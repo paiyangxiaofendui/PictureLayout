@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\ExcelReadWrite">
+      <UniqueIdentifier>{67783a61-3c68-4e46-9fd0-9a5ac4bc3544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ExcelReadWrite\Excel">
+      <UniqueIdentifier>{39a0c1ae-bc6b-4b51-84a8-95edc0ab844a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ExcelReadWrite">
+      <UniqueIdentifier>{28d1de8b-f855-4ce4-a87c-9bbe837f73da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\HgmReadWrite">
+      <UniqueIdentifier>{ca375eca-02b8-4a9b-9328-1b5ffec8ccbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\HgmReadWrite">
+      <UniqueIdentifier>{c377f57b-be64-4bb9-905b-b1fc1e6fe6eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\HgyReadWrite">
+      <UniqueIdentifier>{28012e86-8389-4a54-bda3-c86c4b39447a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\HgyReadWrite">
+      <UniqueIdentifier>{991a381d-b0a6-4b4f-b3f0-c6fb96a200dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Misc">
+      <UniqueIdentifier>{0a0b389c-929f-4d77-9ad4-dd984307410a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Misc">
+      <UniqueIdentifier>{3bbd2370-ee32-4c15-a322-547029b5779a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ClientInfoReadWrite">
+      <UniqueIdentifier>{9a07b200-1021-4f3e-9855-5eb2830ece9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ClientInfoReadWrite">
+      <UniqueIdentifier>{6c87b345-5665-43ff-b367-8991d014dd87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DxfReadWrite">
+      <UniqueIdentifier>{b9b2a220-f3e4-4bbd-bead-fbf0121b32d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DxfReadWrite">
+      <UniqueIdentifier>{c39e2d6e-27b0-42ea-bd0e-a0244e51f4de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\RemainderLibraryReadWrite">
+      <UniqueIdentifier>{ce45aa6e-cf0c-4eba-ab9d-d786ff6d8d5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\RemainderLibraryReadWrite">
+      <UniqueIdentifier>{fcda97c9-bef5-43b7-b40e-6ac2a879a847}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="FileReadWrite.def">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="res\FileReadWrite.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FileReadWrite.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExcelReadWrite\ExcelReadWrite.cpp">
+      <Filter>源文件\ExcelReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="HgmReadWrite\HgmReadWrite.cpp">
+      <Filter>源文件\HgmReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="HgyReadWrite\HgyReadWrite.cpp">
+      <Filter>源文件\HgyReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\HGCode.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\XmlHandlePlus.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\YHInfoTools.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientInfoReadWrite\ClientInfoReadWrite.cpp">
+      <Filter>源文件\ClientInfoReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\HGTools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\OtherShapeHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\Misc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\ProgramMisc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\EncryptionInterface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientInfoReadWrite\HardwareInfo.cpp">
+      <Filter>源文件\ClientInfoReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\dl_dxf.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\dl_writer_ascii.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\test_creationclass.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\DxfReadWrite.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="HgmReadWrite\Markup.cpp">
+      <Filter>源文件\HgmReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="RemainderLibraryReadWrite\RemainderLibraryReadWrite.cpp">
+      <Filter>源文件\RemainderLibraryReadWrite</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\ExcelReadWrite.h">
+      <Filter>头文件\ExcelReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\Excel\CApplication.h">
+      <Filter>头文件\ExcelReadWrite\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\Excel\CRange.h">
+      <Filter>头文件\ExcelReadWrite\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\Excel\CWorkbook.h">
+      <Filter>头文件\ExcelReadWrite\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\Excel\CWorkbooks.h">
+      <Filter>头文件\ExcelReadWrite\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\Excel\CWorksheet.h">
+      <Filter>头文件\ExcelReadWrite\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="ExcelReadWrite\Excel\CWorksheets.h">
+      <Filter>头文件\ExcelReadWrite\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="HgmReadWrite\HgmReadWrite.h">
+      <Filter>头文件\HgmReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="HgyReadWrite\HgyReadWrite.h">
+      <Filter>头文件\HgyReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\HGCode.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\XmlHandlePlus.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\YHInfoTools.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientInfoReadWrite\ClientInfoReadWrite.h">
+      <Filter>头文件\ClientInfoReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\HGTools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\OtherShapeHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Misc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ProgramMisc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\EncryptionInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientInfoReadWrite\HardwareInfo.h">
+      <Filter>头文件\ClientInfoReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_attributes.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_codes.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_creationadapter.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_creationinterface.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_dxf.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_entities.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_exception.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_extrusion.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_global.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_writer.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_writer_ascii.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\test_creationclass.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\DxfReadWrite.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="HgmReadWrite\Markup.h">
+      <Filter>头文件\HgmReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="Work\WorkDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RemainderLibraryReadWrite\RemainderLibraryReadWrite.h">
+      <Filter>头文件\RemainderLibraryReadWrite</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FileReadWrite.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

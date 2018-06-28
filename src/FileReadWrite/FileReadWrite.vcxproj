@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4F8407DF-66F9-4663-B297-BF21B1DB04E5}</ProjectGuid>
+    <RootNamespace>FileReadWrite</RootNamespace>
+    <Keyword>MFCDLLProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>NotSet</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName)d</TargetName>
+    <OutDir>$(SolutionDir)../bin/</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)../bin/</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\FileReadWrite.def</ModuleDefinitionFile>
+      <ImportLibrary>$(SolutionDir)../lib/$(ProjectName)d.lib</ImportLibrary>
+      <ProgramDatabaseFile>$(SolutionDir)../pdb/$(TargetName)d.pdb</ProgramDatabaseFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_AFXEXT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\FileReadWrite.def</ModuleDefinitionFile>
+      <ImportLibrary>$(SolutionDir)../lib/$(ProjectName).lib</ImportLibrary>
+      <ProgramDatabaseFile>$(SolutionDir)../pdb/$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="FileReadWrite.def" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\FileReadWrite.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ClientInfoReadWrite\ClientInfoReadWrite.cpp" />
+    <ClCompile Include="ClientInfoReadWrite\HardwareInfo.cpp" />
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\dl_dxf.cpp" />
+    <ClCompile Include="DxfReadWrite\dl_writer_ascii.cpp" />
+    <ClCompile Include="DxfReadWrite\DxfReadWrite.cpp" />
+    <ClCompile Include="DxfReadWrite\test_creationclass.cpp" />
+    <ClCompile Include="ExcelReadWrite\ExcelReadWrite.cpp" />
+    <ClCompile Include="FileReadWrite.cpp" />
+    <ClCompile Include="HgmReadWrite\HgmReadWrite.cpp" />
+    <ClCompile Include="HgmReadWrite\Markup.cpp" />
+    <ClCompile Include="HgyReadWrite\HgyReadWrite.cpp" />
+    <ClCompile Include="Misc\EncryptionInterface.cpp" />
+    <ClCompile Include="Misc\HGCode.cpp" />
+    <ClCompile Include="Misc\HGTools.cpp" />
+    <ClCompile Include="Misc\Misc.cpp" />
+    <ClCompile Include="Misc\OtherShapeHelper.cpp" />
+    <ClCompile Include="Misc\ProgramMisc.cpp" />
+    <ClCompile Include="Misc\XmlHandlePlus.cpp" />
+    <ClCompile Include="Misc\YHInfoTools.cpp" />
+    <ClCompile Include="RemainderLibraryReadWrite\RemainderLibraryReadWrite.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientInfoReadWrite\ClientInfoReadWrite.h" />
+    <ClInclude Include="ClientInfoReadWrite\HardwareInfo.h" />
+    <ClInclude Include="DxfReadWrite\dl_attributes.h" />
+    <ClInclude Include="DxfReadWrite\dl_codes.h" />
+    <ClInclude Include="DxfReadWrite\dl_creationadapter.h" />
+    <ClInclude Include="DxfReadWrite\dl_creationinterface.h" />
+    <ClInclude Include="DxfReadWrite\dl_dxf.h" />
+    <ClInclude Include="DxfReadWrite\dl_entities.h" />
+    <ClInclude Include="DxfReadWrite\dl_exception.h" />
+    <ClInclude Include="DxfReadWrite\dl_extrusion.h" />
+    <ClInclude Include="DxfReadWrite\dl_global.h" />
+    <ClInclude Include="DxfReadWrite\dl_writer.h" />
+    <ClInclude Include="DxfReadWrite\dl_writer_ascii.h" />
+    <ClInclude Include="DxfReadWrite\DxfReadWrite.h" />
+    <ClInclude Include="DxfReadWrite\test_creationclass.h" />
+    <ClInclude Include="ExcelReadWrite\ExcelReadWrite.h" />
+    <ClInclude Include="ExcelReadWrite\Excel\CApplication.h" />
+    <ClInclude Include="ExcelReadWrite\Excel\CRange.h" />
+    <ClInclude Include="ExcelReadWrite\Excel\CWorkbook.h" />
+    <ClInclude Include="ExcelReadWrite\Excel\CWorkbooks.h" />
+    <ClInclude Include="ExcelReadWrite\Excel\CWorksheet.h" />
+    <ClInclude Include="ExcelReadWrite\Excel\CWorksheets.h" />
+    <ClInclude Include="HgmReadWrite\HgmReadWrite.h" />
+    <ClInclude Include="HgmReadWrite\Markup.h" />
+    <ClInclude Include="HgyReadWrite\HgyReadWrite.h" />
+    <ClInclude Include="Misc\EncryptionInterface.h" />
+    <ClInclude Include="Misc\HGCode.h" />
+    <ClInclude Include="Misc\HGTools.h" />
+    <ClInclude Include="Misc\Misc.h" />
+    <ClInclude Include="Misc\OtherShapeHelper.h" />
+    <ClInclude Include="Misc\ProgramMisc.h" />
+    <ClInclude Include="Misc\XmlHandlePlus.h" />
+    <ClInclude Include="Misc\YHInfoTools.h" />
+    <ClInclude Include="RemainderLibraryReadWrite\RemainderLibraryReadWrite.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Work\WorkDef.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FileReadWrite.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="FileReadWrite.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

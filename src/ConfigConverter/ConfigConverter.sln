@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConfigConverter", "ConfigConverter\ConfigConverter.vcxproj", "{C536661C-C3CD-40B0-B47A-72153AFE6425}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C536661C-C3CD-40B0-B47A-72153AFE6425}.Debug|Win32.ActiveCfg = Release|Win32
+		{C536661C-C3CD-40B0-B47A-72153AFE6425}.Debug|Win32.Build.0 = Release|Win32
+		{C536661C-C3CD-40B0-B47A-72153AFE6425}.Release|Win32.ActiveCfg = Release|Win32
+		{C536661C-C3CD-40B0-B47A-72153AFE6425}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

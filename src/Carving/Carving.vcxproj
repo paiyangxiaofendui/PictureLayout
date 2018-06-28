@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{76765855-5826-43F7-A0B9-6911C5E944DB}</ProjectGuid>
+    <RootNamespace>Carving</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)../bin/</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)../bin/</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(SolutionDir)../pdb/$(TargetName)d.pdb</ProgramDatabaseFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ProgramDatabaseFile>$(SolutionDir)../pdb/$(TargetName).pdb</ProgramDatabaseFile>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Administrator\Desktop\图标\tmp\tmp\exclamation.png" />
+    <None Include="ReadMe.txt" />
+    <None Include="res\bitmap2.bmp" />
+    <None Include="res\buttons.bmp" />
+    <None Include="res\Carving.ico" />
+    <None Include="res\Carving.rc2" />
+    <None Include="res\CarvingDoc.ico" />
+    <None Include="res\Carving_YW.ico" />
+    <None Include="res\checkbox_check.png" />
+    <None Include="res\checkbox_uncheck.png" />
+    <None Include="res\filelarge.bmp" />
+    <None Include="res\filesmall.bmp" />
+    <None Include="res\info.bmp" />
+    <None Include="res\main.bmp" />
+    <None Include="res\main_YW.bmp" />
+    <None Include="res\nav_large.bmp" />
+    <None Include="res\nav_large_hc.bmp" />
+    <None Include="res\pages.bmp" />
+    <None Include="res\pages_hc.bmp" />
+    <None Include="res\pages_small.bmp" />
+    <None Include="res\pages_small_hc.bmp" />
+    <None Include="res\ribbon.mfcribbon-ms" />
+    <None Include="res\skin\AboutUs.png" />
+    <None Include="res\skin\AboutUs_YW.png" />
+    <None Include="res\skin\about_software.png" />
+    <None Include="res\skin\about_software_YW.png" />
+    <None Include="res\skin\button_cut_disable.png" />
+    <None Include="res\skin\button_cut_hover.png" />
+    <None Include="res\skin\button_cut_normal.png" />
+    <None Include="res\skin\button_dxf_disable.png" />
+    <None Include="res\skin\button_dxf_hover.png" />
+    <None Include="res\skin\button_dxf_normal.png" />
+    <None Include="res\skin\button_ExcelSetting_h.png" />
+    <None Include="res\skin\button_ExcelSetting_n.png" />
+    <None Include="res\skin\button_excel_disable.png" />
+    <None Include="res\skin\button_excel_hover.png" />
+    <None Include="res\skin\button_excel_normal.png" />
+    <None Include="res\skin\button_print_diagram_disable.png" />
+    <None Include="res\skin\button_print_diagram_hover.png" />
+    <None Include="res\skin\button_print_diagram_normal.png" />
+    <None Include="res\skin\button_print_label_disable.png" />
+    <None Include="res\skin\button_print_label_hover.png" />
+    <None Include="res\skin\button_print_label_normal.png" />
+    <None Include="res\skin\button_register_hover.png" />
+    <None Include="res\skin\button_register_normal.png" />
+    <None Include="res\skin\button_send_to_phone_disable.png" />
+    <None Include="res\skin\button_send_to_phone_hover.png" />
+    <None Include="res\skin\button_send_to_phone_normal.png" />
+    <None Include="res\skin\EXCEL.png" />
+    <None Include="res\skin\exclamation.png" />
+    <None Include="res\skin\flag_no.png" />
+    <None Include="res\skin\flag_yes.png" />
+    <None Include="res\skin\gongwei.bmp" />
+    <None Include="res\skin\HG文件.png" />
+    <None Include="res\skin\HG文件_YW.png" />
+    <None Include="res\skin\load_config.png" />
+    <None Include="res\skin\NC码.png" />
+    <None Include="res\skin\OurCustomers.png" />
+    <None Include="res\skin\QQ.png" />
+    <None Include="res\skin\QRCode.png" />
+    <None Include="res\skin\QRCode_Large.png" />
+    <None Include="res\skin\QRCode_Large_YW.png" />
+    <None Include="res\skin\QRCode_YW.png" />
+    <None Include="res\skin\register_background.png" />
+    <None Include="res\skin\register_background_YW.png" />
+    <None Include="res\skin\revert_config.png" />
+    <None Include="res\skin\RotateAntiClockwise90.png" />
+    <None Include="res\skin\RotateClockwise90.png" />
+    <None Include="res\skin\save_config.png" />
+    <None Include="res\skin\sort_ascending.png" />
+    <None Include="res\skin\sort_descending.png" />
+    <None Include="res\skin\tab_selected_normal.bmp" />
+    <None Include="res\skin\tab_unselected_hover.bmp" />
+    <None Include="res\skin\tab_unselected_normal.bmp" />
+    <None Include="res\skin\优化.png" />
+    <None Include="res\skin\优化方案.png" />
+    <None Include="res\skin\余料设置.png" />
+    <None Include="res\skin\保存.png" />
+    <None Include="res\skin\保存设置.png" />
+    <None Include="res\skin\其他设置.png" />
+    <None Include="res\skin\刀库.png" />
+    <None Include="res\skin\加载设置.png" />
+    <None Include="res\skin\基础设置.png" />
+    <None Include="res\skin\帮助.png" />
+    <None Include="res\skin\微信.png" />
+    <None Include="res\skin\打印.png" />
+    <None Include="res\skin\教学视频.png" />
+    <None Include="res\skin\教程.png" />
+    <None Include="res\skin\料单123.png" />
+    <None Include="res\skin\标签设置.png" />
+    <None Include="res\skin\模板设置.png" />
+    <None Include="res\skin\领料单设置.png" />
+    <None Include="res\tab1_h.bmp" />
+    <None Include="res\tab1_n.bmp" />
+    <None Include="res\Toolbar.bmp" />
+    <None Include="res\Toolbar256.bmp" />
+    <None Include="res\writelarge.bmp" />
+    <None Include="res\writelarge2.bmp" />
+    <None Include="res\writelarge2_YW.bmp" />
+    <None Include="res\writesmall.bmp" />
+    <None Include="res\组合16x16.png" />
+    <None Include="res\组合32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NCProcess\CNCDataConverter.h" />
+    <ClInclude Include="NCProcess\XiaoFengLabelProcess.h" />
+    <ClInclude Include="UI\DlgRemainder.h" />
+    <ClInclude Include="UI\DlgSetReminder.h" />
+    <ClInclude Include="UI\DlgRequirement_PreCombine.h" />
+    <ClInclude Include="UI\ListBoxPreCombine.h" />
+    <ClInclude Include="UI\Menu_ExcelSetting.h" />
+    <ClInclude Include="NCProcess\SyntecProcess.h" />
+    <ClInclude Include="UI\DlgExcelInputSetting.h" />
+    <ClInclude Include="UI\DlgResetMachiningInfo.h" />
+    <ClInclude Include="UI\DlgWeiXin.h" />
+    <ClInclude Include="UI\DlgLabelPosCalc.h" />
+    <ClInclude Include="UI\RemainderDlg.h" />
+    <ClInclude Include="UI\SkinHeaderCtrl_ExcelSetting.h" />
+    <ClInclude Include="UI\UICommon\Link.h" />
+    <ClInclude Include="UI\UICommon\DialogChildBase.h" />
+    <ClInclude Include="UI\ListBoxClipBoard.h" />
+    <ClInclude Include="Misc\EncryptionInterface.h" />
+    <ClInclude Include="Excel\CApplication.h" />
+    <ClInclude Include="Carving.h" />
+    <ClInclude Include="CarvingDoc.h" />
+    <ClInclude Include="CarvingView.h" />
+    <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="Excel\CRange.h" />
+    <ClInclude Include="Excel\CWorkbook.h" />
+    <ClInclude Include="Excel\CWorkbooks.h" />
+    <ClInclude Include="Excel\CWorksheet.h" />
+    <ClInclude Include="Excel\CWorksheets.h" />
+    <ClInclude Include="DataProcess\DataProcess.h" />
+    <ClInclude Include="Drawing\Drawing.h" />
+    <ClInclude Include="UI\DlgSetMachiningOrder.h" />
+    <ClInclude Include="UI\OptimizeDlg.h" />
+    <ClInclude Include="UI\UICommon\PngButton.h" />
+    <ClInclude Include="UI\UICommon\PngButton_Stretchable.h" />
+    <ClInclude Include="UI\UICommon\RibbonCategorySelf.h" />
+    <ClInclude Include="UI\UICommon\RibbonBarSelf.h" />
+    <ClInclude Include="UI\UICommon\RibbonButtonSelf.h" />
+    <ClInclude Include="UI\ListCtrlMaterial.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="Misc\Barcode39.h" />
+    <ClInclude Include="Misc\CIniFile.h" />
+    <ClInclude Include="Misc\HGTools.h" />
+    <ClInclude Include="Misc\Misc.h" />
+    <ClInclude Include="Misc\OtherShapeHelper.h" />
+    <ClInclude Include="Misc\ProgramMisc.h" />
+    <ClInclude Include="Misc\UTF8ToMBCS.h" />
+    <ClInclude Include="Misc\XmlHandlePlus.h" />
+    <ClInclude Include="Misc\YHInfoTools.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="UI\UICommon\SkinListCtrlBase.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="UIData\UIData.h" />
+    <ClInclude Include="UI\BMainCode.h" />
+    <ClInclude Include="UI\ClientRegisterDlg.h" />
+    <ClInclude Include="UI\DirSetDlg.h" />
+    <ClInclude Include="UI\DlgRequirement.h" />
+    <ClInclude Include="UI\DlgResult.h" />
+    <ClInclude Include="UI\DlgTotalResult.h" />
+    <ClInclude Include="UI\ImageListCtrl.h" />
+    <ClInclude Include="ui\inoutdlg.h" />
+    <ClInclude Include="UI\KnifeAddDlg.h" />
+    <ClInclude Include="UI\LeftPanelDlg.h" />
+    <ClInclude Include="UI\LingLiaoDlg.h" />
+    <ClInclude Include="UI\ListRequirement.h" />
+    <ClInclude Include="UI\ListTotalResult.h" />
+    <ClInclude Include="UI\MainCode.h" />
+    <ClInclude Include="UI\MatrialItemEditDlg.h" />
+    <ClInclude Include="UI\MatrialItemeEdit_MatrialDlg.h" />
+    <ClInclude Include="UI\OPSetDlg.h" />
+    <ClInclude Include="UI\OtherShape.h" />
+    <ClInclude Include="UI\PanelPrintDlg.h" />
+    <ClInclude Include="UI\ParamDlg.h" />
+    <ClInclude Include="UI\ParamSettingDlg.h" />
+    <ClInclude Include="UI\PrintCodeDlg.h" />
+    <ClInclude Include="UI\PrintSetDlg.h" />
+    <ClInclude Include="UI\PrintUserSetDlg.h" />
+    <ClInclude Include="UI\PzCode.h" />
+    <ClInclude Include="UI\SelectPathDlg.h" />
+    <ClInclude Include="UI\SelectPrintDlg.h" />
+    <ClInclude Include="UI\SelMachineDlg.h" />
+    <ClInclude Include="UI\SkinHeaderCtrl.h" />
+    <ClInclude Include="UI\SlottingDlg.h" />
+    <ClInclude Include="UI\SpCode.h" />
+    <ClInclude Include="UI\TheChangeCode.h" />
+    <ClInclude Include="UI\TiebiaoEdgeDlg.h" />
+    <ClInclude Include="UI\UICommon\MEMDC.H" />
+    <ClInclude Include="UI\UICommon\TabBar.h" />
+    <ClInclude Include="UI\UISettingDlg.h" />
+    <ClInclude Include="UI\VecOffset.h" />
+    <ClInclude Include="UI\Vecsoltchangedlg.h" />
+    <ClInclude Include="UI\VecSoltDlg.h" />
+    <ClInclude Include="Work\MachineDef.h" />
+    <ClInclude Include="Work\ProgramDef.h" />
+    <ClInclude Include="Work\WorkDef.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Carving.cpp" />
+    <ClCompile Include="CarvingDoc.cpp" />
+    <ClCompile Include="CarvingView.cpp" />
+    <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="DataProcess\DataProcess.cpp" />
+    <ClCompile Include="NCProcess\CNCDataConverter.cpp" />
+    <ClCompile Include="NCProcess\XiaoFengLabelProcess.cpp" />
+    <ClCompile Include="UI\DlgRemainder.cpp" />
+    <ClCompile Include="UI\DlgSetReminder.cpp" />
+    <ClCompile Include="UI\DlgRequirement_PreCombine.cpp" />
+    <ClCompile Include="UI\ListBoxPreCombine.cpp" />
+    <ClCompile Include="UI\Menu_ExcelSetting.cpp" />
+    <ClCompile Include="NCProcess\SyntecProcess.cpp" />
+    <ClCompile Include="UI\DlgExcelInputSetting.cpp" />
+    <ClCompile Include="UI\DlgResetMachiningInfo.cpp" />
+    <ClCompile Include="UI\DlgWeiXin.cpp" />
+    <ClCompile Include="UI\DlgLabelPosCalc.cpp" />
+    <ClCompile Include="UI\RemainderDlg.cpp" />
+    <ClCompile Include="UI\SkinHeaderCtrl_ExcelSeting.cpp" />
+    <ClCompile Include="UI\UICommon\Link.cpp" />
+    <ClCompile Include="UI\UICommon\DialogChildBase.cpp" />
+    <ClCompile Include="UI\ListBoxClipBoard.cpp" />
+    <ClCompile Include="Misc\EncryptionInterface.cpp" />
+    <ClCompile Include="Drawing\Drawing.cpp" />
+    <ClCompile Include="UI\DlgSetMachiningOrder.cpp" />
+    <ClCompile Include="UI\OptimizeDlg.cpp" />
+    <ClCompile Include="UI\UICommon\PngButton.cpp" />
+    <ClCompile Include="UI\UICommon\PngButton_Stretchable.cpp" />
+    <ClCompile Include="UI\UICommon\RibbonCategorySelf.cpp" />
+    <ClCompile Include="UI\UICommon\RibbonBarSelf.cpp" />
+    <ClCompile Include="UI\UICommon\RibbonButtonSelf.cpp" />
+    <ClCompile Include="UI\ListCtrlMaterial.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="Misc\CIniFile.cpp" />
+    <ClCompile Include="Misc\HGTools.cpp" />
+    <ClCompile Include="Misc\Misc.cpp" />
+    <ClCompile Include="Misc\OtherShapeHelper.cpp" />
+    <ClCompile Include="Misc\ProgramMisc.cpp" />
+    <ClCompile Include="Misc\UTF8ToMBCS.cpp" />
+    <ClCompile Include="Misc\XmlHandlePlus.cpp" />
+    <ClCompile Include="Misc\YHInfoTools.cpp" />
+    <ClCompile Include="UI\UICommon\SkinListCtrlBase.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="UIData\UIData.cpp" />
+    <ClCompile Include="UI\BMainCode.cpp" />
+    <ClCompile Include="UI\ClientRegisterDlg.cpp" />
+    <ClCompile Include="UI\DirSetDlg.cpp" />
+    <ClCompile Include="UI\DlgRequirement.cpp" />
+    <ClCompile Include="UI\DlgResult.cpp" />
+    <ClCompile Include="UI\DlgTotalResult.cpp" />
+    <ClCompile Include="UI\ImageListCtrl.cpp" />
+    <ClCompile Include="UI\InOutDlg.cpp" />
+    <ClCompile Include="UI\KnifeAddDlg.cpp" />
+    <ClCompile Include="UI\LeftPanelDlg.cpp" />
+    <ClCompile Include="UI\LingLiaoDlg.cpp" />
+    <ClCompile Include="UI\ListRequirement.cpp" />
+    <ClCompile Include="UI\ListTotalResult.cpp" />
+    <ClCompile Include="UI\MainCode.cpp" />
+    <ClCompile Include="UI\MatrialItemEditDlg.cpp" />
+    <ClCompile Include="UI\MatrialItemeEdit_MatrialDlg.cpp" />
+    <ClCompile Include="UI\OPSetDlg.cpp" />
+    <ClCompile Include="UI\OtherShape.cpp" />
+    <ClCompile Include="UI\PanelPrintDlg.cpp" />
+    <ClCompile Include="UI\ParamDlg.cpp" />
+    <ClCompile Include="UI\ParamSettingDlg.cpp" />
+    <ClCompile Include="UI\PrintCodeDlg.cpp" />
+    <ClCompile Include="UI\PrintSetDlg.cpp" />
+    <ClCompile Include="UI\PrintUserSetDlg.cpp" />
+    <ClCompile Include="UI\PzCode.cpp" />
+    <ClCompile Include="UI\SelectPathDlg.cpp" />
+    <ClCompile Include="UI\SelectPrintDlg.cpp" />
+    <ClCompile Include="UI\SelMachineDlg.cpp" />
+    <ClCompile Include="UI\SkinHeaderCtrl.cpp" />
+    <ClCompile Include="UI\SlottingDlg.cpp" />
+    <ClCompile Include="UI\SpCode.cpp" />
+    <ClCompile Include="UI\TheChangeCode.cpp" />
+    <ClCompile Include="UI\TiebiaoEdgeDlg.cpp" />
+    <ClCompile Include="UI\UICommon\MemDC.cpp" />
+    <ClCompile Include="UI\UICommon\TabBar.cpp" />
+    <ClCompile Include="UI\UISettingDlg.cpp" />
+    <ClCompile Include="UI\VecOffset.cpp" />
+    <ClCompile Include="UI\Vecsoltchangedlg.cpp" />
+    <ClCompile Include="UI\VecSoltDlg.cpp" />
+    <ClCompile Include="Work\MachineDef.cpp" />
+    <ClCompile Include="Work\WorkDef.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Carving.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="Carving.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

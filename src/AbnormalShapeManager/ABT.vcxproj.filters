@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\DataManager">
+      <UniqueIdentifier>{3cac74d9-01ee-4f55-a8a6-48731692c03a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataManager\Point">
+      <UniqueIdentifier>{eb6a7ae2-1fb4-4ba2-944d-336de8189e8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataManager\Figure">
+      <UniqueIdentifier>{cffdc935-1b05-40c9-bc2d-3738907f283a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataManager\Layer">
+      <UniqueIdentifier>{66203c9e-976f-403d-afde-42f175c15ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GeneralInterface">
+      <UniqueIdentifier>{51b9fc75-7db6-4de1-a070-a1431e95955e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\FileRW">
+      <UniqueIdentifier>{0b219b0e-1485-4aa8-8762-18744bebd6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataManager">
+      <UniqueIdentifier>{37453375-4fc7-4106-81d0-f51715ffc2c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataManager\Figure">
+      <UniqueIdentifier>{bccd0ca2-dcc6-480d-80cc-6f00fe8d6b36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataManager\Layer">
+      <UniqueIdentifier>{605c44e2-5e49-4523-be26-0452afe08734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataManager\Point">
+      <UniqueIdentifier>{5eb190b9-0aab-48a9-9193-38ba67f0feec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\FileRW">
+      <UniqueIdentifier>{9da21bc2-9d39-4fc2-a412-8a7f75b05f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GeneralInterface">
+      <UniqueIdentifier>{af6e7633-f6b5-42d5-80dd-acbba464a37f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="ABT.def">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="res\ABT.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ABT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Point\FPoint.cpp">
+      <Filter>源文件\DataManager\Point</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Point\ShapePoint.cpp">
+      <Filter>源文件\DataManager\Point</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Figure\Arc.cpp">
+      <Filter>源文件\DataManager\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Figure\Circle.cpp">
+      <Filter>源文件\DataManager\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Figure\Complex.cpp">
+      <Filter>源文件\DataManager\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Figure\Figure.cpp">
+      <Filter>源文件\DataManager\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Figure\PolyLine.cpp">
+      <Filter>源文件\DataManager\Figure</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\Layer\Layer.cpp">
+      <Filter>源文件\DataManager\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager\CSingleton.cpp">
+      <Filter>源文件\DataManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralInterface\GeneralInterface.cpp">
+      <Filter>源文件\GeneralInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="FileRW\DxfFile.cpp">
+      <Filter>源文件\FileRW</Filter>
+    </ClCompile>
+    <ClCompile Include="AbTools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ABTDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParallelDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AbTools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ABTDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Figure\Arc.h">
+      <Filter>头文件\DataManager\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Figure\Circle.h">
+      <Filter>头文件\DataManager\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Figure\Complex.h">
+      <Filter>头文件\DataManager\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Figure\Figure.h">
+      <Filter>头文件\DataManager\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Figure\PolyLine.h">
+      <Filter>头文件\DataManager\Figure</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Layer\Layer.h">
+      <Filter>头文件\DataManager\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Point\FPoint.h">
+      <Filter>头文件\DataManager\Point</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\Point\ShapePoint.h">
+      <Filter>头文件\DataManager\Point</Filter>
+    </ClInclude>
+    <ClInclude Include="FileRW\DxfFile.h">
+      <Filter>头文件\FileRW</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralInterface\GeneralInterface.h">
+      <Filter>头文件\GeneralInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\CommonData.h">
+      <Filter>头文件\DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager\CSingleton.h">
+      <Filter>头文件\DataManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ParallelDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ABT.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

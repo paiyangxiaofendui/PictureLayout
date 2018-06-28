@@ -1,0 +1,866 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\nav_large.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\nav_large_hc.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\pages.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\pages_hc.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\pages_small.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\pages_small_hc.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\info.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\buttons.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\filelarge.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\filesmall.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\main.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\writelarge.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\writesmall.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\ribbon.mfcribbon-ms">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\Carving.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\CarvingDoc.ico">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\Carving.ico">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\Toolbar.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\Toolbar256.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\writelarge2.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\tab1_h.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\tab1_n.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\checkbox_uncheck.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\checkbox_check.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\组合16x16.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\组合32x32.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\AboutUs.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\OurCustomers.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\HG文件.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\EXCEL.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\NC码.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\帮助.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\保存.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\保存设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\标签设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\打印.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\刀库.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\基础设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\教程.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\料单123.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\领料单设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\模板设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\其他设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\优化.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\优化方案.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\余料设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\加载设置.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\QRCode.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\RotateAntiClockwise90.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\RotateClockwise90.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_print_diagram_disable.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_print_diagram_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_print_diagram_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_print_label_disable.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_print_label_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_print_label_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_excel_disable.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_excel_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_excel_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_cut_disable.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_cut_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_cut_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\tab_selected_normal.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\tab_unselected_hover.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\tab_unselected_normal.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\flag_yes.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\flag_no.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\about_software.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\register_background.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_register_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_register_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\gongwei.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\QQ.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\微信.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\QRCode_Large.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_send_to_phone_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_send_to_phone_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_send_to_phone_disable.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="C:\Users\Administrator\Desktop\图标\tmp\tmp\exclamation.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\exclamation.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\sort_ascending.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\sort_descending.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\load_config.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\save_config.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\revert_config.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_ExcelSetting_n.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_ExcelSetting_h.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_dxf_disable.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_dxf_hover.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\button_dxf_normal.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\HG文件_YW.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\register_background_YW.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\about_software_YW.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\QRCode_YW.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\QRCode_Large_YW.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\main_YW.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\Carving_YW.ico">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\AboutUs_YW.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\writelarge2_YW.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\教学视频.png">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Carving.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CarvingDoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CarvingView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Misc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DataProcess\DataProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ProgramMisc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UIData\UIData.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\MEMDC.H">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\TabBar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SkinHeaderCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgRequirement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgResult.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgTotalResult.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListRequirement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListTotalResult.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ParamDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\VecOffset.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Vecsoltchangedlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\CIniFile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\HGTools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\XmlHandlePlus.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SelMachineDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SelectPathDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\OtherShapeHelper.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Work\WorkDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\YHInfoTools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SelectPrintDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawing\Drawing.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PanelPrintDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ImageListCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PrintCodeDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ParamSettingDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TiebiaoEdgeDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Barcode39.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ClientRegisterDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\KnifeAddDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TheChangeCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MainCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PzCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BMainCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SpCode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\OPSetDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\LeftPanelDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UISettingDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PrintSetDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PrintUserSetDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\OtherShape.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\UTF8ToMBCS.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SlottingDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DirSetDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MatrialItemeEdit_MatrialDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MatrialItemEditDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\inoutdlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\CApplication.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\CRange.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\CWorkbook.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\CWorkbooks.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\CWorksheet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\CWorksheets.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\LingLiaoDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\SkinListCtrlBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListCtrlMaterial.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\EncryptionInterface.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\RibbonButtonSelf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\RibbonBarSelf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\RibbonCategorySelf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgSetMachiningOrder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListBoxClipBoard.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\VecSoltDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\DialogChildBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\OptimizeDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\PngButton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\Link.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgLabelPosCalc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgWeiXin.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgResetMachiningInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgExcelInputSetting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SkinHeaderCtrl_ExcelSetting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NCProcess\SyntecProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Work\MachineDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu_ExcelSetting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\PngButton_Stretchable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgRequirement_PreCombine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListBoxPreCombine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgSetReminder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgRemainder.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NCProcess\XiaoFengLabelProcess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NCProcess\CNCDataConverter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Work\ProgramDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Carving.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CarvingDoc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CarvingView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\Misc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DataProcess\DataProcess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\ProgramMisc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UIData\UIData.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\MemDC.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\TabBar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgRequirement.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgResult.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgTotalResult.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListRequirement.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListTotalResult.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SkinHeaderCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ParamDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\VecOffset.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Vecsoltchangedlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\CIniFile.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\HGTools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\XmlHandlePlus.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SelMachineDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SelectPathDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\OtherShapeHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\YHInfoTools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SelectPrintDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawing\Drawing.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PanelPrintDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ImageListCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PrintCodeDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ParamSettingDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\TiebiaoEdgeDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ClientRegisterDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\KnifeAddDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\TheChangeCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MainCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PzCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BMainCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SpCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\OPSetDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\LeftPanelDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UISettingDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PrintSetDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PrintUserSetDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\OtherShape.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\UTF8ToMBCS.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SlottingDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DirSetDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MatrialItemeEdit_MatrialDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MatrialItemEditDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\InOutDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\LingLiaoDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\SkinListCtrlBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListCtrlMaterial.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\EncryptionInterface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\RibbonButtonSelf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\RibbonBarSelf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\RibbonCategorySelf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgSetMachiningOrder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListBoxClipBoard.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\VecSoltDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\DialogChildBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\OptimizeDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\PngButton.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\Link.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgLabelPosCalc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgWeiXin.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgResetMachiningInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgExcelInputSetting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SkinHeaderCtrl_ExcelSeting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NCProcess\SyntecProcess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Work\MachineDef.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Work\WorkDef.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Menu_ExcelSetting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\PngButton_Stretchable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgRequirement_PreCombine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListBoxPreCombine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgSetReminder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgRemainder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NCProcess\XiaoFengLabelProcess.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NCProcess\CNCDataConverter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Carving.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

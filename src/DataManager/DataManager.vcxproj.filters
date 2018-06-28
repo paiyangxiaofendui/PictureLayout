@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\BaseDataType">
+      <UniqueIdentifier>{38927250-8cc4-40b3-ab58-c8c45d337e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType">
+      <UniqueIdentifier>{d527b0e8-2928-4c47-b06b-b5caae49d9b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\Node">
+      <UniqueIdentifier>{979e0541-ef24-4c7c-932b-151e85664db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\Node">
+      <UniqueIdentifier>{267f7692-29f4-4308-9cb2-007d211e6e00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\CommonData">
+      <UniqueIdentifier>{b83f9a3d-46d8-475b-a2b1-daa5048334e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\CommonData">
+      <UniqueIdentifier>{8db873f5-4265-4697-8a6c-aa2e04b9db5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\BaseInfo">
+      <UniqueIdentifier>{dd427c75-1f97-4a66-9d4f-000d061f54c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\BaseInfo">
+      <UniqueIdentifier>{c1f0eafc-9faa-4a37-b8b2-5f023377dfc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\Component">
+      <UniqueIdentifier>{00922de0-53b7-4cf6-826a-def9033c8183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\Component">
+      <UniqueIdentifier>{7e976b5e-b082-4066-b14a-6df54d7698a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\Panel">
+      <UniqueIdentifier>{f2936ccd-77d3-4c65-8fce-b1f5a681be1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\Panel">
+      <UniqueIdentifier>{76e06e84-6c66-471b-912d-7f8ee4d878ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\Outline">
+      <UniqueIdentifier>{8170f8d9-6dcd-48ac-a313-417a3f9ac548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\Outline">
+      <UniqueIdentifier>{e0007280-b188-4667-bae0-8abb8528c482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\CSolution">
+      <UniqueIdentifier>{eb9155bf-e0da-4b99-9af7-656e6fe2d581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\CSolution">
+      <UniqueIdentifier>{7b804126-631a-4295-8e3b-2933965694d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Algorithm">
+      <UniqueIdentifier>{88a643e7-b578-4df1-a4f8-4593bf9bd6bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Algorithm">
+      <UniqueIdentifier>{2427f604-2662-43a9-b1e8-135d485f4640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\CSingleton">
+      <UniqueIdentifier>{e84f3c10-f2c8-40b5-955c-c69618d5047e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\CSingleton">
+      <UniqueIdentifier>{78c1bfcc-ec77-4dd8-a642-d1bece01ca74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\RemainderItem">
+      <UniqueIdentifier>{6072d1d9-ac92-4f5c-88f4-2b5727521f21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\RemainderItem">
+      <UniqueIdentifier>{08a33821-868e-49fc-8759-2d701fef3b89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\RemainderGroup">
+      <UniqueIdentifier>{c3afd435-2215-47a7-893f-10317bffc860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\RemainderGroup">
+      <UniqueIdentifier>{c358419e-2e9c-42ef-bce3-ca8bdcdb8d17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BaseDataType\RemainderManager">
+      <UniqueIdentifier>{82a04406-b150-4a14-9d61-3cef0efd5b1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\RemainderManager">
+      <UniqueIdentifier>{adcb3533-72ec-4121-a7a0-e9c86db7f9ef}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="DataManager.def">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="res\DataManager.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\Node\Node.cpp">
+      <Filter>源文件\BaseDataType\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\CommonData\CommonData.cpp">
+      <Filter>源文件\BaseDataType\CommonData</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\BaseInfo\BaseInfo.cpp">
+      <Filter>源文件\BaseDataType\BaseInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\Component\Component.cpp">
+      <Filter>源文件\BaseDataType\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\Panel\Panel.cpp">
+      <Filter>源文件\BaseDataType\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\Outline\Outline.cpp">
+      <Filter>源文件\BaseDataType\Outline</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\CSolution\CSolution.cpp">
+      <Filter>源文件\BaseDataType\CSolution</Filter>
+    </ClCompile>
+    <ClCompile Include="Algorithm\Algorithm.cpp">
+      <Filter>源文件\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\CSingleton\CSingleon.cpp">
+      <Filter>源文件\BaseDataType\CSingleton</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\ProgramMisc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\RemainderItem\RemainderItem.cpp">
+      <Filter>源文件\BaseDataType\RemainderItem</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\RemainderGroup\RemainderGroup.cpp">
+      <Filter>源文件\BaseDataType\RemainderGroup</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\RemainderManager\RemainderManager.cpp">
+      <Filter>源文件\BaseDataType\RemainderManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\Node\Node.h">
+      <Filter>头文件\BaseDataType\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\CommonData\CommonData.h">
+      <Filter>头文件\BaseDataType\CommonData</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\BaseInfo\BaseInfo.h">
+      <Filter>头文件\BaseDataType\BaseInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\Component\Component.h">
+      <Filter>头文件\BaseDataType\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\Panel\Panel.h">
+      <Filter>头文件\BaseDataType\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\Outline\Outline.h">
+      <Filter>头文件\BaseDataType\Outline</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\CSolution\CSolution.h">
+      <Filter>头文件\BaseDataType\CSolution</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Algorithm.h">
+      <Filter>头文件\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\CSingleton\CSingleon.h">
+      <Filter>头文件\BaseDataType\CSingleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ProgramMisc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\RemainderItem\RemainderItem.h">
+      <Filter>头文件\BaseDataType\RemainderItem</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\RemainderGroup\RemainderGroup.h">
+      <Filter>头文件\BaseDataType\RemainderGroup</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\RemainderManager\RemainderManager.h">
+      <Filter>头文件\BaseDataType\RemainderManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DataManager.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
