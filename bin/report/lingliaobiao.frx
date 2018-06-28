@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/20/2009 22:40:42" ReportInfo.Modified="09/30/2016 10:22:38" ReportInfo.CreatorVersion="2013.2.5.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqckI77d/xe6n9a3TN7h/bCr0d94HhQbx50xuvh8S0cyO8/eGxL7kqGwuItQnZDBD8O6bkhf3CS+Dv7hIIsEbJUNkHJHLT/4WFwzz+b1jVr6xD5dwd60tManHCdtv9eSGu">
+      <TableDataSource Name="info_0" DataType="System.Int32" Enabled="true" TableName="info_0">
+        <Column Name="CompanyLogoUrl" DataType="System.String"/>
+        <Column Name="CompanyName" DataType="System.String"/>
+        <Column Name="OrderCodeUrl" DataType="System.String"/>
+        <Column Name="OrderID" DataType="System.String"/>
+        <Column Name="ShiftEmployee" DataType="System.String"/>
+        <Column Name="ShiftDate" DataType="System.String"/>
+        <Column Name="UseEmployee" DataType="System.String"/>
+        <Column Name="UseDate" DataType="System.String"/>
+        <Column Name="ManageEmployee" DataType="System.String"/>
+        <Column Name="OrderStore" DataType="System.String"/>
+        <Column Name="AuditEmployee" DataType="System.String"/>
+        <Column Name="UseMachineName" DataType="System.String"/>
+        <Column Name="OrderMoreInfo" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="info_1" DataType="System.Int32" Enabled="true" TableName="info_1">
+        <Column Name="Index" DataType="System.String"/>
+        <Column Name="Thickness" DataType="System.String"/>
+        <Column Name="WidthHeight" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="PanelMatrial" DataType="System.String"/>
+        <Column Name="PanelNum" DataType="System.String"/>
+        <Column Name="Units" DataType="System.String"/>
+        <Column Name="Brand" DataType="System.String"/>
+        <Column Name="Remark" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="info_2" DataType="System.Int32" Enabled="true" TableName="info_2">
+        <Column Name="PanelMatrial" DataType="System.String"/>
+        <Column Name="Thickness" DataType="System.String"/>
+        <Column Name="SmallPanelNum" DataType="System.String"/>
+        <Column Name="TotalArea" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="75.6">
+      <TextObject Name="Text5" Left="207.9" Top="47.25" Width="302.4" Height="28.35" Text="板材领料表" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 12pt, style=Bold"/>
+      <PictureObject Name="Picture1" Top="9.45" Width="170.1" Height="47.25" Hyperlink.Expression="[info_0.CompanyLogoUrl]" ImageLocation="..\ico\logo.jpg"/>
+      <TextObject Name="Text30" Left="207.9" Top="9.45" Width="302.4" Height="28.35" Text="[info_0.CompanyName]" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 16pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="79.6" Width="718.2" Height="132.39">
+      <TableObject Name="Table1" Width="717.76" Height="132.36" Anchor="Top, Bottom, Left, Right">
+        <TableColumn Name="Column1" Width="66.04"/>
+        <TableColumn Name="Column2" Width="283.39"/>
+        <TableColumn Name="Column3" Width="66.04"/>
+        <TableColumn Name="Column4" Width="302.29"/>
+        <TableRow Name="Row1" Height="22.06">
+          <TableCell Name="Cell1" Border.Lines="All" Text="订单编号" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="[info_0.OrderCodeUrl]" VertAlign="Center" Font="宋体, 9pt" ColSpan="3"/>
+          <TableCell Name="Cell3" Border.Lines="All" Font="宋体, 9pt"/>
+          <TableCell Name="Cell4" Border.Lines="All" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="22.06">
+          <TableCell Name="Cell6" Border.Lines="All" Text="排产人员" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell7" Border.Lines="All" Text="[info_0.ShiftEmployee]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell8" Border.Lines="All" Text="排产日期" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell9" Border.Lines="All" Text="[info_0.ShiftDate]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row3" Height="22.06">
+          <TableCell Name="Cell11" Border.Lines="All" Text="领料人员" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell12" Border.Lines="All" Text="[info_0.UseEmployee]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell13" Border.Lines="All" Text="领料日期" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell14" Border.Lines="All" Text="[info_0.UseDate]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row4" Height="22.06">
+          <TableCell Name="Cell16" Border.Lines="All" Text="仓管人员" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell17" Border.Lines="All" Text="[info_0.ManageEmployee]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell18" Border.Lines="All" Text="接单店面" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell19" Border.Lines="All" Text="[info_0.OrderStore]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row5" Height="22.06">
+          <TableCell Name="Cell21" Border.Lines="All" Text="审核人员" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell22" Border.Lines="All" Text="[info_0.AuditEmployee]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell23" Border.Lines="All" Text="开料类型" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell24" Border.Lines="All" Text="[info_0.UseMachineName]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row6" Height="22.06">
+          <TableCell Name="Cell26" Border.Lines="All" Text="订单注释" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell27" Border.Lines="All" Text="[info_0.OrderMoreInfo]" VertAlign="Center" Font="宋体, 9pt" ColSpan="3"/>
+          <TableCell Name="Cell28" Border.Lines="All" Font="宋体, 9pt"/>
+          <TableCell Name="Cell29" Border.Lines="All" Font="宋体, 9pt"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <DataBand Name="Data3" Top="267.24" Width="718.2" Height="28.35" DataSource="info_1">
+      <TextObject Name="Text6" Width="37.8" Height="28.35" Border.Lines="All" Text="[info_1.Index]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text1" Left="37.8" Width="56.7" Height="28.35" Border.Lines="All" Text="[info_1.Thickness]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text8" Left="94.5" Width="113.4" Height="28.35" Border.Lines="All" Text="[info_1.WidthHeight]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text9" Left="207.9" Width="94.5" Height="28.35" Border.Lines="All" Text="[info_1.Code]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text11" Left="302.4" Width="132.3" Height="28.35" Border.Lines="All" Text="[info_1.PanelMatrial]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text12" Left="434.7" Width="75.6" Height="28.35" Border.Lines="All" Text="[info_1.PanelNum]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text14" Left="510.3" Width="56.7" Height="28.35" Border.Lines="All" Text="[info_1.Units]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text16" Left="567" Width="75.6" Height="28.35" Border.Lines="All" Text="[info_1.Brand]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text17" Left="642.6" Width="75.6" Height="28.35" Border.Lines="All" Text="[info_1.Remark]" VertAlign="Center" Font="宋体, 9pt"/>
+      <DataHeaderBand Name="DataHeader1" Top="215.99" Width="718.2" Height="47.25">
+        <TextObject Name="Text7" Top="18.9" Width="37.8" Height="28.35" Border.Lines="All" Text="序号" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text19" Left="642.6" Top="18.9" Width="75.6" Height="28.35" Border.Lines="All" Text="备注" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text2" Left="37.8" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Text="厚度" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text4" Left="302.4" Top="18.9" Width="132.3" Height="28.35" Border.Lines="All" Text="板件材质" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text13" Left="434.7" Top="18.9" Width="75.6" Height="28.35" Border.Lines="All" Text="板件数量" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text15" Left="510.3" Top="18.9" Width="56.7" Height="28.35" Border.Lines="All" Text="单位" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text18" Left="567" Top="18.9" Width="75.6" Height="28.35" Border.Lines="All" Text="品牌" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text20" Left="207.9" Top="18.9" Width="94.5" Height="28.35" Border.Lines="All" Text="板件条码" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text21" Left="94.5" Top="18.9" Width="113.4" Height="28.35" Border.Lines="All" Text="板件尺寸" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+      </DataHeaderBand>
+    </DataBand>
+    <DataBand Name="Data4" Top="350.84" Width="718.2" Height="28.35" DataSource="info_2">
+      <TextObject Name="Text3" Width="264.6" Height="28.35" Border.Lines="All" Text="[info_2.PanelMatrial]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text22" Left="264.6" Width="170.1" Height="28.35" Border.Lines="All" Text="[info_2.Thickness]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text24" Left="434.7" Width="122.85" Height="28.35" Border.Lines="All" Text="[info_2.SmallPanelNum]" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text25" Left="557.55" Width="160.65" Height="28.35" Border.Lines="All" Text="[info_2.TotalArea]" VertAlign="Center" Font="宋体, 9pt"/>
+      <DataHeaderBand Name="DataHeader2" Top="299.59" Width="718.2" Height="47.25">
+        <TextObject Name="Text26" Top="18.9" Width="264.6" Height="28.35" Border.Lines="All" Text="材料" HorzAlign="Center" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text27" Left="264.6" Top="18.9" Width="170.1" Height="28.35" Border.Lines="All" Text="厚度" HorzAlign="Center" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text28" Left="434.7" Top="18.9" Width="122.85" Height="28.35" Border.Lines="All" Text="数量" HorzAlign="Center" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+        <TextObject Name="Text29" Left="557.55" Top="18.9" Width="160.65" Height="28.35" Border.Lines="All" Text="总平方" HorzAlign="Center" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+      </DataHeaderBand>
+    </DataBand>
+    <ColumnFooterBand Name="ColumnFooter1" Top="383.19" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

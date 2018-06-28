@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<data xmlns="http://www.techtimesun.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.techtimesun.com lingliaobiao.xsd">
+    <info_0>
+        <CompanyLogoUrl>..\ico\logo.jpg</CompanyLogoUrl>
+        <CompanyName>22222222222</CompanyName>
+        <OrderCodeUrl>333333333</OrderCodeUrl>
+        <OrderID>4444444444</OrderID>
+        <ShiftEmployee>55555555</ShiftEmployee>
+        <ShiftDate>666666666</ShiftDate>
+        <UseEmployee>77777777</UseEmployee>
+        <UseDate>888888888</UseDate>
+        <ManageEmployee>99999999</ManageEmployee>
+        <OrderStore>AAAAAAAAA</OrderStore>
+        <AuditEmployee>BBBBBBBBBB</AuditEmployee>
+        <UseMachineName>CCCCCCCC</UseMachineName>
+        <OrderMoreInfo>DDDDDDDD</OrderMoreInfo>
+    </info_0>
+    <info_1>
+        <Index>1</Index>
+        <Thickness>18.0</Thickness>
+        <WidthHeight>2440.0 x 1220.0</WidthHeight>
+        <Code></Code>
+        <PanelMatrial>亿维雅/3030叠影橡木 E0</PanelMatrial>
+        <PanelNum>28</PanelNum>
+        <Units>块</Units>
+        <Brand></Brand>
+        <Remark></Remark>
+    </info_1>
+    <info_1>
+        <Index>2</Index>
+        <Thickness>9.0</Thickness>
+        <WidthHeight>2440.0 x 1220.0</WidthHeight>
+        <Code></Code>
+        <PanelMatrial>亿维雅/3030叠影橡木 E0</PanelMatrial>
+        <PanelNum>10</PanelNum>
+        <Units>块</Units>
+        <Brand></Brand>
+        <Remark></Remark>
+    </info_1>
+    <info_1>
+        <Index>3</Index>
+        <Thickness>20.0</Thickness>
+        <WidthHeight>2440.0 x 1220.0</WidthHeight>
+        <Code></Code>
+        <PanelMatrial>亿维雅/5001宫廷核桃木 E0</PanelMatrial>
+        <PanelNum>1</PanelNum>
+        <Units>块</Units>
+        <Brand></Brand>
+        <Remark></Remark>
+    </info_1>
+    <info_1>
+        <Index>4</Index>
+        <Thickness>18.0</Thickness>
+        <WidthHeight>2440.0 x 1220.0</WidthHeight>
+        <Code></Code>
+        <PanelMatrial>亿维雅/5001宫廷核桃木 E0</PanelMatrial>
+        <PanelNum>1</PanelNum>
+        <Units>块</Units>
+        <Brand></Brand>
+        <Remark></Remark>
+    </info_1>
+    <info_2>
+        <PanelMatrial>亿维雅/3030叠影橡木 E0</PanelMatrial>
+        <Thickness>18.0</Thickness>
+        <SmallPanelNum>155</SmallPanelNum>
+        <TotalArea>72.821</TotalArea>
+    </info_2>
+    <info_2>
+        <PanelMatrial>亿维雅/3030叠影橡木 E0</PanelMatrial>
+        <Thickness>9.0</Thickness>
+        <SmallPanelNum>12</SmallPanelNum>
+        <TotalArea>18.482</TotalArea>
+    </info_2>
+    <info_2>
+        <PanelMatrial>亿维雅/5001宫廷核桃木 E0</PanelMatrial>
+        <Thickness>20.0</Thickness>
+        <SmallPanelNum>2</SmallPanelNum>
+        <TotalArea>0.668</TotalArea>
+    </info_2>
+    <info_2>
+        <PanelMatrial>亿维雅/5001宫廷核桃木 E0</PanelMatrial>
+        <Thickness>18.0</Thickness>
+        <SmallPanelNum>4</SmallPanelNum>
+        <TotalArea>1.714</TotalArea>
+    </info_2>
+</data>

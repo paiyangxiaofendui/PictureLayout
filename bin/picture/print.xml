@@ -1,0 +1,399 @@
+<PrintModule>
+    <CodeModule Index="0" Name="50*50二维码D2" Used="0" paperHeight="200" paperWidth="200" pictureName="recode55">
+        <Parameter FontName="宋体" FontSize="14" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="86" Y="184" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="88" Y="164" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="88" Y="111" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="132" Y="184" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="132" Y="65" />
+        <Parameter FontName="宋体" FontSize="25" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="98" Y="136" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="132" Y="3" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="132" Y="123" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="10" Y="139" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="80" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="96" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="48" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="73" Y="32" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="16" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="3" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="3" Y="32" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="65" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="167" Y="80" />
+    </CodeModule>
+    <CodeModule Index="1" Name="50*50条型码(10个字符)D3" Used="0" paperHeight="200" paperWidth="200" pictureName="recode55">
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="79" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="157" Y="3" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="3" Y="142" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="57" Y="127" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="38" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="71" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="3" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="1234567890" X="3" Y="161" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="1234567890" X="3" Y="17" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="3" Y="128" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="53" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="118" Y="95" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="83" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="3" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="113" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="98" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="182" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="168" Y="38" />
+    </CodeModule>
+    <CodeModule Index="2" Name="60*40二维码D2" Used="0" paperHeight="160" paperWidth="240" pictureName="recode64">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="99" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="98" Y="72" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="175" Y="72" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="175" Y="138" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="98" Y="138" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="180" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="98" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="98" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="185" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="197" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="160" Y="93" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="190" Y="20" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="158" Y="54" />
+    </CodeModule>
+    <CodeModule Index="3" Name="60*40条型码(12个字符)D2" Used="0" paperHeight="160" paperWidth="240" pictureName="recode64">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="159" Y="30" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="123456789012" X="5" Y="123" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="189" Y="145" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="103" Y="54" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="123456789012" X="5" Y="90" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="155" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="139" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="67" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="71" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="88" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="96" Y="37" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="132" Y="50" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="145" />
+    </CodeModule>
+    <CodeModule Index="4" Name="60*50二维码D2" Used="0" paperHeight="200" paperWidth="240" pictureName="recode65">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="136" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="90" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="89" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="95" Y="175" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="95" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="167" Y="175" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="167" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="4" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="72" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="164" Y="3" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="68" Y="18" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="179" Y="54" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="197" Y="78" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="167" Y="78" />
+    </CodeModule>
+    <CodeModule Index="5" Name="60*50条型码(12个字符)D3" Used="0" paperHeight="200" paperWidth="240" pictureName="recode65">
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="79" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="157" Y="3" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="90" Y="127" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="55" Y="127" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="38" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="71" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="3" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="123456789012" X="5" Y="161" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="123456789012" X="5" Y="17" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="3" Y="128" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="53" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="158" Y="95" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="83" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="3" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="113" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="98" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="182" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="200" Y="37" />
+    </CodeModule>
+    <CodeModule Index="6" Name="70*30二维码D3" Used="0" paperHeight="120" paperWidth="280" pictureName="recode73">
+        <Parameter FontName="" FontSize="1.4" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="101" Y="42" />
+        <Parameter FontName="" FontSize="1.4" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="173" Y="43" />
+        <Parameter FontName="宋体" FontSize="15" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="157" Y="64" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="184" Y="16" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="12" Y="59" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="100" Y="16" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="100" Y="28" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="100" Y="2" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="232" Y="45" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="233" Y="63" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="229" Y="81" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="101" Y="102" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="172" Y="102" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="227" Y="102" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="2" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="16" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="256" Y="16" />
+    </CodeModule>
+    <CodeModule Index="7" Name="70*40二维码D2" Used="0" paperHeight="160" paperWidth="280" pictureName="recode74">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="99" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="95" Y="72" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="167" Y="72" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="167" Y="138" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="95" Y="138" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="222" Y="138" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="175" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="106" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="167" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="234" Y="72" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="236" Y="92" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="233" Y="52" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="253" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="106" Y="37" />
+    </CodeModule>
+    <CodeModule Index="8" Name="70*40二维码D2-LOGO" Used="0" paperHeight="160" paperWidth="280" pictureName="recode74">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="92" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="92" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="192" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="92" Y="20" />
+        <Parameter FontName="" FontSize="40" LeftStr="" Name="Logo" RightStr="" Used="1" Value="Logo" X="3" Y="0" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="92" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="92" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="11" Y="99" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="171" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="92" Y="145" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="92" Y="82" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="174" Y="145" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="174" Y="82" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="222" Y="143" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="241" Y="36" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="240" Y="91" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="246" Y="112" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="246" Y="57" />
+    </CodeModule>
+    <CodeModule Index="9" Name="70*40条型码(15个字符)D2" Used="0" paperHeight="160" paperWidth="280" pictureName="recode74">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="200" Y="30" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="123456789012345" X="5" Y="123" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="189" Y="145" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="146" Y="35" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="123456789012345" X="5" Y="90" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="155" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="139" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="67" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="71" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="88" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="96" Y="37" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="160" Y="60" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="145" />
+    </CodeModule>
+    <CodeModule Index="10" Name="70*50二维码D2" Used="0" paperHeight="200" paperWidth="280" pictureName="recode75">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="136" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="90" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="89" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="95" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="95" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="185" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="185" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="4" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="72" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="200" Y="3" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="68" Y="18" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="179" Y="54" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="197" Y="78" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="167" Y="78" />
+    </CodeModule>
+    <CodeModule Index="11" Name="70*50二维码D2-LOGO" Used="0" paperHeight="200" paperWidth="280" pictureName="recode75">
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="84" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="84" Y="71" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="84" Y="37" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="84" Y="54" />
+        <Parameter FontName="" FontSize="40" LeftStr="" Name="Logo" RightStr="" Used="1" Value="Logo" X="3" Y="0" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="84" Y="88" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="84" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="136" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="171" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="95" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="95" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="185" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="185" Y="108" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="4" Y="84" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="175" Y="33" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="3" Y="41" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="51" Y="58" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="25" Y="58" />
+    </CodeModule>
+    <CodeModule Index="12" Name="70*50条型码(15个字符)D3" Used="0" paperHeight="200" paperWidth="280" pictureName="recode75">
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="79" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="157" Y="3" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="90" Y="127" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="55" Y="127" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="38" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="71" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="3" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="123456789012345" X="5" Y="161" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="123456789012345" X="5" Y="17" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="3" Y="128" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="53" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="200" Y="95" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="83" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="3" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="113" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="98" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="182" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="230" Y="37" />
+    </CodeModule>
+    <CodeModule Index="13" Name="80*30二维码D3" Used="0" paperHeight="120" paperWidth="320" pictureName="recode83">
+        <Parameter FontName="" FontSize="1.4" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="101" Y="42" />
+        <Parameter FontName="" FontSize="1.4" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="173" Y="43" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="239" Y="66" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="184" Y="16" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="12" Y="59" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="100" Y="16" />
+        <Parameter FontName="宋体" FontSize="13" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="100" Y="28" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="100" Y="2" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="232" Y="45" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="273" Y="42" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="231" Y="93" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="101" Y="102" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="172" Y="102" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="265" Y="28" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="2" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="16" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="294" Y="3" />
+    </CodeModule>
+    <CodeModule Index="14" Name="80*40二维码D2" Used="1" paperHeight="160" paperWidth="320" pictureName="recode84">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="99" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="103" Y="72" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="192" Y="72" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="192" Y="138" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="103" Y="138" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="242" Y="138" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="106" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="106" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="194" Y="38" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="256" Y="83" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="166" Y="92" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="244" Y="37" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="166" Y="51" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="170" Y="20" />
+    </CodeModule>
+    <CodeModule Index="15" Name="80*40二维码D2-LOGO" Used="0" paperHeight="160" paperWidth="320" pictureName="recode84">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="92" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="92" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="192" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="92" Y="20" />
+        <Parameter FontName="" FontSize="40" LeftStr="" Name="Logo" RightStr="" Used="1" Value="Logo" X="3" Y="0" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="92" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="92" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="11" Y="99" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="192" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="92" Y="145" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="92" Y="82" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="192" Y="145" />
+        <Parameter FontName="" FontSize="1.5" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="192" Y="82" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="251" Y="139" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="253" Y="52" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="264" Y="108" />
+        <Parameter FontName="宋体" FontSize="24" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="160" Y="99" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="264" Y="68" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="192" Y="37" />
+    </CodeModule>
+    <CodeModule Index="16" Name="80*40条型码(17个字符)D2" Used="0" paperHeight="160" paperWidth="320" pictureName="recode84">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="240" Y="30" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="12345678901234567" X="5" Y="123" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="154" Y="17" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="159" Y="35" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="12345678901234567" X="5" Y="90" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="155" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="139" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="67" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="111" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="71" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="88" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="96" Y="37" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="191" Y="60" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="145" />
+    </CodeModule>
+    <CodeModule Index="17" Name="80*50二维码D2" Used="0" paperHeight="200" paperWidth="320" pictureName="recode85">
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="136" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="90" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="89" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="95" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="95" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="213" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="213" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="4" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="37" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="230" Y="3" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="211" Y="52" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="213" Y="90" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="173" Y="122" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="133" Y="54" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="167" Y="87" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="74" />
+    </CodeModule>
+    <CodeModule Index="18" Name="80*50二维码D2-LOGO" Used="0" paperHeight="200" paperWidth="320" pictureName="recode85">
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="84" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="84" Y="71" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="213" Y="20" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="84" Y="54" />
+        <Parameter FontName="" FontSize="40" LeftStr="" Name="Logo" RightStr="" Used="1" Value="Logo" X="3" Y="0" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="84" Y="88" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="84" Y="3" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="13" Y="136" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="171" Y="54" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="95" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码" RightStr="" Used="1" Value="二维码" X="95" Y="108" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="213" Y="182" />
+        <Parameter FontName="" FontSize="1.8" LeftStr="" Name="二维码2" RightStr="" Used="1" Value="二维码2" X="213" Y="108" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="4" Y="84" />
+        <Parameter FontName="宋体" FontSize="20" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="248" Y="52" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="169" Y="155" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="173" Y="122" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="280" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="84" Y="37" />
+    </CodeModule>
+    <CodeModule Index="19" Name="80*50条型码(17个字符)D2" Used="0" paperHeight="200" paperWidth="320" pictureName="recode85">
+        <Parameter FontName="宋体" FontSize="18" LeftStr="&lt;" Name="柜号" RightStr="&gt;" Used="1" Value="100" X="64" Y="35" />
+        <Parameter FontName="宋体" FontSize="18" LeftStr="(" Name="加工顺序" RightStr=")" Used="1" Value="100-99" X="165" Y="177" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="钻标识" RightStr="" Used="1" Value="钻标识" X="3" Y="142" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码2" RightStr="" Used="1" Value="12345678901234567" X="5" Y="157" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="异型" RightStr="" Used="1" Value="异1926" X="155" Y="142" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="翻转" RightStr="" Used="1" Value="反" X="200" Y="90" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="槽标识" RightStr="" Used="1" Value="槽标识" X="66" Y="142" />
+        <Parameter FontName="" FontSize="1" LeftStr="" Name="一维码" RightStr="" Used="1" Value="12345678901234567" X="5" Y="120" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="条码编号" RightStr="" Used="1" Value="HG020151303-W001A-2009" X="3" Y="105" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="客户信息" RightStr="" Used="1" Value="五羊小区梁先生" X="3" Y="18" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="加盟店" RightStr="" Used="1" Value="乌鲁木齐中山路店" X="3" Y="88" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件材料" RightStr="" Used="1" Value="板件材料" X="3" Y="3" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="订单类型" RightStr="" Used="1" Value="主卧衣柜" X="3" Y="35" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件尺寸" RightStr="" Used="1" Value="2440*1220*25" X="3" Y="71" />
+        <Parameter FontName="宋体" FontSize="14" LeftStr="" Name="板件名称" RightStr="" Used="1" Value="推拉板挡板" X="3" Y="54" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="板件图片" RightStr="" Used="1" Value="板件图片" X="240" Y="30" />
+        <Parameter FontName="宋体" FontSize="28" LeftStr="" Name="助记号" RightStr="" Used="1" Value="D" X="240" Y="90" />
+        <Parameter FontName="宋体" FontSize="12" LeftStr="" Name="产品名称" RightStr="" Used="1" Value="功能半高柜（微波炉连消毒柜）" X="3" Y="182" />
+    </CodeModule>
+</PrintModule>

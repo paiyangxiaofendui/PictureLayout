@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.techtimesun.com" xmlns="http://www.techtimesun.com" elementFormDefault="unqualified">
+    <xs:element name="data">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="info_0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="CompanyLogoUrl" type="xs:string" minOccurs="0" />
+                            <xs:element name="CompanyName" type="xs:string" minOccurs="0" />
+                            <xs:element name="OrderCodeUrl" type="xs:string" minOccurs="0" />
+                            <xs:element name="OrderID" type="xs:string" minOccurs="0" />
+                            <xs:element name="ShiftEmployee" type="xs:string" minOccurs="0" />
+                            <xs:element name="ShiftDate" type="xs:string" minOccurs="0" />
+                            <xs:element name="UseEmployee" type="xs:string" minOccurs="0" />
+                            <xs:element name="UseDate" type="xs:string" minOccurs="0" />
+                            <xs:element name="ManageEmployee" type="xs:string" minOccurs="0" />
+                            <xs:element name="OrderStore" type="xs:string" minOccurs="0" />
+                            <xs:element name="AuditEmployee" type="xs:string" minOccurs="0" />
+                            <xs:element name="UseMachineName" type="xs:string" minOccurs="0" />
+                            <xs:element name="OrderMoreInfo" type="xs:string" minOccurs="0" />
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="info_1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="Index" type="xs:string" minOccurs="0" />
+                            <xs:element name="Thickness" type="xs:string" minOccurs="0" />
+                            <xs:element name="WidthHeight" type="xs:string" minOccurs="0" />
+                            <xs:element name="Code" type="xs:string" minOccurs="0" />
+                            <xs:element name="PanelMatrial" type="xs:string" minOccurs="0" />
+                            <xs:element name="PanelNum" type="xs:string" minOccurs="0" />
+                            <xs:element name="Units" type="xs:string" minOccurs="0" />
+                            <xs:element name="Brand" type="xs:string" minOccurs="0" />
+                            <xs:element name="Remark" type="xs:string" minOccurs="0" />
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="info_2" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="PanelMatrial" type="xs:string" minOccurs="0" />
+                            <xs:element name="Thickness" type="xs:string" minOccurs="0" />
+                            <xs:element name="SmallPanelNum" type="xs:string" minOccurs="0" />
+                            <xs:element name="TotalArea" type="xs:string" minOccurs="0" />
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
