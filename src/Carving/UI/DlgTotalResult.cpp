@@ -92,7 +92,7 @@ BOOL CDlgTotalResult::OnInitDialog()
 
 
 	m_lcTotalMaterial.InsertColumn(0, _T("用料材质"), 0, 135);
-	m_lcTotalMaterial.InsertColumn(1, _T("厚度(mm)"), 0, 70);
+	m_lcTotalMaterial.InsertColumn(1, _T("周长(米)"), 0, 70);
 	m_lcTotalMaterial.InsertColumn(2, _T("数量"), 0, 70);
 	m_lcTotalMaterial.InsertColumn(3, _T("面积(平方米)"), 0, 90);
 	m_lcTotalMaterial.InsertColumn(4, _T("利用率"), 0, 60);
@@ -403,7 +403,25 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 		CSolution* pSolution = CSingleon::GetSingleton()->m_BackupSolutionList[i];
 
 		m_lcTotalMaterial.InsertItem(nItem, pSolution->m_strMaterial);
-		m_lcTotalMaterial.SetItemText(nItem, 1, GetFloatString(pSolution->m_fThickness, 1));
+
+		// 计算总周长
+		vector<Component*> vAllComponent;
+		FindAllComponentInSingleton(vAllComponent);
+
+		float Circumference = 0;
+
+		for (vector<Component*>::iterator it = vAllComponent.begin(); it != vAllComponent.end(); it++)
+		{
+			Circumference += (*it)->m_RealLength * 2;
+			Circumference += (*it)->m_RealWidth * 2;
+		}
+
+
+
+		//m_lcTotalMaterial.SetItemText(nItem, 1, GetFloatString(pSolution->m_fThickness, 1));
+
+		m_lcTotalMaterial.SetItemText(nItem, 1, GetFloatString(Circumference/1000.0, 1));
+
 		m_lcTotalMaterial.SetItemText(nItem, 2, GetFloatString(pSolution->m_PanelList.size(), 0));
 
 		// 面积 = 大板面积x数量x平均利用率

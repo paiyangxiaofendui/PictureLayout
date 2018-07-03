@@ -354,7 +354,7 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 			// 优化
 			if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// 最低轮廓线
 			{
-				pSingleton->Layout(0, CutDir_Random, Org);
+				pSingleton->Layout(0, CutDir_Horizon, Org);
 			}
 			else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// 贪心
 			{
@@ -364,15 +364,15 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 				}
 				else if (i_first_op_times == 3)
 				{
-					pSingleton->Layout(1, CutDir_Vertical, Org);
+					pSingleton->Layout(1, CutDir_Horizon, Org);
 				}
 				else if (i_first_op_times == 4)
 				{
-					pSingleton->Layout(1, CutDir_Default, Org);
+					pSingleton->Layout(1, CutDir_Horizon, Org);
 				}
 				else
 				{
-					pSingleton->Layout(1, CutDir_Random, Org);
+					pSingleton->Layout(1, CutDir_Horizon, Org);
 				}
 			}
 			else
@@ -382,11 +382,11 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 
 				if (i_first_op_times > flag) // 随机
 				{
-					pSingleton->Layout(0, CutDir_Random, Org);
+					pSingleton->Layout(0, CutDir_Horizon, Org);
 				}
 				else
 				{
-					pSingleton->Layout(1, CutDir_Random, Org);
+					pSingleton->Layout(1, CutDir_Horizon, Org);
 				}
 			}
 

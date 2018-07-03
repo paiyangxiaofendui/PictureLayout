@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Algorithm_CSharp", "Algorit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpTest", "CSharpTest\CSharpTest.csproj", "{8AE4C26B-01CC-4464-84E4-0175090809A6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QRCode", "QRCode\QRCode.vcxproj", "{E21621EA-44E3-4D68-AF56-13942A5F3826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -167,6 +169,18 @@ Global
 		{8AE4C26B-01CC-4464-84E4-0175090809A6}.Release|Win32.ActiveCfg = Release|x86
 		{8AE4C26B-01CC-4464-84E4-0175090809A6}.Release|x86.ActiveCfg = Release|x86
 		{8AE4C26B-01CC-4464-84E4-0175090809A6}.Release|x86.Build.0 = Release|x86
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Debug|Win32.Build.0 = Debug|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Debug|x86.ActiveCfg = Debug|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Release|Any CPU.ActiveCfg = Release|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Release|Win32.ActiveCfg = Release|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Release|Win32.Build.0 = Release|Win32
+		{E21621EA-44E3-4D68-AF56-13942A5F3826}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
