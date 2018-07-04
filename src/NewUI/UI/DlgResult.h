@@ -1,9 +1,6 @@
 #pragma once
 
-
-
-
-
+#include "../resource.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "listboxclipboard.h"
 #include "./UICommon/DialogChildBase.h"
@@ -11,12 +8,12 @@
 
 // CDlgResult ¶Ô»°¿ò
 
-
-
-
 class CDlgTotalResult;
 class Component;
 class PanelViewingParam;
+
+#define WM_REFRESH_PANEL_VIEW               WM_USER+1
+
 
 enum RemainderCutingSettingState{CUTTING_SETTING_STATE_START, CUTTING_SETTING_STATE_END};
 
@@ -114,9 +111,19 @@ protected:
 	bool m_bNeedToEraseOldRemainderCutting;
 	int m_nRemainderCuttingSettingState;
 
-	CPngButton m_btnExportDxf;
-	CPngButton m_btnPrintCurDiagram;
-	CPngButton m_btnPrintCurLabel;
-	CPngButton m_btnPrintCurMaterialList1;
-	CPngButton m_btnPrintCurMaterialList2;
+// 	CPngButton m_btnExportDxf;
+// 	CPngButton m_btnPrintCurDiagram;
+// 	CPngButton m_btnPrintCurLabel;
+// 	CPngButton m_btnPrintCurMaterialList1;
+// 	CPngButton m_btnPrintCurMaterialList2;
+
+
+public:
+
+	void ClearAllData();
+	afx_msg void OnOpenSolution();
+
+
+	vector<ComponentInputItem> m_vComponentInputItem;
+
 };

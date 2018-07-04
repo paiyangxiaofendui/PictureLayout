@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\UI">
+      <UniqueIdentifier>{2c3463b5-a60e-44f9-b0f2-26214124e9f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\UI">
+      <UniqueIdentifier>{4ebbfd45-c2fc-4500-8f41-3e39d5225a50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\UI\UICommon">
+      <UniqueIdentifier>{0a30c91e-a753-4cff-81b4-961f09554168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\UI\UICommon">
+      <UniqueIdentifier>{ba5dd152-8269-4ca7-80c2-167d49bac044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Misc">
+      <UniqueIdentifier>{05e00c27-f65d-4434-ab8a-ec7b147a171a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Misc">
+      <UniqueIdentifier>{b4cdaedd-cc66-435b-8ef6-27f48a00ab6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Drawing">
+      <UniqueIdentifier>{11ff698b-1c82-4650-be52-ac85ff657dde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Drawing">
+      <UniqueIdentifier>{b8cb6f68-259b-41b5-a2c9-38f168f0aee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataProcess">
+      <UniqueIdentifier>{7e40d3f5-f425-44fb-8591-421a7dd3d4ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataProcess">
+      <UniqueIdentifier>{298fbe62-26db-47ec-892d-8cb7557b2a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\UIData">
+      <UniqueIdentifier>{91829c4a-a22b-49ba-8a5c-51fead6e6d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\UIData">
+      <UniqueIdentifier>{8270160c-7554-4ab9-bb32-615f8e32e4a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="NewUI.def">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="res\NewUI.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="NewUI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ExportAPI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\NewUIDlg.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgResult.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\DialogChildBase.cpp">
+      <Filter>源文件\UI\UICommon</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\PngButton.cpp">
+      <Filter>源文件\UI\UICommon</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\SkinListCtrlBase.cpp">
+      <Filter>源文件\UI\UICommon</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\UICommon\MemDC.cpp">
+      <Filter>源文件\UI\UICommon</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgTotalResult.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListBoxClipBoard.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListCtrlMaterial.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ListTotalResult.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\SkinHeaderCtrl.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\Misc.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\ProgramMisc.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\EncryptionInterface.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\YHInfoTools.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\HGTools.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawing\Drawing.cpp">
+      <Filter>源文件\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="DataProcess\DataProcess.cpp">
+      <Filter>源文件\DataProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\OtherShapeHelper.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="UIData\UIData.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\XmlHandlePlus.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="NewUI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportAPI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\NewUIDlg.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgResult.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\DialogChildBase.h">
+      <Filter>头文件\UI\UICommon</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\PngButton.h">
+      <Filter>头文件\UI\UICommon</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\SkinListCtrlBase.h">
+      <Filter>头文件\UI\UICommon</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\UICommon\MEMDC.H">
+      <Filter>头文件\UI\UICommon</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgTotalResult.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListBoxClipBoard.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListCtrlMaterial.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ListTotalResult.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\SkinHeaderCtrl.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Misc.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ProgramMisc.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\EncryptionInterface.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\YHInfoTools.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\HGTools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawing\Drawing.h">
+      <Filter>头文件\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="DataProcess\DataProcess.h">
+      <Filter>头文件\DataProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\OtherShapeHelper.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="UIData\UIData.h">
+      <Filter>头文件\UIData</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\XmlHandlePlus.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NewUI.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
