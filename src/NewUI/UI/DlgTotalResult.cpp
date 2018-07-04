@@ -4,6 +4,7 @@
 #include "stdafx.h"
 //#include "../Carving.h"
 #include "DlgTotalResult.h"
+#include "DlgResult.h"
 #include "afxdialogex.h"
 #include "../Misc/Misc.h"
 #include "../Misc/ProgramMisc.h"
@@ -516,7 +517,7 @@ BOOL CDlgTotalResult::PreTranslateMessage(MSG* pMsg)
 {
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_SPACE)  
 	{
-		::PostMessage(GetParent()->GetSafeHwnd(), WM_COMMAND, ID_MENU_ROTATE_PASTING_COMPONENT, 0);
+		//::PostMessage(GetParent()->GetSafeHwnd(), WM_COMMAND, ID_MENU_ROTATE_PASTING_COMPONENT, 0);
 		return TRUE;
 	}
 	return CDialogChildBase::PreTranslateMessage(pMsg);

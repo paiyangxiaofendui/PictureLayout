@@ -48,6 +48,10 @@ BOOL CDlgNewUI::OnInitDialog()
 	
 	m_pDlgResult->ShowWindow(SW_SHOW);
 	//m_pDlgResult->MoveWindow(/*0, 300, 500, 500*/GetViewRect());
+	CRect rt;
+	GetClientRect(rt);
+
+	m_pDlgResult->MoveWindow(rt);
 
 
 
@@ -82,6 +86,16 @@ CRect CDlgNewUI::GetViewRect()
 	rcRet.CopyRect(rcClient);
 	rcRet.InflateRect(0, -rcTab.Height(), 0, 0);
 	return rcRet;
+
+
+// 	CRect rcRet;
+// 	CRect rcClient, rcTab;
+// 	GetClientRect(rcClient);
+// 	m_Tab.GetWindowRect(rcTab);
+// 	ScreenToClient(rcTab);
+// 	rcRet.CopyRect(rcClient);
+// 	rcRet.InflateRect(0, -rcTab.Height(), 0, 0);
+// 	return rcRet;
 }
 
 
