@@ -58,6 +58,33 @@
     <None Include="res\NewUI.rc2">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="bitmap1.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\checkbox_check.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\bitmap1.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\bmp00001.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\RotateClockwise90.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\RotateAntiClockwise90.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\bitmap1.bmp">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\flag_no.png">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewUI.cpp">

@@ -19,8 +19,8 @@ CListTotalResult::CListTotalResult()
 	:m_pImgUncheck(NULL)
 	,m_pImgCheck(NULL)
 {
-// 	m_pImgUncheck = LoadPngImgFromRes(IDB_PNG_CHECKBOX_UNCHECK);
-// 	m_pImgCheck = LoadPngImgFromRes(IDB_PNG_CHECKBOX_CHECK);
+	m_pImgUncheck = LoadPngImgFromRes(IDB_PNG_CHECKBOX_UNCHECK);
+	m_pImgCheck = LoadPngImgFromRes(IDB_PNG_CHECKBOX_CHECK);
 }
 
 CListTotalResult::~CListTotalResult()

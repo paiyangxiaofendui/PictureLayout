@@ -100,6 +100,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\NewUI\res\checkbox_check.png" />
+    <None Include="..\NewUI\res\checkbox_uncheck.png" />
     <None Include="C:\Users\Administrator\Desktop\图标\tmp\tmp\exclamation.png" />
     <None Include="ReadMe.txt" />
     <None Include="res\bitmap2.bmp" />

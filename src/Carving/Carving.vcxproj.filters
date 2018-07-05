@@ -319,6 +319,12 @@
     <None Include="res\skin\教学视频.png">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="..\NewUI\res\checkbox_check.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\NewUI\res\checkbox_uncheck.png">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Carving.h">
@@ -603,6 +609,9 @@
     <ClInclude Include="Work\ProgramDef.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="UI\RemainderDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Carving.cpp">
@@ -855,6 +864,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="NCProcess\CNCDataConverter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\RemainderDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
