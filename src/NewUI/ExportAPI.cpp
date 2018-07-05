@@ -2,6 +2,7 @@
 #include "ExportAPI.h"
 
 #include "UI/NewUIDlg.h"
+#include "UI/DlgWeiXin.h"
 
 int Test(void)
 {
@@ -10,6 +11,10 @@ int Test(void)
  	CDlgNewUI dlg;
 
 	dlg.DoModal();
+
+// 	CDlgWeiXin dlg;
+// 
+// 	dlg.DoModal();
 
 
 	return 0;

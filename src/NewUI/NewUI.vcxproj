@@ -133,6 +133,7 @@
     <ClCompile Include="UI\DlgResult.cpp" />
     <ClCompile Include="UI\DlgSetMachiningOrder.cpp" />
     <ClCompile Include="UI\DlgTotalResult.cpp" />
+    <ClCompile Include="UI\DlgWeiXin.cpp" />
     <ClCompile Include="UI\ListBoxClipBoard.cpp" />
     <ClCompile Include="UI\ListCtrlMaterial.cpp" />
     <ClCompile Include="UI\ListTotalResult.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="UI\DlgResult.h" />
     <ClInclude Include="UI\DlgSetMachiningOrder.h" />
     <ClInclude Include="UI\DlgTotalResult.h" />
+    <ClInclude Include="UI\DlgWeiXin.h" />
     <ClInclude Include="UI\ListBoxClipBoard.h" />
     <ClInclude Include="UI\ListCtrlMaterial.h" />
     <ClInclude Include="UI\ListTotalResult.h" />

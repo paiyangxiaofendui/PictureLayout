@@ -2,63 +2,42 @@
 //
 
 #include "stdafx.h"
-#include "NewUIDlg.h"
-// #include "afxdialogex.h"
-// #include "../Misc/Misc.h"
+#include "DlgWeiXin.h"
+#include "afxdialogex.h"
+#include "../Misc/Misc.h"
 
 
 // CDlgWeiXin 对话框
 
-IMPLEMENT_DYNAMIC(CDlgNewUI, CDialog)
+IMPLEMENT_DYNAMIC(CDlgWeiXin, CDialog)
 
-CDlgNewUI::CDlgNewUI(CWnd* pParent /*=NULL*/)
-	: CDialog(CDlgNewUI::IDD, pParent)
-	,m_pDlgResult(NULL)
+CDlgWeiXin::CDlgWeiXin(CWnd* pParent /*=NULL*/)
+	: CDialog(CDlgWeiXin::IDD, pParent)
 {
+
 
 }
 
-CDlgNewUI::~CDlgNewUI()
+CDlgWeiXin::~CDlgWeiXin()
 {
-	if (m_pDlgResult != NULL)
-	{
-		delete m_pDlgResult;
-		m_pDlgResult = NULL;
-	}
-
 }
 
-void CDlgNewUI::DoDataExchange(CDataExchange* pDX)
+void CDlgWeiXin::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CDlgNewUI, CDialog)
+BEGIN_MESSAGE_MAP(CDlgWeiXin, CDialog)
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
-	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
-
-
 // CDlgWeiXin 消息处理程序
-BOOL CDlgNewUI::OnInitDialog()
+BOOL CDlgWeiXin::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-
- 	m_pDlgResult = new CDlgResult(this);
-	m_pDlgResult->Create(CDlgResult::IDD, this);
-
-
-
-	
-	m_pDlgResult->ShowWindow(SW_SHOW);
-	CRect rt;
-	GetClientRect(rt);
-
-	m_pDlgResult->MoveWindow(rt);
 
 
 
@@ -66,15 +45,7 @@ BOOL CDlgNewUI::OnInitDialog()
 	// 异常: OCX 属性页应返回 FALSE
 }
 
-
-
-
-
-
-
-
-
-void CDlgNewUI::OnPaint()
+void CDlgWeiXin::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
 	// TODO: 在此处添加消息处理程序代码
@@ -88,7 +59,7 @@ void CDlgNewUI::OnPaint()
 	bmpMem.CreateCompatibleBitmap(&dc, rcClient.Width(), rcClient.Height());
 	dcMem.SelectObject(&bmpMem);
 
-	
+
 	Graphics g(dcMem.m_hDC);
 	COLORREF colBK = RGB(224, 241, 252);//GetSysColor(CTLCOLOR_DLG);//GetBkColor(dc.m_hDC);
 
@@ -97,6 +68,8 @@ void CDlgNewUI::OnPaint()
 
 	
 
+
+
 	dc.BitBlt(0, 0, rcClient.Width(), rcClient.Height(), &dcMem, 0, 0, SRCCOPY);
 
 	bmpMem.DeleteObject();
@@ -104,24 +77,9 @@ void CDlgNewUI::OnPaint()
 }
 
 
-BOOL CDlgNewUI::OnEraseBkgnd(CDC* pDC)
+BOOL CDlgWeiXin::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	return TRUE;
 	//return CDialog::OnEraseBkgnd(pDC);
-}
-
-void CDlgNewUI::OnSize(UINT nType, int cx, int cy)
-{
-	CDialog::OnSize(nType, cx, cy);
-	// TODO: 在此处添加消息处理程序代码
-
-	CRect rt;
-	GetClientRect(rt);
-
-	if (m_pDlgResult && GetSafeHwnd() != 0)
-	{
-		m_pDlgResult->MoveWindow(rt);
-	}
-	
 }

@@ -22,15 +22,13 @@ public:
 
 	CDlgResult* m_pDlgResult;
 
-	CRect GetViewRect();
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 	virtual BOOL OnInitDialog();
-	afx_msg void OnPaint();
+ 	afx_msg void OnPaint();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
-	virtual void  OnClose();
 
 	DECLARE_MESSAGE_MAP()
 
