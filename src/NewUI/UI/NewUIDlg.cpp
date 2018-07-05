@@ -36,6 +36,15 @@ BEGIN_MESSAGE_MAP(CDlgNewUI, CDialog)
 END_MESSAGE_MAP()
 
 
+void  CDlgNewUI::OnClose()
+{
+	delete m_pDlgResult;
+	m_pDlgResult = NULL;
+
+	CDialog::OnClose();
+}
+
+
 // CDlgWeiXin 消息处理程序
 BOOL CDlgNewUI::OnInitDialog()
 {

@@ -35,6 +35,11 @@ namespace CSharpTest
 
 
 
+        [DllImport("NewUId.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
+        public static extern int Test();
+
+
+
         public Form1()
         {
             InitializeComponent();
@@ -44,8 +49,17 @@ namespace CSharpTest
         {
             //int rt;
 
-            Read();
+            //Read();
 
+            try
+            {
+                Test();
+
+             }
+            catch (IOException e1)
+            {
+                Console.WriteLine(e1.ToString());
+            }
 
             //string str = "hello world!";
 

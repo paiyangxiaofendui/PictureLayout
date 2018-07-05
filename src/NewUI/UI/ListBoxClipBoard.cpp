@@ -18,9 +18,9 @@ IMPLEMENT_DYNAMIC(CListBoxClipBoard, CListBox)
 
 CListBoxClipBoard::CListBoxClipBoard()
 {
-// 	m_pImgRotateClockwise90 = LoadPngImgFromRes(IDB_PNG_ROTATE_CLOCKWISE_90);
-// 	m_pImgRotateAntiClockwise90 = LoadPngImgFromRes(IDB_PNG_ROTATE_ANTICLOCKWISE_90);
-// 	m_pImgNO = LoadPngImgFromRes(IDB_PNG_FLAG_NO);
+	m_pImgRotateClockwise90 = LoadPngImgFromRes(IDB_PNG_ROTATE_CLOCKWISE_90);
+	m_pImgRotateAntiClockwise90 = LoadPngImgFromRes(IDB_PNG_ROTATE_ANTICLOCKWISE_90);
+	m_pImgNO = LoadPngImgFromRes(IDB_PNG_FLAG_NO);
 }
 
 CListBoxClipBoard::~CListBoxClipBoard()
