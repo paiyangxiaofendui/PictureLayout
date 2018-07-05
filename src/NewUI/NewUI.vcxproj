@@ -104,9 +104,12 @@
     <None Include="res\bitmap2.bmp" />
     <None Include="res\bmp00001.bmp" />
     <None Include="res\checkbox_check.png" />
+    <None Include="res\checkbox_uncheck.png" />
     <None Include="res\NewUI.rc2" />
     <None Include="res\skin\bitmap1.bmp" />
+    <None Include="res\skin\exclamation.png" />
     <None Include="res\skin\flag_no.png" />
+    <None Include="res\skin\flag_yes.png" />
     <None Include="res\skin\RotateAntiClockwise90.png" />
     <None Include="res\skin\RotateClockwise90.png" />
   </ItemGroup>
@@ -128,6 +131,7 @@
     </ClCompile>
     <ClCompile Include="UIData\UIData.cpp" />
     <ClCompile Include="UI\DlgResult.cpp" />
+    <ClCompile Include="UI\DlgSetMachiningOrder.cpp" />
     <ClCompile Include="UI\DlgTotalResult.cpp" />
     <ClCompile Include="UI\ListBoxClipBoard.cpp" />
     <ClCompile Include="UI\ListCtrlMaterial.cpp" />
@@ -156,6 +160,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UIData\UIData.h" />
     <ClInclude Include="UI\DlgResult.h" />
+    <ClInclude Include="UI\DlgSetMachiningOrder.h" />
     <ClInclude Include="UI\DlgTotalResult.h" />
     <ClInclude Include="UI\ListBoxClipBoard.h" />
     <ClInclude Include="UI\ListCtrlMaterial.h" />

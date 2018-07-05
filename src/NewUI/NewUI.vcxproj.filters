@@ -85,6 +85,15 @@
     <None Include="res\skin\flag_no.png">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="res\checkbox_uncheck.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\flag_yes.png">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\skin\exclamation.png">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NewUI.cpp">
@@ -158,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="Misc\XmlHandlePlus.cpp">
       <Filter>源文件\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgSetMachiningOrder.cpp">
+      <Filter>源文件\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="Misc\XmlHandlePlus.h">
       <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgSetMachiningOrder.h">
+      <Filter>头文件\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

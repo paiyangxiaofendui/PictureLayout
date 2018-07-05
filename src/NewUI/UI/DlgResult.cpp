@@ -8,6 +8,7 @@
 #include "DlgTotalResult.h"
 #include "../Misc/Misc.h"
 #include "../Misc/ProgramMisc.h"
+#include "DlgSetMachiningOrder.h"
 //#include "../MainFrm.h"
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
@@ -80,12 +81,12 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_WM_ERASEBKGND()
 	ON_MESSAGE(WM_REFRESH_PANEL_VIEW, &CDlgResult::OnRefreshPanelView)
 	ON_WM_LBUTTONDBLCLK()
-// 	ON_COMMAND(ID_MENU_RESET_MACHINING_ORDER, &CDlgResult::OnMenuResetMachiningOrder)
-// 	ON_COMMAND(ID_MENU_CUT_COMPONENT, &CDlgResult::OnMenuCutComponent)
-// 	ON_COMMAND(ID_MENU_COPY_COMPONENT, &CDlgResult::OnMenuCopyComponent)
-// 	ON_COMMAND(ID_MENU_PASTE_COMPONENT, &CDlgResult::OnMenuPasteComponent)
-// 	ON_COMMAND(ID_MENU_REMOVE_COMPONENT, &CDlgResult::OnMenuRemoveComponent)
-// 	ON_COMMAND(ID_MENU_REMAINDER_CUTTING, &CDlgResult::OnMenuRemainderCutting)
+	ON_COMMAND(ID_MENU_RESET_MACHINING_ORDER, &CDlgResult::OnMenuResetMachiningOrder)
+	ON_COMMAND(ID_MENU_CUT_COMPONENT, &CDlgResult::OnMenuCutComponent)
+	ON_COMMAND(ID_MENU_COPY_COMPONENT, &CDlgResult::OnMenuCopyComponent)
+	ON_COMMAND(ID_MENU_PASTE_COMPONENT, &CDlgResult::OnMenuPasteComponent)
+	ON_COMMAND(ID_MENU_REMOVE_COMPONENT, &CDlgResult::OnMenuRemoveComponent)
+	ON_COMMAND(ID_MENU_REMAINDER_CUTTING, &CDlgResult::OnMenuRemainderCutting)
 	ON_WM_RBUTTONUP()
 	//ON_WM_LBUTTONUP()
 	ON_WM_LBUTTONDOWN()
@@ -97,7 +98,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 // 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_CUR_MATERIAL_LIST2, &CDlgResult::OnBtnExportCurMaterialList2)
 	ON_LBN_SELCHANGE(IDC_LIST_CLIPBOARD, &CDlgResult::OnLbnSelchangeClipBoard)
 	ON_MESSAGE(WM_SHOW_OR_HIDE_CLIPBOARD, &CDlgResult::OnShowOrHideClipboard)
-//	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
+	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
 
  	ON_BN_CLICKED(IDC_BUTTON_READ_HGO, &CDlgResult::OnOpenSolution)
 END_MESSAGE_MAP()
@@ -930,7 +931,6 @@ void CDlgResult::OnLButtonDblClk(UINT nFlags, CPoint point)
 				rcPanelViewRect = GetPanelViewRect();
 				//InvalidateRect(rcPanelViewRect);
 				PostMessage(WM_REFRESH_PANEL_VIEW, (WPARAM)pParam/*0*/, 0);
-
 				break;
 			}
 		}
@@ -987,18 +987,18 @@ bool CDlgResult::IsPanelChecked(Panel* pPanel)
 
 void CDlgResult::OnMenuResetMachiningOrder()
 {
-// 	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
-// 	if(!pParam || !pParam->m_pPanel)
-// 		return;
-// 	Panel* pThePanel = pParam->m_pPanel;
-// 	CDlgSetMachiningOrder dlg;
-// 	dlg.SetPanel(pThePanel);
-// 	if(dlg.DoModal() == IDOK)
-// 	{
-// 		ResetMachiningOrderByMap(pThePanel, dlg.GetResettedOrderMap());
-// 		CalcKnifeDownPosInPanel(pThePanel);
-// 		PostMessage(WM_REFRESH_PANEL_VIEW, (WPARAM)pParam, 0);
-// 	}
+	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
+	if(!pParam || !pParam->m_pPanel)
+		return;
+	Panel* pThePanel = pParam->m_pPanel;
+	CDlgSetMachiningOrder dlg;
+	dlg.SetPanel(pThePanel);
+	if(dlg.DoModal() == IDOK)
+	{
+		ResetMachiningOrderByMap(pThePanel, dlg.GetResettedOrderMap());
+		CalcKnifeDownPosInPanel(pThePanel);
+		PostMessage(WM_REFRESH_PANEL_VIEW, (WPARAM)pParam, 0);
+	}
 
 }
 
@@ -1021,18 +1021,16 @@ void CDlgResult::OnRButtonUp(UINT nFlags, CPoint point)
 
 		if(GetPanelViewRect().PtInRect(point))
 		{
+			CMenu menu, *pPopup;  
+			menu.LoadMenu(IDR_MENU_RESULT_DLG);  
+			pPopup = menu.GetSubMenu(0);  
+			CPoint myPoint;  
+			//ClientToScreen(&myPoint);  
+			GetCursorPos(&myPoint); 
+			menu.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN|TPM_RIGHTBUTTON, myPoint.x, myPoint.y,this); 
 
-//			ÓÒ¼ü²Ëµ¥
-// 			CMenu menu, *pPopup;  
-// 			menu.LoadMenu(IDR_MENU_RESULT_DLG);  
-// 			pPopup = menu.GetSubMenu(0);  
-// 			CPoint myPoint;  
-// 			//ClientToScreen(&myPoint);  
-// 			GetCursorPos(&myPoint); 
-// 			menu.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN|TPM_RIGHTBUTTON, myPoint.x, myPoint.y,this); 
-// 
-// 			m_ptRClicked = myPoint;
-// 			ScreenToClient(&m_ptRClicked);
+			m_ptRClicked = myPoint;
+			ScreenToClient(&m_ptRClicked);
 		}
 	}
 
@@ -1291,19 +1289,15 @@ void CDlgResult::DrawComponentToPos(Component* pComponent, CPoint ptComponent, b
 	param.m_nGap = 0;
 	DrawComponent(&dcMem, pComponent, CRect(0, 0, rcComponent.Width(), rcComponent.Height()), param);
 
-
-//	¼ôÇÐ°å¼þÊ±¹´ºÍ¸ÐÌ¾ºÅ
-// 	Image* pImageFlag = NULL;
-// 	if(/*IsPosCanPasteComponent(pParam->m_pPanel, pComponent, ptComponent)*/bDrawOKIcon)
-// 		pImageFlag = LoadPngImgFromRes(IDB_PNG_FLAG_YES);
-// 	else
-// 		pImageFlag = LoadPngImgFromRes(/*IDB_PNG_FLAG_NO*/IDB_PNG_EXCLAMATION);
-// 	Graphics g(dcMem.m_hDC);
-// 	RectF rfImgCorrect(((float)rcComponent.Width() - pImageFlag->GetWidth())/2, ((float)rcComponent.Height()-pImageFlag->GetHeight())/2, pImageFlag->GetWidth(), pImageFlag->GetHeight());
-// 	g.DrawImage(pImageFlag, rfImgCorrect, 0, 0, pImageFlag->GetWidth(), pImageFlag->GetHeight(), UnitPixel);
-// 	delete pImageFlag;
-
-
+	Image* pImageFlag = NULL;
+	if(/*IsPosCanPasteComponent(pParam->m_pPanel, pComponent, ptComponent)*/bDrawOKIcon)
+		pImageFlag = LoadPngImgFromRes(IDB_PNG_FLAG_YES);
+	else
+		pImageFlag = LoadPngImgFromRes(/*IDB_PNG_FLAG_NO*/IDB_PNG_EXCLAMATION);
+	Graphics g(dcMem.m_hDC);
+	RectF rfImgCorrect(((float)rcComponent.Width() - pImageFlag->GetWidth())/2, ((float)rcComponent.Height()-pImageFlag->GetHeight())/2, pImageFlag->GetWidth(), pImageFlag->GetHeight());
+	g.DrawImage(pImageFlag, rfImgCorrect, 0, 0, pImageFlag->GetWidth(), pImageFlag->GetHeight(), UnitPixel);
+	delete pImageFlag;
 
 	//int nOldMode = pDC->SetROP2(R2_XORPEN);
 	pDC->BitBlt(ptComponent.x, ptComponent.y, rcComponent.Width(), rcComponent.Height(), &dcMem, 0, 0, SRCINVERT);
@@ -1859,7 +1853,7 @@ void CDlgResult::RotatePastingComponent()
 	{
 		CancelPasting();
 		m_lbClipBoard.ItemRotate90(m_lbClipBoard.GetCurSel());
-		//PostMessage(WM_COMMAND,ID_MENU_PASTE_COMPONENT);
+		PostMessage(WM_COMMAND,ID_MENU_PASTE_COMPONENT);
 	}
 
 }
