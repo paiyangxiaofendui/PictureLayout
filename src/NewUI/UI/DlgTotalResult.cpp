@@ -45,8 +45,8 @@ BEGIN_MESSAGE_MAP(CDlgTotalResult, CDialogChildBase)
 	ON_NOTIFY(NM_RCLICK, IDC_LIST_TOTAL_SOLUTION_PANEL, &CDlgTotalResult::OnRclickListTotalSolutionPanel)
 
 
-// 	ON_COMMAND(ID_MENU_DELETE_PANEL, &CDlgTotalResult::OnIdDeletePanel)
-// 	ON_COMMAND(ID_MENU_ADD_PANEL, &CDlgTotalResult::OnIdAddPanel)
+	ON_COMMAND(ID_MENU_DELETE_PANEL, &CDlgTotalResult::OnIdDeletePanel)
+	ON_COMMAND(ID_MENU_ADD_PANEL, &CDlgTotalResult::OnIdAddPanel)
 
 END_MESSAGE_MAP()
 
@@ -204,18 +204,18 @@ void CDlgTotalResult::OnLvnItemchangedListTotalSolutionPanel(NMHDR *pNMHDR, LRES
 void CDlgTotalResult::OnRclickListTotalSolutionPanel(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// ÅÐ¶ÏÊÇ·ñÑ¡ÖÐ
-// 	PanelViewingParam* pParam = GetSelectedItemViewingParam();
-// 	if(pParam == NULL)
-// 		return;
-// 
-// 
-// 	CMenu menu, *pPopup;  
-// 	menu.LoadMenu(IDR_MENU_TOTAL_RESULT);  
-// 	pPopup = menu.GetSubMenu(0);  
-// 	CPoint myPoint;  
-// 	//ClientToScreen(&myPoint);  
-// 	GetCursorPos(&myPoint); 
-// 	menu.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN|TPM_RIGHTBUTTON, myPoint.x, myPoint.y,this); 
+	PanelViewingParam* pParam = GetSelectedItemViewingParam();
+	if(pParam == NULL)
+		return;
+
+
+	CMenu menu, *pPopup;  
+	menu.LoadMenu(IDR_MENU_TOTAL_RESULT);  
+	pPopup = menu.GetSubMenu(0);  
+	CPoint myPoint;  
+	//ClientToScreen(&myPoint);  
+	GetCursorPos(&myPoint); 
+	menu.GetSubMenu(0)->TrackPopupMenu(TPM_LEFTALIGN|TPM_RIGHTBUTTON, myPoint.x, myPoint.y,this); 
 
 	//m_ptRClicked = myPoint;
 	//ScreenToClient(&m_ptRClicked);
@@ -330,6 +330,8 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 	m_lcTotalSolutionPanel.DeleteAllItems();
 
 	int nItem = 0;
+
+	CSingleon* pSingleton = CSingleon::GetSingleton();
 
 #if 0
 	for(int i = 0; i < CSingleon::GetSingleton()->m_CurrentSolutionList.size(); i++)
@@ -517,7 +519,7 @@ BOOL CDlgTotalResult::PreTranslateMessage(MSG* pMsg)
 {
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_SPACE)  
 	{
-		//::PostMessage(GetParent()->GetSafeHwnd(), WM_COMMAND, ID_MENU_ROTATE_PASTING_COMPONENT, 0);
+		::PostMessage(GetParent()->GetSafeHwnd(), WM_COMMAND, ID_MENU_ROTATE_PASTING_COMPONENT, 0);
 		return TRUE;
 	}
 	return CDialogChildBase::PreTranslateMessage(pMsg);
