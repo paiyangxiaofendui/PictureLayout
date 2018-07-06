@@ -149,17 +149,15 @@ public:
 	vector<ComponentInputItem> m_vComponentInputItem;
 
 	
-	float m_width;		/**< 原料长度 */
+	float m_width;				/**< 原料长度 */
+	float m_height;				/**< 原料宽度 */
 
-	
-	float m_height;		/**< 原料宽度 */
-
-	float m_x_space;
-	float m_y_space;
-	float m_left_offset;
-	float m_right_offset;
-	float m_top_offset;
-	float m_bottom_offset;
+	float m_x_space;			/**< 锯缝 X方向间隙		*/
+	float m_y_space;			/**< 锯缝 Y方向间隙		*/
+	float m_left_offset;		/**< 锯缝 左预留间隙	*/
+	float m_right_offset;		/**< 锯缝 右预留间隙	*/
+	float m_top_offset;			/**< 锯缝 上预留间隙	*/
+	float m_bottom_offset;		/**< 锯缝 下预留间隙	*/
 
 
 	CComboBox control_arranging_origin;

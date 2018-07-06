@@ -94,7 +94,7 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 
 
 	DDX_Control(pDX, IDC_COMBO_LAYOUT_ORIGIN, control_arranging_origin);
-	//DDX_CBIndex(pDX, IDC_COMBO_LAYOUT_ORIGIN, m_arranging_origin);
+	DDX_CBIndex(pDX, IDC_COMBO_LAYOUT_ORIGIN, m_arranging_origin);
 
 }
 
@@ -146,7 +146,7 @@ BOOL CDlgResult::OnInitDialog()
 	control_arranging_origin.InsertString(3,_T("срио╫г"));
 
 
-
+	control_arranging_origin.SetCurSel(1);
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control
