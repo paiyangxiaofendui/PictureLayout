@@ -120,6 +120,10 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 
 	ON_BN_CLICKED(IDC_BUTTON_READ_HGO, &CDlgResult::OnOpenSolution)
 	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnOpenSolution)
+	ON_BN_CLICKED(IDC_BUTTON_READ_PIC_INFO, &CDlgResult::OnOpenSourcePicInfo)
+
+
+	
 END_MESSAGE_MAP()
 
 
@@ -1430,7 +1434,14 @@ void CDlgResult::OnOpenSolution()
 
 
 
-
+/**  排样优化入口
+	@param[in]		
+	@param[out]		
+	@return			void
+	@warning		
+	@note			
+	@see            
+	*/
 void  CDlgResult::OnLayout()
 {
 	// 获取排样数据
@@ -1438,10 +1449,282 @@ void  CDlgResult::OnLayout()
 
 
 	CSingleon* pSingleton = CSingleon::GetSingleton();
+	BaseInfo& info = pSingleton->m_BaseInfo;
 
+	
+	info.m_PanelLength		=		m_width ;			
+	info.m_PanelWidth		=		m_height;			
+	info.m_x_space			=		m_x_space;			
+	info.m_y_space			=		m_y_space;			
+	info.m_left_offset		=		m_left_offset;		
+	info.m_right_offset		=		m_right_offset;	
+	info.m_top_offset		=		m_top_offset;		
+	info.m_bottom_offset	=		m_bottom_offset;	
+
+	info.m_LayoutOrg = m_arranging_origin;
+
+
+
+	// 拷贝需要优化的板件，不直接处理需要优化的板件，避免原始数据遭到破坏
+	vector<ComponentInputItem> vOptimizeComponent = m_vComponentInputItem;
+
+	// 检测板件超出
+	CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
+
+}
+
+
+
+/** 检查板件大小是否超出并删除超长板件
+ *	@param[in]		
+ *	@param[out]		
+ *	@return			void
+ *  @warning		
+ *	@note			
+ *	@see            
+ */
+void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem)
+{
+	CSingleon* pSingleton = CSingleon::GetSingleton();
+	BaseInfo base_info = pSingleton->m_BaseInfo;
+	vector<ComponentInputItem>::iterator it, it_begin, it_end;
+	CString strMsg;
+
+	for (it = vComponentInputItem.begin(); it != vComponentInputItem.end();)
+	{
+		ComponentInputItem& pCpn = *it;
+
+		bool bOverSize = false;
+		if (pCpn.m_strTexture == "无纹理")
+		{
+			if(pCpn.m_fLength > base_info.m_PanelLength - 2*base_info.m_DeburringWidth 
+				|| pCpn.m_fWidth > base_info.m_PanelWidth - 2*base_info.m_DeburringWidth
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 旋转后，再次判断
+				if (pCpn.m_fLength >  base_info.m_PanelWidth - 2*base_info.m_DeburringWidth 
+					|| pCpn.m_fWidth > base_info.m_PanelLength - 2*base_info.m_DeburringWidth
+					|| pCpn.m_fLength <= 0
+					|| pCpn.m_fWidth <= 0)
+				{
+					// 还是超出，删除
+					bOverSize = true;
+				}
+			}
+		}
+		else if(pCpn.m_strTexture == "横纹")
+		{
+			if (pCpn.m_fLength > base_info.m_PanelLength - 2*base_info.m_DeburringWidth 
+				|| pCpn.m_fWidth > base_info.m_PanelWidth - 2*base_info.m_DeburringWidth
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+		else
+		{
+			if(pCpn.m_fLength >  base_info.m_PanelWidth - 2*base_info.m_DeburringWidth 
+				|| pCpn.m_fWidth > base_info.m_PanelLength - 2*base_info.m_DeburringWidth
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+
+		if(bOverSize)
+		{
+			// 报错
+			strMsg += "删除超出范围板件，板件号：" + pCpn.m_strBarcode + "\n";
+
+			// 删除
+			it = vComponentInputItem.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+
+	// 有信息
+	if (strMsg.IsEmpty() != true)
+	{
+		AfxMessageBox(strMsg);
+	}
 
 
 }
 
 
+void CDlgResult::OnOptimize()
+{
+	// TODO: 在此添加命令处理程序代码
+	
+
+}
+
+
+
+
+
+
+
+
 #endif
+
+#define  INCH_TO_MM		(25.4)		// 英寸转毫米 
+
+/**  读取图片文件并排样
+	@param[in]		
+	@param[out]		
+	@return			void
+	@warning		
+	@note			
+	@see            
+	*/
+void CDlgResult::OnOpenSourcePicInfo()
+{
+
+	//CParamDlg* param_dlg;
+	//param_dlg = (((CMainFrame*)AfxGetMainWnd())->m_pDlgBaseParam);
+
+	//CSingleon* pSingleton = CSingleon::GetSingleton();
+
+	//CString filter = "xml 文件(*.xml)|*.xml|所有文件 (*.*)|*.*||";
+	//CFileDialog fileDlg (true, _T("xml"), _T("*.xml"), OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, filter, NULL);
+	//CString strDefDir = SelectPathDlg().DefaultLoadPath();
+	//fileDlg.m_ofn.lpstrInitialDir = strDefDir;
+	//fileDlg.m_ofn.lpstrTitle = _T("导入排样源数据(xml)");
+
+
+
+
+	//if ( fileDlg.DoModal() == IDOK)
+	//{
+
+	//	// 先清除上一次的数据
+	//	ClearAllData();
+	//	m_vComponentInputItem.clear();
+
+	//	m_strOpenedFile = fileDlg.GetPathName();
+
+	//	int Which = m_strOpenedFile.ReverseFind('.');  
+	//	CString strExtName = m_strOpenedFile.Right(m_strOpenedFile.GetLength() - Which - 1);  
+	//	strExtName.MakeLower();
+
+	//	if (strExtName == "xml")
+	//	{
+
+	//		SourceFilePreProccesParam param;
+	//		param.b_upvecImportEnable    = param_dlg->VecInput();//正面孔
+	//		param.b_downvecImportEnable		= param_dlg->DVecInput();//反面孔
+	//		param.b_upsoltImportEnable		= param_dlg->SoltInput();//正面槽
+	//		param.b_downsoltImportEnable = param_dlg->DSoltInput();//反面槽
+	//		param.b_othershapeImportEnable	= param_dlg->OthershapeInput();//异形过滤
+	//		param.i_comnum	= param_dlg->Editnum();//切割数量
+	//		param.i_comchange = param_dlg->Comchange();//翻转设置（不翻转=0，正面无信息翻转=1，打孔优先翻转=2，开槽优先翻转=3）
+	//		param.f_changex = param_dlg->MoveX();//孔槽偏移
+	//		param.f_changey = param_dlg->MoveY();//孔槽偏移	
+	//		param.vecAdder = param_dlg->GetVecAdder();//孔位偏差（找到指定孔直径的孔，其直径加一个值）		
+	//		param._cxy = param_dlg->GetVecFilter();//孔位过滤（找到指定孔直径的孔，并移除）
+	//		param.bReserveDeepHole = param_dlg->ReverseDeepHole();
+	//		param.bReserveDeepSlot = param_dlg->ReverseDeepSlot();
+
+
+	//		// 文档
+	//		TiXmlDocument* doc = new TiXmlDocument;
+	//		doc->LoadFile(m_strOpenedFile.GetBuffer());
+
+	//		// 根节点
+	//		TiXmlElement *pRootElement = doc->RootElement();
+	//		if (pRootElement == NULL)
+	//		{
+	//			AfxMessageBox("空文件");
+	//			//return false;
+	//		}
+
+	//		//循环读取图片信息
+	//		for (TiXmlElement* pPicSetElem = pRootElement->FirstChildElement("图片集"); pPicSetElem != NULL; pPicSetElem = (TiXmlElement*)(pPicSetElem->NextSibling()))
+	//		{
+	//			for (TiXmlElement* pCurPic = pPicSetElem->FirstChildElement("图片"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling()))
+	//			{
+	//				string pic_path = pCurPic->Attribute("路径");
+	//				int	num = stoi(pCurPic->Attribute("数量"));
+
+	//				// 计算图片长宽
+
+	//				const wchar_t* pwc = HGCode::char_Gb2312_To_Unicode(pic_path.c_str());
+	//				Image tmp_img(pwc);
+
+
+	//				UINT w	= tmp_img.GetWidth();
+	//				UINT h	= tmp_img.GetHeight();
+	//				UINT hr = tmp_img.GetHorizontalResolution();		// dpi 每英寸多少个像素点
+	//				UINT vr = tmp_img.GetVerticalResolution();			// dpi
+
+	//				float w_inch = (1.0*w)/hr;
+	//				float h_inch = (1.0*h)/vr;
+
+	//				float w_mm = w_inch*INCH_TO_MM;
+	//				float h_mm = h_inch*INCH_TO_MM;
+
+
+	//				// 形成一条数据
+	//				ComponentInputItem componentInputItem;
+
+	//				componentInputItem.m_strBarcode = pic_path.c_str();
+	//				componentInputItem.m_fLength	= w_mm;
+	//				componentInputItem.m_fWidth		= h_mm;
+	//				componentInputItem.m_nCount		= num;
+	//				componentInputItem.m_strTexture = "横纹";
+
+	//				m_vComponentInputItem.push_back(componentInputItem);
+
+	//			}
+	//		}
+
+
+
+
+
+	//		// 计算小板
+	//		int nCpnNum = 0;
+	//		for(vector<ComponentInputItem>::iterator it = m_vComponentInputItem.begin(); it != m_vComponentInputItem.end(); )
+	//		{
+	//			ComponentInputItem& item = *it;
+	//			if (item.m_nCount > 0)
+	//			{
+	//				nCpnNum += item.m_nCount;
+	//				it++;
+	//			}
+	//			else
+	//			{
+	//				it = m_vComponentInputItem.erase(it);
+	//			}
+	//		}
+
+	//		CString str;
+	//		str.Format("%d", nCpnNum);
+	//		str += "块小板";
+	//		AfxMessageBox(str);
+
+
+	//	}
+
+
+	//}
+
+
+
+	//// 备份输入板件组
+	//pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+
+
+
+
+	//ResetResultDlg();
+}

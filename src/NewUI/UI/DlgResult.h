@@ -144,6 +144,11 @@ public:
 	void ClearAllData();
 	afx_msg void OnOpenSolution();
 	afx_msg void OnLayout();
+	afx_msg void OnOpenSourcePicInfo();
+
+	void OnOptimize();
+
+	void CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem);
 
 
 	vector<ComponentInputItem> m_vComponentInputItem;
