@@ -47,6 +47,16 @@ IMPLEMENT_DYNAMIC(CDlgResult, CDialogChildBase)
 	, m_bNeedToEraseOldRemainderCutting(false)
 {
 
+	m_width				= 1.0;	
+	m_height			= 1.0;	
+	m_x_space			= 1.0;
+	m_y_space			= 1.0;
+	m_left_offset		= 1.0;
+	m_right_offset		= 1.0;
+	m_top_offset		= 1.0;
+	m_bottom_offset		= 1.0;
+
+	m_arranging_origin = 1;
 }
 
 CDlgResult::~CDlgResult()
@@ -69,6 +79,23 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_CLIPBOARD, m_lbClipBoard);
+
+	DDX_Text(pDX, IDC_EDIT_NEW_LEN, m_width);
+	DDX_Text(pDX, IDC_EDIT_NEW_WIDTH, m_height);
+
+	DDX_Text(pDX, IDC_EDIT_NEW_X_SPACE, m_x_space);				 
+	DDX_Text(pDX, IDC_EDIT_NEW_Y_SPACE, m_y_space);				 
+																 
+	DDX_Text(pDX, IDC_EDIT_NEW_LEFT_OFFSET, m_left_offset);			 
+	DDX_Text(pDX, IDC_EDIT_NEW_RIGHT_OFFSET, m_right_offset);			 
+																 
+	DDX_Text(pDX, IDC_EDIT_NEW_TOP_OFFSET, m_top_offset);
+	DDX_Text(pDX, IDC_EDIT_NEW_BOTTOM_OFFSET, m_bottom_offset);
+
+
+	DDX_Control(pDX, IDC_COMBO_LAYOUT_ORIGIN, control_arranging_origin);
+	//DDX_CBIndex(pDX, IDC_COMBO_LAYOUT_ORIGIN, m_arranging_origin);
+
 }
 
 
@@ -92,6 +119,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
 
 	ON_BN_CLICKED(IDC_BUTTON_READ_HGO, &CDlgResult::OnOpenSolution)
+	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnOpenSolution)
 END_MESSAGE_MAP()
 
 
@@ -109,6 +137,15 @@ BOOL CDlgResult::OnInitDialog()
 	m_pDlgTotalResult->ShowWindow(SW_SHOW);
 
 	m_lbClipBoard.ShowWindow(SW_HIDE);
+
+	// 初始化
+	control_arranging_origin.Clear();
+	control_arranging_origin.InsertString(0,_T("左下角"));
+	control_arranging_origin.InsertString(1,_T("左上角"));
+	control_arranging_origin.InsertString(2,_T("右下角"));
+	control_arranging_origin.InsertString(3,_T("右上角"));
+
+
 
 
 
@@ -1390,5 +1427,21 @@ void CDlgResult::OnOpenSolution()
 		pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
 	}
 }
+
+
+
+
+void  CDlgResult::OnLayout()
+{
+	// 获取排样数据
+	UpdateData(TRUE);
+
+
+	CSingleon* pSingleton = CSingleon::GetSingleton();
+
+
+
+}
+
 
 #endif

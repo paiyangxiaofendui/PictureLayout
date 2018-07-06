@@ -1,3 +1,13 @@
+/** @brief 这里写你的摘要
+ *  @file 你的文件名
+ *  @author 谁tmd的搞的
+ *  @version 版本了
+ *  @date  你啥时候搞的
+ *  @note       注解. 例如: 本文件有什么具体功能啊,使用时要注意什么啊…..
+ *  @since    自从  例如: 自从2012年地球爆炸后这个文件就从地球上消失了…..
+ */
+
+
 #pragma once
 
 #include "../resource.h"
@@ -14,9 +24,20 @@ class PanelViewingParam;
 
 #define WM_REFRESH_PANEL_VIEW               WM_USER+1
 
+ /** 
+    * @brief 简要说明文字 
+    */
+enum RemainderCutingSettingState
+{
+	CUTTING_SETTING_STATE_START,		/**< 原料宽度 */
+	CUTTING_SETTING_STATE_END			/**< 原料宽度 */
+};
 
-enum RemainderCutingSettingState{CUTTING_SETTING_STATE_START, CUTTING_SETTING_STATE_END};
 
+  /**
+    * @brief 类的简单概述 \n(换行)
+    * 类的详细概述
+    */
 class CDlgResult : public CDialogChildBase
 {
 	DECLARE_DYNAMIC(CDlgResult)
@@ -111,10 +132,39 @@ protected:
 
 public:
 
+	/**  这里写这个函数是干什么用的
+	@param[in]		输入参数1
+	@param[in]		输入参数2
+	@param[out]		输出参数1
+	@return			返回值解释一下
+	@warning		警告: 例如: 参数不能为空啊,内存要外部释放之类的费话
+	@note			注解  随便你了
+	@see            相当于是请参考xxoo函数之类的
+	*/
 	void ClearAllData();
 	afx_msg void OnOpenSolution();
+	afx_msg void OnLayout();
 
 
 	vector<ComponentInputItem> m_vComponentInputItem;
+
+	
+	float m_width;		/**< 原料长度 */
+
+	
+	float m_height;		/**< 原料宽度 */
+
+	float m_x_space;
+	float m_y_space;
+	float m_left_offset;
+	float m_right_offset;
+	float m_top_offset;
+	float m_bottom_offset;
+
+
+	CComboBox control_arranging_origin;
+	int m_arranging_origin;
+
+
 
 };
