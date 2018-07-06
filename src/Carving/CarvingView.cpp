@@ -1033,7 +1033,7 @@ void CCarvingView::OnInitialUpdate()
 
 
 
-#if 1
+#if 0
 
 	if (ClientInfoReadWrite::IsClientInfoFileExist() == FALSE)
 	{
