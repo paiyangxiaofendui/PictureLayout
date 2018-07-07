@@ -15,6 +15,7 @@
 #include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
 #include "../../../include/FileReadWrite/DxfReadWrite/DxfReadWrite.h"
 #include "../../../include/FileReadWrite/HgyReadWrite/HgyReadWrite.h"
+#include "../../../include/FileReadWrite/Misc/HGCode.h"
 
 
 
@@ -1408,22 +1409,6 @@ void CDlgResult::OnOpenSolution()
 			}
 		}
 
-
-		// 自动计算优化参数
-// 		COPSetDlg dlgOptimizeSetting;
-// 
-// 		dlgOptimizeSetting.AutoSetOpSettings(nCpnNum);
-
-
-		// 切换视图
-//		SwitchView(VIEW_RESULT);
-
-// 		if (m_pDlgResult != NULL)
-// 			m_pDlgResult->ResetResultDlg();
-// 
-// 		if (m_pDlgRequirement != NULL)
-// 			m_pDlgRequirement->SetRequirement(m_vComponentInputItem);
-
 		// 重置窗口
 		ResetResultDlg();
 
@@ -1589,142 +1574,131 @@ void CDlgResult::OnOptimize()
 void CDlgResult::OnOpenSourcePicInfo()
 {
 
-	//CParamDlg* param_dlg;
-	//param_dlg = (((CMainFrame*)AfxGetMainWnd())->m_pDlgBaseParam);
 
-	//CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleon* pSingleton = CSingleon::GetSingleton();
 
-	//CString filter = "xml 文件(*.xml)|*.xml|所有文件 (*.*)|*.*||";
-	//CFileDialog fileDlg (true, _T("xml"), _T("*.xml"), OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, filter, NULL);
-	//CString strDefDir = SelectPathDlg().DefaultLoadPath();
-	//fileDlg.m_ofn.lpstrInitialDir = strDefDir;
-	//fileDlg.m_ofn.lpstrTitle = _T("导入排样源数据(xml)");
+	CString filter = "xml 文件(*.xml)|*.xml|所有文件 (*.*)|*.*||";
+	CFileDialog fileDlg (true, _T("xml"), _T("*.xml"), OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, filter, NULL);
+	
 
 
 
 
-	//if ( fileDlg.DoModal() == IDOK)
-	//{
+	if ( fileDlg.DoModal() == IDOK)
+	{
 
-	//	// 先清除上一次的数据
-	//	ClearAllData();
-	//	m_vComponentInputItem.clear();
+		// 先清除上一次的数据
+		ClearAllData();
+		m_vComponentInputItem.clear();
 
-	//	m_strOpenedFile = fileDlg.GetPathName();
+		CString  m_strOpenedFile = fileDlg.GetPathName();
 
-	//	int Which = m_strOpenedFile.ReverseFind('.');  
-	//	CString strExtName = m_strOpenedFile.Right(m_strOpenedFile.GetLength() - Which - 1);  
-	//	strExtName.MakeLower();
+		int Which = m_strOpenedFile.ReverseFind('.');  
+		CString strExtName = m_strOpenedFile.Right(m_strOpenedFile.GetLength() - Which - 1);  
+		strExtName.MakeLower();
 
-	//	if (strExtName == "xml")
-	//	{
+		if (strExtName == "xml")
+		{
 
-	//		SourceFilePreProccesParam param;
-	//		param.b_upvecImportEnable    = param_dlg->VecInput();//正面孔
-	//		param.b_downvecImportEnable		= param_dlg->DVecInput();//反面孔
-	//		param.b_upsoltImportEnable		= param_dlg->SoltInput();//正面槽
-	//		param.b_downsoltImportEnable = param_dlg->DSoltInput();//反面槽
-	//		param.b_othershapeImportEnable	= param_dlg->OthershapeInput();//异形过滤
-	//		param.i_comnum	= param_dlg->Editnum();//切割数量
-	//		param.i_comchange = param_dlg->Comchange();//翻转设置（不翻转=0，正面无信息翻转=1，打孔优先翻转=2，开槽优先翻转=3）
-	//		param.f_changex = param_dlg->MoveX();//孔槽偏移
-	//		param.f_changey = param_dlg->MoveY();//孔槽偏移	
-	//		param.vecAdder = param_dlg->GetVecAdder();//孔位偏差（找到指定孔直径的孔，其直径加一个值）		
-	//		param._cxy = param_dlg->GetVecFilter();//孔位过滤（找到指定孔直径的孔，并移除）
-	//		param.bReserveDeepHole = param_dlg->ReverseDeepHole();
-	//		param.bReserveDeepSlot = param_dlg->ReverseDeepSlot();
+			
 
 
-	//		// 文档
-	//		TiXmlDocument* doc = new TiXmlDocument;
-	//		doc->LoadFile(m_strOpenedFile.GetBuffer());
+			// 文档
+			TiXmlDocument* doc = new TiXmlDocument;
+			doc->LoadFile(m_strOpenedFile.GetBuffer());
 
-	//		// 根节点
-	//		TiXmlElement *pRootElement = doc->RootElement();
-	//		if (pRootElement == NULL)
-	//		{
-	//			AfxMessageBox("空文件");
-	//			//return false;
-	//		}
+			// 根节点
+			TiXmlElement *pRootElement = doc->RootElement();
+			if (pRootElement == NULL)
+			{
+				AfxMessageBox("空文件");
+				return ;
+			}
 
-	//		//循环读取图片信息
-	//		for (TiXmlElement* pPicSetElem = pRootElement->FirstChildElement("图片集"); pPicSetElem != NULL; pPicSetElem = (TiXmlElement*)(pPicSetElem->NextSibling()))
-	//		{
-	//			for (TiXmlElement* pCurPic = pPicSetElem->FirstChildElement("图片"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling()))
-	//			{
-	//				string pic_path = pCurPic->Attribute("路径");
-	//				int	num = stoi(pCurPic->Attribute("数量"));
+			//循环读取图片信息
+			for (TiXmlElement* pRMSetElem = pRootElement->FirstChildElement("PictureSet"); pRMSetElem != NULL; pRMSetElem = (TiXmlElement*)(pRMSetElem->NextSibling()))
+			{
+				for (TiXmlElement* pCurPic = pRMSetElem->FirstChildElement("Picture"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling()))
+				{
+					string pic_path		= pCurPic->Attribute("path");
+					int	num				= stoi(pCurPic->Attribute("Number"));
+					float w_mm			= stof(pCurPic->Attribute("Length"));
+					float h_mm			= stof(pCurPic->Attribute("Width"));
 
-	//				// 计算图片长宽
+					// 计算图片长宽
 
-	//				const wchar_t* pwc = HGCode::char_Gb2312_To_Unicode(pic_path.c_str());
-	//				Image tmp_img(pwc);
-
-
-	//				UINT w	= tmp_img.GetWidth();
-	//				UINT h	= tmp_img.GetHeight();
-	//				UINT hr = tmp_img.GetHorizontalResolution();		// dpi 每英寸多少个像素点
-	//				UINT vr = tmp_img.GetVerticalResolution();			// dpi
-
-	//				float w_inch = (1.0*w)/hr;
-	//				float h_inch = (1.0*h)/vr;
-
-	//				float w_mm = w_inch*INCH_TO_MM;
-	//				float h_mm = h_inch*INCH_TO_MM;
-
-
-	//				// 形成一条数据
-	//				ComponentInputItem componentInputItem;
-
-	//				componentInputItem.m_strBarcode = pic_path.c_str();
-	//				componentInputItem.m_fLength	= w_mm;
-	//				componentInputItem.m_fWidth		= h_mm;
-	//				componentInputItem.m_nCount		= num;
-	//				componentInputItem.m_strTexture = "横纹";
-
-	//				m_vComponentInputItem.push_back(componentInputItem);
-
-	//			}
-	//		}
+// 					const wchar_t* pwc = HGCode::char_Gb2312_To_Unicode(pic_path.c_str());
+// 					Image tmp_img(pwc);
+// 
+// 
+// 					UINT w	= tmp_img.GetWidth();
+// 					UINT h	= tmp_img.GetHeight();
+// 					UINT hr = tmp_img.GetHorizontalResolution();		// dpi 每英寸多少个像素点
+// 					UINT vr = tmp_img.GetVerticalResolution();			// dpi
+// 
+// 					float w_inch = (1.0*w)/hr;
+// 					float h_inch = (1.0*h)/vr;
+// 
+// 					float w_mm = w_inch*INCH_TO_MM;
+// 					float h_mm = h_inch*INCH_TO_MM;
 
 
+					// 形成一条数据
+					ComponentInputItem componentInputItem;
 
+					componentInputItem.m_strBarcode = pic_path.c_str();
+					componentInputItem.m_fLength	= w_mm;
+					componentInputItem.m_fWidth		= h_mm;
+					componentInputItem.m_nCount		= num;
+					componentInputItem.m_strTexture = "横纹";
 
+					m_vComponentInputItem.push_back(componentInputItem);
 
-	//		// 计算小板
-	//		int nCpnNum = 0;
-	//		for(vector<ComponentInputItem>::iterator it = m_vComponentInputItem.begin(); it != m_vComponentInputItem.end(); )
-	//		{
-	//			ComponentInputItem& item = *it;
-	//			if (item.m_nCount > 0)
-	//			{
-	//				nCpnNum += item.m_nCount;
-	//				it++;
-	//			}
-	//			else
-	//			{
-	//				it = m_vComponentInputItem.erase(it);
-	//			}
-	//		}
+				}
+			}
 
-	//		CString str;
-	//		str.Format("%d", nCpnNum);
-	//		str += "块小板";
-	//		AfxMessageBox(str);
+			// 读取原料信息
+			for (TiXmlElement* pRMSetElem = pRootElement->FirstChildElement("RawMaterialSet"); pRMSetElem != NULL; pRMSetElem = (TiXmlElement*)(pRMSetElem->NextSibling()))
+			{
+				for (TiXmlElement* pCurRM = pRMSetElem->FirstChildElement("RawMaterial"); pCurRM != NULL; pCurRM = (TiXmlElement*)(pCurRM->NextSibling()))
+				{
+					string name = pCurPic->Attribute("Name");
+					float len	=  stof(pCurPic->Attribute("Length"));
+					float width	=  stof(pCurPic->Attribute("Width"));
 
+				}
+			}
 
-	//	}
-
-
-	//}
-
-
-
-	//// 备份输入板件组
-	//pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+			// 读取排样规则
 
 
 
 
-	//ResetResultDlg();
+			// 计算小板
+			int nCpnNum = 0;
+			for(vector<ComponentInputItem>::iterator it = m_vComponentInputItem.begin(); it != m_vComponentInputItem.end(); )
+			{
+				ComponentInputItem& item = *it;
+				if (item.m_nCount > 0)
+				{
+					nCpnNum += item.m_nCount;
+					it++;
+				}
+				else
+				{
+					it = m_vComponentInputItem.erase(it);
+				}
+			}
+
+			CString str;
+			str.Format("%d", nCpnNum);
+			str += "块小板";
+			AfxMessageBox(str);
+		}
+	}
+
+	// 备份输入板件组
+	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+
+	ResetResultDlg();
 }
