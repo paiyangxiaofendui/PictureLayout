@@ -1662,9 +1662,9 @@ void CDlgResult::OnOpenSourcePicInfo()
 			{
 				for (TiXmlElement* pCurRM = pRMSetElem->FirstChildElement("RawMaterial"); pCurRM != NULL; pCurRM = (TiXmlElement*)(pCurRM->NextSibling()))
 				{
-					string name = pCurPic->Attribute("Name");
-					float len	=  stof(pCurPic->Attribute("Length"));
-					float width	=  stof(pCurPic->Attribute("Width"));
+					string name = pCurRM->Attribute("Name");
+					float len	=  stof(pCurRM->Attribute("Length"));
+					float width	=  stof(pCurRM->Attribute("Width"));
 
 				}
 			}
