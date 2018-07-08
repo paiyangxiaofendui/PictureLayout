@@ -28,7 +28,6 @@ public:
 	float m_right_offset;						/**< ¾â·ì ÓÒÔ¤Áô¼äÏ¶	*/
 	float m_top_offset;							/**< ¾â·ì ÉÏÔ¤Áô¼äÏ¶	*/
 	float m_bottom_offset;						/**< ¾â·ì ÏÂÔ¤Áô¼äÏ¶	*/
-	string m_material;
 
 
 

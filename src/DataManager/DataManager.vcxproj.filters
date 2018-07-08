@@ -91,6 +91,12 @@
     <Filter Include="源文件\BaseDataType\RemainderManager">
       <UniqueIdentifier>{adcb3533-72ec-4121-a7a0-e9c86db7f9ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\BaseDataType\RawMaterialInfo">
+      <UniqueIdentifier>{22871014-69be-4bcf-afa3-d47a4676735e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\BaseDataType\RawMaterialInfo">
+      <UniqueIdentifier>{9175afba-3cc6-4674-a281-80403e768b35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -150,6 +156,9 @@
     <ClCompile Include="BaseDataType\RemainderManager\RemainderManager.cpp">
       <Filter>源文件\BaseDataType\RemainderManager</Filter>
     </ClCompile>
+    <ClCompile Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.cpp">
+      <Filter>源文件\BaseDataType\RawMaterialInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -199,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="BaseDataType\RemainderManager\RemainderManager.h">
       <Filter>头文件\BaseDataType\RemainderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.h">
+      <Filter>头文件\BaseDataType\RawMaterialInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

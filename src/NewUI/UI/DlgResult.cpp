@@ -1437,16 +1437,16 @@ void  CDlgResult::OnLayout()
 	BaseInfo& info = pSingleton->m_BaseInfo;
 
 	
-	info.m_PanelLength		=		m_width ;			
-	info.m_PanelWidth		=		m_height;			
-	info.m_x_space			=		m_x_space;			
-	info.m_y_space			=		m_y_space;			
-	info.m_left_offset		=		m_left_offset;		
-	info.m_right_offset		=		m_right_offset;	
-	info.m_top_offset		=		m_top_offset;		
-	info.m_bottom_offset	=		m_bottom_offset;	
-
-	info.m_LayoutOrg = m_arranging_origin;
+// 	info.m_PanelLength		=		m_width ;			
+// 	info.m_PanelWidth		=		m_height;			
+// 	info.m_x_space			=		m_x_space;			
+// 	info.m_y_space			=		m_y_space;			
+// 	info.m_left_offset		=		m_left_offset;		
+// 	info.m_right_offset		=		m_right_offset;	
+// 	info.m_top_offset		=		m_top_offset;		
+// 	info.m_bottom_offset	=		m_bottom_offset;	
+// 
+// 	info.m_LayoutOrg = m_arranging_origin;
 
 
 
