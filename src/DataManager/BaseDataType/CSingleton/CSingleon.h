@@ -12,6 +12,7 @@
 
 #include <vector>
 #include "../RawMaterialInfo/RawMaterialInfo.h"
+#include "../PrincipleInfo/PrincipleInfo.h"
 #include "../BaseInfo/BaseInfo.h"
 #include "../CommonData/CommonData.h"
 #include "../RemainderManager/RemainderManager.h"
@@ -96,6 +97,8 @@ public:
 	vector<vector<Component*>> m_vComponentGroup;								/**< 小板组	*/ 
 	BaseInfo m_BaseInfo;														/**< 基本信息	*/ 
 	vector<RawMaterialInfo> m_vRawMaterialList;									/**< 原料信息链表	*/ 
+	vector<PrincipleInfo> m_vPrincipleList;									/**< 原料信息链表	*/ 
+	
 	KnifeClass* m_pKnifeClass;													/**< 导出NC所用的类  原有雕刻机软件	*/ 
 	vector<ComponentInputItem> m_vBackupComponentInputItem;						/**< 输入小板备份	*/ 
 	RemainderManager m_RemainderManager;										/**< 余料管理器	*/ 

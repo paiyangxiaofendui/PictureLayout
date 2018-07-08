@@ -1621,6 +1621,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 				for (TiXmlElement* pCurPic = pRMSetElem->FirstChildElement("Picture"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling()))
 				{
 					string pic_path		= pCurPic->Attribute("path");
+					string texture		= pCurPic->Attribute("Texture");
 					int	num				= stoi(pCurPic->Attribute("Number"));
 					float w_mm			= stof(pCurPic->Attribute("Length"));
 					float h_mm			= stof(pCurPic->Attribute("Width"));
@@ -1670,6 +1671,21 @@ void CDlgResult::OnOpenSourcePicInfo()
 			}
 
 			// 读取排样规则
+			for (TiXmlElement* pPrincipleSetElem = pRootElement->FirstChildElement("PrincipleSet"); pPrincipleSetElem != NULL; pPrincipleSetElem = (TiXmlElement*)(pPrincipleSetElem->NextSibling()))
+			{
+				for (TiXmlElement* pCurPrinciple = pPrincipleSetElem->FirstChildElement("Principle"); pCurPrinciple != NULL; pCurPrinciple = (TiXmlElement*)(pCurPrinciple->NextSibling()))
+				{
+					int Method		=  stoi(pCurPrinciple->Attribute("Method"));
+					int Origin		=  stoi(pCurPrinciple->Attribute("Origin"));
+					float XSpace	=  stof(pCurPrinciple->Attribute("XSpace"));
+					float YSpace	=  stof(pCurPrinciple->Attribute("YSpace"));
+					float LeftOffset	=  stof(pCurPrinciple->Attribute("LeftOffset"));
+					float RightOffset	=  stof(pCurPrinciple->Attribute("RightOffset"));
+					float TopOffset	=  stof(pCurPrinciple->Attribute("TopOffset"));
+					float BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
+
+				}
+			}
 
 
 
