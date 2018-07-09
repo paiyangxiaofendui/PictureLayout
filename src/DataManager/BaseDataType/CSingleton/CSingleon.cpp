@@ -116,6 +116,58 @@ int CSingleon::Layout(int Method, int CutStyle, int Org)
 	return 0;
 }
 
+/**< 新排样优化	*/ 
+int CSingleon::New_Layout(int Method, int CutStyle, int Org)				
+{
+	int nGroupSize = m_vComponentGroup.size();
+
+	for(int i = 0; i < nGroupSize; i++)
+	{
+		ComponentList& theComponentList = m_vComponentGroup[i];
+		if(theComponentList.size() == 0)
+			continue;
+
+		// 创建解决方案并初始化数据
+		CSolution* pSolution = new CSolution;
+
+		pSolution->m_BaseInfo = m_BaseInfo;							// 基本信息
+
+		pSolution->m_fThickness = theComponentList[0]->m_Thickness;
+		pSolution->m_strMaterial = theComponentList[0]->m_Material;
+
+		// 先调整长度优先
+		for (int j = 0; j < theComponentList.size();j++)
+		{
+			Component* pCpn = theComponentList[j];
+
+			if (pCpn->m_Texture == TextureType_V_TEXTURE)
+			{
+				pCpn->ClockwiseRotate90();
+			}
+		}
+
+		pSolution->m_ComponentList = theComponentList;				// 小板
+
+// 		if (Method == 0)
+// 		{
+// 			pSolution->LayoutOptimization_RandomSortCut(CutStyle, Org);
+// 		}
+// 		else
+// 		{
+			pSolution->New_LayoutOptimization_MinWaste(CutStyle, Org);					// 优化
+//		}
+
+		m_CurrentSolutionList.push_back(pSolution);
+	}
+
+
+
+	return 0;
+}
+
+
+
+
 // 对利用率低的板重新打散排样
 void CSingleon::ReOptimizeSln(CSolution* pSln, int Org)
 {
