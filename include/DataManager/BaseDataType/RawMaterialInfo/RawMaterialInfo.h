@@ -27,8 +27,9 @@ public:
 public:
 	// 原料相关的信息
 	
-	float m_PanelLength;						/**< 锯缝 大板长度		*/
-	float m_PanelWidth;							/**< 锯缝 大板宽度		*/
+	float	m_PanelLength;					/**<  大板长度		*/
+	float	m_PanelWidth;					/**<  大板宽度		*/
+	string	m_Material;						/**<  大板材质		*/
 };
 
 

@@ -13,6 +13,6 @@
     <RawMaterial Name="UV板" Length="1520" Width="0" />
   </RawMaterialSet>
   <PrincipleSet Name="排样规则集">
-    <Principle Method="0" Origin="0" XSpace="0.5" YSpace="0.5" LeftOffset="1" RightOffset="1"  TopOffset="1" BottomOffset="1" />
+    <Principle Method="0" Origin="0" XSpace="0.5" YSpace="0.5" LeftOffset="1" RightOffset="2"  TopOffset="3" BottomOffset="4" />
   </PrincipleSet>
 </Root>

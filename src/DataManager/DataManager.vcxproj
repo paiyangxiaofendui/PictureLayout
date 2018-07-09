@@ -117,7 +117,6 @@
     <ClCompile Include="BaseDataType\Node\Node.cpp" />
     <ClCompile Include="BaseDataType\Outline\Outline.cpp" />
     <ClCompile Include="BaseDataType\Panel\Panel.cpp" />
-    <ClCompile Include="BaseDataType\PrincipleInfo\PrincipleInfo.cpp" />
     <ClCompile Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.cpp" />
     <ClCompile Include="BaseDataType\RemainderGroup\RemainderGroup.cpp" />
     <ClCompile Include="BaseDataType\RemainderItem\RemainderItem.cpp" />
@@ -147,7 +146,6 @@
     <ClInclude Include="BaseDataType\Node\Node.h" />
     <ClInclude Include="BaseDataType\Outline\Outline.h" />
     <ClInclude Include="BaseDataType\Panel\Panel.h" />
-    <ClInclude Include="BaseDataType\PrincipleInfo\PrincipleInfo.h" />
     <ClInclude Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.h" />
     <ClInclude Include="BaseDataType\RemainderGroup\RemainderGroup.h" />
     <ClInclude Include="BaseDataType\RemainderItem\RemainderItem.h" />

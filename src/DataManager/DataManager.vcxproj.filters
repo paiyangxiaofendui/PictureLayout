@@ -97,12 +97,6 @@
     <Filter Include="源文件\BaseDataType\RawMaterialInfo">
       <UniqueIdentifier>{9175afba-3cc6-4674-a281-80403e768b35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\BaseDataType\PrincipleInfo">
-      <UniqueIdentifier>{c10a9130-a7a6-4ea9-aca7-59045c0827a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\BaseDataType\PrincipleInfo">
-      <UniqueIdentifier>{3ddf64b5-f5e8-44b2-b852-61bbfadaad42}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -165,9 +159,6 @@
     <ClCompile Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.cpp">
       <Filter>源文件\BaseDataType\RawMaterialInfo</Filter>
     </ClCompile>
-    <ClCompile Include="BaseDataType\PrincipleInfo\PrincipleInfo.cpp">
-      <Filter>源文件\BaseDataType\PrincipleInfo</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -220,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.h">
       <Filter>头文件\BaseDataType\RawMaterialInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseDataType\PrincipleInfo\PrincipleInfo.h">
-      <Filter>头文件\BaseDataType\PrincipleInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

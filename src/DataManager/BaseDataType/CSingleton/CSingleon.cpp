@@ -725,9 +725,32 @@ void CSingleon::UpdatePreCombinedComponent(void)
 	}
 }
 
-// 备份输入小板接口
+/**  备份输入小板接口
+	@param[in]		
+	@param[out]		
+	@return			void
+	@warning		
+	@note			
+	@see            
+	*/
 void CSingleon::SetBackupComponentInputItem(vector<ComponentInputItem>& InputItem)
 {
 	m_vBackupComponentInputItem.clear();
 	m_vBackupComponentInputItem = InputItem;
 }
+
+/**  原料信息链表接口
+	@param[in]		
+	@param[out]		
+	@return			void
+	@warning		
+	@note			
+	@see            
+	*/
+void CSingleon::SetRawMaterialInfoList(vector<RawMaterialInfo>& InputItem)			
+{
+	m_vRawMaterialList.clear();
+	m_vRawMaterialList = InputItem;
+
+}
+

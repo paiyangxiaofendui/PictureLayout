@@ -48,8 +48,8 @@ IMPLEMENT_DYNAMIC(CDlgResult, CDialogChildBase)
 	, m_bNeedToEraseOldRemainderCutting(false)
 {
 
+	m_len				= 1.0;	
 	m_width				= 1.0;	
-	m_height			= 1.0;	
 	m_x_space			= 1.0;
 	m_y_space			= 1.0;
 	m_left_offset		= 1.0;
@@ -81,8 +81,8 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_CLIPBOARD, m_lbClipBoard);
 
-	DDX_Text(pDX, IDC_EDIT_NEW_LEN, m_width);
-	DDX_Text(pDX, IDC_EDIT_NEW_WIDTH, m_height);
+	DDX_Text(pDX, IDC_EDIT_NEW_LEN, m_len);
+	DDX_Text(pDX, IDC_EDIT_NEW_WIDTH, m_width);
 
 	DDX_Text(pDX, IDC_EDIT_NEW_X_SPACE, m_x_space);				 
 	DDX_Text(pDX, IDC_EDIT_NEW_Y_SPACE, m_y_space);				 
@@ -1434,19 +1434,37 @@ void  CDlgResult::OnLayout()
 
 
 	CSingleon* pSingleton = CSingleon::GetSingleton();
+
+	// 设置原始信息：备份输入板件组、原料、规则
+	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+	pSingleton->SetRawMaterialInfoList(m_vRawMaterialList);
 	BaseInfo& info = pSingleton->m_BaseInfo;
 
 	
-// 	info.m_PanelLength		=		m_width ;			
-// 	info.m_PanelWidth		=		m_height;			
-// 	info.m_x_space			=		m_x_space;			
-// 	info.m_y_space			=		m_y_space;			
-// 	info.m_left_offset		=		m_left_offset;		
-// 	info.m_right_offset		=		m_right_offset;	
-// 	info.m_top_offset		=		m_top_offset;		
-// 	info.m_bottom_offset	=		m_bottom_offset;	
-// 
-// 	info.m_LayoutOrg = m_arranging_origin;
+	info.m_PanelLength		=		m_len ;	
+
+	if (m_width == 0.0)
+	{
+		info.m_WidthUnlimited	=		true;
+		info.m_PanelWidth		=		DEFAULT_WIDTH;
+	}
+	else
+	{
+		info.m_PanelWidth		=		m_width;
+	}
+
+
+	info.m_x_space				=		m_BaseInfo.m_x_space;			
+	info.m_y_space				=		m_BaseInfo.m_y_space;			
+	info.m_left_offset			=		m_BaseInfo.m_left_offset;		
+	info.m_right_offset			=		m_BaseInfo.m_right_offset;	
+	info.m_top_offset			=		m_BaseInfo.m_top_offset;		
+	info.m_bottom_offset		=		m_BaseInfo.m_bottom_offset;	
+
+	info.m_LayoutOrg			=		m_BaseInfo.m_LayoutOrg;
+	info.m_FirstSectionOPMethod =		m_BaseInfo.m_LayoutMethod;
+
+	float offset = m_left_offset + m_right_offset;
 
 
 
@@ -1456,6 +1474,175 @@ void  CDlgResult::OnLayout()
 	// 检测板件超出
 	CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
 
+
+
+	// 设置优化相关信息
+
+	//pSingleton->ClearAllData();
+	//((CMainFrame*)theApp.GetMainWnd())->GetAlgBaseInfo(pSingleton->m_BaseInfo);
+
+
+	// 第一阶段参数
+// 	pSingleton->m_BaseInfo.m_FirstSectionOPTimes = dlgOptimizeSetting.m_nEditStep1Count;
+// 	pSingleton->m_BaseInfo.m_FirstSectionOPMethod = dlgOptimizeSetting.m_nComboStep1Alg;
+// 	// 第二阶段参数
+// 	pSingleton->m_BaseInfo.m_SecondSectionOPTimes = dlgOptimizeSetting.m_nEditStep2Count;
+// 	// 第三阶段参数
+// 	pSingleton->m_BaseInfo.m_ThirdSectionOPTimes = dlgOptimizeSetting.m_nEditStep3Count;
+// 	pSingleton->m_BaseInfo.m_ThirdSectionOAccptableUtilization = dlgOptimizeSetting.m_fEditStep3AcceptableUti;
+// 
+// 	// 反面信息优先排样
+// 	pSingleton->m_BaseInfo.m_bDownerFaceFirst = dlgOptimizeSetting.m_valDownerInfoFirst;
+
+
+	// 保存原始板件数据
+	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+
+	// 清空所有数据,准备优化
+	ClearAllData();
+
+
+
+
+
+	// 排样原点、优化次数
+	int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
+	ComponentList componentList;
+
+	int nTotalCount = 1;
+
+	// 优化循环开始
+	for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
+	{
+
+
+
+		// 第一段优化
+#if 1
+
+
+		int i_first_op_times = i_progress;
+
+		// 释放解决方案 
+		pSingleton->ClearCurrentSolution();
+		pSingleton->ClearRemainderManager();
+
+		// 释放小板分组
+		pSingleton->m_vComponentGroup.clear();
+
+		// 输入小板分组
+		ConvertInputInfoToComponentList(m_vComponentInputItem, m_vPreCombineItem, componentList);
+
+		// 由于存在无纹理比有纹理利用率更差的情况，无纹理优化时，先横竖纹各排一次
+		int text_index = i_progress%5;
+		float rotate_limit = pSingleton->m_BaseInfo.m_PanelLength >  pSingleton->m_BaseInfo.m_PanelWidth ?  pSingleton->m_BaseInfo.m_PanelWidth :  pSingleton->m_BaseInfo.m_PanelLength ;
+
+		rotate_limit -= offset /*2* pSingleton->m_BaseInfo.m_DeburringWidth*/;
+
+
+// 		if (text_index == 1)
+// 		{
+// 			for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
+// 			{
+// 				Component* pCpn = componentList.at(i_cpn);
+// 
+// 				// 全部用横纹排一次, 不能旋转的除外
+// 				if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
+// 					(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
+// 				{
+// 					pCpn->m_Texture = TextureType_H_TEXTURE;
+// 				}
+// 				else
+// 				{
+// 					int a = 0;
+// 				}
+// 			}
+// 
+// 		}
+// 		else if (text_index == 2)
+// 		{
+// 			for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
+// 			{
+// 				Component* pCpn = componentList.at(i_cpn);
+// 
+// 				// 全部用横纹排一次
+// 				if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
+// 					(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
+// 				{
+// 					pCpn->m_Texture = TextureType_V_TEXTURE;
+// 				}
+// 				else
+// 				{
+// 					int a = 0;
+// 				}
+// 			}
+// 		}
+
+		// 赋值给单例类的优化原料
+		SplitComponentList(componentList, pSingleton->m_vComponentGroup);
+
+
+		// 优化
+		if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// 最低轮廓线
+		{
+			pSingleton->Layout(0, CutDir_Horizon, Org);
+		}
+		else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// 贪心
+		{
+			if (i_first_op_times == 2)
+			{
+				pSingleton->Layout(1, CutDir_Horizon, Org);
+			}
+			else if (i_first_op_times == 3)
+			{
+				pSingleton->Layout(1, CutDir_Horizon, Org);
+			}
+			else if (i_first_op_times == 4)
+			{
+				pSingleton->Layout(1, CutDir_Horizon, Org);
+			}
+			else
+			{
+				pSingleton->Layout(1, CutDir_Horizon, Org);
+			}
+		}
+		else
+		{
+			// 组合 贪心+最低轮廓线
+			int flag = pSingleton->m_BaseInfo.m_FirstSectionOPTimes/2;
+
+			if (i_first_op_times > flag) // 随机
+			{
+				pSingleton->Layout(0, CutDir_Horizon, Org);
+			}
+			else
+			{
+				pSingleton->Layout(1, CutDir_Horizon, Org);
+			}
+		}
+
+	}
+
+	// 对大板尺寸进行处理
+
+
+	pSingleton->BackupBestSolution();
+
+
+
+
+#endif
+
+
+
+	// 更新解决方案ID和板件ID
+	pSingleton->UpdateSlnNum();
+
+	//更新板件轮廓点、孔槽等加工信息（排板过程中可能有的板件被旋转了，所以排板之后被旋转过的板件的轮廓点、孔槽也要随之旋转一下）
+	pSingleton->UpdateComponentMachiningInfo();
+	pSingleton->UpdatePreCombinedComponent();
+
+	ResetResultDlg();
 }
 
 
@@ -1544,6 +1731,90 @@ void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>&
 
 }
 
+bool CDlgResult::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentInputItem, RawMaterialInfo rm_info, BaseInfo b_info)
+{
+
+	float panel_len = rm_info.m_PanelLength;
+	float panel_width = rm_info.m_PanelWidth;
+	float panel_offset = b_info.m_left_offset + b_info.m_right_offset;
+
+	if (panel_width == 0.0)
+	{
+		panel_width = DEFAULT_WIDTH;
+
+	}
+
+
+	vector<ComponentInputItem>::iterator it, it_begin, it_end;
+	CString strMsg;
+
+	for (it = vComponentInputItem.begin(); it != vComponentInputItem.end();)
+	{
+		ComponentInputItem& pCpn = *it;
+
+		bool bOverSize = false;
+		if (pCpn.m_strTexture == "无纹理")
+		{
+			if(pCpn.m_fLength > panel_len - panel_offset 
+				|| pCpn.m_fWidth > panel_width - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 旋转后，再次判断
+				if (pCpn.m_fLength >  panel_width - panel_offset
+					|| pCpn.m_fWidth > panel_len - panel_offset
+					|| pCpn.m_fLength <= 0
+					|| pCpn.m_fWidth <= 0)
+				{
+					// 还是超出，删除
+					bOverSize = true;
+				}
+			}
+		}
+		else if(pCpn.m_strTexture == "横纹")
+		{
+			if (pCpn.m_fLength > panel_len - panel_offset 
+				|| pCpn.m_fWidth > panel_width - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+		else
+		{
+			if(pCpn.m_fLength >  panel_width - panel_offset 
+				|| pCpn.m_fWidth > panel_len - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+
+		if(bOverSize)
+		{
+			// 报错
+			strMsg += "删除超出范围板件，板件号：" + pCpn.m_strBarcode + "\n";
+			return false;
+		}
+		else
+		{
+			it++;
+		}
+	}
+
+	// 有信息
+// 	if (strMsg.IsEmpty() != true)
+// 	{
+// 		AfxMessageBox(strMsg);
+// 	}
+
+	return true;
+}
+
 
 void CDlgResult::OnOptimize()
 {
@@ -1616,9 +1887,11 @@ void CDlgResult::OnOpenSourcePicInfo()
 			}
 
 			//循环读取图片信息
-			for (TiXmlElement* pRMSetElem = pRootElement->FirstChildElement("PictureSet"); pRMSetElem != NULL; pRMSetElem = (TiXmlElement*)(pRMSetElem->NextSibling()))
+			TiXmlElement* pPicSetElem = pRootElement->FirstChildElement("PictureSet"); 
+			if (pPicSetElem != NULL)
 			{
-				for (TiXmlElement* pCurPic = pRMSetElem->FirstChildElement("Picture"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling()))
+			
+				for (TiXmlElement* pCurPic = pPicSetElem->FirstChildElement("Picture"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling("Picture")))
 				{
 					string pic_path		= pCurPic->Attribute("path");
 					string texture		= pCurPic->Attribute("Texture");
@@ -1628,20 +1901,20 @@ void CDlgResult::OnOpenSourcePicInfo()
 
 					// 计算图片长宽
 
-// 					const wchar_t* pwc = HGCode::char_Gb2312_To_Unicode(pic_path.c_str());
-// 					Image tmp_img(pwc);
-// 
-// 
-// 					UINT w	= tmp_img.GetWidth();
-// 					UINT h	= tmp_img.GetHeight();
-// 					UINT hr = tmp_img.GetHorizontalResolution();		// dpi 每英寸多少个像素点
-// 					UINT vr = tmp_img.GetVerticalResolution();			// dpi
-// 
-// 					float w_inch = (1.0*w)/hr;
-// 					float h_inch = (1.0*h)/vr;
-// 
-// 					float w_mm = w_inch*INCH_TO_MM;
-// 					float h_mm = h_inch*INCH_TO_MM;
+					// 						const wchar_t* pwc = HGCode::char_Gb2312_To_Unicode(pic_path.c_str());
+					// 						Image tmp_img(pwc);
+					// 
+					// 
+					// 						UINT w	= tmp_img.GetWidth();
+					// 						UINT h	= tmp_img.GetHeight();
+					// 						UINT hr = tmp_img.GetHorizontalResolution();		// dpi 每英寸多少个像素点
+					// 						UINT vr = tmp_img.GetVerticalResolution();			// dpi
+					// 
+					// 						float w_inch = (1.0*w)/hr;
+					// 						float h_inch = (1.0*h)/vr;
+					// 
+					// 						float w_mm = w_inch*INCH_TO_MM;
+					// 						float h_mm = h_inch*INCH_TO_MM;
 
 
 					// 形成一条数据
@@ -1651,7 +1924,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 					componentInputItem.m_fLength	= w_mm;
 					componentInputItem.m_fWidth		= h_mm;
 					componentInputItem.m_nCount		= num;
-					componentInputItem.m_strTexture = "横纹";
+					componentInputItem.m_strTexture = texture.c_str();
 
 					m_vComponentInputItem.push_back(componentInputItem);
 
@@ -1659,30 +1932,51 @@ void CDlgResult::OnOpenSourcePicInfo()
 			}
 
 			// 读取原料信息
-			for (TiXmlElement* pRMSetElem = pRootElement->FirstChildElement("RawMaterialSet"); pRMSetElem != NULL; pRMSetElem = (TiXmlElement*)(pRMSetElem->NextSibling()))
+			TiXmlElement* pRMSetElem = pRootElement->FirstChildElement("RawMaterialSet"); 
+			if (pRMSetElem != NULL)
 			{
-				for (TiXmlElement* pCurRM = pRMSetElem->FirstChildElement("RawMaterial"); pCurRM != NULL; pCurRM = (TiXmlElement*)(pCurRM->NextSibling()))
+				for (TiXmlElement* pCurRM = pRMSetElem->FirstChildElement("RawMaterial"); pCurRM != NULL; pCurRM = (TiXmlElement*)(pCurRM->NextSibling("RawMaterial")))
 				{
 					string name = pCurRM->Attribute("Name");
 					float len	=  stof(pCurRM->Attribute("Length"));
 					float width	=  stof(pCurRM->Attribute("Width"));
 
+					RawMaterialInfo rm_info;
+
+					rm_info.m_Material		= name;
+					rm_info.m_PanelLength	= len;
+					rm_info.m_PanelWidth	= width;
+
+					m_vRawMaterialList.push_back(rm_info);
 				}
 			}
 
 			// 读取排样规则
-			for (TiXmlElement* pPrincipleSetElem = pRootElement->FirstChildElement("PrincipleSet"); pPrincipleSetElem != NULL; pPrincipleSetElem = (TiXmlElement*)(pPrincipleSetElem->NextSibling()))
+			TiXmlElement* pPrincipleSetElem = pRootElement->FirstChildElement("PrincipleSet"); ;
+			if (pPrincipleSetElem != NULL)
 			{
-				for (TiXmlElement* pCurPrinciple = pPrincipleSetElem->FirstChildElement("Principle"); pCurPrinciple != NULL; pCurPrinciple = (TiXmlElement*)(pCurPrinciple->NextSibling()))
+
+				TiXmlElement* pCurPrinciple = pPrincipleSetElem->FirstChildElement("Principle");
+
+				if ( pCurPrinciple != NULL)
 				{
-					int Method		=  stoi(pCurPrinciple->Attribute("Method"));
-					int Origin		=  stoi(pCurPrinciple->Attribute("Origin"));
-					float XSpace	=  stof(pCurPrinciple->Attribute("XSpace"));
-					float YSpace	=  stof(pCurPrinciple->Attribute("YSpace"));
-					float LeftOffset	=  stof(pCurPrinciple->Attribute("LeftOffset"));
-					float RightOffset	=  stof(pCurPrinciple->Attribute("RightOffset"));
-					float TopOffset	=  stof(pCurPrinciple->Attribute("TopOffset"));
-					float BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
+					int		Method			=  stoi(pCurPrinciple->Attribute("Method"));
+					int		Origin			=  stoi(pCurPrinciple->Attribute("Origin"));
+					float	XSpace			=  stof(pCurPrinciple->Attribute("XSpace"));
+					float	YSpace			=  stof(pCurPrinciple->Attribute("YSpace"));
+					float	LeftOffset		=  stof(pCurPrinciple->Attribute("LeftOffset"));
+					float	RightOffset		=  stof(pCurPrinciple->Attribute("RightOffset"));
+					float	TopOffset		=  stof(pCurPrinciple->Attribute("TopOffset"));
+					float	BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
+
+					m_BaseInfo.m_LayoutMethod	=	Method		;
+					m_BaseInfo.m_LayoutOrg		=	Origin		;
+					m_BaseInfo.m_x_space			=	XSpace		;		
+					m_BaseInfo.m_y_space			=	YSpace		;		
+					m_BaseInfo.m_left_offset		=	LeftOffset	;	
+					m_BaseInfo.m_right_offset	=	RightOffset	;	
+					m_BaseInfo.m_top_offset		=	TopOffset	;	
+					m_BaseInfo.m_bottom_offset	=	BottomOffset;
 
 				}
 			}
@@ -1713,8 +2007,41 @@ void CDlgResult::OnOpenSourcePicInfo()
 		}
 	}
 
-	// 备份输入板件组
-	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+	// 选择合适的原料
+	bool b_selected = false;
+	RawMaterialInfo select_rm;
+	for(vector<RawMaterialInfo>::iterator it = m_vRawMaterialList.begin(); it != m_vRawMaterialList.end(); it++)
+	{
+		if (CheckRawMaterialUsable(m_vComponentInputItem, *it, m_BaseInfo) == true)
+		{
+			b_selected = true;
+			select_rm = *it;
+			break;
+		}
+	}
 
-	ResetResultDlg();
+	if (b_selected == true)
+	{
+		m_len				= select_rm.m_PanelLength			;	
+		m_width				= select_rm.m_PanelWidth			;	
+		m_x_space			= m_BaseInfo.m_x_space			;
+		m_y_space			= m_BaseInfo.m_y_space			;
+		m_left_offset		= m_BaseInfo.m_left_offset		;
+		m_right_offset		= m_BaseInfo.m_right_offset	;
+		m_top_offset		= m_BaseInfo.m_top_offset		;
+		m_bottom_offset		= m_BaseInfo.m_bottom_offset	;
+		m_arranging_origin	= m_BaseInfo.m_LayoutOrg		;
+
+		UpdateData(FALSE);
+		ResetResultDlg();
+	}
+	else
+	{
+		AfxMessageBox("没有合适的原料，无法排样!");
+	}
+
+
+
+
+
 }

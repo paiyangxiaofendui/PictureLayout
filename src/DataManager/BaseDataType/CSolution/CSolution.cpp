@@ -1869,3 +1869,85 @@ void CSolution::SortPanelList(void)
 	
 
 }
+
+void CSolution::FixPanelSize()
+{
+	if (m_BaseInfo.m_WidthUnlimited == true)
+	{
+
+		Panel* pPanel = GetPanel(0);
+		vector<Component*> cpn_list;
+
+		pPanel->GetAllNeededComponent(cpn_list);
+
+		// 收集所有顶点
+		float min_x ;
+		float max_x ;
+		float min_y ;
+		float max_y ;
+		vector<float> vecX, vecY;
+
+		for (int i = 0; i < cpn_list.size(); i++)
+		{
+			Component* pCpn = cpn_list.at(i);
+
+			float min_x =	pCpn->m_x;
+			float max_x =	pCpn->m_x + pCpn->m_RealLength;
+			float min_y =	pCpn->m_y;
+			float max_y =	pCpn->m_y + pCpn->m_RealWidth;
+
+			vecX.push_back(min_x);
+			vecX.push_back(max_x);
+			vecY.push_back(min_y);
+			vecY.push_back(max_y);
+		}
+
+		// 排序
+
+		std::sort(vecX.begin(), vecX.end());
+		std::sort(vecY.begin(), vecY.end());
+
+		min_x = *(vecX.begin());
+		max_x = *(vecX.rbegin());
+		min_y = *(vecY.begin());
+		max_y = *(vecY.rbegin());
+
+		float top; 
+		float bottom; 
+		float offset;
+
+
+		switch(m_BaseInfo.m_LayoutOrg)
+		{
+		case LayoutOrg_LeftBottom:
+		case LayoutOrg_RightBottom:
+			top = max_y + m_BaseInfo.m_top_offset;
+
+			pPanel->m_OrgWidth = top;
+			pPanel->m_RealWidth = max_y - min_y;
+			break;
+		case LayoutOrg_LeftTop:
+		case LayoutOrg_RightTop:
+			bottom = min_y - m_BaseInfo.m_bottom_offset;
+			offset = bottom;
+			for (int i = 0; i < cpn_list.size(); i++)
+			{
+				Component* pCpn = cpn_list.at(i);
+				 
+				pCpn->m_y -= offset;
+
+			}
+
+			pPanel->m_OrgWidth = max_y - offset;
+			pPanel->m_RealWidth = max_y - min_y;
+
+
+			break;
+		}
+
+	}
+
+
+
+	
+}

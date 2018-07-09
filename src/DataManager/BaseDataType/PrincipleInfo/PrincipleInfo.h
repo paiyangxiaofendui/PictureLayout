@@ -26,14 +26,17 @@ public:
 
 public:
 
-	int m_LayoutOrg;							/**<  排样原点			*/
-	int m_LayoutMethod;							/**<  排样方法			*/
-	float m_x_space;							/**< 锯缝 X方向间隙		*/
-	float m_y_space;							/**< 锯缝 Y方向间隙		*/
-	float m_left_offset;						/**< 锯缝 左预留间隙	*/
-	float m_right_offset;						/**< 锯缝 右预留间隙	*/
-	float m_top_offset;							/**< 锯缝 上预留间隙	*/
-	float m_bottom_offset;						/**< 锯缝 下预留间隙	*/
+	int		m_LayoutOrg;							/**<  排样原点		*/
+	int		m_LayoutMethod;							/**<  排样方法		*/
+
+	float	m_PanelLength;							/**<  大板长度		*/
+	float	m_PanelWidth;							/**<  大板宽度		*/
+	float	m_x_space;								/**<  X方向间隙		*/
+	float	m_y_space;								/**<  Y方向间隙		*/
+	float	m_left_offset;							/**<  左预留间隙	*/
+	float	m_right_offset;							/**<  右预留间隙	*/
+	float	m_top_offset;							/**<  上预留间隙	*/
+	float	m_bottom_offset;						/**<  下预留间隙	*/
 };
 
 

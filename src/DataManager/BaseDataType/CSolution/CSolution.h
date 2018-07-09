@@ -11,6 +11,7 @@
 #define		_CSolution_H_
 
 #include "../BaseInfo/BaseInfo.h"
+#include "../PrincipleInfo/PrincipleInfo.h"
 #include "../Outline/Outline.h"
 #include "../CommonData/CommonData.h"
 
@@ -66,13 +67,15 @@ public:
 	// 对大板列表按照优化率进行排序
 	void SortPanelList(void);
 
+	// 存在宽度无限的情况下，调整大板尺寸，
+	void FixPanelSize();
 
 public:
 	int	m_SlnID;						// 解决方案号					
 	float m_fThickness;					// 板件厚度						
 	CString m_strMaterial;				// 板件材料						
 
-	BaseInfo m_BaseInfo;				// 基础信息						
+	BaseInfo m_BaseInfo;				// 基础信息		
 
 	vector<Panel*> m_PanelList;			// 大板列表 优化方案			
 	vector<Component*> m_ComponentList;	// 小板列表 原始板件

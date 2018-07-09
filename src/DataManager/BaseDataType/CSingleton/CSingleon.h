@@ -87,8 +87,10 @@ public:
 	int GetBackupSolutionNum(void);								/**< 获取当前优化方案数量	*/
 
 public:
-	// 备份输入小板接口
+	// 原始信息接口
+
 	void SetBackupComponentInputItem(vector<ComponentInputItem>& InputItem);	/**< 备份输入小板接口	*/
+	void SetRawMaterialInfoList(vector<RawMaterialInfo>& InputItem);			/**< 原料信息链表接口	*/
 
 public:
 	// 优化方案数据
@@ -97,7 +99,6 @@ public:
 	vector<vector<Component*>> m_vComponentGroup;								/**< 小板组	*/ 
 	BaseInfo m_BaseInfo;														/**< 基本信息	*/ 
 	vector<RawMaterialInfo> m_vRawMaterialList;									/**< 原料信息链表	*/ 
-	vector<PrincipleInfo> m_vPrincipleList;									/**< 原料信息链表	*/ 
 	
 	KnifeClass* m_pKnifeClass;													/**< 导出NC所用的类  原有雕刻机软件	*/ 
 	vector<ComponentInputItem> m_vBackupComponentInputItem;						/**< 输入小板备份	*/ 

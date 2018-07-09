@@ -6,18 +6,20 @@
 BaseInfo::BaseInfo(void)
 {
 
+	m_LengthUnlimited					= false;	/**<  长度无限制	*/
+	m_WidthUnlimited					= false;	/**<  宽度无限制	*/
 	m_SawKerfWidth						= 6;		// 锯缝 用于排样
 	m_PanelLength						= 2440;		// 大板长度		
 	m_PanelWidth						= 1220;		// 大板宽度		
 	m_DeburringWidth					= 3;		// 修边距离 4边都修	
 
 
-	m_x_space		= 1.0;		
-	m_y_space		= 1.0;		
-	m_left_offset	= 1.0;	
-	m_right_offset	= 1.0;	
-	m_top_offset	= 1.0;		
-	m_bottom_offset	= 1.0;	
+	m_x_space							= 1.0;		
+	m_y_space							= 1.0;		
+	m_left_offset						= 1.0;	
+	m_right_offset						= 1.0;	
+	m_top_offset						= 1.0;		
+	m_bottom_offset						= 1.0;	
 
 
 

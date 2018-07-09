@@ -12,9 +12,12 @@
 
 #include "../resource.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
+#include "../../../include/DataManager/BaseDataType/RawMaterialInfo/RawMaterialInfo.h"
+#include "../../../include/DataManager/BaseDataType/BaseInfo/BaseInfo.h"
 #include "listboxclipboard.h"
 #include "./UICommon/DialogChildBase.h"
 #include "./UICommon/PngButton.h"
+#include "../UIData/UIData.h"
 
 // CDlgResult 对话框
 
@@ -23,6 +26,11 @@ class Component;
 class PanelViewingParam;
 
 #define WM_REFRESH_PANEL_VIEW               WM_USER+1
+
+
+#define DEFAULT_WIDTH						(100000) 
+
+
 
  /** 
     * @brief 简要说明文字 
@@ -132,41 +140,97 @@ protected:
 
 public:
 
-	/**  这里写这个函数是干什么用的
-	@param[in]		输入参数1
-	@param[in]		输入参数2
-	@param[out]		输出参数1
-	@return			返回值解释一下
-	@warning		警告: 例如: 参数不能为空啊,内存要外部释放之类的费话
-	@note			注解  随便你了
-	@see            相当于是请参考xxoo函数之类的
+
+	/** 
+	* @brief 清除所有数据
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
 	*/
 	void ClearAllData();
+
+
+	/** 
+	* @brief 清除所有数据
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
 	afx_msg void OnOpenSolution();
+
+	/** 
+	* @brief 清除所有数据
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
 	afx_msg void OnLayout();
+
+	/** 
+	* @brief 打开图片信息
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
 	afx_msg void OnOpenSourcePicInfo();
 
+	/** 
+	* @brief 优化
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
 	void OnOptimize();
 
+	/** 
+	* @brief 检查
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
 	void CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem);
 
+	/** 
+	* @brief 检查原料
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	bool CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentInputItem, RawMaterialInfo rm_info, BaseInfo b_info);
 
-	vector<ComponentInputItem> m_vComponentInputItem;
+	vector<PreCombineItem> m_vPreCombineItem;
+	vector<ComponentInputItem> m_vComponentInputItem;						/**< 输入板件链表	*/ 
+	vector<RawMaterialInfo> m_vRawMaterialList;								/**< 原料信息链表	*/ 
+	BaseInfo m_BaseInfo;											/**< 原料信息链表	*/ 
 
 	
-	float m_width;				/**< 原料长度 */
-	float m_height;				/**< 原料宽度 */
+	float m_len;				/**< 原料长度 */
+	float m_width;				/**< 原料宽度 */
 
-	float m_x_space;			/**< 锯缝 X方向间隙		*/
-	float m_y_space;			/**< 锯缝 Y方向间隙		*/
-	float m_left_offset;		/**< 锯缝 左预留间隙	*/
-	float m_right_offset;		/**< 锯缝 右预留间隙	*/
-	float m_top_offset;			/**< 锯缝 上预留间隙	*/
-	float m_bottom_offset;		/**< 锯缝 下预留间隙	*/
+	float m_x_space;			/**<  X方向间隙		*/
+	float m_y_space;			/**<  Y方向间隙		*/
+	float m_left_offset;		/**<  左预留间隙	*/
+	float m_right_offset;		/**<  右预留间隙	*/
+	float m_top_offset;			/**<  上预留间隙	*/
+	float m_bottom_offset;		/**<  下预留间隙	*/
 
 
 	CComboBox control_arranging_origin;
-	int m_arranging_origin;
+	int m_arranging_origin;		/**<  排样原点	*/
 
 
 
