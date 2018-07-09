@@ -42,6 +42,7 @@ public:
 
 public:
 	int LayoutOptimization_MinWaste(int CutStyle, int Org);				// 排样优化	余料剩余最小，长或宽最大利用优先
+	int New_LayoutOptimization_MinWaste(int CutStyle, int Org);				// 排样优化	余料剩余最小，长或宽最大利用优先
 //	bool MatchSuitableComponentNRemaider(Panel* pPanel, Component*& pPerfectMatchComponent, bool &rotate_flag, int &cut_dir, Component*& pPerfectMatchRemainder);			// 匹配合适的小板和轮廓线
 //	int BuildRemainderList(Panel* pParent);				// 初始化余料线链表
 //	int SortRemainderList_LengthFirst(void);			// 板件排序，长度优先，面积次之

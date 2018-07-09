@@ -332,6 +332,88 @@ int ALGORITHM_API::LayoutOnePanel_LowestOutline(Panel* pSrcPanel, BaseInfo& Info
 
 
 
+int ALGORITHM_API::New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org)
+{
+	int nCpnID = 0;
+	vector<Component*> RemainderList;
+
+	// 指针判断
+	if (pSrcPanel == NULL)
+	{
+		return -1;
+	}
+
+	// 建立余料链表
+	BuildRemainderList(pSrcPanel, RemainderList);
+
+	// 还有小板需要排样
+	while (SrcComponentList.size() > 0)
+	{
+		bool bMatchable = false;					// 匹配成功标志
+		bool bRotateFlag = false;					// 旋转标志
+		int nRecommendCutDir = CutDir_Horizon;		// 建议切割方式
+		Component* pPerfectMatchComponent = NULL, *pPerfectMatchRemainder = NULL;	// 最佳匹配的余料和小板
+
+		bMatchable = MatchSuitableComponentNRemaider(RemainderList, SrcComponentList, pPerfectMatchComponent, bRotateFlag, nRecommendCutDir, pPerfectMatchRemainder, Info);
+		if (bMatchable == true)
+		{
+			Component* pPlaceCpn = pPerfectMatchComponent;		
+			Component* pParentNode = pPerfectMatchRemainder;
+
+			// 是否旋转
+			if (bRotateFlag == true)
+			{
+				pPlaceCpn->ClockwiseRotate90();
+			}
+
+			// 选择真正切割方式
+			switch(CutStyle)
+			{
+			case CutDir_Horizon:
+				nRecommendCutDir = CutDir_Horizon;
+				break;
+			case CutDir_Vertical:
+				nRecommendCutDir = CutDir_Vertical;
+				break;
+			case CutDir_Random:
+				nRecommendCutDir = rand()%2;
+				break;
+			default:
+				break;
+			}
+
+			// 排样
+			ALGORITHM_API::New_KnifeOneRemainder(pPerfectMatchRemainder, pPerfectMatchComponent, nRecommendCutDir, Info.m_SawKerfWidth, Org, Info);
+
+			// 删除已排样的板件和余料
+			vector<Component*>::iterator it_cpn = find(SrcComponentList.begin(), SrcComponentList.end(), pPerfectMatchComponent);
+			SrcComponentList.erase(it_cpn);
+
+			vector<Component*>::iterator it_rmd = find(RemainderList.begin(), RemainderList.end(), pPerfectMatchRemainder);
+			RemainderList.erase(it_rmd);
+
+			// 重新建立余料链表
+			BuildRemainderList(pSrcPanel, RemainderList);
+
+			// 余料排序
+			SortRemainderList_LengthFirst(RemainderList);
+
+		}
+		else
+		{
+			if (SrcComponentList.size() > 0)
+				return 1;
+			else
+				return 0;	// 排完了
+		}
+	}
+
+	if (SrcComponentList.size() > 0)
+		return 1;
+	else
+		return 0;	// 排完了
+}
+
 /*---------------------------------------------------------*/
 //	函数说明：
 //		在大板中优化排样
@@ -455,6 +537,581 @@ int ALGORITHM_API::LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vecto
 		return 0;	// 排完了
 }
 
+
+bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org, BaseInfo& b_info)
+{
+	// 判断要切割的小板是否合法
+	if (pPlaceCpn->IsLegal() == false)
+	{
+		return false;
+	}
+
+
+	if (CutDir == CutDir_Vertical)
+	{
+
+		// 第一刀，竖切一刀，父节点一分为二
+		Component* pLeft = new Component;
+		Component* pRight = new Component;
+
+		switch(Org)
+		{
+		case LayoutOrg_LeftBottom:		// 左下角
+
+			// 左节点
+			pLeft->m_x				= pParentNode->m_x;				// 父节点的x
+			pLeft->m_y				= pParentNode->m_y;				// 父节点的y
+			pLeft->m_RealLength		= pPlaceCpn->m_RealLength;		// 小板的长度
+			pLeft->m_RealWidth		= pParentNode->m_RealWidth;		// 父节点宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + SawKerfWidth;			// 父节点左下角 + 小板长度 + 锯缝
+			pRight->m_y				= pParentNode->m_y;														// 父节点的y
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+			break;
+		case LayoutOrg_LeftTop:			// 左上角
+
+			// 左节点
+			pLeft->m_x				= pParentNode->m_x;				// 父节点的x
+			pLeft->m_y				= pParentNode->m_y;				// 父节点的y
+			pLeft->m_RealLength		= pPlaceCpn->m_RealLength;		// 小板的长度
+			pLeft->m_RealWidth		= pParentNode->m_RealWidth;		// 父节点宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + SawKerfWidth;			// 父节点左下角 + 小板长度 + 锯缝
+			pRight->m_y				= pParentNode->m_y;														// 父节点的y
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+
+			break;						
+		case LayoutOrg_RightBottom:		// 右下角
+
+			// 左节点
+			pLeft->m_x				= pParentNode->m_x + pParentNode->m_RealLength - pPlaceCpn->m_RealLength;// 父节点的x + 父节点的长度 - 小板长度
+			pLeft->m_y				= pParentNode->m_y;														// 父节点的y
+			pLeft->m_RealLength		= pPlaceCpn->m_RealLength;												// 小板的长度
+			pLeft->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;			// 父节点的x
+			pRight->m_y				= pParentNode->m_y;														// 父节点的y
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+			break;
+		case LayoutOrg_RightTop:		// 右上角
+
+			// 左节点
+			pLeft->m_x				= pParentNode->m_x + pParentNode->m_RealLength - pPlaceCpn->m_RealLength;// 父节点的x + 父节点的长度 - 小板长度
+			pLeft->m_y				= pParentNode->m_y;														// 父节点的y
+			pLeft->m_RealLength		= pPlaceCpn->m_RealLength;												// 小板的长度
+			pLeft->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;			// 父节点的x
+			pRight->m_y				= pParentNode->m_y;														// 父节点的y
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+			break;
+		default:						// 默认左下角
+
+			// 左节点
+			pLeft->m_x				= pParentNode->m_x;
+			pLeft->m_y				= pParentNode->m_y;
+			pLeft->m_RealLength		= pPlaceCpn->m_RealLength;
+			pLeft->m_RealWidth		= pParentNode->m_RealWidth;
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + SawKerfWidth;			// 父节点左下角 + 小板长度 + 锯缝
+			pRight->m_y				= pParentNode->m_y;
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealWidth		= pParentNode->m_RealWidth;
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+			break;
+
+		}
+
+
+
+
+		// 父节点一分为二, 父节点类型从余料变为组合板
+		pParentNode->m_type = NodeType_CombinePanel;
+
+		if (pLeft->IsLegal() == true)
+		{
+			pParentNode->AddChild(pLeft);
+		}
+		else
+		{
+			delete pLeft;
+			pLeft = NULL;
+		}
+
+		if (pRight->IsLegal() == true)
+		{
+			pParentNode->AddChild(pRight);
+		}
+		else
+		{
+			delete pRight;
+			pRight = NULL;
+		}
+
+
+
+		// 第二刀 横切一刀，左节点再一分为二，变为需要的小板和余料
+		Component* pSecondRight = new Component;
+		switch(Org)
+		{
+		case LayoutOrg_LeftBottom:		// 左下角
+
+			// 设置小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;
+			pPlaceCpn->m_y = pLeft->m_y;
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
+			pSecondRight->m_y			= pLeft->m_y + pPlaceCpn->m_RealWidth + SawKerfWidth;			// 父节点的y + 小板宽度 + 锯缝
+			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+			break;
+		case LayoutOrg_LeftTop:			// 左上角
+
+			// 设置小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;												// 父节点的x
+			pPlaceCpn->m_y = pLeft->m_y + pLeft->m_RealWidth - pPlaceCpn->m_RealWidth;	// 父节点的y + 父节点宽度 - 小板的宽度
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
+			pSecondRight->m_y			= pLeft->m_y;													// 父节点的y
+			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+			break;						
+		case LayoutOrg_RightBottom:		// 右下角
+
+			// 设置小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;	// 父节点的x
+			pPlaceCpn->m_y = pLeft->m_y;	// 父节点的y
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
+			pSecondRight->m_y			= pLeft->m_y  + pPlaceCpn->m_RealWidth + SawKerfWidth;			// 父节点的y + 小板的宽度 + 锯缝
+			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+
+
+
+			break;
+		case LayoutOrg_RightTop:		// 右上角
+
+			// 设置小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;												// 父节点的x
+			pPlaceCpn->m_y = pLeft->m_y + pLeft->m_RealWidth - pPlaceCpn->m_RealWidth;	// 父节点的y + 父节点宽度 - 小板的宽度
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
+			pSecondRight->m_y			= pLeft->m_y;													// 父节点的y
+			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+
+			break;
+		default:						// 默认左下角
+
+			// 设置小板,在小板链表中删除该小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;
+			pPlaceCpn->m_y = pLeft->m_y;
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;			
+			pSecondRight->m_y			= pLeft->m_y + pPlaceCpn->m_RealWidth + SawKerfWidth;			// 父节点左下角 + 小板宽度 + 锯缝
+			pSecondRight->m_RealLength	= pLeft->m_RealLength;	
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+			break;
+		}
+
+
+		// 左节点添加子节点，类型变为组合板
+		pLeft->m_type = NodeType_CombinePanel;
+
+		pLeft->AddChild(pPlaceCpn);
+
+		if (pSecondRight->IsLegal() == true)
+		{
+			pLeft->AddChild(pSecondRight);
+		}
+		else
+		{
+			delete pSecondRight;
+			pSecondRight = NULL;
+		}
+
+
+
+	}
+	else
+	{
+		// 第一刀，横切一刀，父节点一分为二
+
+		Component* pLeft = new Component;	
+		Component* pRight = new Component;
+
+		switch(Org)
+		{
+		case LayoutOrg_LeftBottom:		// 左下角
+
+			// 左节点													
+			pLeft->m_x				= pParentNode->m_x;				// 父节点左下角 
+			pLeft->m_y				= pParentNode->m_y;				// 父节点左下角 
+			pLeft->m_RealLength		= pParentNode->m_RealLength;	// 父节点长度 
+			pLeft->m_RealWidth		= pPlaceCpn->m_RealWidth;		// 小板宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;																		// 父节点左下角 
+			pRight->m_y				= pParentNode->m_y + pPlaceCpn->m_RealWidth + /*SawKerfWidth*/b_info.m_y_space;			// 父节点左下角 + 小板宽度
+			pRight->m_RealLength	= pParentNode->m_RealLength;															// 父节点长度
+			pRight->m_RealWidth		= pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;						// 父节点宽度 - 小板宽度 - 锯缝
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+			break;
+
+		case LayoutOrg_LeftTop:			// 左上角
+
+			// 左节点																
+			pLeft->m_x				= pParentNode->m_x;				// 父节点x  
+			pLeft->m_y				= pParentNode->m_y + pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth;				// 父节点y + 父节点宽度 - 小板宽度
+			pLeft->m_RealLength		= pParentNode->m_RealLength;	// 父节点长度 
+			pLeft->m_RealWidth		= pPlaceCpn->m_RealWidth;		// 小板宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;																			// 父节点x
+			pRight->m_y				= pParentNode->m_y ;																		// 父节点y
+			pRight->m_RealLength	= pParentNode->m_RealLength;																// 父节点长度
+			pRight->m_RealWidth		= pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;		// 父节点宽度 - 小板宽度 - 锯缝
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+
+			break;
+
+		case LayoutOrg_RightBottom:		// 右下角
+
+			// 左节点															
+			pLeft->m_x				= pParentNode->m_x;				// 父节点左下角 
+			pLeft->m_y				= pParentNode->m_y;				// 父节点左下角 
+			pLeft->m_RealLength		= pParentNode->m_RealLength;	// 父节点长度 
+			pLeft->m_RealWidth		= pPlaceCpn->m_RealWidth;		// 小板宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;																			// 父节点左下角 
+			pRight->m_y				= pParentNode->m_y + pPlaceCpn->m_RealWidth + /*SawKerfWidth*/b_info.m_y_space;				// 父节点左下角 + 小板宽度
+			pRight->m_RealLength	= pParentNode->m_RealLength;																// 父节点长度
+			pRight->m_RealWidth		= pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;		// 父节点宽度 - 小板宽度 - 锯缝
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+
+			break;
+
+		case LayoutOrg_RightTop:		// 右上角
+			// 左节点															
+			pLeft->m_x				= pParentNode->m_x;														// 父节点x  
+			pLeft->m_y				= pParentNode->m_y + pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth;	// 父节点y + 父节点宽度 - 小板宽度
+			pLeft->m_RealLength		= pParentNode->m_RealLength;											// 父节点长度 
+			pLeft->m_RealWidth		= pPlaceCpn->m_RealWidth;												// 小板宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;														// 父节点x
+			pRight->m_y				= pParentNode->m_y ;													// 父节点y
+			pRight->m_RealLength	= pParentNode->m_RealLength;											// 父节点长度
+			pRight->m_RealWidth		= pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;		// 父节点宽度 - 小板宽度 - 锯缝
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+			break;
+
+		default:						// 默认左下角
+
+			// 左节点															
+			pLeft->m_x				= pParentNode->m_x;				// 父节点左下角 
+			pLeft->m_y				= pParentNode->m_y;				// 父节点左下角 
+			pLeft->m_RealLength		= pParentNode->m_RealLength;	// 父节点长度 
+			pLeft->m_RealWidth		= pPlaceCpn->m_RealWidth;		// 小板宽度
+			pLeft->m_Thickness		= pParentNode->m_Thickness;
+			pLeft->m_Texture		= pParentNode->m_Texture;
+			pLeft->m_type			= NodeType_Remainder;
+			pLeft->m_Material		= pParentNode->m_Material;
+
+			// 右节点
+			pRight->m_x				= pParentNode->m_x;																// 父节点左下角 
+			pRight->m_y				= pParentNode->m_y + pPlaceCpn->m_RealWidth + /*SawKerfWidth*/b_info.m_y_space;				// 父节点左下角 + 小板宽度
+			pRight->m_RealLength	= pParentNode->m_RealLength;													// 父节点长度
+			pRight->m_RealWidth		= pParentNode->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;		// 父节点宽度 - 小板宽度 - 锯缝
+			pRight->m_Thickness		= pParentNode->m_Thickness;
+			pRight->m_Texture		= pParentNode->m_Texture;
+			pRight->m_type			= NodeType_Remainder;
+			pRight->m_Material		= pParentNode->m_Material;
+
+
+			break;
+		}
+
+
+		// 父节点一分为二, 父节点类型从余料变为组合板
+		pParentNode->m_type = NodeType_CombinePanel;
+
+		if (pLeft->IsLegal() == true)
+		{
+			pParentNode->AddChild(pLeft);
+		}
+		else
+		{
+			delete pLeft;
+			pLeft = NULL;
+		}
+
+		if (pRight->IsLegal() == true)
+		{
+			pParentNode->AddChild(pRight);
+		}
+		else
+		{
+			delete pRight;
+			pRight = NULL;
+		}
+		// 竖切一刀，右节点再一分为二，变为需要的小板和余料
+
+		Component* pSecondRight = new Component;
+		switch(Org)
+		{
+		case LayoutOrg_LeftBottom:		// 左下角
+
+			// 设置小板,在小板链表中删除该小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;		// 父节点的x
+			pPlaceCpn->m_y = pLeft->m_y;		// 父节点的y
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x + pPlaceCpn->m_RealLength + /*SawKerfWidth*/b_info.m_x_space;			// 父节点x + 小板宽度 + 锯缝
+			pSecondRight->m_y			= pLeft->m_y;																		// 父节点y 
+			pSecondRight->m_RealLength	= pLeft->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;	// 父节点长度 - 小板长度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth ;																// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+			break;
+		case LayoutOrg_LeftTop:			// 左上角
+
+			// 设置小板,在小板链表中删除该小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;		// 父节点x
+			pPlaceCpn->m_y = pLeft->m_y;		// 父节点y
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x + pPlaceCpn->m_RealLength + /*SawKerfWidth*/b_info.m_x_space;			// 父节点x + 小板宽度 + 锯缝
+			pSecondRight->m_y			= pLeft->m_y;																		// 父节点y 
+			pSecondRight->m_RealLength	= pLeft->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;	// 父节点长度 - 小板长度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth ;																// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+
+			break;						
+		case LayoutOrg_RightBottom:		// 右下角
+
+			// 设置小板,在小板链表中删除该小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x + pLeft->m_RealLength - pPlaceCpn->m_RealLength;	// 父节点x + 父节点长度 - 小板长度
+			pPlaceCpn->m_y = pLeft->m_y;													// 父节点y
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;																		// 父节点x 
+			pSecondRight->m_y			= pLeft->m_y;																		// 父节点y 
+			pSecondRight->m_RealLength	= pLeft->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;	// 父节点长度 - 小板长度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth ;																// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+			break;
+		case LayoutOrg_RightTop:		// 右上角
+
+			// 设置小板,在小板链表中删除该小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x + pLeft->m_RealLength - pPlaceCpn->m_RealLength;		// 父节点x + 父节点长度 - 小板长度
+			pPlaceCpn->m_y = pLeft->m_y;		// 父节点y
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x;																		// 父节点x 
+			pSecondRight->m_y			= pLeft->m_y;																		// 父节点y 
+			pSecondRight->m_RealLength	= pLeft->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;	// 父节点长度 - 小板长度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth ;																// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+
+			break;
+		default:						// 默认左下角
+
+			// 设置小板,在小板链表中删除该小板
+			pPlaceCpn->m_pParent = pLeft;
+			pPlaceCpn->m_x = pLeft->m_x;		// 父节点的x
+			pPlaceCpn->m_y = pLeft->m_y;		// 父节点的y
+			pPlaceCpn->m_type = NodeType_NeededComponent;
+
+			// 另一块余料
+			pSecondRight->m_x			= pLeft->m_x + pPlaceCpn->m_RealLength + /*SawKerfWidth*/b_info.m_x_space;			// 父节点x + 小板宽度 + 锯缝
+			pSecondRight->m_y			= pLeft->m_y;																		// 父节点y 
+			pSecondRight->m_RealLength	= pLeft->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;	// 父节点长度 - 小板长度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth ;																// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_Thickness	= pLeft->m_Thickness;
+			pSecondRight->m_Texture		= pLeft->m_Texture;
+			pSecondRight->m_type		= NodeType_Remainder;
+			pSecondRight->m_Material	= pLeft->m_Material;
+
+
+			break;
+		}
+
+
+
+
+		// 左节点添加子节点，类型变为组合板
+		pLeft->m_type = NodeType_CombinePanel;
+		pLeft->AddChild(pPlaceCpn);
+
+		if (pSecondRight->IsLegal() == true)
+		{
+			pLeft->AddChild(pSecondRight);
+		}
+		else
+		{
+			delete pSecondRight;
+			pSecondRight = NULL;
+		}
+	}
+
+	return true;
+}
 
 /*---------------------------------------*/
 //	函数说明：

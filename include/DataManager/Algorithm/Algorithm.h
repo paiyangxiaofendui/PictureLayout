@@ -13,21 +13,9 @@ public:
 	// 贪心算法
 
 	
-	/*---------------------------------------*/
-	//	函数说明：
-	//		在大板中优化排样
-	//
-	//	参数：
-	//		Panel * pSrcPanel
-	//		BaseInfo & base_info
-	//		vector<Component * > & SrcCpnList
-	//		int cut_style
-	//
-	//	返回值:
-	//		
-	//
-	/*---------------------------------------*/
-	static int LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& base_info, vector<Component*>& SrcCpnList, int cut_style, int Org);
+	//	在大板中优化排样
+	static int LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org);
+	static int New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org);
 
 	// 初始化余料线链表
 	static int BuildRemainderList(Panel* pParent, vector<Component*>& RemainderList);
@@ -42,7 +30,8 @@ public:
 	static bool ComponentCompareSmaller(const Component* pfirst, const Component* psecond) ;
 
 	// 切割方式
-	static bool KnifeOneRemainder(Component* pRemainder, Component* pComponent, int cut_dir, float kerf_width, int Org);
+	static bool KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org);
+	static bool New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org, BaseInfo& b_info);
 
 public:
 	// 最低轮廓线算法

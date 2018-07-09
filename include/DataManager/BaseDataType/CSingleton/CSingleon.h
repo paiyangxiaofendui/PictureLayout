@@ -107,6 +107,13 @@ public:
 
 
 public:
+	// 新增图片排样接口
+	int New_Layout(int Method, int CutStyle, int Org);				/**< 新排样优化	*/ 
+
+
+
+
+public:
 	// 跟生产、导出NC有关的数据结构
 
 	TiXmlDocument m_KnifetypeDoc;	/**< 刀库文件	*/

@@ -48,16 +48,16 @@ IMPLEMENT_DYNAMIC(CDlgResult, CDialogChildBase)
 	, m_bNeedToEraseOldRemainderCutting(false)
 {
 
-	m_len				= 1.0;	
-	m_width				= 1.0;	
-	m_x_space			= 1.0;
-	m_y_space			= 1.0;
-	m_left_offset		= 1.0;
-	m_right_offset		= 1.0;
-	m_top_offset		= 1.0;
-	m_bottom_offset		= 1.0;
+	m_len				= 0.0;	
+	m_width				= 0.0;	
+	m_x_space			= 0.0;
+	m_y_space			= 0.0;
+	m_left_offset		= 0.0;
+	m_right_offset		= 0.0;
+	m_top_offset		= 0.0;
+	m_bottom_offset		= 0.0;
 
-	m_arranging_origin = 1;
+	m_arranging_origin = 0;
 }
 
 CDlgResult::~CDlgResult()
@@ -120,7 +120,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
 
 	ON_BN_CLICKED(IDC_BUTTON_READ_HGO, &CDlgResult::OnOpenSolution)
-	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnOpenSolution)
+	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnLayout)
 	ON_BN_CLICKED(IDC_BUTTON_READ_PIC_INFO, &CDlgResult::OnOpenSourcePicInfo)
 
 
@@ -151,7 +151,7 @@ BOOL CDlgResult::OnInitDialog()
 	control_arranging_origin.InsertString(3,_T("右上角"));
 
 
-	control_arranging_origin.SetCurSel(1);
+	control_arranging_origin.SetCurSel(0);
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -1454,15 +1454,15 @@ void  CDlgResult::OnLayout()
 	}
 
 
-	info.m_x_space				=		m_BaseInfo.m_x_space;			
-	info.m_y_space				=		m_BaseInfo.m_y_space;			
-	info.m_left_offset			=		m_BaseInfo.m_left_offset;		
-	info.m_right_offset			=		m_BaseInfo.m_right_offset;	
-	info.m_top_offset			=		m_BaseInfo.m_top_offset;		
-	info.m_bottom_offset		=		m_BaseInfo.m_bottom_offset;	
+	info.m_x_space				=		m_x_space;			
+	info.m_y_space				=		m_y_space;			
+	info.m_left_offset			=		m_left_offset;		
+	info.m_right_offset			=		m_right_offset;	
+	info.m_top_offset			=		m_top_offset;		
+	info.m_bottom_offset		=		m_bottom_offset;	
 
-	info.m_LayoutOrg			=		m_BaseInfo.m_LayoutOrg;
-	info.m_FirstSectionOPMethod =		m_BaseInfo.m_LayoutMethod;
+	info.m_LayoutOrg			=		m_arranging_origin;
+	info.m_FirstSectionOPMethod =		1;
 
 	float offset = m_left_offset + m_right_offset;
 
@@ -1585,25 +1585,25 @@ void  CDlgResult::OnLayout()
 		// 优化
 		if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// 最低轮廓线
 		{
-			pSingleton->Layout(0, CutDir_Horizon, Org);
+			pSingleton->New_Layout(0, CutDir_Horizon, Org);
 		}
 		else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// 贪心
 		{
 			if (i_first_op_times == 2)
 			{
-				pSingleton->Layout(1, CutDir_Horizon, Org);
+				pSingleton->New_Layout(1, CutDir_Horizon, Org);
 			}
 			else if (i_first_op_times == 3)
 			{
-				pSingleton->Layout(1, CutDir_Horizon, Org);
+				pSingleton->New_Layout(1, CutDir_Horizon, Org);
 			}
 			else if (i_first_op_times == 4)
 			{
-				pSingleton->Layout(1, CutDir_Horizon, Org);
+				pSingleton->New_Layout(1, CutDir_Horizon, Org);
 			}
 			else
 			{
-				pSingleton->Layout(1, CutDir_Horizon, Org);
+				pSingleton->New_Layout(1, CutDir_Horizon, Org);
 			}
 		}
 		else
@@ -1613,11 +1613,11 @@ void  CDlgResult::OnLayout()
 
 			if (i_first_op_times > flag) // 随机
 			{
-				pSingleton->Layout(0, CutDir_Horizon, Org);
+				pSingleton->New_Layout(0, CutDir_Horizon, Org);
 			}
 			else
 			{
-				pSingleton->Layout(1, CutDir_Horizon, Org);
+				pSingleton->New_Layout(1, CutDir_Horizon, Org);
 			}
 		}
 
@@ -1642,7 +1642,7 @@ void  CDlgResult::OnLayout()
 	pSingleton->UpdateComponentMachiningInfo();
 	pSingleton->UpdatePreCombinedComponent();
 
-	ResetResultDlg();
+//	ResetResultDlg();
 }
 
 
