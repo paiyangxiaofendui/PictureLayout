@@ -157,6 +157,7 @@ int CSingleon::New_Layout(int Method, int CutStyle, int Org)
 			pSolution->New_LayoutOptimization_MinWaste(CutStyle, Org);					// ÓÅ»¯
 //		}
 
+		pSolution->FixPanelSize();
 		m_CurrentSolutionList.push_back(pSolution);
 	}
 
