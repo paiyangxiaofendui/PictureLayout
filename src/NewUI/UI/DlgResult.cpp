@@ -1642,7 +1642,7 @@ void  CDlgResult::OnLayout()
 	pSingleton->UpdateComponentMachiningInfo();
 	pSingleton->UpdatePreCombinedComponent();
 
-//	ResetResultDlg();
+	ResetResultDlg();
 }
 
 
@@ -1895,6 +1895,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 				{
 					string pic_path		= pCurPic->Attribute("path");
 					string texture		= pCurPic->Attribute("Texture");
+					string material		= pCurPic->Attribute("Material");
 					int	num				= stoi(pCurPic->Attribute("Number"));
 					float w_mm			= stof(pCurPic->Attribute("Length"));
 					float h_mm			= stof(pCurPic->Attribute("Width"));
@@ -1925,6 +1926,14 @@ void CDlgResult::OnOpenSourcePicInfo()
 					componentInputItem.m_fWidth		= h_mm;
 					componentInputItem.m_nCount		= num;
 					componentInputItem.m_strTexture = texture.c_str();
+					componentInputItem.m_strMaterial = material.c_str();
+					componentInputItem.m_strOtherShapeID = "вь0";
+					componentInputItem.m_strAbnormalInfo = OtherShapeHelper::GetPointInfoStringFromPointInfo(
+						OtherShapeHelper::getPointInfoRectangle(
+						string(GetFloatString((int)componentInputItem.m_eRotateType, 0)), \
+						string(GetFloatString(componentInputItem.m_fLength, 1)), \
+						string(GetFloatString(componentInputItem.m_fWidth, 1))) \
+						).c_str();
 
 					m_vComponentInputItem.push_back(componentInputItem);
 
@@ -1937,7 +1946,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 			{
 				for (TiXmlElement* pCurRM = pRMSetElem->FirstChildElement("RawMaterial"); pCurRM != NULL; pCurRM = (TiXmlElement*)(pCurRM->NextSibling("RawMaterial")))
 				{
-					string name = pCurRM->Attribute("Name");
+					string name = pCurRM->Attribute("Material");
 					float len	=  stof(pCurRM->Attribute("Length"));
 					float width	=  stof(pCurRM->Attribute("Width"));
 

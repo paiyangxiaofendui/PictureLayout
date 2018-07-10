@@ -1281,19 +1281,22 @@ void GetComponentRegion(vector<PointInfo>& vAllOutlinePoint, CRect rcComponent, 
 	GraphicsPath pathComponentOutter;
 	//vector<PointInfo> vOutterOutlinePoint;
 	//GetOutterOutlineVertex(vAllOutlinePoint, vOutterOutlinePoint);
-	GetOutlinePath(vOutlinePointGroup[vOutlinePointGroup.size()-1], rcComponent, fScale, pathComponentOutter);
-	Region regionComponentOutter(&pathComponentOutter);
-	
-	for(int i = 0; i < vOutlinePointGroup.size()-1; i++)
+	if (vOutlinePointGroup.size() > 0)
 	{
-		GraphicsPath pathComponentOneInner;
-		GetOutlinePath(vOutlinePointGroup[i], rcComponent, fScale, pathComponentOneInner);
-		Region regionComponentOneInner(&pathComponentOneInner);
-		regionComponentOutter.Exclude(&regionComponentOneInner);
-	}
+		GetOutlinePath(vOutlinePointGroup[vOutlinePointGroup.size()-1], rcComponent, fScale, pathComponentOutter);
+		Region regionComponentOutter(&pathComponentOutter);
 
-	regionComponent.MakeEmpty();
-	regionComponent.Union(&regionComponentOutter);
+		for(int i = 0; i < vOutlinePointGroup.size()-1; i++)
+		{
+			GraphicsPath pathComponentOneInner;
+			GetOutlinePath(vOutlinePointGroup[i], rcComponent, fScale, pathComponentOneInner);
+			Region regionComponentOneInner(&pathComponentOneInner);
+			regionComponentOutter.Exclude(&regionComponentOneInner);
+		}
+
+		regionComponent.MakeEmpty();
+		regionComponent.Union(&regionComponentOutter);
+	}
 }
 
 bool SortMaterialListData(std::map<std::string,std::string>& first, std::map<std::string,std::string>& second)

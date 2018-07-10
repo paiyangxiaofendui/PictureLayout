@@ -428,8 +428,8 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 		m_lcTotalMaterial.SetItemText(nItem, 2, GetFloatString(pSolution->m_PanelList.size(), 0));
 
 		// 面积 = 大板面积x数量x平均利用率
-		float fAverageAvailability = 100 - GetSolutionRemainderToatlArea(*pSolution) * 100 / GetSolutionPanelTotalArea(*pSolution);
-		float fUsedArea = pSolution->m_BaseInfo.m_PanelLength/1000.0 * pSolution->m_BaseInfo.m_PanelWidth/1000.0 * pSolution->GetPanelNum() * fAverageAvailability/100.0;	// 平方毫米转平方米 利用率/100
+		float fAverageAvailability	= 0.5;//100 - GetSolutionRemainderToatlArea(*pSolution) * 100 / GetSolutionPanelTotalArea(*pSolution);
+		float fUsedArea				= 100;//pSolution->m_BaseInfo.m_PanelLength/1000.0 * pSolution->m_BaseInfo.m_PanelWidth/1000.0 * pSolution->GetPanelNum() * fAverageAvailability/100.0;	// 平方毫米转平方米 利用率/100
 
 		m_lcTotalMaterial.SetItemText(nItem, 3, GetFloatString(/*GetSolutionComponentToatlArea(*pSolution)*/fUsedArea, 2));
 		m_lcTotalMaterial.SetItemText(nItem, 4, GetFloatString(fAverageAvailability, 1) + _T("%"));

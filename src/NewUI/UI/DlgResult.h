@@ -18,6 +18,7 @@
 #include "./UICommon/DialogChildBase.h"
 #include "./UICommon/PngButton.h"
 #include "../UIData/UIData.h"
+#include "../Misc/OtherShapeHelper.h"
 
 // CDlgResult ¶Ô»°¿ò
 
