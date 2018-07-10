@@ -68,7 +68,7 @@ float Panel::GetUtilization(void)
 	float panel_area = 0, cpn_area = 0, remain_area = 0;
 	vector<Node*> RemainderList;
 
-	panel_area = GetArea();
+	panel_area = m_OrgLen*m_OrgWidth;//GetArea();
 
 	//GetAllLeafNodes(RemainderList, NodeType_Remainder);
 
@@ -86,16 +86,16 @@ float Panel::GetUtilization(void)
 	for (vector<Node*>::iterator it = RemainderList.begin(); it != RemainderList.end(); it++)
 	{
 		Component* pCpn = static_cast<Component*>(*it);
-		cpn_area += pCpn->GetAreaContainKerf();
+		cpn_area += pCpn->GetArea();
 	}
 
 	// ¼ÓÉÏÐÞ±ß
 	CSingleon* pSingleton = CSingleon::GetSingleton();
-	float DeburringWidth = pSingleton->m_BaseInfo.m_DeburringWidth;
-	float DeburringArea = m_OrgLen*DeburringWidth + (m_OrgWidth-DeburringWidth)*DeburringWidth;
+// 	float DeburringWidth = pSingleton->m_BaseInfo.m_DeburringWidth;
+// 	float DeburringArea = m_OrgLen*DeburringWidth + (m_OrgWidth-DeburringWidth)*DeburringWidth;
 
 
-	utilization = (cpn_area + DeburringArea) / panel_area;
+	utilization = (cpn_area /*+ DeburringArea*/) / panel_area;
 
 
 	return utilization;

@@ -835,13 +835,13 @@ int CSolution::New_LayoutOptimization_MinWaste(int CutStyle, int Org)
 
 		// Panel的信息
 		pPanel->m_OriginX		= m_BaseInfo.m_left_offset;								// 设置原点x 相对原始大板左下角的坐标
-		pPanel->m_OriginY		= m_BaseInfo.m_right_offset;								// 设置原点y 相对原始大板左下角的坐标
+		pPanel->m_OriginY		= m_BaseInfo.m_bottom_offset;								// 设置原点y 相对原始大板左下角的坐标
 
 		// Component的信息
 		pPanel->m_x				= m_BaseInfo.m_left_offset;														// 设置原点x 相对原始大板左下角的坐标
-		pPanel->m_y				= m_BaseInfo.m_right_offset;													// 设置原点y 相对原始大板左下角的坐标
-		pPanel->m_RealLength	= pPanel->m_OrgLen	 - m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset;		// 设置大板真实长 需减去左右修边
-		pPanel->m_RealWidth		= pPanel->m_OrgWidth - m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset;		// 设置大板真实宽 需减去上下修边
+		pPanel->m_y				= m_BaseInfo.m_bottom_offset;													// 设置原点y 相对原始大板左下角的坐标
+		pPanel->m_RealLength	= pPanel->m_OrgLen	 - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);		// 设置大板真实长 需减去左右修边
+		pPanel->m_RealWidth		= pPanel->m_OrgWidth - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);		// 设置大板真实宽 需减去上下修边
 		pPanel->m_Material		= m_strMaterial;																// 设置大板材质
 		pPanel->m_Thickness		= m_fThickness;																	// 设置大板厚度
 		pPanel->m_type			= NodeType_Remainder;															// 设置大板节点类型
@@ -935,13 +935,13 @@ int CSolution::New_LayoutOptimization_MinWaste(int CutStyle, int Org)
 
 			// Panel的信息
 			pPanel->m_OriginX		= m_BaseInfo.m_left_offset;									// 设置原点x 相对原始大板左下角的坐标
-			pPanel->m_OriginY		= m_BaseInfo.m_right_offset;								// 设置原点y 相对原始大板左下角的坐标
+			pPanel->m_OriginY		= m_BaseInfo.m_bottom_offset;								// 设置原点y 相对原始大板左下角的坐标
 
 			// Component的信息
 			pPanel->m_x				= m_BaseInfo.m_left_offset;														// 设置原点x 相对原始大板左下角的坐标
-			pPanel->m_y				= m_BaseInfo.m_right_offset;													// 设置原点y 相对原始大板左下角的坐标
-			pPanel->m_RealLength	= pPanel->m_OrgLen	 - m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset;		// 设置大板真实长 需减去左右修边
-			pPanel->m_RealWidth		= pPanel->m_OrgWidth - m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset;		// 设置大板真实宽 需减去上下修边
+			pPanel->m_y				= m_BaseInfo.m_bottom_offset;													// 设置原点y 相对原始大板左下角的坐标
+			pPanel->m_RealLength	= pPanel->m_OrgLen	 - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);;		// 设置大板真实长 需减去左右修边
+			pPanel->m_RealWidth		= pPanel->m_OrgWidth - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);;		// 设置大板真实宽 需减去上下修边
 			pPanel->m_Material		= m_strMaterial;											// 设置大板材质
 			pPanel->m_Thickness		= m_fThickness;												// 设置大板厚度
 			pPanel->m_type			= NodeType_Remainder;										// 设置大板节点类型
@@ -2104,7 +2104,7 @@ void CSolution::FixPanelSize()
 
 			}
 
-			pPanel->m_OrgWidth = max_y - offset;
+			pPanel->m_OrgWidth = max_y + m_BaseInfo.m_top_offset  - offset;
 			pPanel->m_RealWidth = max_y - min_y;
 
 

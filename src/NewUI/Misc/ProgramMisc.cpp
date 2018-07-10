@@ -118,7 +118,7 @@ float GetSolutionPanelTotalArea(CSolution& theSolution)
 	{
 		Panel* thePanel = theSolution.m_PanelList[i];
 
-		float fPanelArea = (thePanel->m_RealLength * thePanel->m_RealWidth) / (1000.0 * 1000.0);
+		float fPanelArea = (thePanel->m_OrgLen * thePanel->m_OrgWidth) / (1000.0 * 1000.0);
 		fRet += fPanelArea;
 
 	}

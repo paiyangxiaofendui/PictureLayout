@@ -1496,7 +1496,7 @@ void  CDlgResult::OnLayout()
 
 
 	// 保存原始板件数据
-	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
+	pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
 
 	// 清空所有数据,准备优化
 	ClearAllData();
@@ -1531,7 +1531,7 @@ void  CDlgResult::OnLayout()
 		pSingleton->m_vComponentGroup.clear();
 
 		// 输入小板分组
-		ConvertInputInfoToComponentList(m_vComponentInputItem, m_vPreCombineItem, componentList);
+		ConvertInputInfoToComponentList(vOptimizeComponent, m_vPreCombineItem, componentList);
 
 		// 由于存在无纹理比有纹理利用率更差的情况，无纹理优化时，先横竖纹各排一次
 		int text_index = i_progress%5;
@@ -1659,6 +1659,7 @@ void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>&
 {
 	CSingleon* pSingleton = CSingleon::GetSingleton();
 	BaseInfo base_info = pSingleton->m_BaseInfo;
+	float panel_offset = base_info.m_left_offset + base_info.m_right_offset;
 	vector<ComponentInputItem>::iterator it, it_begin, it_end;
 	CString strMsg;
 
@@ -1669,14 +1670,14 @@ void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>&
 		bool bOverSize = false;
 		if (pCpn.m_strTexture == "无纹理")
 		{
-			if(pCpn.m_fLength > base_info.m_PanelLength - 2*base_info.m_DeburringWidth 
-				|| pCpn.m_fWidth > base_info.m_PanelWidth - 2*base_info.m_DeburringWidth
+			if(pCpn.m_fLength > base_info.m_PanelLength - panel_offset 
+				|| pCpn.m_fWidth > base_info.m_PanelWidth - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
 				// 旋转后，再次判断
-				if (pCpn.m_fLength >  base_info.m_PanelWidth - 2*base_info.m_DeburringWidth 
-					|| pCpn.m_fWidth > base_info.m_PanelLength - 2*base_info.m_DeburringWidth
+				if (pCpn.m_fLength >  base_info.m_PanelWidth - panel_offset 
+					|| pCpn.m_fWidth > base_info.m_PanelLength - panel_offset
 					|| pCpn.m_fLength <= 0
 					|| pCpn.m_fWidth <= 0)
 				{
@@ -1687,8 +1688,8 @@ void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>&
 		}
 		else if(pCpn.m_strTexture == "横纹")
 		{
-			if (pCpn.m_fLength > base_info.m_PanelLength - 2*base_info.m_DeburringWidth 
-				|| pCpn.m_fWidth > base_info.m_PanelWidth - 2*base_info.m_DeburringWidth
+			if (pCpn.m_fLength > base_info.m_PanelLength - panel_offset
+				|| pCpn.m_fWidth > base_info.m_PanelWidth - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
@@ -1698,8 +1699,8 @@ void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>&
 		}
 		else
 		{
-			if(pCpn.m_fLength >  base_info.m_PanelWidth - 2*base_info.m_DeburringWidth 
-				|| pCpn.m_fWidth > base_info.m_PanelLength - 2*base_info.m_DeburringWidth
+			if(pCpn.m_fLength >  base_info.m_PanelWidth - panel_offset 
+				|| pCpn.m_fWidth > base_info.m_PanelLength - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
