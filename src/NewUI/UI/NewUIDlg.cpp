@@ -60,7 +60,7 @@ BOOL CDlgNewUI::OnInitDialog()
 
 	m_pDlgResult->MoveWindow(rt);
 
-
+	ShowWindow(SW_SHOWMAXIMIZED);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
