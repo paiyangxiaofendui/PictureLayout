@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+#include <atlconv.h >
 #include "DlgResult.h"
 #include "afxdialogex.h"
 #include "DlgTotalResult.h"
@@ -176,8 +177,8 @@ void CDlgResult::OnPaint()
 
 
 	Graphics g(dcMem.m_hDC);
-	COLORREF colBK = RGB(255, 255, 224);//GetSysColor(CTLCOLOR_DLG);//GetBkColor(dc.m_hDC);
-
+	//COLORREF colBK = RGB(255, 255, 224);//GetSysColor(CTLCOLOR_DLG);//GetBkColor(dc.m_hDC);
+	COLORREF colBK = RGB(255, 255, 255);
 	g.FillRectangle(&SolidBrush(Color(GetRValue(colBK), GetGValue(colBK), GetBValue(colBK))), rcClient.left, rcClient.top, rcClient.Width(), rcClient.Height());
 
 	rcDrawArea = GetPanelViewRect();
@@ -187,6 +188,80 @@ void CDlgResult::OnPaint()
 	{
 		DrawPanel(&dcMem, pParam->m_pPanel, rcDrawArea, *pParam);
 	}
+
+
+	CRect rt_demo(0, 200, 200, 0);
+	rt_demo.NormalizeRect();
+
+	int row_num = rcClient.Width() / rt_demo.Width() + 1;
+	int column_num = rcClient.Height() / rt_demo.Height() + 1;
+
+	for (int i_row = 0; i_row <= row_num; i_row++)
+	{
+		for (int j_column = 0; j_column <= column_num; j_column++)
+		{
+			PointF pos;
+
+			pos.X = rt_demo.Width() *(i_row);
+			pos.Y = rt_demo.Height()*(j_column);
+
+			Gdiplus::Font myFont(L"Segoe UI", 60, FontStyleRegular,UnitPixel);	
+			StringFormat format;
+			format.SetAlignment(StringAlignmentCenter);
+			SolidBrush blackBrush(Color(20, 100, 100, 100));
+			//g.DrawString(L"Demo", -1, &myFont, pos, &format,&blackBrush);
+
+			RectF rfLogo( rcClient.left + pos.X ,rcClient.top+ pos.Y, rt_demo.Width(), rt_demo.Height());
+			
+
+			g.TranslateTransform(pos.X, pos.Y);
+			g.RotateTransform(-45);
+			g.TranslateTransform(-pos.X, -pos.Y);
+			g.DrawString(L"Demo", -1, &myFont, rfLogo, &format, &blackBrush);
+			g.ResetTransform();
+		}
+	}
+
+
+
+
+// 	Gdiplus::Font myFont(L"Segoe UI", 50, FontStyleRegular,UnitPixel);	
+// 	StringFormat format;
+// 	format.SetAlignment(StringAlignmentCenter);
+// 	SolidBrush blackBrush(Color(50, 100, 100, 100));
+// 	g.DrawString(L"Demo", -1, &myFont, PointF(200 ,200), &format,&blackBrush);
+
+// 	int nXPos = 30, nYPos = 80;
+// 	int nRow = 0;
+// 
+// 
+// 	RectF rfMeasure(0, 100, 100, 0);
+// 	CString strTmp="Demo";
+// 
+// 	while(nYPos < rcClient.Height())
+// 	{
+// 		nXPos = (nRow%2 == 0) ? 30 : 30 + rfMeasure.Width;
+// 		while(nXPos < rcClient.Width())
+// 		{
+// 			float fTextCenterX = rcClient.left + (nXPos + rfMeasure.Width/2.0);
+// 			float fTextCenterY = rcClient.top + (nYPos + rfMeasure.Height/2.0);
+// 			RectF rfLogo(rcClient.left + nXPos, rcClient.top + nYPos, rfMeasure.Width + 10, rfMeasure.Height + 10);
+// 			g.TranslateTransform(fTextCenterX, fTextCenterY);
+// 			g.RotateTransform(-45);
+// 			g.TranslateTransform(-fTextCenterX, -fTextCenterY);
+// 			g.DrawString(A2W(strTmp), -1, &fontLogo, rfLogo, &sfLogo, &brushLogo);
+// 			g.ResetTransform();
+// 
+// 			nXPos += 450;
+// 		}
+// 		nYPos += 450;
+// 		nRow++;
+// 	}
+
+
+
+
+
 
 
 	dc.BitBlt(0, 0, rcClient.Width(), rcClient.Height(), &dcMem, 0, 0, SRCCOPY);
