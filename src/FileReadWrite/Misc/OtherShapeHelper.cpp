@@ -4,10 +4,11 @@
 #include <algorithm>
 #include "HGTools.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
-//#include "../../../include/Encryption/base64/base64.h"
-#include "EncryptionInterface.h"
 #include "Misc.h"
 #include "ProgramMisc.h"
+
+
+#include "../../../include/muParser/muParserDLL.h"
 
 
 bool OtherShapeHelper::isLoadPanelOutlineList = false;
@@ -350,6 +351,23 @@ void OtherShapeHelper::RotateOtherShapeParamPoint(std::vector<param_point>& pa_p
 	}
 }
 
+float OtherShapeHelper::calcFormula(std::string formula)
+{
+
+	muParserHandle_t hParser;
+	hParser = mupCreate(muBASETYPE_FLOAT); // initialize the parser
+	mupSetExpr(hParser, formula.c_str());
+
+
+
+	float val = mupEval(hParser);
+	mupRelease(hParser); // finalle free the parser ressources
+	return val;
+
+}
+
+
+
 // 用异形string参数，替换公共异形参数点阵，计算参数点阵到普通点阵
 // ID:2016;PW:50;PD:60;gapWidth:10;gapHeight:20; + {[x:"PD-gapWidth",y:"PW-gapHeight"]} => {[ x:50.0 , y:30.0 ]}
 std::vector<PointInfo> OtherShapeHelper::GetPointInfoFromPanelOutLineAndParamPoint( std::vector<std::map<std::string,std::string>> panelOutline, std::vector<param_point> pa_p )
@@ -382,9 +400,9 @@ std::vector<PointInfo> OtherShapeHelper::GetPointInfoFromPanelOutLineAndParamPoi
 		if (panelOutline[i]["Sign"].compare("-1") != 0)
 		{
 			PointInfo pointInfo;
-			pointInfo.x = KnifeClass::calcFormula(panelOutline[i]["X"]);
-			pointInfo.y = KnifeClass::calcFormula(panelOutline[i]["Y"]);
-			pointInfo.r = KnifeClass::calcFormula(panelOutline[i]["R"]);
+			pointInfo.x = calcFormula(panelOutline[i]["X"]);
+			pointInfo.y = calcFormula(panelOutline[i]["Y"]);
+			pointInfo.r = calcFormula(panelOutline[i]["R"]);
 			pointInfo.sign = atoi(panelOutline[i]["Sign"].c_str());
 			pointInfo.dir = atoi(panelOutline[i]["Dir"].c_str());
 			pointInfo.cut = atoi(panelOutline[i]["Cut"].c_str());
@@ -396,130 +414,6 @@ std::vector<PointInfo> OtherShapeHelper::GetPointInfoFromPanelOutLineAndParamPoi
 	return m_pointInfos;
 }
 
-// 获得公共异形参数点阵
-// ID:2016;...  => {[x:"PD-gapWidth",y:"PW-gapHeight"]}
-std::vector<std::map<std::string,std::string>> OtherShapeHelper::GetOtherShapePanelOutLineListFromOtherShapeID( std::string otherShapeID )
-{
-	//点集合
-	std::vector<std::map<std::string,std::string>> result;
-
-	if (!isLoadPanelOutlineList)
-	{
-		isLoadPanelOutlineList = true;
-
-
-
-		// 新的加解密方式
-#if (NEW_ENCRYPT_BASE64 == 1)
-
-		// hge文件路径和xml文件路径
-		CString strTmp;
-		strTmp.Format(_T("kdata\\PanelOutlineList%s"), g_szSuffix);
-		CString hgePath = HGTools::getRelativePath(strTmp);
-		CString xmlPath = HGTools::getXmlPathFromHgxPath(hgePath);
-
-		// 解密文件
-		decrypt_base64(hgePath.GetBuffer(), xmlPath.GetBuffer());
-
-
-#else
-
-		//配置文件路径
-		CString hgmPath = HGTools::getRelativePath("kdata\\PanelOutlineList.hgm");
-		CString xmlPath = HGTools::getXmlPathFromHgxPath(hgmPath);
-
-		//解密
-		//HGTools::decryptFile(hgmPath,xmlPath);
-
-#endif
-
-
-
-
-
-		docPanelOutlineList.LoadFile(xmlPath);
-
-		//关闭文件
-		HGTools::deleteFile(xmlPath);
-	}
-
-	//加载辅助
-	//TinyXml::XmlHandlePlus docHandler(&docPanelOutlineList);
-	//std::vector<TinyXml::TiXmlNode*> PanelOutlineArr = docHandler.findAll("/PanelOutlineList/PanelOutline",TinyXml::XmlAttrValueCompare("StyleId",otherShapeID));
-	TiXmlElement* elmRoot = docPanelOutlineList.RootElement();
-	XmlHandler xmlHandler;
-	TiXmlElement* elmThePanelOutline = xmlHandler.GetIndicatedElement(elmRoot, "PanelOutline", "StyleId", otherShapeID.c_str());
-	//if (PanelOutlineArr.size() != 1)
-	if(elmThePanelOutline  == NULL)
-	{
-		return result;
-	}
-
-
-	//加载所有vector节点
-	//TinyXml::XmlHandlePlus PanelOutlineHandler(PanelOutlineArr[0]);
-	//std::vector<TinyXml::TiXmlNode*> VectorArr = PanelOutlineHandler.findAll("Vector");
-	vector<TiXmlElement*> vVector = xmlHandler.GetChildElms(elmThePanelOutline, "Vector");
-	//for (int i = 0;i<VectorArr.size();i++)
-	for (int i = 0;i<vVector.size();i++)
-	{
-		std::map<std::string,std::string> strPointInfo;
-		//TinyXml::XmlHandlePlus vectorHandler(VectorArr[i]);
-		TiXmlElement* elmVector = vVector[i];
-
-		//std::string str_x = vectorHandler.getAttr("X","0");
-		//std::string str_y = vectorHandler.getAttr("Y","0");
-		//std::string str_r = vectorHandler.getAttr("R","0");
-		//std::string str_sign = vectorHandler.getAttr("Sign","0");
-		//std::string str_dir = vectorHandler.getAttr("Dir","0");
-		//std::string str_cut = vectorHandler.getAttr("Cut","0");
-		//std::string str_type = vectorHandler.getAttr("type","0");
-		//std::string str_group = vectorHandler.getAttr("Group","0");
-		//std::string str_side = vectorHandler.getAttr("Side","0");
-		CString strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "X", strTmp);
-		std::string str_x = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "Y", strTmp);
-		std::string str_y = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "R", strTmp);
-		std::string str_r = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "Sign", strTmp);
-		std::string str_sign = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "Dir", strTmp);
-		std::string str_dir = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "Cut", strTmp);
-		std::string str_cut = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "type", strTmp);
-		std::string str_type = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "Group", strTmp);
-		std::string str_group = strTmp;
-		strTmp = "0";
-		xmlHandler.GetXmlAttribute(elmVector, "Side", strTmp);
-		std::string str_side = strTmp;
-
-		strPointInfo["X"] = str_x;
-		strPointInfo["Y"] = "(" + str_y + ")";////////////////////////////////////////////////////////////////
-		strPointInfo["R"] = str_r;
-		strPointInfo["Sign"] = str_sign;
-		strPointInfo["Dir"] = str_dir;
-		strPointInfo["Cut"] = str_cut;
-		strPointInfo["type"] = str_type;
-		strPointInfo["Group"] = str_group;
-		strPointInfo["Side"] = str_side;
-
-		result.push_back(strPointInfo);
-	}
-
-
-	return result;
-}
 
 //异形string中获取 ID数据
 std::string OtherShapeHelper::GetOtherShapeId( const std::string& otherShapeID )

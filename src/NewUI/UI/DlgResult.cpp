@@ -13,7 +13,7 @@
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/FileReadWrite/DxfReadWrite/DxfReadWrite.h"
 #include "../../../include/FileReadWrite/HgyReadWrite/HgyReadWrite.h"
 #include "../../../include/FileReadWrite/Misc/HGCode.h"
@@ -69,7 +69,7 @@ CDlgResult::~CDlgResult()
 	if(m_pRemainderCutting)
 		delete m_pRemainderCutting;
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	if (pSingleton != NULL)
 	{
 		pSingleton->ClearAllData();
@@ -1070,7 +1070,7 @@ void CDlgResult::DrawComponentToPos(Component* pComponent, CPoint ptComponent, b
 	//fXClickedInPanel = (ptComponent.x - rcPanelUIRect.left) / fScale;
 	//fYClickedInPanel = (-(ptComponent.y - rcPanelUIRect.bottom)) / fScale;
 	//CPoint ptInPanel(fXClickedInPanel, fYClickedInPanel);
-	//CSingleon* pSingleton = CSingleon::GetSingleton();
+	//CSingleton* pSingleton = CSingleton::GetSingleton();
 	//if(!IsComponentOverlap(pParam->m_pPanel, pComponent, ptInPanel, pSingleton->m_BaseInfo.m_SawKerfWidth) \
 	//	&& IsComponentInPanelClipped(pParam->m_pPanel, pComponent, ptInPanel, pSingleton->m_BaseInfo.m_DeburringWidth))
 	DrawingPanelParam param;
@@ -1102,7 +1102,7 @@ bool CDlgResult::IsPosCanPasteComponent(Panel* pPanel, Component* pComponent, Po
 	bool bRet = false;
 
 	PointFloat ptInPanel = /*ConvertUIPosToPanelPos(pPanel, ptComponentUILeftTop)*/ptComponentUILeftTop;
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	if(pPanel->m_Material.CompareNoCase(pComponent->m_Material) == 0 \
 		&& IsFloatEqual(pPanel->m_Thickness, pComponent->m_Thickness) \
 		&&!IsComponentOverlap(pPanel, pComponent, ptInPanel, pSingleton->m_BaseInfo.m_SawKerfWidth) \
@@ -1176,7 +1176,7 @@ PointFloat CDlgResult::GetAttachPanelPos_Component(CPoint ptMouseInUI, float fCo
 	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
 	if(pParam && pParam->m_pPanel)
 	{
-		CSingleon* pSingleton = CSingleon::GetSingleton();
+		CSingleton* pSingleton = CSingleton::GetSingleton();
 		float fKerf = pSingleton->m_BaseInfo.m_SawKerfWidth;
 
 		PointFloat ptMouseInPanel = ConvertUIPosToPanelPos(pParam->m_pPanel, ptMouseInUI);
@@ -1403,7 +1403,7 @@ void CDlgResult::OnMenuRotatePastingComponent()
 
 void CDlgResult::ClearAllData()
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 	pSingleton->ClearAllData();
 	ResetResultDlg();
@@ -1416,7 +1416,7 @@ void CDlgResult::OnOpenSolution()
 	// TODO: 在此添加命令处理程序代码
 
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 	CString strTmp;
 
@@ -1460,7 +1460,7 @@ void CDlgResult::OnOpenSolution()
 				m_vComponentInputItem = pSingleton->m_vBackupComponentInputItem;
 
 				for(int i = 0; i < m_vComponentInputItem.size(); i++)
-					m_vComponentInputItem[i].m_uSerialID = CSingleon::GetSingleton()->m_uComponentInputItemSerialID++;
+					m_vComponentInputItem[i].m_uSerialID = CSingleton::GetSingleton()->m_uComponentInputItemSerialID++;
 
 				// 检查板件是否有超出尺寸范围的，删掉
 				//CheckComponentList(m_vComponentInputItem);
@@ -1508,7 +1508,7 @@ void  CDlgResult::OnLayout()
 	UpdateData(TRUE);
 
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 	// 设置原始信息：备份输入板件组、原料、规则
 	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
@@ -1732,7 +1732,7 @@ void  CDlgResult::OnLayout()
  */
 void CDlgResult::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem)
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	BaseInfo base_info = pSingleton->m_BaseInfo;
 	float panel_offset = base_info.m_left_offset + base_info.m_right_offset;
 	vector<ComponentInputItem>::iterator it, it_begin, it_end;
@@ -1922,7 +1922,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 {
 
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 	CString filter = "xml 文件(*.xml)|*.xml|所有文件 (*.*)|*.*||";
 	CFileDialog fileDlg (true, _T("xml"), _T("*.xml"), OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, filter, NULL);

@@ -9,7 +9,7 @@ using namespace std;
 #include "../Misc/Misc.h"
 #include "../Misc/EncryptionInterface.h"
 #include "../../../include/TinyXml/tinyxml.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/DataManager/BaseDataType/RemainderGroup/RemainderGroup.h"
 #include "../../../include/DataManager/BaseDataType/RemainderItem/RemainderItem.h"
 #include "../../../include/DataManager/BaseDataType/RemainderManager/RemainderManager.h"
@@ -48,7 +48,7 @@ bool RemainderLibraryReadWrite::Read(char* file_name)
 		return false;
 	}
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	RemainderManager& RmdMgr = pSingleton->m_RemainderManager;
 
 	// 清空原有的余料
@@ -79,7 +79,7 @@ bool RemainderLibraryReadWrite::Read(char* file_name)
 
 bool RemainderLibraryReadWrite::Write(char* file_name)
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	RemainderManager& RmdMgr = pSingleton->m_RemainderManager;
 
 	TiXmlDocument* m_xmlDoc = new TiXmlDocument();

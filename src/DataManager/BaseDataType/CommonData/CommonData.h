@@ -8,13 +8,7 @@
 
 using namespace std;
 
-// 全局宏定义
-#define		NEW_ENCRYPT_BASE64		1
 
-#define HG_EDITION 0
-#define YW_EDITION 1
-
-#define CUR_EDITION HG_EDITION
 
 
 

@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
-///	CSingleon.h    --  单例类声明文件
+///	CSingleton.h    --  单例类声明文件
 //	
 //	作者：	yuanzb
 //	时间：	2016.11.8
@@ -7,8 +7,8 @@
 //	
 /*--------------------------------------------------------------------------------------------------------------------*/
 
-#ifndef		_CSingleon_H_ 
-#define		_CSingleon_H_
+#ifndef		_CSingleton_H_ 
+#define		_CSingleton_H_
 
 #include <vector>
 #include "../RawMaterialInfo/RawMaterialInfo.h"
@@ -28,13 +28,11 @@ using namespace TinyXml;
 #ifdef DEBUG 
 
 #pragma comment(lib, "../../lib/tinyxmld.lib")
-#pragma comment(lib, "../../lib/KnifeDlld.lib")
 #pragma  message(".......................................当前为debug版本")
 
 #else
 
 #pragma comment(lib, "../../lib/tinyxml.lib")
-#pragma comment(lib, "../../lib/KnifeDll.lib")
 #pragma  message(".......................................当前为release版本")
 
 #endif
@@ -51,15 +49,23 @@ class Component;
     * @brief	软件数据管理器 \n
     *			使用单例模式，管理最核心的数据结构
     */
-class AFX_EXT_CLASS CSingleon
+class AFX_EXT_CLASS CSingleton
 {
 public:
-	~CSingleon();
-	static CSingleon* GetSingleton(void);
+	/** 
+	* @brief 单例类
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	~CSingleton();
+	static CSingleton* GetSingleton(void);
 
 private:
-	CSingleon();
-	static CSingleon* m_pSingleton;
+	CSingleton();
+	static CSingleton* m_pSingleton;
 
 public:
 	// 接口函数
@@ -100,7 +106,6 @@ public:
 	BaseInfo m_BaseInfo;														/**< 基本信息	*/ 
 	vector<RawMaterialInfo> m_vRawMaterialList;									/**< 原料信息链表	*/ 
 	
-	KnifeClass* m_pKnifeClass;													/**< 导出NC所用的类  原有雕刻机软件	*/ 
 	vector<ComponentInputItem> m_vBackupComponentInputItem;						/**< 输入小板备份	*/ 
 	RemainderManager m_RemainderManager;										/**< 余料管理器	*/ 
 	UINT m_uComponentInputItemSerialID;											/**< 需切板件序列号，用于标识每一块需切板件	*/ 
@@ -109,15 +114,6 @@ public:
 public:
 	// 新增图片排样接口
 	int New_Layout(int Method, int CutStyle, int Org);				/**< 新排样优化	*/ 
-
-
-
-
-public:
-	// 跟生产、导出NC有关的数据结构
-
-	TiXmlDocument m_KnifetypeDoc;	/**< 刀库文件	*/
-
 
 
 

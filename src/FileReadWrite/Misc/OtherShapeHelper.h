@@ -1,8 +1,6 @@
 #ifndef		_OtherShapeHelper_H_
 #define		_OtherShapeHelper_H_
 
-#include "../../../include/KnifeDll/KnifeClass.h"
-//#include "../../../include/TinyXml/tinyxml.h"
 #include "../Misc/XmlHandlePlus.h"
 
 #include <string>
@@ -26,6 +24,9 @@ public:
 	OtherShapeHelper();
 
 public:
+
+
+	static float calcFormula(std::string formula);
 
 	// 获得异形PointInfo 
 	// x:50.0,y:30.0;  => {[ x:50.0 , y:30.0 ]}
@@ -85,9 +86,6 @@ public:
 	// ID:2016;PW:50;PD:60;gapWidth:10;gapHeight:20; + {[x:"PD-gapWidth",y:"PW-gapHeight"]} => {[ x:50.0 , y:30.0 ]}
 	static std::vector<PointInfo> GetPointInfoFromPanelOutLineAndParamPoint(std::vector<std::map<std::string,std::string>> panelOutline, std::vector<param_point> pa_p);
 
-	// 获得公共异形参数点阵
-	// ID:2016;...  => {[x:"PD-gapWidth",y:"PW-gapHeight"]}
-	static std::vector<std::map<std::string,std::string>> GetOtherShapePanelOutLineListFromOtherShapeID(std::string otherShapeID);
 
 	//异形string中获取 ID数据
 	static std::string GetOtherShapeId( const std::string& otherShapeID );

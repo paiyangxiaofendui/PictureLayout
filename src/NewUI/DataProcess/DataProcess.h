@@ -16,7 +16,7 @@ Component* ConvertOneInputInfoToOneComponent(ComponentInputItem& theInputItem);
 
 void SplitComponentList(ComponentList& componentList, vector<ComponentList>& vComponentList);
 
-void ProcessOptimize(/*CSingleon& data*/);
+void ProcessOptimize(/*CSingleton& data*/);
 
 void PreProcessOfExportGCode();
 

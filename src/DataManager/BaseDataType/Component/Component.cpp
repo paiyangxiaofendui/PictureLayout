@@ -440,7 +440,7 @@ float Component::GetArea(void)
 // 获取板件面积包含锯缝
 float  Component::GetAreaContainKerf(void)
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 	float half_kerf = pSingleton->m_BaseInfo.m_SawKerfWidth/2;
 	float area = (m_RealLength+half_kerf) * (m_RealWidth+half_kerf);

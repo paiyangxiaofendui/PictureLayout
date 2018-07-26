@@ -10,7 +10,7 @@
 
 #include "../../../include/FileCompressandUnCompress/FileCompressandUnCompress.h"
 #include "../../../include/TinyXml/tinyxml.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/KnifeDll/KnifeClass.h"
 //#include "../../../include/Encryption/base64/base64.h"
 #include "../Misc/EncryptionInterface.h"
@@ -1210,7 +1210,7 @@ void HgmReadWrite::LoadSettings_KnifeType()
 
 	
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	pSingleton->m_KnifetypeDoc.LoadFile(knifeType_xml);
 
 
@@ -1243,7 +1243,7 @@ void HgmReadWrite::SaveSettings_KnifeType()
 	CString knifeType_hge = HGTools::getRelativePath(strTmp);
 	CString knifeType_xml = HGTools::getXmlPathFromHgxPath(knifeType_hge);
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	pSingleton->m_KnifetypeDoc.SaveFile(knifeType_xml);
 
 	encrypt_base64(knifeType_xml.GetBuffer(), knifeType_hge.GetBuffer());
@@ -1258,7 +1258,7 @@ void HgmReadWrite::SaveSettings_KnifeType()
 	CString knifeType_hgm = HGTools::getRelativePath("kdata\\knifetype.hgm");
 	CString knifeType_xml = HGTools::getXmlPathFromHgxPath(knifeType_hgm);
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	pSingleton->m_KnifetypeDoc.SaveFile(knifeType_xml);
 
 

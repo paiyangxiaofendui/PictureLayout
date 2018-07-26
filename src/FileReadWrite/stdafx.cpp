@@ -4,9 +4,3 @@
 
 #include "stdafx.h"
 
-
-#if (CUR_EDITION == HG_EDITION)
-TCHAR* g_szSuffix = ".hge";
-#else
-TCHAR* g_szSuffix = ".ywe";
-#endif

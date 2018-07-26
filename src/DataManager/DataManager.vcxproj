@@ -112,7 +112,7 @@
     <ClCompile Include="BaseDataType\BaseInfo\BaseInfo.cpp" />
     <ClCompile Include="BaseDataType\CommonData\CommonData.cpp" />
     <ClCompile Include="BaseDataType\Component\Component.cpp" />
-    <ClCompile Include="BaseDataType\CSingleton\CSingleon.cpp" />
+    <ClCompile Include="BaseDataType\CSingleton\CSingleton.cpp" />
     <ClCompile Include="BaseDataType\CSolution\CSolution.cpp" />
     <ClCompile Include="BaseDataType\Node\Node.cpp" />
     <ClCompile Include="BaseDataType\Outline\Outline.cpp" />
@@ -141,7 +141,7 @@
     <ClInclude Include="BaseDataType\BaseInfo\BaseInfo.h" />
     <ClInclude Include="BaseDataType\CommonData\CommonData.h" />
     <ClInclude Include="BaseDataType\Component\Component.h" />
-    <ClInclude Include="BaseDataType\CSingleton\CSingleon.h" />
+    <ClInclude Include="BaseDataType\CSingleton\CSingleton.h" />
     <ClInclude Include="BaseDataType\CSolution\CSolution.h" />
     <ClInclude Include="BaseDataType\Node\Node.h" />
     <ClInclude Include="BaseDataType\Outline\Outline.h" />

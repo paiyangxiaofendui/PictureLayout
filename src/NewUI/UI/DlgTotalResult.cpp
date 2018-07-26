@@ -11,7 +11,7 @@
 #include <algorithm>
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
@@ -260,7 +260,7 @@ void  CDlgTotalResult::OnIdDeletePanel()
 		// 没有板件了 删除解决方案
 		if (nPanelCount == 0 )
 		{
-			CSingleon* pSingleton = CSingleon::GetSingleton();
+			CSingleton* pSingleton = CSingleton::GetSingleton();
 			vector<CSolution*>& SlnList =  pSingleton->m_BackupSolutionList;
 
 			vector<CSolution*>::iterator itr_cur_sln = std::find(SlnList.begin(), SlnList.end(), pCurSln);
@@ -331,21 +331,21 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 
 	int nItem = 0;
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 #if 0
-	for(int i = 0; i < CSingleon::GetSingleton()->m_CurrentSolutionList.size(); i++)
+	for(int i = 0; i < CSingleton::GetSingleton()->m_CurrentSolutionList.size(); i++)
 	{
-		CSolution* pSolution = CSingleon::GetSingleton()->m_CurrentSolutionList[i];
-		for(int j = 0; j < CSingleon::GetSingleton()->m_CurrentSolutionList[i]->m_PanelList.size(); j++)
+		CSolution* pSolution = CSingleton::GetSingleton()->m_CurrentSolutionList[i];
+		for(int j = 0; j < CSingleton::GetSingleton()->m_CurrentSolutionList[i]->m_PanelList.size(); j++)
 		{
-			Panel& thePanel = *(CSingleon::GetSingleton()->m_CurrentSolutionList[i]->m_PanelList[j]);
+			Panel& thePanel = *(CSingleton::GetSingleton()->m_CurrentSolutionList[i]->m_PanelList[j]);
 
 			CString strSize;
 			strSize.Format("%s*%s", GetFloatString(thePanel.m_RealLength, 0), GetFloatString(thePanel.m_RealWidth, 0));
 			PanelViewingParam* pParam = new PanelViewingParam;
-			pParam->m_pSolution = CSingleon::GetSingleton()->m_CurrentSolutionList[i];
-			pParam->m_pPanel = CSingleon::GetSingleton()->m_CurrentSolutionList[i]->m_PanelList[j];
+			pParam->m_pSolution = CSingleton::GetSingleton()->m_CurrentSolutionList[i];
+			pParam->m_pPanel = CSingleton::GetSingleton()->m_CurrentSolutionList[i]->m_PanelList[j];
 
 			m_lcTotalSolutionPanel.InsertItem(nItem, pSolution->m_strMaterial);			
 			m_lcTotalSolutionPanel.SetItemText(nItem, 1, GetFloatString(thePanel.m_Thickness, 0));	
@@ -358,18 +358,18 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 
 #else
 
-	for(int i = 0; i < CSingleon::GetSingleton()->m_BackupSolutionList.size(); i++)
+	for(int i = 0; i < CSingleton::GetSingleton()->m_BackupSolutionList.size(); i++)
 	{
-		CSolution* pSolution = CSingleon::GetSingleton()->m_BackupSolutionList[i];
-		for(int j = 0; j < CSingleon::GetSingleton()->m_BackupSolutionList[i]->m_PanelList.size(); j++)
+		CSolution* pSolution = CSingleton::GetSingleton()->m_BackupSolutionList[i];
+		for(int j = 0; j < CSingleton::GetSingleton()->m_BackupSolutionList[i]->m_PanelList.size(); j++)
 		{
-			Panel& thePanel = *(CSingleon::GetSingleton()->m_BackupSolutionList[i]->m_PanelList[j]);
+			Panel& thePanel = *(CSingleton::GetSingleton()->m_BackupSolutionList[i]->m_PanelList[j]);
 
 			CString strSize;
 			strSize.Format("%s*%s", GetFloatString(thePanel.m_OrgLen, 0), GetFloatString(thePanel.m_OrgWidth, 0));
 			PanelViewingParam* pParam = new PanelViewingParam;
-			pParam->m_pSolution = CSingleon::GetSingleton()->m_BackupSolutionList[i];
-			pParam->m_pPanel = CSingleon::GetSingleton()->m_BackupSolutionList[i]->m_PanelList[j];
+			pParam->m_pSolution = CSingleton::GetSingleton()->m_BackupSolutionList[i];
+			pParam->m_pPanel = CSingleton::GetSingleton()->m_BackupSolutionList[i]->m_PanelList[j];
 			pParam->m_bChecked = true;
 
 			CString strUtilization;
@@ -401,9 +401,9 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 
 	m_lcTotalMaterial.DeleteAllItems();
 	nItem = 0;
-	for(int i = 0; i < CSingleon::GetSingleton()->m_BackupSolutionList.size(); i++)
+	for(int i = 0; i < CSingleton::GetSingleton()->m_BackupSolutionList.size(); i++)
 	{
-		CSolution* pSolution = CSingleon::GetSingleton()->m_BackupSolutionList[i];
+		CSolution* pSolution = CSingleton::GetSingleton()->m_BackupSolutionList[i];
 
 		m_lcTotalMaterial.InsertItem(nItem, pSolution->m_strMaterial);
 

@@ -5,7 +5,6 @@
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 //#include "../../../include/Encryption/base64/base64.h"
-#include "EncryptionInterface.h"
 
 
 CString GetModulePath()
@@ -173,26 +172,6 @@ bool XmlHandler::LoadFile(LPCTSTR szFileDir)
 	if(strFirDir.Right(strFirDir.GetLength()-strFirDir.ReverseFind('.')-1).CompareNoCase("xml") != 0)
 	{
 		bDelete = TRUE;
-		//strXMLFile = A2W(HGTools::getXmlPathFromHgxPath(W2A(strFirDir)));
-
-		strXMLFile = strXMLFile.Left(strXMLFile.ReverseFind('\\')+1) + "1849858.xml";
-
-
-
-		// 新的加解密方式
-#if (NEW_ENCRYPT_BASE64 == 1)
-
-		decrypt_base64(strFirDir.GetBuffer(), strXMLFile.GetBuffer());
-
-#else
-
-		//HGTools::decryptFile(strFirDir.GetBuffer(), strXMLFile.GetBuffer());
-
-#endif
-
-
-
-
 
 
 		strFirDir.ReleaseBuffer();

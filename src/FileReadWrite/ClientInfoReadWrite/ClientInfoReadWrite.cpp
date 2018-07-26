@@ -2,7 +2,7 @@
 #include "ClientInfoReadWrite.h"
 #include "../Misc/EncryptionInterface.h"
 #include "HardwareInfo.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 
 
 CString ClientInfoReadWrite::m_ClientInfoFileName;

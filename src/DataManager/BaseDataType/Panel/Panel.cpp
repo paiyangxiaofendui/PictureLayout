@@ -13,7 +13,7 @@
 
 #include "../CommonData/CommonData.h"
 #include "../../Algorithm/Algorithm.h"
-#include "../CSingleton/CSingleon.h"
+#include "../CSingleton/CSingleton.h"
 
 using namespace std;
 
@@ -90,7 +90,7 @@ float Panel::GetUtilization(void)
 	}
 
 	// 加上修边
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 // 	float DeburringWidth = pSingleton->m_BaseInfo.m_DeburringWidth;
 // 	float DeburringArea = m_OrgLen*DeburringWidth + (m_OrgWidth-DeburringWidth)*DeburringWidth;
 
@@ -160,7 +160,7 @@ bool  ComponentCompareCenterFarer(const Component* pfirst, const Component* psec
 void Panel::GetAllNeededComponent_Sorted(vector<Component*>& cpn_list)
 {
 	// 初始化基础信息
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	BaseInfo base_info = pSingleton->m_BaseInfo;
 
 	vector<Node*> node_list;

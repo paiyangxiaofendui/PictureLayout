@@ -1,5 +1,5 @@
 /*--------------------------------------------------------------------------------------------------------------------*
-///	CSingleon.cpp    --  单例类实现文件
+///	CSingleton.cpp    --  单例类实现文件
 //	
 //	作者：	yuanzb
 //	时间：	2016.11.8
@@ -8,7 +8,7 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 #include "stdafx.h"
-#include "CSingleon.h"
+#include "CSingleton.h"
 
 #include <algorithm>
 
@@ -21,34 +21,32 @@
 #include "../../Misc/ProgramMisc.h"
 
 
-CSingleon* CSingleon::m_pSingleton = NULL;
+CSingleton* CSingleton::m_pSingleton = NULL;
 
 
 // 构造
-CSingleon::CSingleon()
+CSingleton::CSingleton()
 {
 	// 优化数据
 	m_CurrentSolutionList.clear();
 	m_BackupSolutionList.clear();	
 	m_vComponentGroup.clear();
 
-	m_pKnifeClass = new KnifeClass;
-
 	m_uComponentInputItemSerialID = 0;
 }
 
 // 析构
-CSingleon::~CSingleon()
+CSingleton::~CSingleton()
 {
 
 }
 
 
-CSingleon* CSingleon::GetSingleton()
+CSingleton* CSingleton::GetSingleton()
 {
 	if (m_pSingleton == NULL)
 	{
-		m_pSingleton = new CSingleon;
+		m_pSingleton = new CSingleton;
 	}
 
 	return m_pSingleton;
@@ -66,7 +64,7 @@ CSingleon* CSingleon::GetSingleton()
 //	return:
 //		0 -- 成功
 /*--------------------------------------------------------------------------------------*/
-int CSingleon::Layout(int Method, int CutStyle, int Org)
+int CSingleton::Layout(int Method, int CutStyle, int Org)
 {
 	int nGroupSize = m_vComponentGroup.size();
 
@@ -117,7 +115,7 @@ int CSingleon::Layout(int Method, int CutStyle, int Org)
 }
 
 /**< 新排样优化	*/ 
-int CSingleon::New_Layout(int Method, int CutStyle, int Org)				
+int CSingleton::New_Layout(int Method, int CutStyle, int Org)				
 {
 	int nGroupSize = m_vComponentGroup.size();
 
@@ -170,7 +168,7 @@ int CSingleon::New_Layout(int Method, int CutStyle, int Org)
 
 
 // 对利用率低的板重新打散排样
-void CSingleon::ReOptimizeSln(CSolution* pSln, int Org)
+void CSingleton::ReOptimizeSln(CSolution* pSln, int Org)
 {
 	if (pSln == NULL)
 		return ;
@@ -335,7 +333,7 @@ void CSingleon::ReOptimizeSln(CSolution* pSln, int Org)
 
 
 // 获取当前优化方案大板数量
-int CSingleon::GetCurSolutionPanelNum(void)	
+int CSingleton::GetCurSolutionPanelNum(void)	
 {
 	int i, panel_num = 0, nCount = m_CurrentSolutionList.size();
 
@@ -350,7 +348,7 @@ int CSingleon::GetCurSolutionPanelNum(void)
 }
 
 // 获取当前优化方案大板数量
-int CSingleon::GetBackupSolutionPanelNum(void)	
+int CSingleton::GetBackupSolutionPanelNum(void)	
 {
 	int i, panel_num = 0, nCount = m_BackupSolutionList.size();
 
@@ -365,13 +363,13 @@ int CSingleon::GetBackupSolutionPanelNum(void)
 }
 
 // 获取当前优化方案数量
-int CSingleon::GetCurSolutionNum(void)
+int CSingleton::GetCurSolutionNum(void)
 {
 	return m_CurrentSolutionList.size();
 }
 
 // 获取当前优化方案数量
-int CSingleon::GetBackupSolutionNum(void)
+int CSingleton::GetBackupSolutionNum(void)
 {
 	return m_BackupSolutionList.size();
 }
@@ -389,7 +387,7 @@ int CSingleon::GetBackupSolutionNum(void)
 //	return:
 //		void
 /*--------------------------------------------------------------------------------------*/
-void CSingleon::BackupBestSolution(void)
+void CSingleton::BackupBestSolution(void)
 {
 	// 还没有最优方案，直接备份
 	if(m_BackupSolutionList.size() == 0)
@@ -529,7 +527,7 @@ void CSingleon::BackupBestSolution(void)
 }
 
 // 清除所有数据
-void CSingleon::ClearCurrentSolution(void)
+void CSingleton::ClearCurrentSolution(void)
 {
 	for(int i = 0; i < m_CurrentSolutionList.size(); i++)
 	{
@@ -556,7 +554,7 @@ void CSingleon::ClearCurrentSolution(void)
 //
 //
 /*---------------------------------------*/
-void CSingleon::ClearBackupSolution(void)
+void CSingleton::ClearBackupSolution(void)
 {
 	for(int i = 0; i < m_BackupSolutionList.size(); i++)
 	{
@@ -583,7 +581,7 @@ void CSingleon::ClearBackupSolution(void)
 //
 //
 /*---------------------------------------*/
-void CSingleon::ClearRemainderManager(void)
+void CSingleton::ClearRemainderManager(void)
 {
 
 	for(int i = 0; i < m_RemainderManager.m_RemainderGroupList.size(); i++)
@@ -600,7 +598,7 @@ void CSingleon::ClearRemainderManager(void)
 
 
 // 设置备份优化方案
-void CSingleon::SetBackupSolution(vector<CSolution*> &sln_list)
+void CSingleton::SetBackupSolution(vector<CSolution*> &sln_list)
 {
 	ClearBackupSolution();
 	
@@ -620,7 +618,7 @@ void CSingleon::SetBackupSolution(vector<CSolution*> &sln_list)
 //		void
 /*--------------------------------------------------------------------------------------*/
 // 
-void CSingleon::ClearAllData(void)
+void CSingleton::ClearAllData(void)
 {
 	// 释放解决方案
 	ClearCurrentSolution();
@@ -637,7 +635,7 @@ void CSingleon::ClearAllData(void)
 
 
 // 更新解决方案号
-void CSingleon::UpdateSlnNum(void)
+void CSingleton::UpdateSlnNum(void)
 {
 	int i, nCount;
 
@@ -658,7 +656,7 @@ void CSingleon::UpdateSlnNum(void)
 
 }
 
-void CSingleon::UpdateComponentMachiningInfo(void)
+void CSingleton::UpdateComponentMachiningInfo(void)
 {
 	int i, nCount;
 	nCount = GetBackupSolutionNum();
@@ -704,7 +702,7 @@ void CSingleon::UpdateComponentMachiningInfo(void)
 }
 
 // 更新预组合板件：根据排样结果填充预组合板件的一些字段
-void CSingleon::UpdatePreCombinedComponent(void)
+void CSingleton::UpdatePreCombinedComponent(void)
 {
 	int i, nCount;
 	nCount = GetBackupSolutionNum();
@@ -786,7 +784,7 @@ void CSingleon::UpdatePreCombinedComponent(void)
 	@note			
 	@see            
 	*/
-void CSingleon::SetBackupComponentInputItem(vector<ComponentInputItem>& InputItem)
+void CSingleton::SetBackupComponentInputItem(vector<ComponentInputItem>& InputItem)
 {
 	m_vBackupComponentInputItem.clear();
 	m_vBackupComponentInputItem = InputItem;
@@ -800,7 +798,7 @@ void CSingleon::SetBackupComponentInputItem(vector<ComponentInputItem>& InputIte
 	@note			
 	@see            
 	*/
-void CSingleon::SetRawMaterialInfoList(vector<RawMaterialInfo>& InputItem)			
+void CSingleton::SetRawMaterialInfoList(vector<RawMaterialInfo>& InputItem)			
 {
 	m_vRawMaterialList.clear();
 	m_vRawMaterialList = InputItem;

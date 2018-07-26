@@ -2,7 +2,7 @@
 #include "ProgramMisc.h"
 
 //#include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
-//#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+//#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 //#include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 //#include "../../../include/HG3D/XmlFile.h"
 //#include "../../../include/HG3D/XmlNode.h"
@@ -36,9 +36,9 @@ void FindAllComponentInPanel(Component& thePanel, vector<Component*>& vAllCompon
 //void GetSolutionPanel(vector<PanelAndTheSolution>& vPanelAndTheSolution)
 //{
 //	vPanelAndTheSolution.clear();
-//	for(int i = 0; i < CSingleon::GetSingleton()->m_BackupSolutionList.size(); i++)
+//	for(int i = 0; i < CSingleton::GetSingleton()->m_BackupSolutionList.size(); i++)
 //	{
-//		CSolution* pSolution = CSingleon::GetSingleton()->m_BackupSolutionList[i];
+//		CSolution* pSolution = CSingleton::GetSingleton()->m_BackupSolutionList[i];
 //		for(int j = 0; j < pSolution->m_PanelList.size(); j++)
 //		{
 //			PanelAndTheSolution panleAndSol;

@@ -141,9 +141,6 @@
     <ClCompile Include="Algorithm\Algorithm.cpp">
       <Filter>源文件\Algorithm</Filter>
     </ClCompile>
-    <ClCompile Include="BaseDataType\CSingleton\CSingleon.cpp">
-      <Filter>源文件\BaseDataType\CSingleton</Filter>
-    </ClCompile>
     <ClCompile Include="Misc\ProgramMisc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -158,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.cpp">
       <Filter>源文件\BaseDataType\RawMaterialInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseDataType\CSingleton\CSingleton.cpp">
+      <Filter>源文件\BaseDataType\CSingleton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +194,6 @@
     <ClInclude Include="Algorithm\Algorithm.h">
       <Filter>头文件\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="BaseDataType\CSingleton\CSingleon.h">
-      <Filter>头文件\BaseDataType\CSingleton</Filter>
-    </ClInclude>
     <ClInclude Include="Misc\ProgramMisc.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -211,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="BaseDataType\RawMaterialInfo\RawMaterialInfo.h">
       <Filter>头文件\BaseDataType\RawMaterialInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseDataType\CSingleton\CSingleton.h">
+      <Filter>头文件\BaseDataType\CSingleton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

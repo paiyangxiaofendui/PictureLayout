@@ -144,9 +144,6 @@
     <ClCompile Include="Misc\ProgramMisc.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\EncryptionInterface.cpp">
-      <Filter>源文件\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="Misc\YHInfoTools.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
@@ -228,9 +225,6 @@
       <Filter>头文件\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Misc\ProgramMisc.h">
-      <Filter>头文件\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Misc\EncryptionInterface.h">
       <Filter>头文件\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Misc\YHInfoTools.h">

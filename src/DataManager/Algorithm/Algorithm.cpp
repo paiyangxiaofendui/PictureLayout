@@ -2337,7 +2337,7 @@ vector<PointInfo> ALGORITHM_API::FiltrateCoincidentPoints(vector<PointInfo>& old
 		next_point = oldpoint.at((i + 1) % old_point_size);
 
 		// ȡֵ
-		float cur_x, cur_y, next_x, next_y, dx, dy;
+		float  dx, dy;
 		dx = cur_point.x - next_point.x;
 		dy = cur_point.y - next_point.y;
 
@@ -2493,7 +2493,7 @@ vector<PointInfo> ALGORITHM_API::FiltrateCoincidentPoints2(vector<PointInfo>& ol
 		next_point = oldpoint.at((i + 1) % old_point_size);
 
 		// ȡֵ
-		float cur_x, cur_y, next_x, next_y, dx, dy;
+		float dx, dy;
 		dx = cur_point.x - next_point.x;
 		dy = cur_point.y - next_point.y;
 

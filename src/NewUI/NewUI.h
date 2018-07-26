@@ -13,17 +13,15 @@
 
 
 
+
 // 判断是否在测试环境下
 #ifdef DEBUG 
 
 #pragma comment(lib, "../../lib/DataManagerd.lib")
 #pragma comment(lib, "../../lib/FileReadWrited.lib")
 #pragma comment(lib, "../../lib/tinyxmld.lib")
-#pragma comment(lib, "../../lib/QRCoded.lib")
-#pragma comment(lib, "../../lib/Encryptiond.lib")
-#pragma comment(lib, "../../lib/InternetManagerd.lib")
+#pragma comment(lib, "../../lib/muParserd.lib")
 #pragma comment(lib, "../../lib/AbnormalShapeManagerd.lib")
-#pragma comment(lib, "../../lib/TaoBaoSenderd.lib")
 
 #pragma  message(".......................................当前为debug版本")
 
@@ -32,13 +30,8 @@
 #pragma comment(lib, "../../lib/DataManager.lib")
 #pragma comment(lib, "../../lib/FileReadWrite.lib")
 #pragma comment(lib, "../../lib/tinyxml.lib")
-#pragma comment(lib, "../../lib/QRCode.lib")
-#pragma comment(lib, "../../lib/FileCompressandUnCompress.lib")
-#pragma comment(lib, "../../lib/hg3d.lib")
-#pragma comment(lib, "../../lib/Encryption.lib")
-#pragma comment(lib, "../../lib/InternetManager.lib")
+#pragma comment(lib, "../../lib/muParser.lib")
 #pragma comment(lib, "../../lib/AbnormalShapeManager.lib")
-#pragma comment(lib, "../../lib/TaoBaoSender.lib")
 
 #pragma  message(".......................................当前为release版本")
 

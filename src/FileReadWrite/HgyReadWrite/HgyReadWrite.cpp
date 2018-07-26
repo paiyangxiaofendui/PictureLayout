@@ -7,69 +7,10 @@
 //#include "../../../include/FileCompressandUnCompress/FileCompressandUnCompress.h"
 
 
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
-#include "../Misc/EncryptionInterface.h"
 
-
-/*---------------------------------------*/
-//	函数说明：
-//		保存为hgy,特定给CSharp调用的临时函数
-//	
-//
-//	参数：
-//
-//
-//
-//
-//	返回值:
-//
-//
-/*---------------------------------------*/
-bool HgyReadWrite::WriteHgy_CSharp(CString szFileDir)
-{
-	CSingleon* pSingleton = CSingleon::GetSingleton();
-
-
-	TiXmlDocument* m_xmlDoc = new TiXmlDocument();
-
-	TiXmlDeclaration * xmlDec = new TiXmlDeclaration("1.0", "GB2312", "yes"); 
-
-
-	// 单例类
-	//TiXmlElement* pSingletonElement = new TiXmlElement("Singleton");
-	//TiXmlElement* pSingletonElement = new TiXmlElement("单例类");
-	TiXmlElement* pSingletonElement = new TiXmlElement("Root");
-
-	m_xmlDoc->LinkEndChild(xmlDec);
-	m_xmlDoc->LinkEndChild(pSingletonElement);
-
-
-	// 解决方案
-	vector<CSolution*>& SlnList = pSingleton->m_BackupSolutionList;
-	int nSlnNum = SlnList.size();
-
-	for (int i_sln = 0; i_sln < nSlnNum; i_sln++)
-	{
-		CSolution* pCurSln = SlnList.at(i_sln);
-
-		//TiXmlElement* pSolutionElement = new TiXmlElement("Solution");
-		//TiXmlElement* pSolutionElement = new TiXmlElement("解决方案");
-		TiXmlElement* pSolutionElement = new TiXmlElement("Panel");
-
-		pSolutionElement->SetAttribute("Material",		pCurSln->m_strMaterial.GetBuffer());
-		pSolutionElement->SetAttribute("Thickness",		pCurSln->m_fThickness);
-		pSolutionElement->SetAttribute("Count",			pCurSln->GetPanelNum());
-
-		pSingletonElement->LinkEndChild(pSolutionElement);
-	}
-
-	m_xmlDoc->SaveFile(szFileDir);
-	delete m_xmlDoc;
-
-	return true;
-}
 
 
 /*---------------------------------------*/
@@ -88,7 +29,7 @@ bool HgyReadWrite::WriteHgy_CSharp(CString szFileDir)
 /*---------------------------------------*/
 bool  HgyReadWrite::WriteHgy(CString szFileDir)
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 
 	TiXmlDocument* m_xmlDoc = new TiXmlDocument();
@@ -235,17 +176,7 @@ bool  HgyReadWrite::WriteHgy(CString szFileDir)
 	m_xmlDoc->SaveFile(xml_path);
 	delete m_xmlDoc;
 
-#if (NEW_ENCRYPT_BASE64 == 1)
 
-
-	//从hgx文件目录生成xml文件目录
-	CString hgo_path = szFileDir;
-
-	encrypt_base64(xml_path.GetBuffer(), hgo_path.GetBuffer());
-	DeleteFile(xml_path);
-
-
-#endif
 
 
 
@@ -342,18 +273,6 @@ bool HgyReadWrite::SaveOneTree2Xml(TiXmlElement* pCurNode, Component* pCurCpn)
 		{
 			// 保存轮廓点
 			SaveOutline(pCpnElem, pChildCpn);
-
-			// 保存正面孔
-			SaveUpperFaceHole(pCpnElem, pChildCpn);
-
-			// 保存正面槽
-			SaveUpperFaceSlot(pCpnElem, pChildCpn);
-
-			// 保存反面孔
-			SaveDownerFaceHole(pCpnElem, pChildCpn);
-
-			// 保存反面槽
-			SaveDownerFaceSlot(pCpnElem, pChildCpn);
 		}
 
 
@@ -399,28 +318,6 @@ void HgyReadWrite::ReadOutlineHoleSlotInfo(TiXmlElement* pCurCpnNode, Component*
 		{
 			// 读取异形点信息
 			ReadOutline(pCurInfoNode, pNewCpn);
-		}
-		else if (node_name == "正面孔")
-		{
-			// 读取正面孔 
-			ReadUpperFaceHole(pCurInfoNode, pNewCpn);
-
-		}
-		else if (node_name == "正面槽")
-		{
-			// 读取正面槽
-			ReadUpperFaceSlot(pCurInfoNode, pNewCpn);
-
-		}
-		else if (node_name == "反面孔")
-		{
-			// 读取反面孔
-			ReadDownerFaceHole(pCurInfoNode, pNewCpn);
-		}
-		else if (node_name == "反面槽")
-		{
-			// 读取反面槽
-			ReadDownerFaceSlot(pCurInfoNode, pNewCpn);
 		}
 		else
 		{
@@ -471,148 +368,6 @@ void HgyReadWrite::ReadOutline(TiXmlElement* pCpnElem, Component* pCpn)
 
 /*---------------------------------------*/
 //	函数说明：
-//		读取板件正面孔数据
-//
-//
-//	参数：
-//		TiXmlElement* pCpnElem	--	板件XML节点
-//		Component* pCpn			--	板件指针
-//
-//
-//	返回值:
-//
-//
-/*---------------------------------------*/
-void HgyReadWrite::ReadUpperFaceHole(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	// 先清空原有的
-	pCpn->m_vUpperFaceHole.clear();
-
-	// 循环读取轮廓点信息
-	for (TiXmlElement * pInfoNode = pCpnElem->FirstChildElement(); pInfoNode != NULL; pInfoNode = (TiXmlElement*)(pInfoNode->NextSibling()))
-	{
-		AllVec hole;
-
-		hole._x			=	_ttof(pInfoNode->Attribute("X"		));	
-		hole._y			=	_ttof(pInfoNode->Attribute("Y"		));	
-		hole._r			=	_ttof(pInfoNode->Attribute("R"		));	
-		hole._depth		=	_ttof(pInfoNode->Attribute("Depth"	));
-		hole.panel_info	=	pInfoNode->Attribute("Info"	);
-
-		pCpn->m_vUpperFaceHole.push_back(hole);
-	}
-}
-
-/*---------------------------------------*/
-//	函数说明：
-//		读取板件正面槽数据
-//
-//
-//	参数：
-//		TiXmlElement* pCpnElem	--	板件XML节点
-//		Component* pCpn			--	板件指针
-//
-//
-//	返回值:
-//
-//
-/*---------------------------------------*/
-void HgyReadWrite::ReadUpperFaceSlot(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	// 先清空原有的
-	pCpn->m_vUpperFaceSlot.clear();
-
-	// 循环读取轮廓点信息
-	for (TiXmlElement * pInfoNode = pCpnElem->FirstChildElement(); pInfoNode != NULL; pInfoNode = (TiXmlElement*)(pInfoNode->NextSibling()))
-	{
-		AllSlot slot;
-
-		slot._x			= _ttof(pInfoNode->Attribute("X"		));	
-		slot._y			= _ttof(pInfoNode->Attribute("Y"		));	
-		slot._width		= _ttof(pInfoNode->Attribute("Width"	));	
-		slot._height	= _ttof(pInfoNode->Attribute("Height"	));	
-		slot._depth		= _ttof(pInfoNode->Attribute("Depth"	));
-		slot._dir		= _ttoi(pInfoNode->Attribute("Dir"		));
-		slot.panel_info	= pInfoNode->Attribute("Info"		);	
-
-		pCpn->m_vUpperFaceSlot.push_back(slot);
-	}
-}
-
-
-/*---------------------------------------*/
-//	函数说明：
-//		读取板件反面孔数据
-//
-//
-//	参数：
-//		TiXmlElement* pCpnElem	--	板件XML节点
-//		Component* pCpn			--	板件指针
-//
-//
-//	返回值:
-//
-//
-/*---------------------------------------*/
-void HgyReadWrite::ReadDownerFaceHole(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	// 先清空原有的
-	pCpn->m_vDownerFaceHole.clear();
-
-	// 循环读取轮廓点信息
-	for (TiXmlElement * pInfoNode = pCpnElem->FirstChildElement(); pInfoNode != NULL; pInfoNode = (TiXmlElement*)(pInfoNode->NextSibling()))
-	{
-		AllVec hole;
-
-		hole._x			=	_ttof(pInfoNode->Attribute("X"		));	
-		hole._y			=	_ttof(pInfoNode->Attribute("Y"		));	
-		hole._r			=	_ttof(pInfoNode->Attribute("R"		));	
-		hole._depth		=	_ttof(pInfoNode->Attribute("Depth"	));
-		hole.panel_info	=	pInfoNode->Attribute("Info"	);
-
-		pCpn->m_vDownerFaceHole.push_back(hole);
-	}
-}
-
-
-/*---------------------------------------*/
-//	函数说明：
-//		读取板件正面槽数据
-//
-//
-//	参数：
-//		TiXmlElement* pCpnElem	--	板件XML节点
-//		Component* pCpn			--	板件指针
-//
-//
-//	返回值:
-//
-//
-/*---------------------------------------*/
-void HgyReadWrite::ReadDownerFaceSlot(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	// 先清空原有的
-	pCpn->m_vDownerFaceSlot.clear();
-
-	// 循环读取轮廓点信息
-	for (TiXmlElement * pInfoNode = pCpnElem->FirstChildElement(); pInfoNode != NULL; pInfoNode = (TiXmlElement*)(pInfoNode->NextSibling()))
-	{
-		AllSlot slot;
-
-		slot._x			= _ttof(pInfoNode->Attribute("X"		));	
-		slot._y			= _ttof(pInfoNode->Attribute("Y"		));	
-		slot._width		= _ttof(pInfoNode->Attribute("Width"	));	
-		slot._height	= _ttof(pInfoNode->Attribute("Height"	));	
-		slot._depth		= _ttof(pInfoNode->Attribute("Depth"	));
-		slot._dir		= _ttoi(pInfoNode->Attribute("Dir"		));
-		slot.panel_info	= pInfoNode->Attribute("Info"		);	
-
-		pCpn->m_vDownerFaceSlot.push_back(slot);
-	}
-}
-
-/*---------------------------------------*/
-//	函数说明：
 //		保存板件异形数据
 //
 //
@@ -656,129 +411,6 @@ void HgyReadWrite::SaveOutline(TiXmlElement* pCpnElem, Component* pCpn)
 		}
 	}
 }
-
-
-
-
-// 保存板件正面孔数据
-void HgyReadWrite::SaveUpperFaceHole(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	int nUpperFaceHoleCount = pCpn->m_vUpperFaceHole.size();
-	if (nUpperFaceHoleCount > 0)
-	{
-		// 新建一个Outline节点
-		//TiXmlElement* pUpperFaceHoleElem = new TiXmlElement("UpperFaceHole");
-		TiXmlElement* pUpperFaceHoleElem = new TiXmlElement("正面孔");
-		pCpnElem->LinkEndChild(pUpperFaceHoleElem);
-
-		// 新建一个个的轮廓点节点插入pOutlineElem中
-		for (int i_hole = 0; i_hole < nUpperFaceHoleCount; i_hole++)
-		{
-			AllVec hole = pCpn->m_vUpperFaceHole.at(i_hole);
-			//TiXmlElement* pVectorNode = new TiXmlElement("UpperFaceHoleInfo");
-			TiXmlElement* pVectorNode = new TiXmlElement("正面孔信息");
-
-			pVectorNode->SetAttribute("X",		GetFloatString(hole._x,1));	
-			pVectorNode->SetAttribute("Y",		GetFloatString(hole._y,1));	
-			pVectorNode->SetAttribute("R",		GetFloatString(hole._r,1));	
-			pVectorNode->SetAttribute("Depth",	GetFloatString(hole._depth,1));
-			pVectorNode->SetAttribute("Info",	hole.panel_info);	
-
-			pUpperFaceHoleElem->LinkEndChild(pVectorNode);
-		}
-	}
-}	
-
-// 保存板件正面槽数据
-void HgyReadWrite::SaveUpperFaceSlot(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	int nUpperFaceSlotCount = pCpn->m_vUpperFaceSlot.size();
-	if (nUpperFaceSlotCount > 0)
-	{
-		// 新建一个Outline节点
-		//TiXmlElement* pUpperFaceSlotElem = new TiXmlElement("UpperFaceSlot");
-		TiXmlElement* pUpperFaceSlotElem = new TiXmlElement("正面槽");
-		pCpnElem->LinkEndChild(pUpperFaceSlotElem);
-
-		// 新建一个个的轮廓点节点插入pOutlineElem中
-		for (int i_slot = 0; i_slot < nUpperFaceSlotCount; i_slot++)
-		{
-			AllSlot slot = pCpn->m_vUpperFaceSlot.at(i_slot);
-			//TiXmlElement* pVectorNode = new TiXmlElement("UpperFaceSlotInfo");
-			TiXmlElement* pVectorNode = new TiXmlElement("正面槽信息");
-
-			pVectorNode->SetAttribute("X",		GetFloatString(slot._x,1));	
-			pVectorNode->SetAttribute("Y",		GetFloatString(slot._y,1));	
-			pVectorNode->SetAttribute("Width",	GetFloatString(slot._width,1));	
-			pVectorNode->SetAttribute("Height",	GetFloatString(slot._height,1));	
-			pVectorNode->SetAttribute("Depth",	GetFloatString(slot._depth,1));
-			pVectorNode->SetAttribute("Dir",	slot._dir);
-			pVectorNode->SetAttribute("Info",	slot.panel_info);	
-
-			pUpperFaceSlotElem->LinkEndChild(pVectorNode);
-		}
-	}
-}		
-
-// 保存板件反面孔数据
-void HgyReadWrite::SaveDownerFaceHole(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	int nDownerFaceHoleCount = pCpn->m_vDownerFaceHole.size();
-	if (nDownerFaceHoleCount > 0)
-	{
-		// 新建一个Outline节点
-		//TiXmlElement* pDownerFaceHoleElem = new TiXmlElement("DownerFaceHole");
-		TiXmlElement* pDownerFaceHoleElem = new TiXmlElement("反面孔");
-		pCpnElem->LinkEndChild(pDownerFaceHoleElem);
-
-		// 新建一个个的轮廓点节点插入pOutlineElem中
-		for (int i_hole = 0; i_hole < nDownerFaceHoleCount; i_hole++)
-		{
-			AllVec hole = pCpn->m_vDownerFaceHole.at(i_hole);
-			//TiXmlElement* pVectorNode = new TiXmlElement("UpperFaceHoleInfo");
-			TiXmlElement* pVectorNode = new TiXmlElement("反面孔信息");
-
-			pVectorNode->SetAttribute("X",		GetFloatString(hole._x,1));	
-			pVectorNode->SetAttribute("Y",		GetFloatString(hole._y,1));	
-			pVectorNode->SetAttribute("R",		GetFloatString(hole._r,1));	
-			pVectorNode->SetAttribute("Depth",	GetFloatString(hole._depth,1));
-			pVectorNode->SetAttribute("Info",	hole.panel_info);	
-
-			pDownerFaceHoleElem->LinkEndChild(pVectorNode);
-		}
-	}
-}	
-
-// 保存板件反面槽数据
-void HgyReadWrite::SaveDownerFaceSlot(TiXmlElement* pCpnElem, Component* pCpn)
-{
-	int nDownerFaceSlotCount = pCpn->m_vDownerFaceSlot.size();
-	if (nDownerFaceSlotCount > 0)
-	{
-		// 新建一个Outline节点
-		//TiXmlElement* pUpperFaceSlotElem = new TiXmlElement("DownerFaceSlot");
-		TiXmlElement* pDownerFaceSlotElem = new TiXmlElement("反面槽");
-		pCpnElem->LinkEndChild(pDownerFaceSlotElem);
-
-		// 新建一个个的轮廓点节点插入pOutlineElem中
-		for (int i_slot = 0; i_slot < nDownerFaceSlotCount; i_slot++)
-		{
-			AllSlot slot = pCpn->m_vDownerFaceSlot.at(i_slot);
-			//TiXmlElement* pVectorNode = new TiXmlElement("DownerFaceSlotInfo");
-			TiXmlElement* pVectorNode = new TiXmlElement("反面槽信息");
-
-			pVectorNode->SetAttribute("X",		GetFloatString(slot._x,1));	
-			pVectorNode->SetAttribute("Y",		GetFloatString(slot._y,1));	
-			pVectorNode->SetAttribute("Width",	GetFloatString(slot._width,1));	
-			pVectorNode->SetAttribute("Height",	GetFloatString(slot._height,1));	
-			pVectorNode->SetAttribute("Depth",	GetFloatString(slot._depth,1));
-			pVectorNode->SetAttribute("Dir",	slot._dir);
-			pVectorNode->SetAttribute("Info",	slot.panel_info);	
-
-			pDownerFaceSlotElem->LinkEndChild(pVectorNode);
-		}
-	}
-}	
 
 
 
@@ -870,24 +502,10 @@ bool HgyReadWrite::LoadOneTreeFromXml(TiXmlElement* pCurNode, Component* pParent
 
 bool  HgyReadWrite::ReadHgy(CString strSrcPath)
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 	//加密文件读取标准
-	CString XmlPath = HGTools::getXmlPathFromHgxPath(strSrcPath);
-
-	// 新的加解密方式
-#if (NEW_ENCRYPT_BASE64 == 1)
-
-	decrypt_base64(strSrcPath.GetBuffer(), XmlPath.GetBuffer());
-
-#else
-
-	//HGTools::decryptFile(strSrcPath, XmlPath);
-
-#endif
-
-
-
+	CString XmlPath = strSrcPath;
 
 	// 加载文件
 	TiXmlDocument* m_xmlDoc = new TiXmlDocument();
@@ -1012,10 +630,6 @@ bool  HgyReadWrite::ReadHgy(CString strSrcPath)
 			AfxMessageBox("hgy中读取到未知节点，跳过！");
 		}
 	}
-
-
-	// 读取完之后删除解密文件
-	DeleteFile(XmlPath); 
 
 
 	return true;

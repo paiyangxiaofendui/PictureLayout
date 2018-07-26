@@ -14,7 +14,7 @@
 
 
 // 外部DataManager.dll的头文件
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "../../../include/DataManager/Algorithm/Algorithm.h"
@@ -165,7 +165,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath)
 #if 1
 
 	// 获取内存数据
-// 	CSingleon* pSingleton = CSingleon::GetSingleton();
+// 	CSingleton* pSingleton = CSingleton::GetSingleton();
 // 	vector<CSolution*>& SlnList = pSingleton->m_BackupSolutionList;
 // 	int nSlnNum = SlnList.size();
 // 
@@ -794,7 +794,7 @@ bool DxfReadWrite::OutputDownerFaceDxf(Panel* pPanel, CString strDxfFilePath)
 #if 1
 
 	// 获取内存数据
-// 	CSingleon* pSingleton = CSingleon::GetSingleton();
+// 	CSingleton* pSingleton = CSingleton::GetSingleton();
 // 	vector<CSolution*>& SlnList = pSingleton->m_BackupSolutionList;
 // 	int nSlnNum = SlnList.size();
 // 

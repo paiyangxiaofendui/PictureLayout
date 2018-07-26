@@ -808,7 +808,7 @@ int CSolution::New_LayoutOptimization_MinWaste(int CutStyle, int Org)
 		pPanel = new Panel;
 
 		// 判断有无余料可利用，有的话直接调用，没有则新建大板
-		CSingleon* pSingelton = CSingleon::GetSingleton();
+		CSingleton* pSingelton = CSingleton::GetSingleton();
 // 		RemainderManager& RmdManager = pSingelton->m_RemainderManager;
 // 		RemainderItem* pItem = RmdManager.FindRemainder(m_strMaterial, m_fThickness);
 // 
@@ -908,7 +908,7 @@ int CSolution::New_LayoutOptimization_MinWaste(int CutStyle, int Org)
 			pPanel = new Panel;
 
 			// 判断有无余料可利用，有的话直接调用，没有则新建大板
-			CSingleon* pSingelton = CSingleon::GetSingleton();
+			CSingleton* pSingelton = CSingleton::GetSingleton();
 // 			RemainderManager& RmdManager = pSingelton->m_RemainderManager;
 // 			RemainderItem* pItem = RmdManager.FindRemainder(m_strMaterial, m_fThickness);
 // 
@@ -983,7 +983,7 @@ int CSolution::LayoutOptimization_MinWaste(int CutStyle, int Org)
 		pPanel = new Panel;
 
 		// 判断有无余料可利用，有的话直接调用，没有则新建大板
-		CSingleon* pSingelton = CSingleon::GetSingleton();
+		CSingleton* pSingelton = CSingleton::GetSingleton();
 		RemainderManager& RmdManager = pSingelton->m_RemainderManager;
 		RemainderItem* pItem = RmdManager.FindRemainder(m_strMaterial, m_fThickness);
 
@@ -1083,7 +1083,7 @@ int CSolution::LayoutOptimization_MinWaste(int CutStyle, int Org)
 			pPanel = new Panel;
 
 			// 判断有无余料可利用，有的话直接调用，没有则新建大板
-			CSingleon* pSingelton = CSingleon::GetSingleton();
+			CSingleton* pSingelton = CSingleton::GetSingleton();
 			RemainderManager& RmdManager = pSingelton->m_RemainderManager;
 			RemainderItem* pItem = RmdManager.FindRemainder(m_strMaterial, m_fThickness);
 

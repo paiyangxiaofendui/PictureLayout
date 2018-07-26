@@ -5,7 +5,7 @@
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
 
@@ -14,8 +14,6 @@
 #include "../../../include/HG3D/XmlNode.h"
 #include "../../../include/HG3D/Utils.h"
 
-//#include "../../../include/Encryption/base64/base64.h"
-#include "EncryptionInterface.h"
 #include <algorithm>
 
 // #include "../UI/ParamSettingDlg.h"
@@ -62,9 +60,9 @@ int GetComponentCountInPanel(Component& thePanel)
 void GetSolutionPanel(vector<PanelAndTheSolution>& vPanelAndTheSolution)
 {
 	vPanelAndTheSolution.clear();
-	for(int i = 0; i < CSingleon::GetSingleton()->m_BackupSolutionList.size(); i++)
+	for(int i = 0; i < CSingleton::GetSingleton()->m_BackupSolutionList.size(); i++)
 	{
-		CSolution* pSolution = CSingleon::GetSingleton()->m_BackupSolutionList[i];
+		CSolution* pSolution = CSingleton::GetSingleton()->m_BackupSolutionList[i];
 		for(int j = 0; j < pSolution->m_PanelList.size(); j++)
 		{
 			PanelAndTheSolution panleAndSol;
@@ -128,85 +126,7 @@ float GetSolutionPanelTotalArea(CSolution& theSolution)
 //得到贴标的宽高
 void GetTiebiaoSize( float& tiebiao_width, float& tiebiao_height )
 {
-	//hg3d::TString strConfigFile = _T("picture");
-	//strConfigFile = hg3d::getFullFileName(strConfigFile);
-// 	CString strConfigFile = GetModulePath() +  _T("picture");
-// 
-// 
-// 	// 新的加解密方式
-// #if (NEW_ENCRYPT_BASE64 == 1)
-// 
-// 	CString strTmp;
-// 	strTmp.Format(_T("\\printcode%s"), g_szEncyptSubfix);
-// 	strConfigFile += strTmp;
-// 
-// 	CString xmlpath = HGTools::getXmlPathFromHgxPath(strConfigFile);
-// 	decrypt_base64(strConfigFile.GetBuffer(), xmlpath.GetBuffer());
-// 
-// #else
-// 
-// 	strConfigFile += _T("\\printcode.hgm");
-// 
-// 	CString xmlpath = HGTools::getXmlPathFromHgxPath(strConfigFile);
-// 	//HGTools::decryptFile(strConfigFile,xmlpath);
-// 
-// #endif
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 
-// 	XmlHandler xmlHandler;
-// 	bool bLoadSuccess = xmlHandler.LoadFile(xmlpath.GetBuffer());
-// 	HGTools::deleteFile(xmlpath);
-// 
-// 	//hg3d::CXmlFile* doc = new hg3d::CXmlFile();
-// 
-// 	if (/*!doc->Load(strConfigFile)*/!bLoadSuccess)
-// 	{
-// 		AfxMessageBox("读取printcode.xml失败",MB_OK);
-// 		return;
-// 	}
-// 
-// 	//hg3d::CXmlNode * print_node = NULL;
-// 	TiXmlElement* elmUsed = NULL; 
-// 	TiXmlElement* elmRoot = xmlHandler.GetDoc()->RootElement();
-// 	vector<TiXmlElement*> vChildNodes = xmlHandler.GetChildElms(elmRoot, NULL);
-// 
-// 	for (int i = 0;i < /*doc->GetChildNodes().size()*/vChildNodes.size();i++)
-// 	{
-// 		//hg3d::CXmlNode* child_node = doc->GetChildNodes().at(i);
-// 		TiXmlElement* elmChild = vChildNodes[i];
-// 		//std::string _used = child_node->GetAttributeValue("Used");
-// 		CString strTmp;
-// 		xmlHandler.GetXmlAttribute(elmChild, "Used", strTmp);
-// 		if (/*_used == "1"*/strTmp.CompareNoCase(_T("1")) == 0)
-// 		{
-// 			//print_node = child_node;
-// 			elmUsed = elmChild;
-// 			break;
-// 		}
-// 	}
-// 
-// 	//如果没有找到任何标签配置信息，那么默认标签大小认为是100*100
-// 	if (/*print_node*/elmUsed == NULL)
-// 	{
-// 		tiebiao_width = 100/4.0;
-// 		tiebiao_height = 100/4.0;
-// 		return;
-// 	}
-// 
-// 	float fTmp = 0.0;
-// 	xmlHandler.GetXmlAttribute(elmUsed, "paperWidth", fTmp);
-// 	tiebiao_width = fTmp/4.0;
-// 	xmlHandler.GetXmlAttribute(elmUsed, "paperHeight", fTmp);
-// 	tiebiao_height = fTmp/4.0;
-	//tiebiao_width = atof(print_node->GetAttributeValue("paperWidth").c_str())/4.0;
-	//tiebiao_height = atof(print_node->GetAttributeValue("paperHeight").c_str())/4.0;
+
 }
 
 LineType GetLineType(int nLineSign)
@@ -223,11 +143,11 @@ void FindAllComponentInSingleton(vector<Component*>& vAllComponent)
 {
 	vAllComponent.clear();
 
-	int nSolutionCount = CSingleon::GetSingleton()->GetBackupSolutionNum();
+	int nSolutionCount = CSingleton::GetSingleton()->GetBackupSolutionNum();
 
 	for(int i = 0; i < nSolutionCount; i++)
 	{
-		CSolution* pSln =  CSingleon::GetSingleton()->m_BackupSolutionList.at(i);
+		CSolution* pSln =  CSingleton::GetSingleton()->m_BackupSolutionList.at(i);
 
 		int nPanelNum = pSln->GetPanelNum();
 		for (int i_panel = 0; i_panel < nPanelNum; i_panel++)
@@ -245,11 +165,11 @@ void FindAllPanelInSingleton(vector<Panel*>& vAllPanel)
 {
 	vAllPanel.clear();
 
-	int nSolutionCount = CSingleon::GetSingleton()->GetBackupSolutionNum();
+	int nSolutionCount = CSingleton::GetSingleton()->GetBackupSolutionNum();
 
 	for(int i = 0; i < nSolutionCount; i++)
 	{
-		CSolution* pSln =  CSingleon::GetSingleton()->m_BackupSolutionList.at(i);
+		CSolution* pSln =  CSingleton::GetSingleton()->m_BackupSolutionList.at(i);
 
 		int nPanelNum = pSln->GetPanelNum();
 		for (int i_panel = 0; i_panel < nPanelNum; i_panel++)
@@ -891,7 +811,7 @@ std::string getPrintInfoAsString(ComponentInputItem& theItem)
 
 float GetKerf()
 {
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	return pSingleton->m_BaseInfo.m_SawKerfWidth;
 }
 
@@ -1073,7 +993,7 @@ bool IsComponentOverSize(ComponentInputItem& theItem)
 {
 	bool bRet = false;
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	BaseInfo base_info = pSingleton->m_BaseInfo;
 	vector<ComponentInputItem>::iterator it, it_begin, it_end;
 	CString strMsg;

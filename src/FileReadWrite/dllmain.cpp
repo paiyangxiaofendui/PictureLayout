@@ -17,16 +17,16 @@
 
 #pragma comment(lib, "../../lib/tinyxmld.lib")
 #pragma comment(lib, "../../lib/DataManagerd.lib")
-#pragma comment(lib, "../../lib/Encryptiond.lib")
 #pragma comment(lib, "../../lib/AbnormalShapeManagerd.lib")
+#pragma comment(lib, "../../lib/muParserd.lib")
 #pragma  message(".......................................当前为debug版本")
 
 #else
 
 #pragma comment(lib, "../../lib/tinyxml.lib")
 #pragma comment(lib, "../../lib/DataManager.lib")
-#pragma comment(lib, "../../lib/Encryption.lib")
 #pragma comment(lib, "../../lib/AbnormalShapeManager.lib")
+#pragma comment(lib, "../../lib/muParser.lib")
 #pragma  message(".......................................当前为release版本")
 
 #endif

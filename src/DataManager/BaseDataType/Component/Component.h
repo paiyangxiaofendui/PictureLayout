@@ -12,7 +12,7 @@
 
 #include "../Node/Node.h"
 #include "../CommonData/CommonData.h"
-#include "../CSingleton/CSingleon.h"
+#include "../CSingleton/CSingleton.h"
 
 // –°∞Â–≈œ¢
 class AFX_EXT_CLASS Component : public Node
