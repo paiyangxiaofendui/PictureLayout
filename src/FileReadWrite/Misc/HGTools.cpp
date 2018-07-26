@@ -2,7 +2,6 @@
 #include "HGTools.h"
 
 
-#include "../../../include/FileCompressandUnCompress/FileCompressandUnCompress.h"
 
 //创建指定目录
 void HGTools::createDir(CString path)

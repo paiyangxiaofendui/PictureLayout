@@ -6,7 +6,6 @@
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "../../../include/DataManager/Algorithm/Algorithm.h"
 #include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
-#include "../../../include/KnifeDll/KnifeClass.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
 #include "../Misc/ProgramMisc.h"
 #include <algorithm>

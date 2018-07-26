@@ -17,7 +17,6 @@
 #include "../Panel/Panel.h"
 
 
-#include "../../../../include/KnifeDll/KnifeClass.h"
 #include "../../Misc/ProgramMisc.h"
 
 

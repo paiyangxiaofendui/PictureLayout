@@ -10,14 +10,9 @@
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
 
 
-#include "../../../include/HG3D/XmlFile.h"
-#include "../../../include/HG3D/XmlNode.h"
-#include "../../../include/HG3D/Utils.h"
 
 #include <algorithm>
 
-// #include "../UI/ParamSettingDlg.h"
-// #include "../UI/TiebiaoEdgeDlg.h"
 
 #include "../UIData/UIData.h"
 #include "YHInfoTools.h"
