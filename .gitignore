@@ -59,3 +59,12 @@
 /src/NewUI/~VC5D0E.tmp
 /src/NewUI/~VC5D0F.tmp
 /bin/*.pdb
+/src/Encryption
+/src/InternetManager
+/src/KnifeDll
+/src/SMSSender
+/src/TaoBaoSender
+/src/Algorithm_CSharp
+/src/Carving
+/bin/CSharpTest.vshost.exe.manifest
+/bin/CSharpTest.vshost.exe
