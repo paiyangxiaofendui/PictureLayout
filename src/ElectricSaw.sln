@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppTest", "CppTest\CppTest.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AbnormalShapeManager", "AbnormalShapeManager\ABT.vcxproj", "{D80506AC-E4DC-402C-B5C9-DEC4335958A5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaiGua", "WaiGua\WaiGua.vcxproj", "{D6EA879C-0AD9-42A8-964D-29296EF0375F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{D80506AC-E4DC-402C-B5C9-DEC4335958A5}.Release|Win32.ActiveCfg = Release|Win32
 		{D80506AC-E4DC-402C-B5C9-DEC4335958A5}.Release|Win32.Build.0 = Release|Win32
 		{D80506AC-E4DC-402C-B5C9-DEC4335958A5}.Release|x86.ActiveCfg = Release|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Debug|Win32.Build.0 = Debug|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Debug|x86.ActiveCfg = Debug|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Any CPU.ActiveCfg = Release|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Win32.ActiveCfg = Release|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Win32.Build.0 = Release|Win32
+		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

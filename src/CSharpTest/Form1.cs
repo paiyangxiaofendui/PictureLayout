@@ -47,19 +47,20 @@ namespace CSharpTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //int rt;
-
-            //Read();
-
             try
             {
                 Test();
 
-             }
+            }
             catch (IOException e1)
             {
                 Console.WriteLine(e1.ToString());
             }
+
+            //int rt;
+
+            //Read();
+
 
             //string str = "hello world!";
 
