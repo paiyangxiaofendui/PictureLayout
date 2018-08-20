@@ -35,10 +35,11 @@ namespace CSharpTest
 
 
 
-        [DllImport("NewUId.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
+//         [DllImport("NewUId.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
+//         public static extern int Test();
+
+        [DllImport("NewUI.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
         public static extern int Test();
-
-
 
         public Form1()
         {
