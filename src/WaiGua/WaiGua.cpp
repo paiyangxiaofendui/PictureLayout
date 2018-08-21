@@ -18,7 +18,8 @@ using namespace std;
 
 
 #define  DEBUG_SLEEP		(1)
-#define  DEBUG_SLEEP_TIME	(1000)
+#define  DEBUG_SLEEP_LONG_TIME	(800)
+#define  DEBUG_SLEEP_SHORT_TIME	(10)
 
 
 BOOL CopyToClipboard(const char* pszData, const int nDataLen)
@@ -72,8 +73,8 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 
 
-	HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
-	//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+	//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+	HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
 
 	
 
@@ -110,9 +111,13 @@ int _tmain(int argc, _TCHAR* argv[])
 		// 填写文件名
 		vector<string> file_list;
 
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
+		//file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
+		//file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
+		//file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
+
+		file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\001.tif");
+		file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\002.tif");
+		file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\003.tif");
 
 
 		vector<string> x_pos_list;
@@ -147,9 +152,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				SetCursorPos(x, y);
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_TIME);
-#endif
+
 				
 
 //			}
@@ -170,7 +173,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起I
 
 #if (DEBUG_SLEEP)
-			Sleep(DEBUG_SLEEP_TIME);
+			Sleep(DEBUG_SLEEP_LONG_TIME);
 #endif
 
 
@@ -196,7 +199,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 #if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_TIME);
+				Sleep(DEBUG_SLEEP_SHORT_TIME);
 #endif
 
 
@@ -211,7 +214,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 #if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_TIME);
+				Sleep(DEBUG_SLEEP_SHORT_TIME);
 #endif
 
 				// 按键-确定 
@@ -243,7 +246,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			// 修改标注
 
 #if (DEBUG_SLEEP)
-			Sleep(DEBUG_SLEEP_TIME);
+			Sleep(DEBUG_SLEEP_SHORT_TIME);
 #endif
 			HWND parent_dlg_id = FindWindowEx(exe_id, 0,"OGL_V30_Window", "");
 
@@ -267,9 +270,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 				// 输入
 				InputNormalString(str_pos_x);
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_TIME);
-#endif
+// #if (DEBUG_SLEEP)
+// 				Sleep(DEBUG_SLEEP_SHORT_TIME);
+// #endif
 
 				// 设置y坐标
 				// 			POINT coor_y;
@@ -288,9 +291,6 @@ int _tmain(int argc, _TCHAR* argv[])
 				InputNormalString(str_pos_y);
 
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_TIME);
-#endif
 
 
 				// 按键-确定 
