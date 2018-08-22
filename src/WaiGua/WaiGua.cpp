@@ -50,14 +50,10 @@ void  InputNormalString(string str)
 	for(UINT i = 0; i < str.length(); i++)
 	{
 		char c = str.at(i);
-// 		if ( (c >= '0' && c <= '9') ||
-// 			(c >= 'A' && c <= 'Z'))
-// 		{
+
 		Sleep(1);
-			keybd_event(c, 0, 0, 0);					// 按下
-			keybd_event(c, 0, KEYEVENTF_KEYUP, 0);		// 抬起
-//		}
-		
+		keybd_event(c, 0, 0, 0);					// 按下
+		keybd_event(c, 0, KEYEVENTF_KEYUP, 0);		// 抬起
 	}
 }
 
@@ -76,7 +72,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
 	HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
 
-	
+
 
 
 	if (exe_id != NULL)
@@ -138,28 +134,28 @@ int _tmain(int argc, _TCHAR* argv[])
 		for (UINT i = 0; i < file_list.size();  i++)
 		{
 			// 设置焦点
-// 			HWND MainTopWnd_id = FindWindow("MainTop_TpfWindow", "");
-// 			if (MainTopWnd_id != NULL)
-// 			{
+			// 			HWND MainTopWnd_id = FindWindow("MainTop_TpfWindow", "");
+			// 			if (MainTopWnd_id != NULL)
+			// 			{
 			//				RECT maintop_wnd_rect;
 			//				GetWindowRect(MainTopWnd_id, &maintop_wnd_rect);
 
-				int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
+			int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
 
 
-				// 窗口获取焦点
-				
-				SetCursorPos(x, y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+			// 窗口获取焦点
 
-
-				
-
-//			}
+			SetCursorPos(x, y);
+			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
 
-			
+
+			//			}
+
+
+
+
 			string file_path = file_list.at(i);
 			string str_pos_x = x_pos_list.at(i);
 			string str_pos_y = y_pos_list.at(i);
@@ -257,7 +253,7 @@ int _tmain(int argc, _TCHAR* argv[])
 				GetWindowRect(coor_dlg_id, &coor_dlg_rect);
 
 
-				
+
 
 				// 设置x坐标
 				POINT coor_x;
@@ -270,9 +266,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 				// 输入
 				InputNormalString(str_pos_x);
-// #if (DEBUG_SLEEP)
-// 				Sleep(DEBUG_SLEEP_SHORT_TIME);
-// #endif
+				// #if (DEBUG_SLEEP)
+				// 				Sleep(DEBUG_SLEEP_SHORT_TIME);
+				// #endif
 
 				// 设置y坐标
 				// 			POINT coor_y;

@@ -184,6 +184,38 @@ public:
 	afx_msg void OnOpenSourcePicInfo();
 
 	/** 
+	* @brief 键盘输入字符串
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	void  InputNormalString(string str);
+
+	/** 
+	* @brief 拷贝到剪贴板
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	bool CopyToClipboard(const char* pszData, const int nDataLen);
+
+
+	/** 
+	* @brief 排样结果对接蒙泰
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	afx_msg void OnConnectMaintop();
+
+
+	/** 
 	* @brief 优化
 	* @author yuanzb
 	* @return 
