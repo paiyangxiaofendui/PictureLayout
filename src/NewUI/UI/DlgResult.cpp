@@ -1985,7 +1985,7 @@ void CDlgResult::OnConnectMaintop()
 	//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
 	HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
 	
-
+	int find_exe_num = 0;
 
 	if (exe_id == 0)
 	{
@@ -1994,8 +1994,9 @@ void CDlgResult::OnConnectMaintop()
 
 		while(exe_id == 0)
 		{
-			Sleep(2000);
+			Sleep(100);
 			exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+			find_exe_num++;
 			
 		}
 		
@@ -2008,7 +2009,8 @@ void CDlgResult::OnConnectMaintop()
 		::SendMessage(exe_id, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
 		::SetWindowPos(NULL, HWND_TOPMOST, 0,0, 1926,1446, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
 																			 
-		bool show_coor_flag =false;
+		bool show_coor_flag =false;																			 
+		bool insert_flag =false;
 		RECT exe_wnd_rect;
 		::GetWindowRect(exe_id, &exe_wnd_rect);
 
@@ -2041,6 +2043,12 @@ void CDlgResult::OnConnectMaintop()
 		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
 		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
 		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
+		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
+		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
+		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
+		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
+		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
+		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
 
 		//file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\001.tif");
 		//file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\002.tif");
@@ -2052,9 +2060,21 @@ void CDlgResult::OnConnectMaintop()
 		x_pos_list.push_back("100");
 		x_pos_list.push_back("200");
 		x_pos_list.push_back("300");
+		x_pos_list.push_back("1500");
+		x_pos_list.push_back("1600");
+		x_pos_list.push_back("1700");
+		x_pos_list.push_back("3100");
+		x_pos_list.push_back("3200");
+		x_pos_list.push_back("3300");
 
 		vector<string> y_pos_list;
 
+		y_pos_list.push_back("10");
+		y_pos_list.push_back("1800");
+		y_pos_list.push_back("3600");
+		y_pos_list.push_back("10");
+		y_pos_list.push_back("1800");
+		y_pos_list.push_back("3600");
 		y_pos_list.push_back("10");
 		y_pos_list.push_back("1800");
 		y_pos_list.push_back("3600");
@@ -2097,17 +2117,26 @@ void CDlgResult::OnConnectMaintop()
 			keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
 			keybd_event('I', 0, 0, 0);						// 按下I
 			keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起I
+			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起IC:\Users\admin\Desktop\tif测试图片\001.tif
 
-#if (DEBUG_SLEEP)
+	
 			Sleep(DEBUG_SLEEP_LONG_TIME);
-#endif
+		
 
 
 
 
 
-			HWND file_dlg_id = ::FindWindow("#32770", "取图片文件");
+			int  find_count = 0;
+			HWND file_dlg_id;/* = ::FindWindow("#32770", "取图片文件");*/
+
+			while(!(file_dlg_id = ::FindWindow("#32770", "取图片文件")))
+			{
+				Sleep(DEBUG_SLEEP_SHORT_TIME);
+				find_count++;
+			}
+
+
 			if (file_dlg_id != NULL)
 			{
 				RECT file_dlg_rect;
@@ -2125,9 +2154,6 @@ void CDlgResult::OnConnectMaintop()
 				keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
 
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_SHORT_TIME);
-#endif
 
 
 				// 设置到剪切板
@@ -2140,9 +2166,7 @@ void CDlgResult::OnConnectMaintop()
 				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_SHORT_TIME);
-#endif
+
 
 				// 按键-确定 
 
@@ -2161,6 +2185,7 @@ void CDlgResult::OnConnectMaintop()
 			else
 			{
 				AfxMessageBox("文件窗口未找到！");
+				return;
 			}
 
 			// 显示标注
@@ -2177,9 +2202,17 @@ void CDlgResult::OnConnectMaintop()
 
 			// 修改标注
 
-#if (DEBUG_SLEEP)
+
+		if (insert_flag == false)
+		{
+
 			Sleep(DEBUG_SLEEP_LONG_TIME);
-#endif
+			insert_flag = true;
+		}
+			
+
+
+
 			HWND parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "");
 
 			HWND coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "");
@@ -2199,15 +2232,10 @@ void CDlgResult::OnConnectMaintop()
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_LONG_TIME);
-#endif
 
 				// 输入
 				InputNormalString(str_pos_x);
-				// #if (DEBUG_SLEEP)
-				// 				Sleep(DEBUG_SLEEP_SHORT_TIME);
-				// #endif
+			
 
 				// 设置y坐标
 				// 			POINT coor_y;
@@ -2222,18 +2250,14 @@ void CDlgResult::OnConnectMaintop()
 				keybd_event(VK_TAB, 0, 0, 0);
 				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_LONG_TIME);
-#endif
+
 
 
 				// 输入
 				InputNormalString(str_pos_y);
 
 
-#if (DEBUG_SLEEP)
-				Sleep(DEBUG_SLEEP_LONG_TIME);
-#endif
+
 
 
 
@@ -2245,16 +2269,17 @@ void CDlgResult::OnConnectMaintop()
 			else
 			{
 				AfxMessageBox("坐标窗口未找到！");
+				return;
 			}
-
-
 		}
-
-
-
-
+	}
+	else
+	{
+		AfxMessageBox("exe窗口未找到！");
+		return;
 	}
 }
+
 
 
 
