@@ -50,7 +50,7 @@ BOOL CDlgNewUI::OnInitDialog()
 
  	m_pDlgResult = new CDlgResult(this);
 	m_pDlgResult->Create(CDlgResult::IDD, this);
-
+	m_pDlgResult->m_strSrcFilePath = m_strSrcFilePath;
 
 
 	

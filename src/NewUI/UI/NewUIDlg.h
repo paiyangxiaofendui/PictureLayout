@@ -23,6 +23,9 @@ public:
 	CDlgResult* m_pDlgResult;
 
 
+	string m_strSrcFilePath;
+
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 	virtual BOOL OnInitDialog();

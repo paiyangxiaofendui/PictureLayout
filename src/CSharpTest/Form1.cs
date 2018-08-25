@@ -38,8 +38,14 @@ namespace CSharpTest
 //         [DllImport("NewUId.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
 //         public static extern int Test();
 
-        [DllImport("NewUI.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
-        public static extern int Test();
+        //[DllImport("NewUI.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Test", CharSet = CharSet.Ansi)]
+        //public static extern int Test();
+        //
+        [DllImport("NewUI.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "JT_Layouts", CharSet = CharSet.Ansi)]
+        public static extern int JT_Layouts(char[] src_path);
+
+        //[DllImport("NewUId.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "JT_Layouts", CharSet = CharSet.Ansi)]
+        //public static extern int JT_Layouts(char[] src_path);
 
         public Form1()
         {
@@ -50,7 +56,10 @@ namespace CSharpTest
         {
             try
             {
-                Test();
+               // Test();
+
+                string src_file = "F:\\PictureLayout\\真实测试.xml";
+                JT_Layouts(src_file.ToCharArray());
 
             }
             catch (IOException e1)

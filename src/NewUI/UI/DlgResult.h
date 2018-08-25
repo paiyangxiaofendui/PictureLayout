@@ -32,6 +32,9 @@ class PanelViewingParam;
 #define DEFAULT_WIDTH						(100000) 
 
 
+#define IDTIMER1  1
+
+
 
  /** 
     * @brief 简要说明文字 
@@ -82,6 +85,7 @@ protected:
 	afx_msg void OnMenuRotatePastingComponent();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnTimer( UINT nIDEvent );
 
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	
@@ -264,6 +268,10 @@ public:
 
 	CComboBox control_arranging_origin;
 	int m_arranging_origin;		/**<  排样原点	*/
+
+
+	string m_strSrcFilePath;
+	bool open_rt;
 
 
 

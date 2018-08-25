@@ -183,8 +183,8 @@ void CCppTestDlg::OnBnClickedOk()
 	// TODO: 在此添加控件通知处理程序代码
 	
 
-	Test();
-
+	//Test();
+	JT_Layouts("F:\\PictureLayout\\真实测试.xml");
 
 
 

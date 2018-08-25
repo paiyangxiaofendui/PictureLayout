@@ -10,6 +10,7 @@
 #include "../Misc/ProgramMisc.h"
 #include "DlgSetMachiningOrder.h"
 
+
 #include <windows.h>
 #include <WinUser.h>
 #include <stdio.h>
@@ -17,6 +18,7 @@
 #include <atltypes.h>
 #include <string>
 #include <vector>
+#include <sstream>
 
 
 
@@ -24,9 +26,10 @@
 
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
+#include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/FileReadWrite/DxfReadWrite/DxfReadWrite.h"
 #include "../../../include/FileReadWrite/HgyReadWrite/HgyReadWrite.h"
 #include "../../../include/FileReadWrite/Misc/HGCode.h"
@@ -67,9 +70,14 @@ using namespace std;
 
 
 
-#define  DEBUG_SLEEP		(1)
-#define  DEBUG_SLEEP_LONG_TIME	(1000)
-#define  DEBUG_SLEEP_SHORT_TIME	(10)
+#define  SLEEP_1MS			(1)
+#define  SLEEP_10MS			(10)
+#define  SLEEP_100MS		(10)
+#define  SLEEP_1000MS		(1000)
+#define  SLEEP_2000MS		(2000)
+#define  SLEEP_3000MS		(3000)
+#define  SLEEP_4000MS		(4000)
+#define  SLEEP_5000MS		(5000)
 
 
 
@@ -138,6 +146,7 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_WM_SIZE()
+	ON_WM_TIMER()
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_MESSAGE(WM_REFRESH_PANEL_VIEW, &CDlgResult::OnRefreshPanelView)
@@ -193,9 +202,43 @@ BOOL CDlgResult::OnInitDialog()
 	control_arranging_origin.SetCurSel(0);
 
 
+
+	SetTimer(IDTIMER1, 1000, 0);
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
 }
+
+
+void CDlgResult::OnTimer(UINT nIDEvent)
+{
+	// TODO: Add your message handler code here and/or call default
+	switch(nIDEvent) 
+	{
+	case IDTIMER1:
+		{   
+			//AfxMessageBox("进入定时器1");
+			KillTimer(IDTIMER1);
+
+			// 读文件
+			OnOpenSourcePicInfo();
+			if (open_rt)
+			{
+				// 排样
+				OnLayout();
+			}
+
+			break;
+		}
+	
+	default:
+		;
+	}
+
+	CDialogChildBase::OnTimer(nIDEvent);
+}
+
+
 
 
 void CDlgResult::OnPaint()
@@ -1972,312 +2015,430 @@ void  CDlgResult::InputNormalString(string str)
 	{
 		char c = str.at(i);
 
-		Sleep(1);
-		keybd_event(c, 0, 0, 0);					// 按下
-		keybd_event(c, 0, KEYEVENTF_KEYUP, 0);		// 抬起
+		Sleep(SLEEP_1MS);
+
+		if (c == '.')
+		{
+			keybd_event(VK_DECIMAL, 0, 0, 0);					// 按下
+			keybd_event(VK_DECIMAL, 0, KEYEVENTF_KEYUP, 0);		// 抬起
+		}
+		else
+		{
+			keybd_event(c, 0, 0, 0);					// 按下
+			keybd_event(c, 0, KEYEVENTF_KEYUP, 0);		// 抬起
+		}
+		
+		
 	}
 }
 
 
 void CDlgResult::OnConnectMaintop()
 {
-
-	//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
-	HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+	// 获取当前排样方案
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	
-	int find_exe_num = 0;
-
-	if (exe_id == 0)
+	int nSlnNum = pSingleton->m_BackupSolutionList.size();
+	if (nSlnNum != 1)
 	{
-		// 启动程序
-		ShellExecute(NULL, "open", "E:\\袁梓埠个人文件夹\\代码\\MainTop\\DTP\\dtpw.exe", NULL, NULL, SW_SHOWNORMAL); 
+		return;
+	}
 
-		while(exe_id == 0)
-		{
-			Sleep(100);
-			exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
-			find_exe_num++;
-			
-		}
-		
+	CSolution* pCurSln = pSingleton->m_BackupSolutionList.at(0);
+
+	int nPanelNum = pCurSln->GetPanelNum();
+	if (nPanelNum != 1)
+	{
+		return;
+	}
+
+	Panel* pCurPanel = pCurSln->GetPanel(0);
+
+	vector<Component*> cpn_list;
+	pCurPanel->GetAllNeededComponent(cpn_list);
+
+
+	// 填写文件名
+	vector<string> file_list;
+	vector<string> x_pos_list;
+	vector<string> y_pos_list;
+
+
+
+
+	for (int i_cpn = 0; i_cpn < cpn_list.size(); i_cpn++)
+	{
+		Component* pCpn = cpn_list.at(i_cpn);
+
+		string file_path = pCpn->m_BarCode;
+		float x = pCpn->m_x;
+		float y = pCurPanel->m_OrgWidth - pCpn->m_y - pCpn->m_RealWidth;	// 左上角为原点， y要取反
+
+		stringstream ss;
+
+		ss << x;
+
+		string str_x = ss.str();
+
+		ss.clear();
+		ss.str("");
+
+		ss << y;
+
+		string str_y = ss.str();
+
+
+		file_list.push_back(file_path);
+		x_pos_list.push_back(str_x);
+		y_pos_list.push_back(str_y);
+
 	}
 
 
-	if (exe_id != NULL)
-	{
-		// 将窗口移到最顶层
-		::SendMessage(exe_id, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
-		::SetWindowPos(NULL, HWND_TOPMOST, 0,0, 1926,1446, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
-																			 
-		bool show_coor_flag =false;																			 
-		bool insert_flag =false;
-		RECT exe_wnd_rect;
-		::GetWindowRect(exe_id, &exe_wnd_rect);
 
-		int x = exe_wnd_rect.left, y = exe_wnd_rect.top;
-
-
-		// 窗口获取焦点
-		int x2 = (exe_wnd_rect.left + exe_wnd_rect.right)/2;
-		int y2 = (exe_wnd_rect.top + exe_wnd_rect.bottom)/2;
-		SetCursorPos(x2, y2);
-		mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+#if 0
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
+// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
 
 
-		// 新建Ctrl+N
-		keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-		keybd_event('N', 0, 0, 0);						// 按下N
-		keybd_event('N', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-		keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起N
-
-
-		// 按键-确定 新建文件
-		keybd_event(VK_RETURN, 0, 0, 0);
-		keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-		// 填写文件名
-		vector<string> file_list;
-
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-		file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
-
-		//file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\001.tif");
-		//file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\002.tif");
-		//file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\003.tif");
-
-
-		vector<string> x_pos_list;
-
-		x_pos_list.push_back("100");
-		x_pos_list.push_back("200");
-		x_pos_list.push_back("300");
-		x_pos_list.push_back("1500");
-		x_pos_list.push_back("1600");
-		x_pos_list.push_back("1700");
-		x_pos_list.push_back("3100");
-		x_pos_list.push_back("3200");
-		x_pos_list.push_back("3300");
-
-		vector<string> y_pos_list;
-
-		y_pos_list.push_back("10");
-		y_pos_list.push_back("1800");
-		y_pos_list.push_back("3600");
-		y_pos_list.push_back("10");
-		y_pos_list.push_back("1800");
-		y_pos_list.push_back("3600");
-		y_pos_list.push_back("10");
-		y_pos_list.push_back("1800");
-		y_pos_list.push_back("3600");
+#else
+// 	file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\001.tif");
+// 	file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\002.tif");
+// 	file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\003.tif");
+#endif
 
 
 
 
-		for (UINT i = 0; i < file_list.size();  i++)
+
+
+
+// 	x_pos_list.push_back("100");
+// 	x_pos_list.push_back("200");
+// 	x_pos_list.push_back("300");
+	// 		x_pos_list.push_back("1500");
+	// 		x_pos_list.push_back("1600");
+	// 		x_pos_list.push_back("1700");
+	// 		x_pos_list.push_back("3100");
+	// 		x_pos_list.push_back("3200");
+	// 		x_pos_list.push_back("3300");
+
+
+// 	y_pos_list.push_back("10");
+// 	y_pos_list.push_back("1800");
+// 	y_pos_list.push_back("3600");
+	// 		y_pos_list.push_back("10");
+	// 		y_pos_list.push_back("1800");
+	// 		y_pos_list.push_back("3600");
+	// 		y_pos_list.push_back("10");
+	// 		y_pos_list.push_back("1800");
+	// 		y_pos_list.push_back("3600");
+
+
+
+
+
+
+
+
+		//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+		HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+
+		int find_exe_num = 0;
+
+		if (exe_id == 0)
 		{
-			// 设置焦点
-			// 			HWND MainTopWnd_id = FindWindow("MainTop_TpfWindow", "");
-			// 			if (MainTopWnd_id != NULL)
-			// 			{
-			//				RECT maintop_wnd_rect;
-			//				GetWindowRect(MainTopWnd_id, &maintop_wnd_rect);
+			// 启动程序
+#if 0
 
-			int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
+			//ShellExecute(NULL, "open", "E:\\袁梓埠个人文件夹\\代码\\MainTop\\DTP\\dtpw.exe", NULL, NULL, SW_SHOWNORMAL); 
+
+#else
+
+			ShellExecute(NULL, "open", "F:\\MainTop\\DTP\\dtpw.exe", NULL, NULL, SW_SHOWNORMAL); 
+
+#endif
+
+
+
+
+			while(exe_id == 0)
+			{
+				Sleep(100);
+				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+				find_exe_num++;
+
+			}
+
+		}
+
+
+		if (exe_id != NULL)
+		{
+			// 将窗口移到最顶层
+			::SendMessage(exe_id, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+			::SetWindowPos(NULL, HWND_TOPMOST, 0,0, 1926,1446, SWP_SHOWWINDOW | SWP_NOSIZE | SWP_NOMOVE);
+
+			Sleep(SLEEP_1000MS);
+
+			bool show_coor_flag =false;																			 
+			bool insert_flag =false;
+			RECT exe_wnd_rect;
+			::GetWindowRect(exe_id, &exe_wnd_rect);
+
+			int x = exe_wnd_rect.left, y = exe_wnd_rect.top;
 
 
 			// 窗口获取焦点
-
-			SetCursorPos(x, y);
+			int x2 = (exe_wnd_rect.left + exe_wnd_rect.right)/2;
+			int y2 = (exe_wnd_rect.top + exe_wnd_rect.bottom)/2;
+			SetCursorPos(x2, y2);
 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
-
-
-			//			}
-
-
-
-
-			string file_path = file_list.at(i);
-			string str_pos_x = x_pos_list.at(i);
-			string str_pos_y = y_pos_list.at(i);
-
-
-
-			// 取图片文件窗口 Ctrl+I
+			// 新建Ctrl+N
 			keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-			keybd_event('I', 0, 0, 0);						// 按下I
-			keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起IC:\Users\admin\Desktop\tif测试图片\001.tif
+			keybd_event('N', 0, 0, 0);						// 按下N
+			keybd_event('N', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起N
+
+
+			// 按键-确定 新建文件
+			keybd_event(VK_RETURN, 0, 0, 0);
+			keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+
+			for (UINT i = 0; i < file_list.size();  i++)
+			{
+				// 设置焦点
+				// 			HWND MainTopWnd_id = FindWindow("MainTop_TpfWindow", "");
+				// 			if (MainTopWnd_id != NULL)
+				// 			{
+				//				RECT maintop_wnd_rect;
+				//				GetWindowRect(MainTopWnd_id, &maintop_wnd_rect);
+
+				int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
+
+
+				// 窗口获取焦点
+
+				SetCursorPos(x, y);
+				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+
+				//			}
+
+
+
+
+				string file_path = file_list.at(i);
+				string str_pos_x = x_pos_list.at(i);
+				string str_pos_y = y_pos_list.at(i);
+
+
+
+				// 取图片文件窗口 Ctrl+I
+				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+				Sleep(SLEEP_10MS);
+				keybd_event('I', 0, 0, 0);						// 按下I
+				Sleep(SLEEP_10MS);
+				keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+				Sleep(SLEEP_10MS);
+				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起IC:\Users\admin\Desktop\tif测试图片\001.tif
+
+
+				Sleep(SLEEP_1000MS);
+
+
+
+
+
+
+				int  find_count = 0;
+				HWND file_dlg_id;/* = ::FindWindow("#32770", "取图片文件");*/
+
+				while(!(file_dlg_id = ::FindWindow("#32770", "取图片文件")))
+				{
+					// 取图片文件窗口 Ctrl+I
+					//keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+					//Sleep(SLEEP_10MS);
+					//keybd_event('I', 0, 0, 0);						// 按下I
+					//Sleep(SLEEP_10MS);
+					//keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					//Sleep(SLEEP_10MS);
+					//keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起IC:\Users\admin\Desktop\tif测试图片\001.tif
+
+
+					Sleep(SLEEP_1000MS);
+					find_count++;
+				}
+
+
+				if (file_dlg_id != NULL)
+				{
+					RECT file_dlg_rect;
+					::GetWindowRect(file_dlg_id, &file_dlg_rect);
+
+					int file_path_x = file_dlg_rect.left + 150;
+					int file_path_y = file_dlg_rect.bottom - 65;
+
+					SetCursorPos(file_path_x, file_path_y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+					// 删除已有数据
+					keybd_event(VK_BACK, 0, 0, 0);
+					keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+					// 设置到剪切板
+					CopyToClipboard(file_path.c_str(), file_path.length());
+
+					// 粘贴 Ctrl+V
+					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+					keybd_event('V', 0, 0, 0);						// 按下D:\QQPCmgr\Desktop\tif测试图片\test_image.tif
+					keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+
+
+
+
+					// 按键-确定 
+
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+					// 按键-确定 
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+				}
+				else
+				{
+					AfxMessageBox("文件窗口未找到！");
+					return;
+				}
+
+				// 显示标注
+				if (show_coor_flag == false)
+				{
+					int show_coord_btn_x = exe_wnd_rect.left + 610;
+					int show_coord_btn_y = exe_wnd_rect.top + 70;
+					SetCursorPos(show_coord_btn_x, show_coord_btn_y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+					show_coor_flag = true;
+				}
+
+
+				// 修改标注
+
+
+				if (insert_flag == false)
+				{
+
+					Sleep(SLEEP_1000MS);
+					insert_flag = true;
+				}
+
+
+
+
+				HWND parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "");
+
+				HWND coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "");
+				if (coor_dlg_id != NULL)
+				{
+					RECT coor_dlg_rect;
+					::GetWindowRect(coor_dlg_id, &coor_dlg_rect);
+
+
+
+					// 设置x坐标
+					POINT coor_x;
+					coor_x.x = coor_dlg_rect.left + 35;
+					coor_x.y = coor_dlg_rect.top + 8;
+
+					SetCursorPos(coor_x.x, coor_x.y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+					// 输入
+					InputNormalString(str_pos_x);
+
+
+					// 设置y坐标
+					// 			POINT coor_y;
+					// 			coor_y.x = coor_dlg_rect.left + 35;
+					// 			coor_y.y = coor_dlg_rect.top + 25;
+					// 
+					// 			SetCursorPos(coor_y.x, coor_y.y);
+					// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+					// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+					//	
+					// 按下table键
+					keybd_event(VK_TAB, 0, 0, 0);
+					keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+					// 输入
+					InputNormalString(str_pos_y);
+
+
+
+
+
+
+					// 按键-确定 
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+				}
+				else
+				{
+					AfxMessageBox("坐标窗口未找到！");
+					return;
+				}
+			}
+		}
+		else
+		{
+			AfxMessageBox("exe窗口未找到！");
+			return;
+		}
 
 	
-			Sleep(DEBUG_SLEEP_LONG_TIME);
-		
-
-
-
-
-
-			int  find_count = 0;
-			HWND file_dlg_id;/* = ::FindWindow("#32770", "取图片文件");*/
-
-			while(!(file_dlg_id = ::FindWindow("#32770", "取图片文件")))
-			{
-				Sleep(DEBUG_SLEEP_SHORT_TIME);
-				find_count++;
-			}
-
-
-			if (file_dlg_id != NULL)
-			{
-				RECT file_dlg_rect;
-				::GetWindowRect(file_dlg_id, &file_dlg_rect);
-
-				int file_path_x = file_dlg_rect.left + 150;
-				int file_path_y = file_dlg_rect.bottom - 65;
-
-				SetCursorPos(file_path_x, file_path_y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-				// 删除已有数据
-				keybd_event(VK_BACK, 0, 0, 0);
-				keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-
-				// 设置到剪切板
-				CopyToClipboard(file_path.c_str(), file_path.length());
-
-				// 粘贴 Ctrl+V
-				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-				keybd_event('V', 0, 0, 0);						// 按下D:\QQPCmgr\Desktop\tif测试图片\test_image.tif
-				keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
-
-
-
-
-				// 按键-确定 
-
-				keybd_event(VK_RETURN, 0, 0, 0);
-				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-
-				// 按键-确定 
-				keybd_event(VK_RETURN, 0, 0, 0);
-				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-
-			}
-			else
-			{
-				AfxMessageBox("文件窗口未找到！");
-				return;
-			}
-
-			// 显示标注
-			if (show_coor_flag == false)
-			{
-				int show_coord_btn_x = exe_wnd_rect.left + 610;
-				int show_coord_btn_y = exe_wnd_rect.top + 70;
-				SetCursorPos(show_coord_btn_x, show_coord_btn_y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-				show_coor_flag = true;
-			}
-
-
-			// 修改标注
-
-
-		if (insert_flag == false)
-		{
-
-			Sleep(DEBUG_SLEEP_LONG_TIME);
-			insert_flag = true;
-		}
-			
-
-
-
-			HWND parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "");
-
-			HWND coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "");
-			if (coor_dlg_id != NULL)
-			{
-				RECT coor_dlg_rect;
-				::GetWindowRect(coor_dlg_id, &coor_dlg_rect);
-
-
-
-				// 设置x坐标
-				POINT coor_x;
-				coor_x.x = coor_dlg_rect.left + 35;
-				coor_x.y = coor_dlg_rect.top + 8;
-
-				SetCursorPos(coor_x.x, coor_x.y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-
-				// 输入
-				InputNormalString(str_pos_x);
-			
-
-				// 设置y坐标
-				// 			POINT coor_y;
-				// 			coor_y.x = coor_dlg_rect.left + 35;
-				// 			coor_y.y = coor_dlg_rect.top + 25;
-				// 
-				// 			SetCursorPos(coor_y.x, coor_y.y);
-				// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-				// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-				//	
-				// 按下table键
-				keybd_event(VK_TAB, 0, 0, 0);
-				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-
-				// 输入
-				InputNormalString(str_pos_y);
 
 
 
 
 
 
-				// 按键-确定 
-				keybd_event(VK_RETURN, 0, 0, 0);
-				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
-			}
-			else
-			{
-				AfxMessageBox("坐标窗口未找到！");
-				return;
-			}
-		}
-	}
-	else
-	{
-		AfxMessageBox("exe窗口未找到！");
-		return;
-	}
+
+
+
 }
 
 
@@ -2302,25 +2463,24 @@ void CDlgResult::OnConnectMaintop()
 	*/
 void CDlgResult::OnOpenSourcePicInfo()
 {
-
-
+	CString  m_strOpenedFile;
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 
-	CString filter = "xml 文件(*.xml)|*.xml|所有文件 (*.*)|*.*||";
-	CFileDialog fileDlg (true, _T("xml"), _T("*.xml"), OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, filter, NULL);
-	
+// 	CString filter = "xml 文件(*.xml)|*.xml|所有文件 (*.*)|*.*||";
+// 	CFileDialog fileDlg (true, _T("xml"), _T("*.xml"), OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, filter, NULL);
+// 	CString  m_strOpenedFile = fileDlg.GetPathName();
+// 	if ( fileDlg.DoModal() == IDOK)
 
 
-
-
-	if ( fileDlg.DoModal() == IDOK)
+	m_strOpenedFile = m_strSrcFilePath.c_str();
+	if (!m_strOpenedFile.IsEmpty())
 	{
 
 		// 先清除上一次的数据
 		ClearAllData();
 		m_vComponentInputItem.clear();
 
-		CString  m_strOpenedFile = fileDlg.GetPathName();
+		
 
 		int Which = m_strOpenedFile.ReverseFind('.');  
 		CString strExtName = m_strOpenedFile.Right(m_strOpenedFile.GetLength() - Which - 1);  
@@ -2341,6 +2501,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 			if (pRootElement == NULL)
 			{
 				AfxMessageBox("空文件");
+				open_rt = false;
 				return ;
 			}
 
@@ -2470,7 +2631,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 			CString str;
 			str.Format("%d", nCpnNum);
 			str += "块小板";
-			AfxMessageBox(str);
+			//AfxMessageBox(str);
 		}
 	}
 
@@ -2505,10 +2666,11 @@ void CDlgResult::OnOpenSourcePicInfo()
 	else
 	{
 		AfxMessageBox("没有合适的原料，无法排样!");
+
+		open_rt = false;
+		return ;
 	}
 
 
-
-
-
+	open_rt = true;
 }

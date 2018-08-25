@@ -19,3 +19,23 @@ int Test(void)
 
 	return 0;
 }
+
+
+ int JT_Layouts(char* src_file_path)
+ {
+	 AFX_MANAGE_STATE(AfxGetStaticModuleState());
+
+	 CDlgNewUI dlg;
+
+	 dlg.m_strSrcFilePath = src_file_path;
+		
+
+	 dlg.DoModal();
+
+	 // 	CDlgWeiXin dlg;
+	 // 
+	 // 	dlg.DoModal();
+
+
+	 return 0;
+ }
