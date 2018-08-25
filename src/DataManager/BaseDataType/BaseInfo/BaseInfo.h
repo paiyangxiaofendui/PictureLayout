@@ -52,6 +52,9 @@ public:
 												
 	bool m_bDownerFaceFirst;					/**<  有反面信息优先排列		   */
 
+public:
+	string m_strMainTopPath;
+
 
 
 };

@@ -69,6 +69,12 @@ using namespace std;
 
 
 
+#define	VERSION_PRO				(1)
+#define	VERSION_NORMAL			(2)
+
+#define CUR_VERSION				VERSION_NORMAL
+
+
 
 #define  SLEEP_1MS			(1)
 #define  SLEEP_10MS			(10)
@@ -2064,6 +2070,8 @@ void CDlgResult::OnConnectMaintop()
 	vector<string> y_pos_list;
 
 
+	//exe 路径
+	string exe_path = m_BaseInfo.m_strMainTopPath;
 
 
 	for (int i_cpn = 0; i_cpn < cpn_list.size(); i_cpn++)
@@ -2146,27 +2154,23 @@ void CDlgResult::OnConnectMaintop()
 
 
 
+#if (CUR_VERSION == VERSION_NORMAL)
 
+	HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
 
-		//HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
-		HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+#else
+
+	HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+
+#endif
 
 		int find_exe_num = 0;
 
 		if (exe_id == 0)
 		{
 			// 启动程序
-#if 0
 
-			//ShellExecute(NULL, "open", "E:\\袁梓埠个人文件夹\\代码\\MainTop\\DTP\\dtpw.exe", NULL, NULL, SW_SHOWNORMAL); 
-
-#else
-
-			ShellExecute(NULL, "open", "F:\\MainTop\\DTP\\dtpw.exe", NULL, NULL, SW_SHOWNORMAL); 
-
-#endif
-
-
+			ShellExecute(NULL, "open", exe_path.c_str(), NULL, NULL, SW_SHOWNORMAL); 
 
 
 			while(exe_id == 0)
@@ -2596,15 +2600,17 @@ void CDlgResult::OnOpenSourcePicInfo()
 					float	RightOffset		=  stof(pCurPrinciple->Attribute("RightOffset"));
 					float	TopOffset		=  stof(pCurPrinciple->Attribute("TopOffset"));
 					float	BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
+					string	maintop_path	=  pCurPrinciple->Attribute("MainTopPath");	
 
 					m_BaseInfo.m_LayoutMethod	=	Method		;
 					m_BaseInfo.m_LayoutOrg		=	Origin		;
-					m_BaseInfo.m_x_space			=	XSpace		;		
-					m_BaseInfo.m_y_space			=	YSpace		;		
-					m_BaseInfo.m_left_offset		=	LeftOffset	;	
+					m_BaseInfo.m_x_space		=	XSpace		;		
+					m_BaseInfo.m_y_space		=	YSpace		;		
+					m_BaseInfo.m_left_offset	=	LeftOffset	;	
 					m_BaseInfo.m_right_offset	=	RightOffset	;	
 					m_BaseInfo.m_top_offset		=	TopOffset	;	
 					m_BaseInfo.m_bottom_offset	=	BottomOffset;
+					m_BaseInfo.m_strMainTopPath =	maintop_path;
 
 				}
 			}
