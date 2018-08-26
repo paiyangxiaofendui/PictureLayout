@@ -72,7 +72,7 @@ using namespace std;
 #define	VERSION_PRO				(1)
 #define	VERSION_NORMAL			(2)
 
-#define CUR_VERSION				VERSION_NORMAL
+#define CUR_VERSION				VERSION_PRO
 
 
 
@@ -2160,7 +2160,7 @@ void CDlgResult::OnConnectMaintop()
 
 #else
 
-	HWND exe_id = FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+	HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
 
 #endif
 
@@ -2175,9 +2175,29 @@ void CDlgResult::OnConnectMaintop()
 
 			while(exe_id == 0)
 			{
-				Sleep(100);
+				Sleep(SLEEP_1000MS);
+
+
+#if (CUR_VERSION == VERSION_NORMAL)
+
 				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+
+#else
+
+				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+
+#endif
+
+
 				find_exe_num++;
+				
+				// 10秒未启动
+				if (find_exe_num >= 10)
+				{
+					AfxMessageBox("超过10秒未找到蒙泰程序窗口，退出！");
+					return;
+				}
+
 
 			}
 
@@ -2193,7 +2213,9 @@ void CDlgResult::OnConnectMaintop()
 			Sleep(SLEEP_1000MS);
 
 			bool show_coor_flag =false;																			 
-			bool insert_flag =false;
+			bool first_modify_coord_flag =false;																	 
+			bool first_insert_flag =false;
+
 			RECT exe_wnd_rect;
 			::GetWindowRect(exe_id, &exe_wnd_rect);
 
@@ -2287,6 +2309,14 @@ void CDlgResult::OnConnectMaintop()
 
 					Sleep(SLEEP_1000MS);
 					find_count++;
+
+					// 10秒未启动
+					if (find_count >= 10)
+					{
+						AfxMessageBox("超过10秒未找到取图片文件窗口，退出！");
+						return;
+					}
+
 				}
 
 
@@ -2306,7 +2336,12 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_BACK, 0, 0, 0);
 					keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
 
+					if (first_insert_flag == false)
+					{
+						Sleep(SLEEP_1000MS);
 
+						first_insert_flag = true;
+					}
 
 
 					// 设置到剪切板
@@ -2356,12 +2391,13 @@ void CDlgResult::OnConnectMaintop()
 				// 修改标注
 
 
-				if (insert_flag == false)
+				if (first_modify_coord_flag == false)
 				{
 
 					Sleep(SLEEP_1000MS);
-					insert_flag = true;
+					first_modify_coord_flag = true;
 				}
+
 
 
 

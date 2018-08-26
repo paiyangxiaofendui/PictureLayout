@@ -184,7 +184,7 @@ void CCppTestDlg::OnBnClickedOk()
 	
 
 	//Test();
-	JT_Layouts("F:\\PictureLayout\\真实测试.xml");
+	JT_Layouts("真实测试.xml");
 
 
 
