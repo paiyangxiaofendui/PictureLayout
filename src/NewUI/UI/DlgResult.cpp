@@ -2039,6 +2039,36 @@ void  CDlgResult::InputNormalString(string str)
 }
 
 
+// 设置编辑栏的值
+void CDlgResult::setEditCtrlString(int pos_x, int pos_y, string str, int sleep_time)
+{
+	SetCursorPos(pos_x, pos_y);
+	mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+	mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+	// 删除已有数据
+	keybd_event(VK_BACK, 0, 0, 0);
+	keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
+
+
+	if (sleep_time > 0)
+	{
+		Sleep(sleep_time);
+	}
+
+
+	// 设置到剪切板
+	CopyToClipboard(str.c_str(), str.length());
+
+	// 粘贴 Ctrl+V
+	keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+	keybd_event('V', 0, 0, 0);						// 按下v
+	keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+	keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+}
+
+
+
 void CDlgResult::OnConnectMaintop()
 {
 	// 获取当前排样方案
@@ -2165,6 +2195,7 @@ void CDlgResult::OnConnectMaintop()
 #endif
 
 		int find_exe_num = 0;
+		int find_count = 0;
 
 		if (exe_id == 0)
 		{
@@ -2235,6 +2266,70 @@ void CDlgResult::OnConnectMaintop()
 			keybd_event('N', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 			keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起N
 
+			// 设置纸张大小   窗口“建立新文件”
+			find_count = 0;
+			HWND new_file_dlg_id;
+			while(!(new_file_dlg_id = ::FindWindow("#32770", "建立新文件")))
+			{
+				Sleep(SLEEP_1000MS);
+				find_count++;
+
+				// 10秒未启动
+				if (find_count >= 10)
+				{
+					AfxMessageBox("超过10秒未找到建立新文件窗口，退出！");
+					return;
+				}
+
+			}
+
+
+			if (new_file_dlg_id != NULL)
+			{
+				// 长的坐标为100x100   宽220x100
+				RECT new_file_dlg_rect;
+				::GetWindowRect(new_file_dlg_id, &new_file_dlg_rect);
+
+				int len_pos_x = new_file_dlg_rect.left + 100;
+				int len_pos_y = new_file_dlg_rect.top + 100;
+
+
+				int width_pos_x = new_file_dlg_rect.left + 220;
+				int width_pos_y = new_file_dlg_rect.top + 100;
+
+				stringstream ss ;
+
+				ss << pCurPanel->m_OrgLen;
+
+				string panel_len = ss.str();
+
+
+				ss.clear();
+				ss.str("");
+
+				ss << pCurPanel->m_OrgWidth;
+
+				string panel_width = ss.str();
+
+
+
+				setEditCtrlString(len_pos_x, len_pos_y, panel_len, 0);
+
+
+				setEditCtrlString(width_pos_x, width_pos_y, panel_width, 0);
+
+
+
+			}
+			else
+			{
+				AfxMessageBox("超过10秒未找到建立新文件窗口，退出！");
+				return;
+			}
+
+
+
+
 
 			// 按键-确定 新建文件
 			keybd_event(VK_RETURN, 0, 0, 0);
@@ -2292,8 +2387,7 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-				int  find_count = 0;
-				HWND file_dlg_id;/* = ::FindWindow("#32770", "取图片文件");*/
+				HWND file_dlg_id;
 
 				while(!(file_dlg_id = ::FindWindow("#32770", "取图片文件")))
 				{
@@ -2349,7 +2443,7 @@ void CDlgResult::OnConnectMaintop()
 
 					// 粘贴 Ctrl+V
 					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-					keybd_event('V', 0, 0, 0);						// 按下D:\QQPCmgr\Desktop\tif测试图片\test_image.tif
+					keybd_event('V', 0, 0, 0);						// 按下v
 					keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 

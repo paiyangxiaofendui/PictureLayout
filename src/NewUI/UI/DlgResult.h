@@ -218,6 +218,7 @@ public:
 	*/
 	afx_msg void OnConnectMaintop();
 
+	void setEditCtrlString(int pos_x, int pos_y, string str, int sleep_time = 0);
 
 	/** 
 	* @brief ”≈ªØ
