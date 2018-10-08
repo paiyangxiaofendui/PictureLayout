@@ -2377,7 +2377,7 @@ void CDlgResult::OnConnectMaintop()
 				Sleep(SLEEP_10MS);
 				keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// Ì§Æðctrl
 				Sleep(SLEEP_10MS);
-				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// Ì§ÆðIC:\Users\admin\Desktop\tif²âÊÔÍ¼Æ¬\001.tif
+				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// Ì§ÆðI
 
 
 				Sleep(SLEEP_1000MS);

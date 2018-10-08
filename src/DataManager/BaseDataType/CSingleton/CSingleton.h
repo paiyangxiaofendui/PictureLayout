@@ -39,7 +39,6 @@ using namespace TinyXml;
 
 
 
-class KnifeClass;
 
 class Panel;
 class Component;
