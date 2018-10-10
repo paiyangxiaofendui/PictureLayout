@@ -60,8 +60,8 @@ BOOL CDlgTotalResult::OnInitDialog()
 
 	// TODO:  在此添加额外的初始化
 	//m_lcTotalSolutionPanel.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
-	m_lcTotalSolutionPanel.InsertColumn(0, _T("图号"), 0, 35);
-	m_lcTotalSolutionPanel.InsertColumn(1, _T("原片尺寸"), 0, 130);
+	m_lcTotalSolutionPanel.InsertColumn(0, _T("方案号"), 0, 65);
+	m_lcTotalSolutionPanel.InsertColumn(1, _T("纸张尺寸"), 0, 100);
 	m_lcTotalSolutionPanel.InsertColumn(2, _T("利用率"), 0, 100);
 	m_lcTotalSolutionPanel.InsertColumn(3, _T("用量"), 0, 46);
 	m_lcTotalSolutionPanel.InsertColumn(4, _T("图片数"), 0, 124);

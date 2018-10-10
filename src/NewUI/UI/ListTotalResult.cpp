@@ -241,7 +241,7 @@ void CListTotalResult::DrawItems(CDC& dc)
 		vector<Component*> vAllComponent;
 		FindAllComponentInPanel(thePanel, vAllComponent);
 
-		for(int i = 0; i < vAllComponent.size(); i++)
+		for(unsigned int i = 0; i < vAllComponent.size(); i++)
 		{
 			Component& theComponent = *(vAllComponent[i]);
 			CRect rcComponent(theComponent.m_x*fScale, (/*thePanel.m_RealWidth*/nPanelWidth - (theComponent.m_y + theComponent.m_RealWidth))*fScale, (theComponent.m_x + theComponent.m_RealLength)*fScale, (/*thePanel.m_RealWidth*/nPanelWidth - theComponent.m_y)*fScale);

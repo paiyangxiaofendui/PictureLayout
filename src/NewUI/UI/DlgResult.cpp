@@ -1600,200 +1600,227 @@ void  CDlgResult::OnLayout()
 	// 设置原始信息：备份输入板件组、原料、规则
 	pSingleton->SetBackupComponentInputItem(m_vComponentInputItem);
 	pSingleton->SetRawMaterialInfoList(m_vRawMaterialList);
-	BaseInfo& info = pSingleton->m_BaseInfo;
 
-	
-	info.m_PanelLength		=		m_len ;	
-
-	if (m_width == 0.0)
-	{
-		info.m_WidthUnlimited	=		true;
-		info.m_PanelWidth		=		DEFAULT_WIDTH;
-	}
-	else
-	{
-		info.m_PanelWidth		=		m_width;
-	}
-
-
-	info.m_x_space				=		m_x_space;			
-	info.m_y_space				=		m_y_space;			
-	info.m_left_offset			=		m_left_offset;		
-	info.m_right_offset			=		m_right_offset;	
-	info.m_top_offset			=		m_top_offset;		
-	info.m_bottom_offset		=		m_bottom_offset;	
-
-	info.m_LayoutOrg			=		m_arranging_origin;
-	info.m_FirstSectionOPMethod =		1;
-
-	float offset = m_left_offset + m_right_offset;
-
-
-
-	// 拷贝需要优化的板件，不直接处理需要优化的板件，避免原始数据遭到破坏
-	vector<ComponentInputItem> vOptimizeComponent = m_vComponentInputItem;
-
-	// 检测板件超出
-	CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
-
-
-
-	// 设置优化相关信息
-
-	//pSingleton->ClearAllData();
-	//((CMainFrame*)theApp.GetMainWnd())->GetAlgBaseInfo(pSingleton->m_BaseInfo);
-
-
-	// 第一阶段参数
-// 	pSingleton->m_BaseInfo.m_FirstSectionOPTimes = dlgOptimizeSetting.m_nEditStep1Count;
-// 	pSingleton->m_BaseInfo.m_FirstSectionOPMethod = dlgOptimizeSetting.m_nComboStep1Alg;
-// 	// 第二阶段参数
-// 	pSingleton->m_BaseInfo.m_SecondSectionOPTimes = dlgOptimizeSetting.m_nEditStep2Count;
-// 	// 第三阶段参数
-// 	pSingleton->m_BaseInfo.m_ThirdSectionOPTimes = dlgOptimizeSetting.m_nEditStep3Count;
-// 	pSingleton->m_BaseInfo.m_ThirdSectionOAccptableUtilization = dlgOptimizeSetting.m_fEditStep3AcceptableUti;
-// 
-// 	// 反面信息优先排样
-// 	pSingleton->m_BaseInfo.m_bDownerFaceFirst = dlgOptimizeSetting.m_valDownerInfoFirst;
-
-
-	// 保存原始板件数据
-	pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
 
 	// 清空所有数据,准备优化
 	ClearAllData();
 
-
-
-
-
-	// 排样原点、优化次数
-	int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
-	ComponentList componentList;
-
-	int nTotalCount = 1;
-
-	// 优化循环开始
-	for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
+	int sln_index = 0;
+	for (unsigned int raw_index = 0; raw_index < m_vRawMaterialList.size(); raw_index++)
 	{
+		RawMaterialInfo rm_info = m_vRawMaterialList.at(raw_index);
 
-
-
-		// 第一段优化
-#if 1
-
-
-		int i_first_op_times = i_progress;
-
-		// 释放解决方案 
-		pSingleton->ClearCurrentSolution();
-		pSingleton->ClearRemainderManager();
-
-		// 释放小板分组
-		pSingleton->m_vComponentGroup.clear();
-
-		// 输入小板分组
-		ConvertInputInfoToComponentList(vOptimizeComponent, m_vPreCombineItem, componentList);
-
-		// 由于存在无纹理比有纹理利用率更差的情况，无纹理优化时，先横竖纹各排一次
-		int text_index = i_progress%5;
-		float rotate_limit = pSingleton->m_BaseInfo.m_PanelLength >  pSingleton->m_BaseInfo.m_PanelWidth ?  pSingleton->m_BaseInfo.m_PanelWidth :  pSingleton->m_BaseInfo.m_PanelLength ;
-
-		rotate_limit -= offset /*2* pSingleton->m_BaseInfo.m_DeburringWidth*/;
-
-
-// 		if (text_index == 1)
-// 		{
-// 			for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
-// 			{
-// 				Component* pCpn = componentList.at(i_cpn);
-// 
-// 				// 全部用横纹排一次, 不能旋转的除外
-// 				if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
-// 					(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
-// 				{
-// 					pCpn->m_Texture = TextureType_H_TEXTURE;
-// 				}
-// 				else
-// 				{
-// 					int a = 0;
-// 				}
-// 			}
-// 
-// 		}
-// 		else if (text_index == 2)
-// 		{
-// 			for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
-// 			{
-// 				Component* pCpn = componentList.at(i_cpn);
-// 
-// 				// 全部用横纹排一次
-// 				if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
-// 					(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
-// 				{
-// 					pCpn->m_Texture = TextureType_V_TEXTURE;
-// 				}
-// 				else
-// 				{
-// 					int a = 0;
-// 				}
-// 			}
-// 		}
-
-		// 赋值给单例类的优化原料
-		SplitComponentList(componentList, pSingleton->m_vComponentGroup);
-
-
-		// 优化
-		if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// 最低轮廓线
+		if (CheckRawMaterialUsable(m_vComponentInputItem, rm_info, m_BaseInfo) == false)
 		{
-			pSingleton->New_Layout(0, CutDir_Horizon, Org);
+			continue;;
 		}
-		else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// 贪心
+
+		BaseInfo& info = pSingleton->m_BaseInfo;
+
+		m_len = rm_info.m_PanelLength;
+		m_width = rm_info.m_PanelWidth;
+
+
+		info.m_PanelLength		=		m_len ;	
+
+		if (m_width == 0.0)
 		{
-			if (i_first_op_times == 2)
-			{
-				pSingleton->New_Layout(1, CutDir_Horizon, Org);
-			}
-			else if (i_first_op_times == 3)
-			{
-				pSingleton->New_Layout(1, CutDir_Horizon, Org);
-			}
-			else if (i_first_op_times == 4)
-			{
-				pSingleton->New_Layout(1, CutDir_Horizon, Org);
-			}
-			else
-			{
-				pSingleton->New_Layout(1, CutDir_Horizon, Org);
-			}
+			info.m_WidthUnlimited	=		true;
+			info.m_PanelWidth		=		DEFAULT_WIDTH;
 		}
 		else
 		{
-			// 组合 贪心+最低轮廓线
-			int flag = pSingleton->m_BaseInfo.m_FirstSectionOPTimes/2;
+			info.m_PanelWidth		=		m_width;
+		}
 
-			if (i_first_op_times > flag) // 随机
+
+		info.m_x_space				=		m_x_space;			
+		info.m_y_space				=		m_y_space;			
+		info.m_left_offset			=		m_left_offset;		
+		info.m_right_offset			=		m_right_offset;	
+		info.m_top_offset			=		m_top_offset;		
+		info.m_bottom_offset		=		m_bottom_offset;	
+
+		info.m_LayoutOrg			=		m_arranging_origin;
+		info.m_FirstSectionOPMethod =		1;
+
+		float offset = m_left_offset + m_right_offset;
+
+
+
+		// 拷贝需要优化的板件，不直接处理需要优化的板件，避免原始数据遭到破坏
+		vector<ComponentInputItem> vOptimizeComponent = m_vComponentInputItem;
+
+
+
+		// 设置优化相关信息
+
+		//pSingleton->ClearAllData();
+		//((CMainFrame*)theApp.GetMainWnd())->GetAlgBaseInfo(pSingleton->m_BaseInfo);
+
+
+		// 第一阶段参数
+		// 	pSingleton->m_BaseInfo.m_FirstSectionOPTimes = dlgOptimizeSetting.m_nEditStep1Count;
+		// 	pSingleton->m_BaseInfo.m_FirstSectionOPMethod = dlgOptimizeSetting.m_nComboStep1Alg;
+		// 	// 第二阶段参数
+		// 	pSingleton->m_BaseInfo.m_SecondSectionOPTimes = dlgOptimizeSetting.m_nEditStep2Count;
+		// 	// 第三阶段参数
+		// 	pSingleton->m_BaseInfo.m_ThirdSectionOPTimes = dlgOptimizeSetting.m_nEditStep3Count;
+		// 	pSingleton->m_BaseInfo.m_ThirdSectionOAccptableUtilization = dlgOptimizeSetting.m_fEditStep3AcceptableUti;
+		// 
+		// 	// 反面信息优先排样
+		// 	pSingleton->m_BaseInfo.m_bDownerFaceFirst = dlgOptimizeSetting.m_valDownerInfoFirst;
+
+
+		// 保存原始板件数据
+		pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
+
+
+
+
+		// 检测板件超出
+		CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
+
+
+
+		// 排样原点、优化次数
+		int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
+		ComponentList componentList;
+
+		int nTotalCount = 1;
+
+		// 优化循环开始
+		for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
+		{
+
+
+
+			// 第一段优化
+#if 1
+
+
+			int i_first_op_times = i_progress;
+
+			// 释放解决方案 
+			pSingleton->ClearCurrentSolution();
+			pSingleton->ClearRemainderManager();
+
+			// 释放小板分组
+			pSingleton->m_vComponentGroup.clear();
+
+			// 输入小板分组
+			ConvertInputInfoToComponentList(vOptimizeComponent, m_vPreCombineItem, componentList);
+
+			// 由于存在无纹理比有纹理利用率更差的情况，无纹理优化时，先横竖纹各排一次
+			int text_index = i_progress%5;
+			float rotate_limit = pSingleton->m_BaseInfo.m_PanelLength >  pSingleton->m_BaseInfo.m_PanelWidth ?  pSingleton->m_BaseInfo.m_PanelWidth :  pSingleton->m_BaseInfo.m_PanelLength ;
+
+			rotate_limit -= offset /*2* pSingleton->m_BaseInfo.m_DeburringWidth*/;
+
+
+			// 		if (text_index == 1)
+			// 		{
+			// 			for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
+			// 			{
+			// 				Component* pCpn = componentList.at(i_cpn);
+			// 
+			// 				// 全部用横纹排一次, 不能旋转的除外
+			// 				if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
+			// 					(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
+			// 				{
+			// 					pCpn->m_Texture = TextureType_H_TEXTURE;
+			// 				}
+			// 				else
+			// 				{
+			// 					int a = 0;
+			// 				}
+			// 			}
+			// 
+			// 		}
+			// 		else if (text_index == 2)
+			// 		{
+			// 			for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
+			// 			{
+			// 				Component* pCpn = componentList.at(i_cpn);
+			// 
+			// 				// 全部用横纹排一次
+			// 				if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
+			// 					(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
+			// 				{
+			// 					pCpn->m_Texture = TextureType_V_TEXTURE;
+			// 				}
+			// 				else
+			// 				{
+			// 					int a = 0;
+			// 				}
+			// 			}
+			// 		}
+
+			// 赋值给单例类的优化原料
+			SplitComponentList(componentList, pSingleton->m_vComponentGroup);
+
+
+			// 优化
+			if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// 最低轮廓线
 			{
 				pSingleton->New_Layout(0, CutDir_Horizon, Org);
 			}
+			else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// 贪心
+			{
+				if (i_first_op_times == 2)
+				{
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+				}
+				else if (i_first_op_times == 3)
+				{
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+				}
+				else if (i_first_op_times == 4)
+				{
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+				}
+				else
+				{
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+				}
+			}
 			else
 			{
-				pSingleton->New_Layout(1, CutDir_Horizon, Org);
+				// 组合 贪心+最低轮廓线
+				int flag = pSingleton->m_BaseInfo.m_FirstSectionOPTimes/2;
+
+				if (i_first_op_times > flag) // 随机
+				{
+					pSingleton->New_Layout(0, CutDir_Horizon, Org);
+				}
+				else
+				{
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+				}
 			}
-		}
-
-	}
-
-	// 对大板尺寸进行处理
-
-
-	pSingleton->BackupBestSolution();
-
-
 
 
 #endif
+
+		}
+
+		// 对大板尺寸进行处理
+
+
+		pSingleton->BackupBetterSolution(sln_index);
+
+		sln_index++;
+
+
+
+
+	}
+
+
+
+
+
+
 
 
 
@@ -2780,6 +2807,9 @@ void CDlgResult::OnOpenSourcePicInfo()
 		{
 			b_selected = true;
 			select_rm = *it;
+
+
+
 			break;
 		}
 	}

@@ -32,6 +32,7 @@ CSingleton::CSingleton()
 	m_vComponentGroup.clear();
 
 	m_uComponentInputItemSerialID = 0;
+	m_CurSlnIndex = 0;
 }
 
 // 析构
@@ -371,6 +372,53 @@ int CSingleton::GetCurSolutionNum(void)
 int CSingleton::GetBackupSolutionNum(void)
 {
 	return m_BackupSolutionList.size();
+}
+
+
+/*--------------------------------------------------------------------------------------*/
+//	purpose:
+//		保存较优解决方案,
+//
+//	param:
+//		void
+//
+//	return:
+//		void
+/*--------------------------------------------------------------------------------------*/
+void CSingleton::BackupBetterSolution(int index)
+{
+	int cur_sln_num = m_CurrentSolutionList.size();
+	int backup_sln_num = m_BackupSolutionList.size();
+
+	if (cur_sln_num > 0)
+	{
+		CSolution* pSln = m_CurrentSolutionList.at(0);
+
+		if (index == backup_sln_num)
+		{
+			m_BackupSolutionList.push_back(pSln);
+			m_CurrentSolutionList.clear();
+		}
+		else if (index >=0 && index < backup_sln_num)
+		{
+			CSolution* pBackupSln = m_BackupSolutionList.at(index);
+
+			if (0)
+			{
+				delete pBackupSln;
+				pBackupSln = NULL;
+
+
+				m_BackupSolutionList[index] = pSln;
+				m_CurrentSolutionList.clear();
+			}
+			else
+			{
+				ClearCurrentSolution();
+			}
+
+		}
+	}
 }
 
 
