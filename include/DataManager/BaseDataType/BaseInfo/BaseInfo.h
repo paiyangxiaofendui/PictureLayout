@@ -51,6 +51,7 @@ public:
 	float m_ThirdSectionOAccptableUtilization;	/**<  第三阶可接受优化率		   */
 												
 	bool m_bDownerFaceFirst;					/**<  有反面信息优先排列		   */
+	bool m_bCustomerFirst;			
 
 public:
 	string m_strMainTopPath;

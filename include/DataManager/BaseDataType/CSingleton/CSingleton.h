@@ -2,7 +2,7 @@
 ///	CSingleton.h    --  单例类声明文件
 //	
 //	作者：	yuanzb
-//	时间：	2016.11.8
+//	时间：	2018.9.8
 //	备注：	算法主要数据结构
 //	
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -39,7 +39,6 @@ using namespace TinyXml;
 
 
 
-class KnifeClass;
 
 class Panel;
 class Component;
@@ -87,6 +86,7 @@ public:
 	int GetCurSolutionPanelNum(void);							/**< 获取当前优化方案大板数量	*/ 
 	int GetBackupSolutionPanelNum(void);						/**< 获取当前优化方案大板数量	*/
 	void BackupBestSolution(void);								/**< 保存最优解决方案	*/ 
+	void BackupBetterSolution(int index);							/**< 保存最优解决方案	*/ 
 
 
 	int GetCurSolutionNum(void);								/**< 获取当前优化方案数量	*/ 
@@ -98,12 +98,17 @@ public:
 	void SetBackupComponentInputItem(vector<ComponentInputItem>& InputItem);	/**< 备份输入小板接口	*/
 	void SetRawMaterialInfoList(vector<RawMaterialInfo>& InputItem);			/**< 原料信息链表接口	*/
 
+	void SetUsableRawMaterialInfoList(vector<RawMaterialInfo>& InputItem)	;	/**< 原料信息链表接口	*/
+
+
 public:
 	// 优化方案数据
+	int m_CurSlnIndex;
+	BaseInfo m_BaseInfo;														/**< 基本信息		*/ 
 	vector<CSolution*> m_CurrentSolutionList;									/**< 当前优化方案	*/ 
 	vector<CSolution*> m_BackupSolutionList;									/**< 备份优化方案	*/ 
-	vector<vector<Component*>> m_vComponentGroup;								/**< 小板组	*/ 
-	BaseInfo m_BaseInfo;														/**< 基本信息	*/ 
+	vector<vector<Component*>> m_vComponentGroup;								/**< 小板组			*/ 
+
 	vector<RawMaterialInfo> m_vRawMaterialList;									/**< 原料信息链表	*/ 
 	
 	vector<ComponentInputItem> m_vBackupComponentInputItem;						/**< 输入小板备份	*/ 
