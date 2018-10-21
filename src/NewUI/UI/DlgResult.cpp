@@ -1643,6 +1643,7 @@ void  CDlgResult::OnLayout()
 
 		info.m_LayoutOrg			=		m_arranging_origin;
 		info.m_FirstSectionOPMethod =		1;
+		info.m_bCustomerFirst		=		m_BaseInfo.m_bCustomerFirst; 
 
 		float offset = m_left_offset + m_right_offset;
 
