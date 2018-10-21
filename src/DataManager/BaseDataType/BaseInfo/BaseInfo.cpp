@@ -40,7 +40,8 @@ BaseInfo::BaseInfo(void)
 	m_ThirdSectionOPTimes				= 0;		// 第三阶段优化次数
 	m_ThirdSectionOAccptableUtilization	= 0;		// 第三阶可接受优化率
 	m_LayoutOrg							= 0;		// 排样原点
-	m_bDownerFaceFirst					= true;	// 反面信息优先排列		
+	m_bDownerFaceFirst					= true;		// 反面信息优先排列		
+	m_bCustomerFirst					= false;	// 客户优先
 }
 
 

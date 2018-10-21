@@ -332,6 +332,66 @@ int ALGORITHM_API::LayoutOnePanel_LowestOutline(Panel* pSrcPanel, BaseInfo& Info
 
 
 
+/**  小板按照客户名分组
+	@param[in]		
+	@param[out]		
+	@return			void
+	@warning		
+	@note			
+	@see            
+	*/
+void ALGORITHM_API::SplitComponentListByCustomer(vector<Component*>& SrcComponentList, vector<vector<Component*>>& SplitComponentGroup)
+{
+	int nSrcCompSize = SrcComponentList.size();
+
+	// 遍历
+	for(int i = 0; i < nSrcCompSize; i++)
+	{
+		int nListToInsertItemID = -1;
+		int nSplitCompGroupSize = SplitComponentGroup.size();
+		Component* pSrcComponent = SrcComponentList[i];
+
+		// 查看板件分组中是否已有同材质、厚度的分组
+		for(int j = 0; j < nSplitCompGroupSize; j++)
+		{
+			if(SplitComponentGroup[j].size() > 0 )		// 存在分组
+			{
+				Component* pSplitComponent = SplitComponentGroup[j][0];
+
+				// 判断材质、厚度是否相同
+				if (pSplitComponent->m_strCustomerInfo.Compare(pSrcComponent->m_strCustomerInfo) == 0)
+				{
+					nListToInsertItemID = j;
+					break;
+				}
+			}
+		}
+
+		if(nListToInsertItemID != -1)	// 找到已有分组
+		{
+			SplitComponentGroup[nListToInsertItemID].push_back(pSrcComponent);
+		}
+		else							// 未找到分组，新建分组并插入
+		{
+			vector<Component*> componentList;
+			componentList.push_back(pSrcComponent);
+
+			SplitComponentGroup.push_back(componentList);
+		}
+	}
+
+
+}
+
+
+/**  排样优化入口
+	@param[in]		
+	@param[out]		
+	@return			void
+	@warning		
+	@note			
+	@see            
+	*/
 int ALGORITHM_API::New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org)
 {
 	int nCpnID = 0;
@@ -345,6 +405,55 @@ int ALGORITHM_API::New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, v
 
 	// 建立余料链表
 	BuildRemainderList(pSrcPanel, RemainderList);
+
+
+
+	// 如果启用反面信息优先排列
+// 	if (Info.m_bDownerFaceFirst == true)
+// 	{
+// 		vector<Component*> DownerInfoCpnList;
+// 		vector<Component*>::iterator it;
+// 		for (it = SrcComponentList.begin(); it != SrcComponentList.end();)
+// 		{
+// 			Component* pCpn = *it;
+// 
+// 			if (pCpn->HaveDownerFaceHole() == true || pCpn->HaveDownerFaceSlot() == true)
+// 			{
+// 				// 从原链表删除，插入反面信息链表
+// 				it = SrcComponentList.erase(it);
+// 				DownerInfoCpnList.push_back(pCpn);
+// 			}
+// 			else
+// 			{
+// 				it++;
+// 			}
+// 		}
+// 
+// 		// 插在头部
+// 		SrcComponentList.insert(SrcComponentList.begin(), DownerInfoCpnList.begin(), DownerInfoCpnList.end());
+// 	}
+
+
+	// 客户信息优先
+	if (Info.m_bCustomerFirst == true)
+	{
+		vector<vector<Component*>> SplitComponentGroup;
+
+		SplitComponentListByCustomer(SrcComponentList, SplitComponentGroup);
+
+
+		// 先清空再逐个组插入
+		SrcComponentList.clear();
+		for(unsigned int i_group = 0; i_group < SplitComponentGroup.size(); i_group++)
+		{
+			vector<Component*>& cur_group = SplitComponentGroup.at(i_group);
+
+			SrcComponentList.insert(SrcComponentList.begin(), cur_group.begin(), cur_group.end());
+		}
+	}
+
+
+
 
 	// 还有小板需要排样
 	while (SrcComponentList.size() > 0)
@@ -1769,7 +1878,7 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 	bool bRotateFlag = false;
 	float min_remain_length, min_remain_width, min_dist;
 
-	if (base_info.m_bDownerFaceFirst == true)
+	if (base_info.m_bCustomerFirst == true)
 	{
 
 		for(i_remainder = 0; i_remainder < nRemainderNum; i_remainder++)
@@ -1830,7 +1939,7 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 
 						// 遇到更匹配的 并且不是最佳有反面信息且当前板件无反面信息
 						if (	(remaim_length < min_dist || remain_width < min_dist) 
-							&& !(pPerfectMatchComponent->HaveDownerFaceInfo() ==true && pCpn->HaveDownerFaceInfo() == false))
+							&& (pPerfectMatchComponent->m_strCustomerInfo == pCpn->m_strCustomerInfo))
 						{
 							min_remain_length = remaim_length;
 							min_remain_width = remain_width;

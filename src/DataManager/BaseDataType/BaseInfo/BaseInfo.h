@@ -19,7 +19,7 @@ public:
 	bool    m_LengthUnlimited;					/**<  长度无限制	*/
 	bool    m_WidthUnlimited;					/**<  宽度无限制	*/
 	int		m_LayoutOrg;						/**<  排样原点		*/
-	int		m_LayoutMethod;						/**<  排样方法		*/
+	int		m_LayoutMethod;						/**<  排样方法	0：智能模式	 1：省料优先 2：后道优先 3：客户优先*/	
 	float	m_PanelLength;						/**<  大板长度		*/
 	float	m_PanelWidth;						/**<  大板宽度		*/
 
@@ -51,6 +51,7 @@ public:
 	float m_ThirdSectionOAccptableUtilization;	/**<  第三阶可接受优化率		   */
 												
 	bool m_bDownerFaceFirst;					/**<  有反面信息优先排列		   */
+	bool m_bCustomerFirst;			
 
 public:
 	string m_strMainTopPath;

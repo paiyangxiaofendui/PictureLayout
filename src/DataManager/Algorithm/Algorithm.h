@@ -17,6 +17,9 @@ public:
 	static int LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org);
 	static int New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org);
 
+	//
+	static void SplitComponentListByCustomer(vector<Component*>& SrcComponentList, vector<vector<Component*>>& SplitComponentGroup);	/**< 小板按照客户名分组	*/ 
+
 	// 初始化余料线链表
 	static int BuildRemainderList(Panel* pParent, vector<Component*>& RemainderList);
 

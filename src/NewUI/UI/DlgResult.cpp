@@ -2673,12 +2673,13 @@ void CDlgResult::OnOpenSourcePicInfo()
 			
 				for (TiXmlElement* pCurPic = pPicSetElem->FirstChildElement("Picture"); pCurPic != NULL; pCurPic = (TiXmlElement*)(pCurPic->NextSibling("Picture")))
 				{
-					string pic_path		= pCurPic->Attribute("path");
-					string texture		= pCurPic->Attribute("Texture");
-					string material		= pCurPic->Attribute("Material");
-					int	num				= stoi(pCurPic->Attribute("Number"));
-					float w_mm			= stof(pCurPic->Attribute("Length"));
-					float h_mm			= stof(pCurPic->Attribute("Width"));
+					string pic_path			= pCurPic->Attribute("path");
+					string texture			= pCurPic->Attribute("Texture");
+					string material			= pCurPic->Attribute("Material");
+					string customer_info	= pCurPic->Attribute("Customer");
+					int	num					= stoi(pCurPic->Attribute("Number"));
+					float w_mm				= stof(pCurPic->Attribute("Length"));
+					float h_mm				= stof(pCurPic->Attribute("Width"));
 
 					// 计算图片长宽
 
@@ -2701,14 +2702,15 @@ void CDlgResult::OnOpenSourcePicInfo()
 					// 形成一条数据
 					ComponentInputItem componentInputItem;
 
-					componentInputItem.m_strBarcode = pic_path.c_str();
-					componentInputItem.m_fLength	= w_mm;
-					componentInputItem.m_fWidth		= h_mm;
-					componentInputItem.m_nCount		= num;
-					componentInputItem.m_strTexture = texture.c_str();
-					componentInputItem.m_strMaterial = material.c_str();
-					componentInputItem.m_strOtherShapeID = "异0";
-					componentInputItem.m_strAbnormalInfo = OtherShapeHelper::GetPointInfoStringFromPointInfo(
+					componentInputItem.m_strBarcode			= pic_path.c_str();
+					componentInputItem.m_fLength			= w_mm;
+					componentInputItem.m_fWidth				= h_mm;
+					componentInputItem.m_nCount				= num;
+					componentInputItem.m_strTexture			= texture.c_str();
+					componentInputItem.m_strMaterial		= material.c_str();
+					componentInputItem.m_strCustomerInfo	= customer_info.c_str();
+					componentInputItem.m_strOtherShapeID	= "异0";
+					componentInputItem.m_strAbnormalInfo	= OtherShapeHelper::GetPointInfoStringFromPointInfo(
 						OtherShapeHelper::getPointInfoRectangle(
 						string(GetFloatString((int)componentInputItem.m_eRotateType, 0)), \
 						string(GetFloatString(componentInputItem.m_fLength, 1)), \
@@ -2768,6 +2770,12 @@ void CDlgResult::OnOpenSourcePicInfo()
 					m_BaseInfo.m_top_offset		=	TopOffset	;	
 					m_BaseInfo.m_bottom_offset	=	BottomOffset;
 					m_BaseInfo.m_strMainTopPath =	maintop_path;
+
+					// 
+					if (m_BaseInfo.m_LayoutMethod == 3)
+					{
+						m_BaseInfo.m_bCustomerFirst = true;
+					}
 
 				}
 			}
