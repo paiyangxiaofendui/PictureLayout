@@ -430,6 +430,32 @@ LRESULT CDlgResult::OnRefreshPanelView(WPARAM wparam, LPARAM lparam)
 	InvalidateRect(GetPanelViewRect());
 	
 	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
+
+	if(pParam)
+	{
+		CSolution* pCurSel = pParam->m_pSolution;
+
+		if (pCurSel)
+		{
+
+			m_len				= pCurSel->m_BaseInfo.m_PanelLength		;	
+			//m_width				= pCurSel->m_BaseInfo.m_PanelWidth		;	
+			m_x_space			= pCurSel->m_BaseInfo.m_x_space			;
+			m_y_space			= pCurSel->m_BaseInfo.m_y_space			;
+			m_left_offset		= pCurSel->m_BaseInfo.m_left_offset		;
+			m_right_offset		= pCurSel->m_BaseInfo.m_right_offset	;
+			m_top_offset		= pCurSel->m_BaseInfo.m_top_offset		;
+			m_bottom_offset		= pCurSel->m_BaseInfo.m_bottom_offset	;
+			m_arranging_origin	= pCurSel->m_BaseInfo.m_LayoutOrg		;
+
+			UpdateData(FALSE);
+		}
+
+
+	}
+
+
+
 	bool bEnable = true;
 	if(!pParam || !pParam->m_pPanel)
 		bEnable = false;
