@@ -178,16 +178,197 @@ HCURSOR CCppTestDlg::OnQueryDragIcon()
 
 
 
+BOOL CALLBACK EnumWindowsLikeProc(HWND hwnd,LPARAM lParam)
+{
+	CString* namelink = (CString*)lParam;
+	TCHAR str[500];
+	::GetWindowText(hwnd,str,sizeof(str));
+	if(CString(str).Find(*namelink) != -1)
+	{
+		*namelink = CString(str);
+		return 0;
+	}
+	return 1;
+}
+
+
+
+int FindWindowLike(CString& namelink)
+{
+	EnumWindows(EnumWindowsLikeProc,(LPARAM)&namelink);
+	return 0;
+}
+
+
+
+CWnd* FindWndByCtrlID(CWnd* pWnd, UINT nCtrlID, LPCTSTR szClassName)
+{
+	CWnd* pFindingWnd = NULL;
+	pFindingWnd = pWnd->GetWindow(GW_CHILD);
+	while(pFindingWnd)
+	{
+		CString strTmp;
+		TCHAR szCheckingClassName[MAX_PATH];
+		GetClassName(pFindingWnd->GetSafeHwnd(), szCheckingClassName, MAX_PATH);
+		strTmp.Format("ID=%d H=%x class=%s\n", pFindingWnd->GetDlgCtrlID(), pFindingWnd->GetSafeHwnd(), szCheckingClassName);
+		OutputDebugString(strTmp);
+
+		CString strFindingClassName = szClassName;
+		if(pFindingWnd->GetDlgCtrlID() == nCtrlID && (strFindingClassName.IsEmpty() || strFindingClassName.CompareNoCase(szCheckingClassName) == 0))
+		{
+			return pFindingWnd;
+		}
+
+		CWnd* pRes = FindWndByCtrlID(pFindingWnd, nCtrlID, szClassName);
+		if(pRes)
+			return pRes;
+
+		pFindingWnd = pFindingWnd->GetNextWindow();
+	}
+
+	return NULL;
+}
+
+
+void EmptyCtrlContent(HWND hWnd)
+{
+	for(int j = 0; j < MAX_PATH; j++)
+	{
+		::PostMessage(hWnd, WM_KEYDOWN, VK_BACK, 0);
+		::PostMessage(hWnd, WM_KEYUP, VK_BACK, 0);
+	}
+	for(int j = 0; j < MAX_PATH; j++)
+	{
+		::PostMessage(hWnd, WM_KEYDOWN, VK_DELETE, 0);
+		::PostMessage(hWnd, WM_KEYUP, VK_DELETE, 0);
+	}
+}
+
+
 void CCppTestDlg::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	
 
 	//Test();
-	JT_Layouts("E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml");
+	//JT_Layouts("F:\\PictureLayout\\真实测试.xml");
+
+
+
+		
+		CString title = "蒙泰彩色电子出版系统 V6.0(普及版)";
+		int id = 200;
+
+		CString strMsg;
+// 		strMsg.Format("默认转发窗口:%s 默认转发控件ID:%d", title, id);
+// 		//AfxMessageBox(strMsg);
+// 		CWnd* pDefTransWnd = NULL;
+// 
+// 		CString strWndTitle = title;
+// 		FindWindowLike(strWndTitle);
+// 		pDefTransWnd = FindWindow(NULL, strWndTitle);
+// 
+// 
+// 		if(pDefTransWnd && pDefTransWnd->GetSafeHwnd())
+// 		{
+// 			CWnd wndPopup;
+// 			wndPopup.Attach(::GetLastActivePopup(pDefTransWnd->GetSafeHwnd()));
+// 
+// 			CWnd* pDefTransCtrl = FindWndByCtrlID(/*pDefTransWnd*/&wndPopup, id, NULL);
+// 			wndPopup.Detach();
+// 			if(pDefTransCtrl && pDefTransCtrl->GetSafeHwnd())
+// 			{
+// 				strMsg.Format("找到了默认窗口及控件！");
+// 				//AfxMessageBox(strMsg);
+// 
+// 				::PostMessage(pDefTransCtrl->GetSafeHwnd(), BM_CLICK, 0, 0);
+// 
+// 				//CWnd* pPostingWnd = pDefTransCtrl->GetParent();
+// 				//while(pPostingWnd)
+// 				//{
+// 				//	::PostMessage(pDefTransCtrl->GetParent()->GetSafeHwnd(), WM_COMMAND, MAKEWPARAM(theAction.m_uCtrlID, BN_CLICKED), (LPARAM)(pDefTransCtrl->GetSafeHwnd()));
+// 				//	pPostingWnd = pPostingWnd->GetParent();
+// 				//}
+// 
+// 				//::PostMessage(pDefTransCtrl->GetSafeHwnd(), WM_LBUTTONDOWN, 0, 0);
+// 				//::PostMessage(pDefTransCtrl->GetSafeHwnd(), WM_LBUTTONUP, 0, 0);
+// 			}
+// 			else
+// 			{
+// 				strMsg.Format("找不到默认控件！");
+// 				AfxMessageBox(strMsg);
+// 			}	
+// 		}
+// 		else
+// 		{
+// 			strMsg.Format("找不到默认窗口！");
+// 			AfxMessageBox(strMsg);
+// 		}
+
+
+
+			
+				strMsg.Format("默认转发窗口:%s", title);
+				//AfxMessageBox(strMsg);
+				CWnd* pDefTransWnd = NULL;
+
+				CString strWndTitle = title;
+				FindWindowLike(strWndTitle);
+				pDefTransWnd = FindWindow(NULL, strWndTitle);
+
+
+				if(pDefTransWnd && pDefTransWnd->GetSafeHwnd())
+				{
+					CString strBarcode = "100";
+// 					((CEdit*)GetDlgItem(IDC_EDIT_BARCODE))->GetWindowText(strBarcode);
+// 					strBarcode += m_config.m_strAddSuffix;
+					HWND hPopup = ::GetLastActivePopup(pDefTransWnd->GetSafeHwnd());
+
+					CWnd wndPopup;
+					wndPopup.Attach(hPopup);
+					CWnd* pTargetCtrl = NULL;
+					pTargetCtrl = FindWndByCtrlID(&wndPopup, id, "Edit");
+					//CString strPrint = PrintAllCtrl(&wndPopup);
+					//AfxMessageBox(strPrint);
+					wndPopup.Detach();		
+
+					if(pTargetCtrl && pTargetCtrl->GetSafeHwnd())
+					{
+						EmptyCtrlContent(pTargetCtrl->GetSafeHwnd());
+
+						CString strTmp;
+						TCHAR szClassName[MAX_PATH];
+						GetClassName(pTargetCtrl->GetSafeHwnd(), szClassName, MAX_PATH);
+						strTmp.Format("ID=%d H=%x class=%s\n", pTargetCtrl->GetDlgCtrlID(), pTargetCtrl->GetSafeHwnd(), szClassName);
+						OutputDebugString(strTmp);
+						for(int j = 0; j < strBarcode.GetLength(); j++)
+						{
+							::PostMessage(pTargetCtrl->GetSafeHwnd(), WM_CHAR, strBarcode.GetAt(j), 0);
+						}
+						//::PostMessage(pTargetCtrl->GetSafeHwnd(), WM_KEYDOWN, VK_RETURN, 0);
+					}
+					else
+					{
+						strMsg.Format(_T("在默认窗口下找不到控件：ID=%d CtrlClassName=%s"), id, "Edit");
+						AfxMessageBox(strMsg);
+					}
+				}
+				else
+				{
+					strMsg.Format("找不到默认窗口！");
+					AfxMessageBox(strMsg);
+				}
 
 
 
 
-	CDialogEx::OnOK();
+
+
+
+
+
+
+
+
+	//CDialogEx::OnOK();
 }
