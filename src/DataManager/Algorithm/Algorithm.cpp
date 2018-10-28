@@ -505,7 +505,27 @@ int ALGORITHM_API::New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, v
 			BuildRemainderList(pSrcPanel, RemainderList);
 
 			// 余料排序
-			SortRemainderList_LengthFirst(RemainderList);
+			//SortRemainderList_LengthFirst(RemainderList);
+
+			switch(Info.m_LayoutOrg)
+			{
+			case LayoutOrg_LeftBottom:
+			case LayoutOrg_RightBottom:
+				SortRemainderList_Bottom2Top(RemainderList);
+				break;
+			case LayoutOrg_LeftTop:
+			case LayoutOrg_RightTop:
+
+				SortRemainderList_Top2Bottom(RemainderList);
+
+				break;
+			default:
+
+				SortRemainderList_Bottom2Top(RemainderList);
+				break;
+
+			}
+
 
 		}
 		else
@@ -2076,6 +2096,14 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 					}
 				}
 			}
+
+			//2018-10-27 yuanzb  匹配到了直接退出，因为图片排样不是在规定尺寸而是无限长，要按照从上往下或者从下往上排，否则空间浪费很大
+			// 配合余料从上往下或者从下往排，可以解决优先排在最上或者最下，只有余料不能排时才选择下一个余料
+			if (bMatchFlag == true)
+			{
+				return true;
+			}
+
 		}
 	}
 	else
@@ -2274,6 +2302,14 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 					}
 				}
 			}
+
+			//2018-10-27 yuanzb  匹配到了直接退出，因为图片排样不是在规定尺寸而是无限长，要按照从上往下或者从下往上排，否则空间浪费很大
+			// 配合余料从上往下或者从下往排，可以解决优先排在最上或者最下，只有余料不能排时才选择下一个余料
+			if (bMatchFlag == true)
+			{
+				return true;
+			}
+
 		}
 	}
 
@@ -2281,6 +2317,37 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 	return bMatchFlag;
 
 }
+
+
+
+ bool  ALGORITHM_API::ComponentCompareHigher(const Component* pfirst, const Component* psecond) 
+{
+	Component* p1 = const_cast<Component*>(pfirst);
+	Component* p2 = const_cast<Component*>(psecond);
+
+	if (p1->m_y > p2->m_y)
+	{
+		return true;
+	}
+
+
+	return false;	
+}
+
+ bool ALGORITHM_API::ComponentCompareLower(const Component* pfirst, const Component* psecond) 
+{
+	Component* p1 = const_cast<Component*>(pfirst);
+	Component* p2 = const_cast<Component*>(psecond);
+
+	if (p1->m_y < p2->m_y)
+	{
+		return true;
+	}
+
+
+	return false;	
+}
+
 
 
 // 判断谁比较小
@@ -2313,6 +2380,30 @@ int ALGORITHM_API::SortRemainderList_LengthFirst(vector<Component*>& RemainderLi
 
 	return 0;
 }
+
+
+
+
+
+ int  ALGORITHM_API::SortRemainderList_Top2Bottom(vector<Component*>& RemainderList)
+ {
+//  板件从高到低排序
+	 sort(RemainderList.begin(), RemainderList.end(), ComponentCompareHigher);
+
+	 return 0;
+ }
+
+// 对余料进行从低到高排序
+int ALGORITHM_API::SortRemainderList_Bottom2Top(vector<Component*>& RemainderList)
+{
+	//  板件从低到高排序
+	sort(RemainderList.begin(), RemainderList.end(), ComponentCompareLower);
+
+	return 0;
+}
+
+
+
 
 
 

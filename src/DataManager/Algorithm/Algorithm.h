@@ -29,8 +29,21 @@ public:
 	// 对余料进行从大到小排序
 	static int SortRemainderList_LengthFirst(vector<Component*>& RemainderList);
 
+	// 对余料进行从高到低排序
+	static int SortRemainderList_Top2Bottom(vector<Component*>& RemainderList);
+	
+	// 对余料进行从低到高排序
+	static int SortRemainderList_Bottom2Top(vector<Component*>& RemainderList);
+
 	// 比较第一块是否小于第二块板
 	static bool ComponentCompareSmaller(const Component* pfirst, const Component* psecond) ;
+
+
+	// 比较第一块是否低于第二块板
+	static bool ComponentCompareLower(const Component* pfirst, const Component* psecond) ;
+
+	// 比较第一块是否低于第二块板
+	static bool ComponentCompareHigher(const Component* pfirst, const Component* psecond) ;
 
 	// 切割方式
 	static bool KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org);
