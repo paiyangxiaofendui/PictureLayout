@@ -1714,7 +1714,7 @@ void  CDlgResult::OnLayout()
 		int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
 		ComponentList componentList;
 
-		int nTotalCount = 1;
+		int nTotalCount = 10;
 
 		// 优化循环开始
 		for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
@@ -1829,13 +1829,13 @@ void  CDlgResult::OnLayout()
 
 #endif
 
+
+			// 备份较好的方案
+			pSingleton->BackupBetterSolution(sln_index);
+
 		}
 
-		// 对大板尺寸进行处理
-
-
-		pSingleton->BackupBetterSolution(sln_index);
-
+		// 用下一个尺寸进行排样
 		sln_index++;
 
 

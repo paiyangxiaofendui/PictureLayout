@@ -392,24 +392,31 @@ void CSingleton::BackupBetterSolution(int index)
 
 	if (cur_sln_num > 0)
 	{
-		CSolution* pSln = m_CurrentSolutionList.at(0);
+		CSolution* pCurSln = m_CurrentSolutionList.at(0);
 
 		if (index == backup_sln_num)
 		{
-			m_BackupSolutionList.push_back(pSln);
+			m_BackupSolutionList.push_back(pCurSln);
 			m_CurrentSolutionList.clear();
 		}
 		else if (index >=0 && index < backup_sln_num)
 		{
 			CSolution* pBackupSln = m_BackupSolutionList.at(index);
 
-			if (0)
+			// 对比两个方案的利用率，选取利用率高的，删除利用率低的
+			Panel* pCurPanel	= pCurSln->GetPanel(0);
+			Panel* pBackupPanel = pBackupSln->GetPanel(0);
+
+			float cur_util = pCurPanel->GetUtilization();
+			float back_util = pBackupPanel->GetUtilization();
+
+
+			if (back_util < cur_util)
 			{
 				delete pBackupSln;
 				pBackupSln = NULL;
 
-
-				m_BackupSolutionList[index] = pSln;
+				m_BackupSolutionList[index] = pCurSln;
 				m_CurrentSolutionList.clear();
 			}
 			else
