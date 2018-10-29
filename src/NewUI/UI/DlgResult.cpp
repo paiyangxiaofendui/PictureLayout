@@ -72,7 +72,7 @@ using namespace std;
 #define	VERSION_PRO				(1)
 #define	VERSION_NORMAL			(2)
 
-#define CUR_VERSION				VERSION_PRO
+#define CUR_VERSION				VERSION_NORMAL
 
 
 
@@ -1800,15 +1800,15 @@ void  CDlgResult::OnLayout()
 				}
 				else if (i_first_op_times == 3)
 				{
-					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+					pSingleton->New_Layout(1, CutDir_Vertical, Org);
 				}
 				else if (i_first_op_times == 4)
 				{
-					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+					pSingleton->New_Layout(1, CutDir_Default, Org);
 				}
 				else
 				{
-					pSingleton->New_Layout(1, CutDir_Horizon, Org);
+					pSingleton->New_Layout(1, CutDir_Random, Org);
 				}
 			}
 			else

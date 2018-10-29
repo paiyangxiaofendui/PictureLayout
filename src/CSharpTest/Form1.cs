@@ -61,7 +61,7 @@ namespace CSharpTest
             {
                // Test();
 
-                string src_file = "真实测试.xml";
+                string src_file = "F:\\PictureLayout\\真实测试.xml";
                 JT_Layouts(src_file.ToCharArray());
 
             }
