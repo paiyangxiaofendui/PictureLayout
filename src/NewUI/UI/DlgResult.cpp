@@ -2164,7 +2164,19 @@ void CDlgResult::OnConnectMaintop()
 
 		string file_path = pCpn->m_BarCode;
 		float x = pCpn->m_x;
-		float y = pCurPanel->m_OrgWidth - pCpn->m_y - pCpn->m_RealWidth;	// 左上角为原点， y要取反
+		float y;
+		if (pCpn->m_nRotatedAngle == 0)
+		{
+
+			y = pCurPanel->m_OrgWidth - pCpn->m_y - pCpn->m_RealWidth;	// 左上角为原点， y要取反
+
+		}
+		else
+		{
+			y = pCurPanel->m_OrgWidth - pCpn->m_y;	// 左上角为原点， y要取反
+
+
+		}
 
 		stringstream ss;
 
@@ -2367,10 +2379,10 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-				setEditCtrlString(len_pos_x, len_pos_y, panel_len, 0);
+				setEditCtrlString(len_pos_x, len_pos_y, panel_len, SLEEP_10MS);
 
 
-				setEditCtrlString(width_pos_x, width_pos_y, panel_width, 0);
+				setEditCtrlString(width_pos_x, width_pos_y, panel_width, SLEEP_10MS);
 
 
 
@@ -2382,7 +2394,7 @@ void CDlgResult::OnConnectMaintop()
 			}
 
 
-
+			Sleep(SLEEP_1000MS);
 
 
 			// 按键-确定 新建文件
@@ -2418,6 +2430,7 @@ void CDlgResult::OnConnectMaintop()
 
 
 
+				Component* pCpn = cpn_list.at(i);
 				string file_path = file_list.at(i);
 				string str_pos_x = x_pos_list.at(i);
 				string str_pos_y = y_pos_list.at(i);
@@ -2568,6 +2581,51 @@ void CDlgResult::OnConnectMaintop()
 					SetCursorPos(coor_x.x, coor_x.y);
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+					if (pCpn->m_nRotatedAngle != 0)
+					{
+						// 先调整角度
+
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+						
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+						//Sleep(SLEEP_1000MS);
+						// 输入
+						InputNormalString("90");
+						Sleep(SLEEP_1000MS);
+
+						// 按键-确定 
+						keybd_event(VK_RETURN, 0, 0, 0);
+						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						//Sleep(SLEEP_1000MS);
+
+						SetCursorPos(coor_x.x, coor_x.y);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						//Sleep(SLEEP_1000MS);
+
+					}
+
+
+
+
+
+
+
 
 
 					// 输入

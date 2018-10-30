@@ -251,9 +251,16 @@ void CCppTestDlg::OnBnClickedOk()
 	
 
 	//Test();
-	//JT_Layouts("F:\\PictureLayout\\真实测试.xml");
+#if 0
+
+	JT_Layouts("F:\\PictureLayout\\真实测试.xml");
+#else
+
+	JT_Layouts("E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml");	
+#endif
 
 
+#if 0
 
 		
 		CString title = "蒙泰彩色电子出版系统 V6.0(普及版)";
@@ -363,6 +370,8 @@ void CCppTestDlg::OnBnClickedOk()
 
 
 
+
+#endif
 
 
 
