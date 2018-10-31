@@ -2129,15 +2129,16 @@ void CDlgResult::OnConnectMaintop()
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 	
 	int nSlnNum = pSingleton->m_BackupSolutionList.size();
-	if (nSlnNum != 1)
+	if (nSlnNum < 1)
 	{
 		return;
 	}
 
-	CSolution* pCurSln = pSingleton->m_BackupSolutionList.at(0);
+
+	CSolution* pCurSln = pSingleton->m_BackupSolutionList.at(pSingleton->m_CurSlnIndex);
 
 	int nPanelNum = pCurSln->GetPanelNum();
-	if (nPanelNum != 1)
+	if (nPanelNum < 1)
 	{
 		return;
 	}
