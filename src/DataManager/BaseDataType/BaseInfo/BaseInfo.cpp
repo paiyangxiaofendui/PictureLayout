@@ -36,7 +36,7 @@ BaseInfo::BaseInfo(void)
 	m_MinArea							= 90000;					// 最小大板参数 - 最小面积
 
 	m_FirstSectionOPTimes				= 1;						// 第一阶段优化次数
-	m_FirstSectionOPMethod				= 0;						// 第一阶段优化方法
+	m_FirstSectionOPMethod				= 1;						// 第一阶段优化方法
 	m_SecondSectionOPTimes				= 0;						// 第二阶段优化次数
 	m_ThirdSectionOPTimes				= 0;						// 第三阶段优化次数
 	m_ThirdSectionOAccptableUtilization	= 0;						// 第三阶可接受优化率

@@ -11,10 +11,17 @@ using namespace std;
 
 
 
+//0:智能模式 1：省料优先 2：后道优先 3：客户优先*/	
 
 
-
-
+typedef enum
+{
+	LayoutMethod_Smart = 0,
+	LayoutMethod_Minwaste,
+	LayoutMethod_OneCut,
+	LayoutMethod_ClientFirst,
+	
+}LayoutMethod;
 
 
 

@@ -1668,6 +1668,7 @@ void  CDlgResult::OnLayout()
 		info.m_bottom_offset		=		m_bottom_offset;	
 
 		info.m_LayoutOrg			=		m_arranging_origin;
+		info.m_FirstSectionOPTimes =		m_BaseInfo.m_FirstSectionOPTimes;
 		info.m_FirstSectionOPMethod =		1;
 		info.m_bCustomerFirst		=		m_BaseInfo.m_bCustomerFirst; 
 
@@ -1714,7 +1715,7 @@ void  CDlgResult::OnLayout()
 		int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
 		ComponentList componentList;
 
-		int nTotalCount = 10;
+		int nTotalCount = info.m_FirstSectionOPTimes;
 
 		// 优化循环开始
 		for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
@@ -2379,12 +2380,11 @@ void CDlgResult::OnConnectMaintop()
 				string panel_width = ss.str();
 
 
-
 				setEditCtrlString(len_pos_x, len_pos_y, panel_len, SLEEP_10MS);
-
+				Sleep(SLEEP_100MS);
 
 				setEditCtrlString(width_pos_x, width_pos_y, panel_width, SLEEP_10MS);
-
+				Sleep(SLEEP_1000MS);
 
 
 			}
@@ -2838,6 +2838,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 				if ( pCurPrinciple != NULL)
 				{
 					int		Method			=  stoi(pCurPrinciple->Attribute("Method"));
+					int		OPTimes			=  stoi(pCurPrinciple->Attribute("OPTimes"));
 					int		Origin			=  stoi(pCurPrinciple->Attribute("Origin"));
 					float	XSpace			=  stof(pCurPrinciple->Attribute("XSpace"));
 					float	YSpace			=  stof(pCurPrinciple->Attribute("YSpace"));
@@ -2847,15 +2848,16 @@ void CDlgResult::OnOpenSourcePicInfo()
 					float	BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
 					string	maintop_path	=  pCurPrinciple->Attribute("MainTopPath");	
 
-					m_BaseInfo.m_LayoutMethod	=	Method		;
-					m_BaseInfo.m_LayoutOrg		=	Origin		;
-					m_BaseInfo.m_x_space		=	XSpace		;		
-					m_BaseInfo.m_y_space		=	YSpace		;		
-					m_BaseInfo.m_left_offset	=	LeftOffset	;	
-					m_BaseInfo.m_right_offset	=	RightOffset	;	
-					m_BaseInfo.m_top_offset		=	TopOffset	;	
-					m_BaseInfo.m_bottom_offset	=	BottomOffset;
-					m_BaseInfo.m_strMainTopPath =	maintop_path;
+					m_BaseInfo.m_LayoutMethod			=	Method		;
+					m_BaseInfo.m_FirstSectionOPTimes	=	OPTimes		;
+					m_BaseInfo.m_LayoutOrg				=	Origin		;
+					m_BaseInfo.m_x_space				=	XSpace		;		
+					m_BaseInfo.m_y_space				=	YSpace		;		
+					m_BaseInfo.m_left_offset			=	LeftOffset	;	
+					m_BaseInfo.m_right_offset			=	RightOffset	;	
+					m_BaseInfo.m_top_offset				=	TopOffset	;	
+					m_BaseInfo.m_bottom_offset			=	BottomOffset;
+					m_BaseInfo.m_strMainTopPath			=	maintop_path;
 
 					// 
 					if (m_BaseInfo.m_LayoutMethod == 3)
