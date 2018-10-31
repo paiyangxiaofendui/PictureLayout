@@ -10,7 +10,7 @@
     <RawMaterial Material="UV板" Length="3000" Width="0" />
   </RawMaterialSet>
   <PrincipleSet Name="排样规则集">
-    <Principle Method="1" Origin="1" XSpace="0.5" YSpace="0.5" LeftOffset="1" RightOffset="2"  TopOffset="3" BottomOffset="4" MainTopPath="E:\袁梓埠个人文件夹\代码\MainTop\DTP\dtpw.exe"/>
+    <Principle Method="1" Origin="1" OPTimes="20"  XSpace="0.5" YSpace="0.5" LeftOffset="1" RightOffset="2"  TopOffset="3" BottomOffset="4" MainTopPath="E:\袁梓埠个人文件夹\代码\MainTop\DTP\dtpw.exe"/>
   			
   </PrincipleSet>
 </Root>
