@@ -220,6 +220,13 @@ public:
 
 	void setEditCtrlString(int pos_x, int pos_y, string str, int sleep_time = 0);
 
+	bool SetCtrlValue(CString title, int ctrl_id, CString ctrl_type,  CString str_value);
+
+	static void EmptyCtrlContent(HWND hWnd);
+	static CWnd* FindWndByCtrlID(CWnd* pWnd, UINT nCtrlID, LPCTSTR szClassName);
+	static int FindWindowLike(CString& namelink);
+	static BOOL CALLBACK EnumWindowsLikeProc(HWND hwnd,LPARAM lParam);
+
 	/** 
 	* @brief ”≈ªØ
 	* @author yuanzb

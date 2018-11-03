@@ -168,11 +168,12 @@ void CDlgTotalResult::OnLvnItemchangedListTotalSolutionPanel(NMHDR *pNMHDR, LRES
 	if(pNMLV->uNewState & LVIS_SELECTED)
 	{
 		PanelViewingParam* pParam = (PanelViewingParam*)m_lcTotalSolutionPanel.GetItemData(pNMLV->iItem);
-		::PostMessage(GetParent()->GetSafeHwnd(), WM_REFRESH_PANEL_VIEW, (WPARAM)pParam/*0*/, 0);
 
 		CSingleton* pSingleton = CSingleton::GetSingleton();
 		pSingleton->m_CurSlnIndex = pParam->m_pSolution->m_SlnID;
 
+
+		::PostMessage(GetParent()->GetSafeHwnd(), WM_REFRESH_PANEL_VIEW, (WPARAM)pParam/*0*/, 0);
 	}
 	else
 	{
@@ -188,6 +189,8 @@ void CDlgTotalResult::OnLvnItemchangedListTotalSolutionPanel(NMHDR *pNMHDR, LRES
 	//m_lcPanelFace.GetFirstSelectedItemPosition()
 	*pResult = 0;
 }
+
+
 
 
 

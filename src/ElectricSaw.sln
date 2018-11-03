@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AbnormalShapeManager", "Abn
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaiGua", "WaiGua\WaiGua.vcxproj", "{D6EA879C-0AD9-42A8-964D-29296EF0375F}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "VBTest", "VBTest\VBTest.vbproj", "{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,18 @@ Global
 		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Win32.ActiveCfg = Release|Win32
 		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|Win32.Build.0 = Release|Win32
 		{D6EA879C-0AD9-42A8-964D-29296EF0375F}.Release|x86.ActiveCfg = Release|Win32
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Debug|Win32.ActiveCfg = Debug|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Debug|x86.ActiveCfg = Debug|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Debug|x86.Build.0 = Debug|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Release|Any CPU.ActiveCfg = Release|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Release|Win32.ActiveCfg = Release|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Release|x86.ActiveCfg = Release|x86
+		{C783DDDD-692A-40D6-8EA2-5C519CA79F9A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,11 @@
 #include "UI/NewUIDlg.h"
 #include "UI/DlgWeiXin.h"
 
+ int  __stdcall Function1(int a, int b)
+{
+	return a+b;
+}
+
 int Test(void)
 {
 	AFX_MANAGE_STATE(AfxGetStaticModuleState());
@@ -21,7 +26,7 @@ int Test(void)
 }
 
 
- int JT_Layouts(char* src_file_path)
+ int __stdcall JT_Layouts(char* src_file_path)
  {
 	 AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
