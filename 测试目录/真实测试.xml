@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="gb2312"?>
 <Root>
   <PictureSet Name="图片集">
-     <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\tif测试图片\001.tif" Number="1" Length="914.4" Width="1625.6" Texture="横纹" Material="UV板"  />
-     <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\tif测试图片\002.tif" Number="1" Length="914.4" Width="1625.6" Texture="横纹" Material="UV板"  />
-     <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\tif测试图片\003.tif" Number="1" Length="914.4" Width="1625.6" Texture="横纹" Material="UV板"  />
+     <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\tif测试图片\001.tif" Number="1" Length="914.4" Width="1625.6" Texture="无纹理" Material="UV板" Customer="张三" />
+     <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\tif测试图片\002.tif" Number="2" Length="914.4" Width="1625.6" Texture="无纹理" Material="UV板" Customer="李四" />
+     <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\tif测试图片\003.tif" Number="3" Length="914.4" Width="1625.6" Texture="无纹理" Material="UV板" Customer="王五" />
   </PictureSet>
   <RawMaterialSet Name="原料集">
-    <RawMaterial Material="UV板" Length="914" Width="0"  />
-    <RawMaterial Material="UV板" Length="1270" Width="0" />
-    <RawMaterial Material="UV板" Length="1520" Width="0" />
+    <RawMaterial Material="UV板" Length="2000" Width="0" />
+    <RawMaterial Material="UV板" Length="3000" Width="0" />
   </RawMaterialSet>
   <PrincipleSet Name="排样规则集">
-    <Principle Method="1" Origin="0" XSpace="0.5" YSpace="0.5" LeftOffset="1" RightOffset="2"  TopOffset="3" BottomOffset="4" MainTopPath="E:\袁梓埠个人文件夹\代码\MainTop\DTP\dtpw.exe"/>
+    <Principle Method="1" Origin="1" OPTimes="20"  XSpace="0.5" YSpace="0.5" LeftOffset="1" RightOffset="2"  TopOffset="3" BottomOffset="4" MainTopPath="E:\袁梓埠个人文件夹\代码\MainTop\DTP\dtpw.exe"/>
+  			
   </PrincipleSet>
 </Root>

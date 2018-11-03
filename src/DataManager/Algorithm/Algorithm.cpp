@@ -2325,7 +2325,7 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 	Component* p1 = const_cast<Component*>(pfirst);
 	Component* p2 = const_cast<Component*>(psecond);
 
-	if (p1->m_y > p2->m_y)
+	if ((p1->m_y + p1->m_RealWidth) > (p2->m_y +p2->m_RealWidth))
 	{
 		return true;
 	}

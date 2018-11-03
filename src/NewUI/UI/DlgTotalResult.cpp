@@ -173,7 +173,6 @@ void CDlgTotalResult::OnLvnItemchangedListTotalSolutionPanel(NMHDR *pNMHDR, LRES
 		pSingleton->m_CurSlnIndex = pParam->m_pSolution->m_SlnID;
 
 
-
 		::PostMessage(GetParent()->GetSafeHwnd(), WM_REFRESH_PANEL_VIEW, (WPARAM)pParam/*0*/, 0);
 	}
 	else

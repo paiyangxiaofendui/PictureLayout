@@ -19,7 +19,6 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <WinUser.h>
 
 
 
@@ -73,7 +72,7 @@ using namespace std;
 #define	VERSION_PRO				(1)
 #define	VERSION_NORMAL			(2)
 
-#define CUR_VERSION				VERSION_NORMAL
+#define CUR_VERSION				VERSION_PRO
 
 
 
@@ -2124,201 +2123,6 @@ void CDlgResult::setEditCtrlString(int pos_x, int pos_y, string str, int sleep_t
 
 
 
-
-BOOL CDlgResult::EnumWindowsLikeProc(HWND hwnd,LPARAM lParam)
-{
-	CString* namelink = (CString*)lParam;
-	TCHAR str[500];
-	::GetWindowText(hwnd,str,sizeof(str));
-	if(CString(str).Find(*namelink) != -1)
-	{
-		*namelink = CString(str);
-		return 0;
-	}
-	return 1;
-}
-
-
-
-int CDlgResult::FindWindowLike(CString& namelink)
-{
-	EnumWindows(EnumWindowsLikeProc,(LPARAM)&namelink);
-	return 0;
-}
-
-
-
-CWnd* CDlgResult::FindWndByCtrlID(CWnd* pWnd, UINT nCtrlID, LPCTSTR szClassName)
-{
-	CWnd* pFindingWnd = NULL;
-	pFindingWnd = pWnd->GetWindow(GW_CHILD);
-	while(pFindingWnd)
-	{
-		CString strTmp;
-		TCHAR szCheckingClassName[MAX_PATH];
-		GetClassName(pFindingWnd->GetSafeHwnd(), szCheckingClassName, MAX_PATH);
-		strTmp.Format("ID=%d H=%x class=%s\n", pFindingWnd->GetDlgCtrlID(), pFindingWnd->GetSafeHwnd(), szCheckingClassName);
-		OutputDebugString(strTmp);
-
-		CString strFindingClassName = szClassName;
-		if(pFindingWnd->GetDlgCtrlID() == nCtrlID && (strFindingClassName.IsEmpty() || strFindingClassName.CompareNoCase(szCheckingClassName) == 0))
-		{
-			return pFindingWnd;
-		}
-
-		CWnd* pRes = FindWndByCtrlID(pFindingWnd, nCtrlID, szClassName);
-		if(pRes)
-			return pRes;
-
-		pFindingWnd = pFindingWnd->GetNextWindow();
-	}
-
-	return NULL;
-}
-
-
-void CDlgResult::EmptyCtrlContent(HWND hWnd)
-{
-	for(int j = 0; j < MAX_PATH; j++)
-	{
-		::PostMessage(hWnd, WM_KEYDOWN, VK_BACK, 0);
-		::PostMessage(hWnd, WM_KEYUP, VK_BACK, 0);
-	}
-	for(int j = 0; j < MAX_PATH; j++)
-	{
-		::PostMessage(hWnd, WM_KEYDOWN, VK_DELETE, 0);
-		::PostMessage(hWnd, WM_KEYUP, VK_DELETE, 0);
-	}
-}
-
-
-
-bool CDlgResult::SetCtrlValue(CString title, int ctrl_id, CString ctrl_type,  CString str_value)
-{
-
-	CString strMsg;
-	strMsg.Format("默认转发窗口:%s", title);
-	//AfxMessageBox(strMsg);
-	CWnd* pDefTransWnd = NULL;
-
-	CString strWndTitle = title;
-	FindWindowLike(strWndTitle);
-	pDefTransWnd = FindWindow(NULL, strWndTitle);
-
-
-	if(pDefTransWnd && pDefTransWnd->GetSafeHwnd())
-	{
-
-		HWND hPopup = ::GetLastActivePopup(pDefTransWnd->GetSafeHwnd());
-
-		CWnd wndPopup;
-		wndPopup.Attach(hPopup);
-		CWnd* pTargetCtrl = NULL;
-		pTargetCtrl = FindWndByCtrlID(&wndPopup, ctrl_id, ctrl_type);
-		//CString strPrint = PrintAllCtrl(&wndPopup);
-		//AfxMessageBox(strPrint);
-		wndPopup.Detach();		
-
-		if(pTargetCtrl && pTargetCtrl->GetSafeHwnd())
-		{
-			EmptyCtrlContent(pTargetCtrl->GetSafeHwnd());
-
-// 			CEdit* pEdit = (CEdit*)pTargetCtrl;
-//  			pEdit->SetWindowText(str_value);
-			
-			//::PostMessage(pDefTransWnd->GetSafeHwnd(), WM_PAINT, 0, 0);
-
-			//::PostMessage(pDefTransWnd->GetSafeHwnd(), WM_DRAWITEM, 0, 0);
-			
-			CString strTmp;
-			TCHAR szClassName[MAX_PATH];
-			GetClassName(pTargetCtrl->GetSafeHwnd(), szClassName, MAX_PATH);
-			strTmp.Format("ID=%d H=%x class=%s\n", pTargetCtrl->GetDlgCtrlID(), pTargetCtrl->GetSafeHwnd(), szClassName);
-			OutputDebugString(strTmp);
-			for(int j = 0; j < str_value.GetLength(); j++)
-			{
-				::PostMessage(pTargetCtrl->GetSafeHwnd(), WM_CHAR, str_value.GetAt(j), 0);
-			}
-			//::PostMessage(pTargetCtrl->GetSafeHwnd(), WM_KEYDOWN, VK_RETURN, 0);
-		}
-		else
-		{
-			strMsg.Format(_T("在默认窗口下找不到控件：ID=%d CtrlClassName=%s"), ctrl_id, ctrl_type);
-			AfxMessageBox(strMsg);
-		}
-	}
-	else
-	{
-		strMsg.Format("找不到默认窗口！");
-		AfxMessageBox(strMsg);
-	}
-
-
-	return true;
-}
-
-#if 0
-bool SetCtrlAction()
-{
-
-
-	// 旋转选左下角
-
-	// 窗口title旋转按键ID
-	Sleep(SLEEP_1000MS);
-	int id = 10000;
-	CString strWndTitle = "载入图片设定";
-	CString strMsg;
-	strMsg.Format("默认转发窗口:%s 默认转发控件ID:%d", strWndTitle, id);
-	//AfxMessageBox(strMsg);
-	CWnd* pDefTransWnd = NULL;
-
-	FindWindowLike(strWndTitle);
-	pDefTransWnd = FindWindow(NULL, strWndTitle);
-
-
-	if(pDefTransWnd && pDefTransWnd->GetSafeHwnd())
-	{
-		CWnd wndPopup;
-		wndPopup.Attach(::GetLastActivePopup(pDefTransWnd->GetSafeHwnd()));
-
-		CWnd* pDefTransCtrl = FindWndByCtrlID(/*pDefTransWnd*/&wndPopup, id, NULL);
-		wndPopup.Detach();
-		if(pDefTransCtrl && pDefTransCtrl->GetSafeHwnd())
-		{
-			strMsg.Format("找到了默认窗口及控件！");
-			//AfxMessageBox(strMsg);
-
-			::PostMessage(pDefTransCtrl->GetSafeHwnd(), BM_CLICK, 0, 0);
-
-			//CWnd* pPostingWnd = pDefTransCtrl->GetParent();
-			//while(pPostingWnd)
-			//{
-			//	::PostMessage(pDefTransCtrl->GetParent()->GetSafeHwnd(), WM_COMMAND, MAKEWPARAM(theAction.m_uCtrlID, BN_CLICKED), (LPARAM)(pDefTransCtrl->GetSafeHwnd()));
-			//	pPostingWnd = pPostingWnd->GetParent();
-			//}
-
-			//::PostMessage(pDefTransCtrl->GetSafeHwnd(), WM_LBUTTONDOWN, 0, 0);
-			//::PostMessage(pDefTransCtrl->GetSafeHwnd(), WM_LBUTTONUP, 0, 0);
-		}
-		else
-		{
-			strMsg.Format("找不到默认控件！");
-			AfxMessageBox(strMsg);
-		}	
-	}
-	else
-	{
-		strMsg.Format("找不到默认窗口！");
-		AfxMessageBox(strMsg);
-	}
-
-}
-
-#endif
-
-
-
 void CDlgResult::OnConnectMaintop()
 {
 	// 获取当前排样方案
@@ -2330,8 +2134,8 @@ void CDlgResult::OnConnectMaintop()
 		return;
 	}
 
-	int cur_index = pSingleton->m_CurSlnIndex;
-	CSolution* pCurSln = pSingleton->m_BackupSolutionList.at(cur_index);
+
+	CSolution* pCurSln = pSingleton->m_BackupSolutionList.at(pSingleton->m_CurSlnIndex);
 
 	int nPanelNum = pCurSln->GetPanelNum();
 	if (nPanelNum < 1)
@@ -2362,19 +2166,18 @@ void CDlgResult::OnConnectMaintop()
 		string file_path = pCpn->m_BarCode;
 		float x = pCpn->m_x;
 		float y;
-		
-		// 不旋转选左上角
 		if (pCpn->m_nRotatedAngle == 0)
 		{
+
 			y = pCurPanel->m_OrgWidth - pCpn->m_y - pCpn->m_RealWidth;	// 左上角为原点， y要取反
+
 		}
 		else
 		{
-			// 旋转选左下角
-			y = pCurPanel->m_OrgWidth - pCpn->m_y;	// 左下角为原点， y要取反
+			y = pCurPanel->m_OrgWidth - pCpn->m_y;	// 左上角为原点， y要取反
+
+
 		}
-
-
 
 		stringstream ss;
 
@@ -2461,21 +2264,6 @@ void CDlgResult::OnConnectMaintop()
 		int find_exe_num = 0;
 		int find_count = 0;
 
-		CString exe_title;
-
-
-#if (CUR_VERSION == VERSION_NORMAL)
-
-		exe_title =  "蒙泰彩色电子出版系统 V6.0(普及版)";
-
-#else
-
-		exe_title = "蒙泰彩色电子出版系统 V6.0(专业版)";
-
-#endif
-	
-
-
 		if (exe_id == 0)
 		{
 			// 启动程序
@@ -2488,8 +2276,15 @@ void CDlgResult::OnConnectMaintop()
 				Sleep(SLEEP_1000MS);
 
 
+#if (CUR_VERSION == VERSION_NORMAL)
 
-				exe_id = ::FindWindow(NULL, exe_title.GetBuffer());
+				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+
+#else
+
+				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+
+#endif
 
 
 				find_exe_num++;
@@ -2576,7 +2371,6 @@ void CDlgResult::OnConnectMaintop()
 				string panel_len = ss.str();
 
 
-
 				ss.clear();
 				ss.str("");
 
@@ -2584,15 +2378,12 @@ void CDlgResult::OnConnectMaintop()
 
 				string panel_width = ss.str();
 
-				// 纸张大小 长：10500 宽：10501
-
-				SetCtrlValue("建立新文件", 10500, "Edit", "5000"/*panel_len.c_str()*/);
-				SetCtrlValue("建立新文件", 10501, "Edit", "4000"/*panel_width.c_str()*/);
-				Sleep(SLEEP_2000MS);
-				//setEditCtrlString(len_pos_x, len_pos_y, panel_len, 0);
 
 
-				//setEditCtrlString(width_pos_x, width_pos_y, panel_width, 0);
+				setEditCtrlString(len_pos_x, len_pos_y, panel_len, SLEEP_10MS);
+
+
+				setEditCtrlString(width_pos_x, width_pos_y, panel_width, SLEEP_10MS);
 
 
 
@@ -2604,7 +2395,7 @@ void CDlgResult::OnConnectMaintop()
 			}
 
 
-
+			Sleep(SLEEP_1000MS);
 
 
 			// 按键-确定 新建文件
@@ -2644,12 +2435,6 @@ void CDlgResult::OnConnectMaintop()
 				string file_path = file_list.at(i);
 				string str_pos_x = x_pos_list.at(i);
 				string str_pos_y = y_pos_list.at(i);
-				string str_rotate = "0";
-
-				if (pCpn->m_nRotatedAngle != 0)
-				{
-					str_rotate = "90";
-				}
 
 
 
@@ -2721,26 +2506,14 @@ void CDlgResult::OnConnectMaintop()
 					}
 
 
-					if (1)
-					{
-						// 设置到剪切板
-						CopyToClipboard(file_path.c_str(), file_path.length());
+					// 设置到剪切板
+					CopyToClipboard(file_path.c_str(), file_path.length());
 
-						// 粘贴 Ctrl+V
-						keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-						keybd_event('V', 0, 0, 0);						// 按下v
-						keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-						keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
-					}
-					else
-					{
-						// 设置文件名 id:1152
-
-
-						SetCtrlValue("取图片文件", 1152, "Edit", file_path.c_str());
-						
-					}
-					
+					// 粘贴 Ctrl+V
+					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+					keybd_event('V', 0, 0, 0);						// 按下v
+					keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
 
@@ -2750,20 +2523,6 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_RETURN, 0, 0, 0);
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
-
-#if 0
-
-					// 如果旋转了要勾选，旋转----不在这里处理
-					if (pCpn->m_nRotatedAngle != 0)
-					{
-
-
-
-						Sleep(SLEEP_2000MS);
-					}
-
-
-#endif
 
 					// 按键-确定 
 					keybd_event(VK_RETURN, 0, 0, 0);
@@ -2813,34 +2572,6 @@ void CDlgResult::OnConnectMaintop()
 					RECT coor_dlg_rect;
 					::GetWindowRect(coor_dlg_id, &coor_dlg_rect);
 
-					// id x：200 y:201  w:202 h:203 z轴_rotate:204  y轴旋转：205    
-					// 先设置旋转
-
-					if (str_rotate == "90")
-					{
-
-						SetCtrlValue(exe_title, 204, "Edit", "90");
-
-						Sleep(SLEEP_1000MS);
-						// 按键-确定 
-						keybd_event(VK_RETURN, 0, 0, 0);
-						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-						Sleep(SLEEP_1000MS);
-					}
-
-					// 设置x y 值
-
-
-					SetCtrlValue(exe_title, 200, "Edit", str_pos_x.c_str());
-					SetCtrlValue(exe_title, 201, "Edit", str_pos_y.c_str());
-
-					Sleep(SLEEP_1000MS);
-					// 按键-确定 
-					keybd_event(VK_RETURN, 0, 0, 0);
-					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-					Sleep(SLEEP_1000MS);
-#if 0
 
 
 					// 设置x坐标
@@ -2852,14 +2583,9 @@ void CDlgResult::OnConnectMaintop()
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
-					// 先设置旋转，在设置位置
-					if (str_rotate == "90")
+					if (pCpn->m_nRotatedAngle != 0)
 					{
-
-						// 移到角度 
-						// 按下table键
-						keybd_event(VK_TAB, 0, 0, 0);
-						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+						// 先调整角度
 
 						// 按下table键
 						keybd_event(VK_TAB, 0, 0, 0);
@@ -2869,23 +2595,38 @@ void CDlgResult::OnConnectMaintop()
 						keybd_event(VK_TAB, 0, 0, 0);
 						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
 
-
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+						
 						// 按下table键
 						keybd_event(VK_TAB, 0, 0, 0);
 						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
 
+
+						//Sleep(SLEEP_1000MS);
 						// 输入
-						InputNormalString(str_rotate);
+						InputNormalString("90");
+						Sleep(SLEEP_1000MS);
 
 						// 按键-确定 
 						keybd_event(VK_RETURN, 0, 0, 0);
 						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						//Sleep(SLEEP_1000MS);
+
+						SetCursorPos(coor_x.x, coor_x.y);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						//Sleep(SLEEP_1000MS);
 
 					}
 
-					SetCursorPos(coor_x.x, coor_x.y);
-					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+
+
+
 
 
 					// 输入
@@ -2913,16 +2654,12 @@ void CDlgResult::OnConnectMaintop()
 
 
 
+
+
+
 					// 按键-确定 
 					keybd_event(VK_RETURN, 0, 0, 0);
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-#endif
-
-
-
-
-
 
 				}
 				else

@@ -251,7 +251,13 @@ void CCppTestDlg::OnBnClickedOk()
 	
 
 	//Test();
+#if 0
+
 	JT_Layouts("F:\\PictureLayout\\真实测试.xml");
+#else
+
+	JT_Layouts("E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml");	
+#endif
 
 
 #if 0
@@ -359,6 +365,7 @@ void CCppTestDlg::OnBnClickedOk()
 					strMsg.Format("找不到默认窗口！");
 					AfxMessageBox(strMsg);
 				}
+
 
 
 
