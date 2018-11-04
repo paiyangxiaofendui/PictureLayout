@@ -11,6 +11,7 @@
 #include "DlgSetMachiningOrder.h"
 
 
+
 #include <windows.h>
 #include <WinUser.h>
 #include <stdio.h>
@@ -19,6 +20,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+//#include <afxwin.h>
 
 
 
@@ -2124,6 +2126,136 @@ void CDlgResult::setEditCtrlString(int pos_x, int pos_y, string str, int sleep_t
 
 
 
+
+BOOL CALLBACK CDlgResult::EnumWindowsLikeProc(HWND hwnd,LPARAM lParam)
+{
+	CString* namelink = (CString*)lParam;
+	TCHAR str[500];
+	::GetWindowText(hwnd,str,sizeof(str));
+	if(CString(str).Find(*namelink) != -1)
+	{
+		*namelink = CString(str);
+		return 0;
+	}
+	return 1;
+}
+
+
+
+int CDlgResult::FindWindowLike(CString& namelink)
+{
+	EnumWindows(EnumWindowsLikeProc,(LPARAM)&namelink);
+	return 0;
+}
+
+
+
+CWnd* CDlgResult::FindWndByCtrlID(CWnd* pWnd, UINT nCtrlID, LPCTSTR szClassName)
+{
+	CWnd* pFindingWnd = NULL;
+	pFindingWnd = pWnd->GetWindow(GW_CHILD);
+	while(pFindingWnd)
+	{
+		CString strTmp;
+		TCHAR szCheckingClassName[MAX_PATH];
+		GetClassName(pFindingWnd->GetSafeHwnd(), szCheckingClassName, MAX_PATH);
+		strTmp.Format("ID=%d H=%x class=%s\n", pFindingWnd->GetDlgCtrlID(), pFindingWnd->GetSafeHwnd(), szCheckingClassName);
+		OutputDebugString(strTmp);
+
+		CString strFindingClassName = szClassName;
+		if(pFindingWnd->GetDlgCtrlID() == nCtrlID && (strFindingClassName.IsEmpty() || strFindingClassName.CompareNoCase(szCheckingClassName) == 0))
+		{
+			return pFindingWnd;
+		}
+
+		CWnd* pRes = FindWndByCtrlID(pFindingWnd, nCtrlID, szClassName);
+		if(pRes)
+			return pRes;
+
+		pFindingWnd = pFindingWnd->GetNextWindow();
+	}
+
+	return NULL;
+}
+
+
+void CDlgResult::EmptyCtrlContent(HWND hWnd)
+{
+	for(int j = 0; j < MAX_PATH; j++)
+	{
+		::PostMessage(hWnd, WM_KEYDOWN, VK_BACK, 0);
+		::PostMessage(hWnd, WM_KEYUP, VK_BACK, 0);
+	}
+	for(int j = 0; j < MAX_PATH; j++)
+	{
+		::PostMessage(hWnd, WM_KEYDOWN, VK_DELETE, 0);
+		::PostMessage(hWnd, WM_KEYUP, VK_DELETE, 0);
+	}
+}
+
+
+void CDlgResult::SetBottomAction(CString title, int id, UINT action)
+{
+	CString strMsg;
+	strMsg.Format("默认转发窗口:%s 默认转发控件ID:%d", title, id);
+	//AfxMessageBox(strMsg);
+	CWnd* pDefTransWnd = NULL;
+
+	CString strWndTitle = title;
+	FindWindowLike(strWndTitle);
+	pDefTransWnd = FindWindow(NULL, strWndTitle);
+	
+
+	if(pDefTransWnd && pDefTransWnd->GetSafeHwnd())
+	{
+		CWnd wndPopup;
+		wndPopup.Attach(::GetLastActivePopup(pDefTransWnd->GetSafeHwnd()));
+
+		CWnd* pDefTransCtrl = FindWndByCtrlID(/*pDefTransWnd*/&wndPopup, id, NULL);
+		wndPopup.Detach();
+		if(pDefTransCtrl && pDefTransCtrl->GetSafeHwnd())
+		{
+			strMsg.Format("找到了默认窗口及控件！");
+			//AfxMessageBox(strMsg);
+
+			::PostMessage(pDefTransCtrl->GetSafeHwnd(), /*BM_CLICK*/action, 0, 0);
+
+			//CWnd* pPostingWnd = pDefTransCtrl->GetParent();
+			//while(pPostingWnd)
+			//{
+			//	::PostMessage(pDefTransCtrl->GetParent()->GetSafeHwnd(), WM_COMMAND, MAKEWPARAM(theAction.m_uCtrlID, BN_CLICKED), (LPARAM)(pDefTransCtrl->GetSafeHwnd()));
+			//	pPostingWnd = pPostingWnd->GetParent();
+			//}
+
+			//::PostMessage(pDefTransCtrl->GetSafeHwnd(), WM_LBUTTONDOWN, 0, 0);
+			//::PostMessage(pDefTransCtrl->GetSafeHwnd(), WM_LBUTTONUP, 0, 0);
+		}
+		else
+		{
+			strMsg.Format("找不到默认控件！");
+			AfxMessageBox(strMsg);
+		}	
+	}
+	else
+	{
+		strMsg.Format("找不到默认窗口！");
+		AfxMessageBox(strMsg);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void CDlgResult::OnConnectMaintop()
 {
 	// 获取当前排样方案
@@ -2250,18 +2382,20 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-
+	CString exe_title;
+	HWND exe_id ;
 
 #if (CUR_VERSION == VERSION_NORMAL)
 
-	HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
+	exe_title = "蒙泰彩色电子出版系统 V6.0(普及版)";
 
 #else
 
-	HWND exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
+	exe_title = "蒙泰彩色电子出版系统 V6.0(专业版)";
 
 #endif
 
+		exe_id = ::FindWindow(NULL, exe_title);
 		int find_exe_num = 0;
 		int find_count = 0;
 
@@ -2573,51 +2707,175 @@ void CDlgResult::OnConnectMaintop()
 					::GetWindowRect(coor_dlg_id, &coor_dlg_rect);
 
 
+					// 这里需要先对图片进“保持原有尺寸”行处理，
 
-					// 设置x坐标
-					POINT coor_x;
-					coor_x.x = coor_dlg_rect.left + 35;
-					coor_x.y = coor_dlg_rect.top + 8;
 
-					SetCursorPos(coor_x.x, coor_x.y);
-					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
-					if (pCpn->m_nRotatedAngle != 0)
+
+
+					// 将鼠标移动到窗口左上角
+					int img_attribule_x = exe_wnd_rect.left + 80, img_attribule_y = exe_wnd_rect.top + 120;
+					SetCursorPos(img_attribule_x, img_attribule_y);
+
+					mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
+					Sleep(SLEEP_1000MS);
+
+
+					//选择右键菜单“栏框属性”，A+Enter
+					keybd_event('A', 0, 0, 0);						// 按下v
+					keybd_event('A', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+					Sleep(SLEEP_1000MS);
+
+
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+					Sleep(SLEEP_1MS);
+
+
+
+					// 选择窗口“图片框属性”
+
+
+					HWND img_attribule_dlg_id;
+
+					while(!(img_attribule_dlg_id = ::FindWindow("#32770", "图片框属性")))
 					{
-						// 先调整角度
-
-						// 按下table键
-						keybd_event(VK_TAB, 0, 0, 0);
-						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-						// 按下table键
-						keybd_event(VK_TAB, 0, 0, 0);
-						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-						// 按下table键
-						keybd_event(VK_TAB, 0, 0, 0);
-						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
 						
-						// 按下table键
-						keybd_event(VK_TAB, 0, 0, 0);
-						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+						Sleep(SLEEP_1000MS);
+						find_count++;
+
+						// 10秒未启动
+						if (find_count >= 10)
+						{
+							AfxMessageBox("超过10秒未找到“图片框属性”窗口，退出！");
+							return;
+						}
+
+					}
 
 
-						//Sleep(SLEEP_1000MS);
-						// 输入
-						InputNormalString("90");
+					if (img_attribule_dlg_id != NULL)
+					{
+						RECT img_attribule_dlg_rect;
+						::GetWindowRect(img_attribule_dlg_id, &img_attribule_dlg_rect);
+
+
+						// 点击保持图片原尺寸 75 290
+						int keep_org_img_size_x = img_attribule_dlg_rect.left + 75, keep_org_img_size_y = img_attribule_dlg_rect.top + 290;
+						
+						SetCursorPos(keep_org_img_size_x, keep_org_img_size_y);
+
+						mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
+
 						Sleep(SLEEP_1000MS);
 
-						// 按键-确定 
-						keybd_event(VK_RETURN, 0, 0, 0);
-						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-						//Sleep(SLEEP_1000MS);
+						// 点击确定 270 290
+						int enter_x = img_attribule_dlg_rect.left + 270, enter_y = img_attribule_dlg_rect.top + 290;
+
+						SetCursorPos(enter_x, enter_y);
+
+						mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+						Sleep(SLEEP_1000MS);
+
+
+
+
+
+
+
+
+
+
+
+						// 设置x坐标
+						POINT coor_x;
+						coor_x.x = coor_dlg_rect.left + 35;
+						coor_x.y = coor_dlg_rect.top + 8;
 
 						SetCursorPos(coor_x.x, coor_x.y);
 						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-						//Sleep(SLEEP_1000MS);
+
+						if (pCpn->m_nRotatedAngle != 0)
+						{
+							// 先调整角度
+
+							// 按下table键
+							keybd_event(VK_TAB, 0, 0, 0);
+							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+							// 按下table键
+							keybd_event(VK_TAB, 0, 0, 0);
+							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+							// 按下table键
+							keybd_event(VK_TAB, 0, 0, 0);
+							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+							// 按下table键
+							keybd_event(VK_TAB, 0, 0, 0);
+							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+							//Sleep(SLEEP_1000MS);
+							// 输入
+							InputNormalString("90");
+							Sleep(SLEEP_1000MS);
+
+							// 按键-确定 
+							keybd_event(VK_RETURN, 0, 0, 0);
+							keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+							//Sleep(SLEEP_1000MS);
+
+							SetCursorPos(coor_x.x, coor_x.y);
+							mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+							mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+							//Sleep(SLEEP_1000MS);
+
+						}
+
+
+
+
+
+
+
+
+
+						// 输入
+						InputNormalString(str_pos_x);
+
+
+						// 设置y坐标
+						// 			POINT coor_y;
+						// 			coor_y.x = coor_dlg_rect.left + 35;
+						// 			coor_y.y = coor_dlg_rect.top + 25;
+						// 
+						// 			SetCursorPos(coor_y.x, coor_y.y);
+						// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						//	
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+						// 输入
+						InputNormalString(str_pos_y);
+
+
+
+
+
+
+						// 按键-确定 
+						keybd_event(VK_RETURN, 0, 0, 0);
+						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 					}
 
@@ -2625,41 +2883,6 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-
-
-
-
-					// 输入
-					InputNormalString(str_pos_x);
-
-
-					// 设置y坐标
-					// 			POINT coor_y;
-					// 			coor_y.x = coor_dlg_rect.left + 35;
-					// 			coor_y.y = coor_dlg_rect.top + 25;
-					// 
-					// 			SetCursorPos(coor_y.x, coor_y.y);
-					// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-					// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-					//	
-					// 按下table键
-					keybd_event(VK_TAB, 0, 0, 0);
-					keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-
-					// 输入
-					InputNormalString(str_pos_y);
-
-
-
-
-
-
-					// 按键-确定 
-					keybd_event(VK_RETURN, 0, 0, 0);
-					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 				}
 				else
