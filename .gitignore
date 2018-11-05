@@ -80,3 +80,5 @@
 /latex
 /Doxyfile
 /pages.html.lnk
+/src/VBTest/obj
+/src/VBTest/bin
