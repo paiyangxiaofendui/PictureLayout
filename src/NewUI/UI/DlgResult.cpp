@@ -74,7 +74,7 @@ using namespace std;
 #define	VERSION_PRO				(1)
 #define	VERSION_NORMAL			(2)
 
-#define CUR_VERSION				VERSION_PRO
+#define CUR_VERSION				VERSION_NORMAL
 
 
 
@@ -86,6 +86,8 @@ using namespace std;
 #define  SLEEP_3000MS		(3000)
 #define  SLEEP_4000MS		(4000)
 #define  SLEEP_5000MS		(5000)
+
+#define FIND_TIMES			(20)
 
 
 
@@ -2425,9 +2427,9 @@ void CDlgResult::OnConnectMaintop()
 				find_exe_num++;
 				
 				// 10秒未启动
-				if (find_exe_num >= 10)
+				if (find_exe_num >= FIND_TIMES)
 				{
-					AfxMessageBox("超过10秒未找到蒙泰程序窗口，退出！");
+					AfxMessageBox("超过20秒未找到蒙泰程序窗口，退出！");
 					return;
 				}
 
@@ -2477,9 +2479,9 @@ void CDlgResult::OnConnectMaintop()
 				find_count++;
 
 				// 10秒未启动
-				if (find_count >= 10)
+				if (find_count >= FIND_TIMES)
 				{
-					AfxMessageBox("超过10秒未找到建立新文件窗口，退出！");
+					AfxMessageBox("超过20秒未找到建立新文件窗口，退出！");
 					return;
 				}
 
@@ -2650,7 +2652,7 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
-
+					Sleep(SLEEP_100MS);
 
 					// 按键-确定 
 
@@ -2658,11 +2660,13 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
+					Sleep(SLEEP_100MS);
 					// 按键-确定 
 					keybd_event(VK_RETURN, 0, 0, 0);
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
+					Sleep(SLEEP_100MS);
 
 
 				}
@@ -2695,7 +2699,7 @@ void CDlgResult::OnConnectMaintop()
 				}
 
 
-
+				Sleep(SLEEP_1000MS);
 
 
 				HWND parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "");
@@ -2734,12 +2738,13 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-					// 选择窗口“图片框属性”
+					// 选择窗口“图片框属性” 
 
 
 					HWND img_attribule_dlg_id;
+					CString img_attribule_dlg_title = "图片框属性";
 
-					while(!(img_attribule_dlg_id = ::FindWindow("#32770", "图片框属性")))
+					while(!(img_attribule_dlg_id = ::FindWindow("#32770", img_attribule_dlg_title)))
 					{
 						
 
@@ -2762,21 +2767,46 @@ void CDlgResult::OnConnectMaintop()
 						::GetWindowRect(img_attribule_dlg_id, &img_attribule_dlg_rect);
 
 
-						// 点击保持图片原尺寸 75 290
+						// 点击保持图片原尺寸 75 290   ID=100
+
+#if 0
+
 						int keep_org_img_size_x = img_attribule_dlg_rect.left + 75, keep_org_img_size_y = img_attribule_dlg_rect.top + 290;
-						
+
 						SetCursorPos(keep_org_img_size_x, keep_org_img_size_y);
 
 						mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
 
+#else
+						int keep_org_img_size_id = 100;
+
+						SetBottomAction(img_attribule_dlg_title, keep_org_img_size_id, BM_CLICK);
+
+#endif
+
+
 						Sleep(SLEEP_1000MS);
 
-						// 点击确定 270 290
+						// 点击确定 270 290 ID = 1
+
+#if 0
+
 						int enter_x = img_attribule_dlg_rect.left + 270, enter_y = img_attribule_dlg_rect.top + 290;
 
 						SetCursorPos(enter_x, enter_y);
 
 						mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+#else
+						
+						int ok_id = 1;
+
+						SetBottomAction(img_attribule_dlg_title, ok_id, BM_CLICK);
+						
+
+
+#endif
+						
 
 						Sleep(SLEEP_1000MS);
 

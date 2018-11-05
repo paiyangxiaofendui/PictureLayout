@@ -25,7 +25,7 @@ Module Module1
         's = "E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml"
         JT_Layouts(s)
 
-        ' MsgBox("Hello World")
+        MsgBox("Hello World")
 
     End Sub
 
