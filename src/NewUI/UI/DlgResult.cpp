@@ -80,7 +80,8 @@ using namespace std;
 
 #define  SLEEP_1MS			(1)
 #define  SLEEP_10MS			(10)
-#define  SLEEP_100MS		(10)
+#define  SLEEP_100MS		(100)
+#define  SLEEP_500MS		(500)
 #define  SLEEP_1000MS		(1000)
 #define  SLEEP_2000MS		(2000)
 #define  SLEEP_3000MS		(3000)
@@ -2220,7 +2221,7 @@ void CDlgResult::SetBottomAction(CString title, int id, UINT action)
 			strMsg.Format("找到了默认窗口及控件！");
 			//AfxMessageBox(strMsg);
 
-			::PostMessage(pDefTransCtrl->GetSafeHwnd(), /*BM_CLICK*/action, 0, 0);
+			::SendMessage(pDefTransCtrl->GetSafeHwnd(), /*BM_CLICK*/action, 0, 0);
 
 			//CWnd* pPostingWnd = pDefTransCtrl->GetParent();
 			//while(pPostingWnd)
@@ -2412,16 +2413,8 @@ void CDlgResult::OnConnectMaintop()
 			{
 				Sleep(SLEEP_1000MS);
 
+				exe_id = ::FindWindow(NULL, exe_title);
 
-#if (CUR_VERSION == VERSION_NORMAL)
-
-				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(普及版)");
-
-#else
-
-				exe_id = ::FindWindow(NULL, "蒙泰彩色电子出版系统 V6.0(专业版)");
-
-#endif
 
 
 				find_exe_num++;
@@ -2517,7 +2510,7 @@ void CDlgResult::OnConnectMaintop()
 
 
 				setEditCtrlString(len_pos_x, len_pos_y, panel_len, SLEEP_10MS);
-				Sleep(SLEEP_100MS);
+				Sleep(SLEEP_1000MS);
 
 				setEditCtrlString(width_pos_x, width_pos_y, panel_width, SLEEP_10MS);
 				Sleep(SLEEP_1000MS);
@@ -2595,23 +2588,13 @@ void CDlgResult::OnConnectMaintop()
 
 				while(!(file_dlg_id = ::FindWindow("#32770", "取图片文件")))
 				{
-					// 取图片文件窗口 Ctrl+I
-					//keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-					//Sleep(SLEEP_10MS);
-					//keybd_event('I', 0, 0, 0);						// 按下I
-					//Sleep(SLEEP_10MS);
-					//keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-					//Sleep(SLEEP_10MS);
-					//keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起IC:\Users\admin\Desktop\tif测试图片\001.tif
-
-
 					Sleep(SLEEP_1000MS);
 					find_count++;
 
 					// 10秒未启动
-					if (find_count >= 10)
+					if (find_count >= FIND_TIMES)
 					{
-						AfxMessageBox("超过10秒未找到取图片文件窗口，退出！");
+						AfxMessageBox("超过20秒未找到取图片文件窗口，退出！");
 						return;
 					}
 
@@ -2652,7 +2635,7 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
-					Sleep(SLEEP_100MS);
+					Sleep(SLEEP_500MS);
 
 					// 按键-确定 
 
@@ -2660,13 +2643,13 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-					Sleep(SLEEP_100MS);
+					Sleep(SLEEP_500MS);
 					// 按键-确定 
 					keybd_event(VK_RETURN, 0, 0, 0);
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-					Sleep(SLEEP_100MS);
+					Sleep(SLEEP_500MS);
 
 
 				}
@@ -2679,6 +2662,7 @@ void CDlgResult::OnConnectMaintop()
 				// 显示标注
 				if (show_coor_flag == false)
 				{
+					Sleep(SLEEP_3000MS);
 					int show_coord_btn_x = exe_wnd_rect.left + 610;
 					int show_coord_btn_y = exe_wnd_rect.top + 70;
 					SetCursorPos(show_coord_btn_x, show_coord_btn_y);
@@ -2702,9 +2686,46 @@ void CDlgResult::OnConnectMaintop()
 				Sleep(SLEEP_1000MS);
 
 
-				HWND parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "");
+				HWND parent_dlg_id;
 
-				HWND coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "");
+				while(!(parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "")))
+				{
+
+
+					Sleep(SLEEP_1000MS);
+					find_count++;
+
+					// 10秒未启动
+					if (find_count >= FIND_TIMES)
+					{
+						AfxMessageBox("超过10秒未找到“图片坐标父窗口”，退出！");
+						return;
+					}
+
+				}
+
+
+
+
+				HWND coor_dlg_id;
+				while(!(coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "")))
+				{
+
+
+					Sleep(SLEEP_1000MS);
+					find_count++;
+
+					// 10秒未启动
+					if (find_count >= FIND_TIMES)
+					{
+						AfxMessageBox("超过10秒未找到“图片坐标子窗口”，退出！");
+						return;
+					}
+
+				}
+
+
+
 				if (coor_dlg_id != NULL)
 				{
 					RECT coor_dlg_rect;
@@ -2752,7 +2773,7 @@ void CDlgResult::OnConnectMaintop()
 						find_count++;
 
 						// 10秒未启动
-						if (find_count >= 10)
+						if (find_count >= FIND_TIMES)
 						{
 							AfxMessageBox("超过10秒未找到“图片框属性”窗口，退出！");
 							return;
@@ -2897,7 +2918,6 @@ void CDlgResult::OnConnectMaintop()
 
 						// 输入
 						InputNormalString(str_pos_y);
-
 
 
 
