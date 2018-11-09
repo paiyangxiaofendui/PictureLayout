@@ -90,7 +90,7 @@ using namespace std;
 #define  SLEEP_4000MS		(4000)
 #define  SLEEP_5000MS		(5000)
 
-#define FIND_TIMES			(20)
+#define FIND_TIMES			(200)
 
 
 
@@ -2471,7 +2471,7 @@ void CDlgResult::OnConnectMaintop()
 
 			while(exe_id == 0)
 			{
-				Sleep(SLEEP_1000MS);
+				Sleep(SLEEP_100MS);
 
 				exe_id = ::FindWindow(NULL, exe_title);
 
@@ -2529,7 +2529,7 @@ void CDlgResult::OnConnectMaintop()
 			CString new_file_dlg_title = "建立新文件";
 			while(!(new_file_dlg_id = ::FindWindow("#32770", new_file_dlg_title)))
 			{
-				Sleep(SLEEP_1000MS);
+				Sleep(SLEEP_100MS);
 				find_count++;
 
 				// 10秒未启动
@@ -2616,12 +2616,6 @@ void CDlgResult::OnConnectMaintop()
 
 			for (UINT i = 0; i < file_list.size();  i++)
 			{
-				// 设置焦点
-				// 			HWND MainTopWnd_id = FindWindow("MainTop_TpfWindow", "");
-				// 			if (MainTopWnd_id != NULL)
-				// 			{
-				//				RECT maintop_wnd_rect;
-				//				GetWindowRect(MainTopWnd_id, &maintop_wnd_rect);
 
 				int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
 
@@ -2630,11 +2624,6 @@ void CDlgResult::OnConnectMaintop()
 
 				SetCursorPos(x, y);
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-
-
-
-				//			}
 
 
 
@@ -2654,12 +2643,6 @@ void CDlgResult::OnConnectMaintop()
 				keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 				Sleep(SLEEP_10MS);
 				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起I
-
-
-				//Sleep(SLEEP_1000MS);
-
-
-
 
 
 
@@ -2729,12 +2712,6 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-
-
-
-
-
-
 					Sleep(SLEEP_100MS);
 
 					// 按键-确定 
@@ -2792,7 +2769,7 @@ void CDlgResult::OnConnectMaintop()
 				{
 
 
-					Sleep(SLEEP_1000MS);
+					Sleep(SLEEP_100MS);
 					find_count++;
 
 					// 10秒未启动
@@ -2812,7 +2789,7 @@ void CDlgResult::OnConnectMaintop()
 				{
 
 
-					Sleep(SLEEP_1000MS);
+					Sleep(SLEEP_100MS);
 					find_count++;
 
 					// 10秒未启动
@@ -2869,7 +2846,7 @@ void CDlgResult::OnConnectMaintop()
 					{
 						
 
-						Sleep(SLEEP_500MS);
+						Sleep(SLEEP_100MS);
 						find_count++;
 
 						// 10秒未启动
