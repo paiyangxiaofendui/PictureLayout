@@ -77,6 +77,8 @@ using namespace std;
 #define CUR_VERSION				VERSION_NORMAL
 
 
+#define MESSAGE_SET_CTRL_TEXT	(1)
+
 
 #define  SLEEP_1MS			(1)
 #define  SLEEP_10MS			(10)
@@ -2186,13 +2188,71 @@ void CDlgResult::EmptyCtrlContent(HWND hWnd)
 {
 	for(int j = 0; j < MAX_PATH; j++)
 	{
-		::PostMessage(hWnd, WM_KEYDOWN, VK_BACK, 0);
-		::PostMessage(hWnd, WM_KEYUP, VK_BACK, 0);
+		::SendMessage(hWnd, WM_KEYDOWN, VK_BACK, 0);
+		::SendMessage(hWnd, WM_KEYUP, VK_BACK, 0);
 	}
 	for(int j = 0; j < MAX_PATH; j++)
 	{
-		::PostMessage(hWnd, WM_KEYDOWN, VK_DELETE, 0);
-		::PostMessage(hWnd, WM_KEYUP, VK_DELETE, 0);
+		::SendMessage(hWnd, WM_KEYDOWN, VK_DELETE, 0);
+		::SendMessage(hWnd, WM_KEYUP, VK_DELETE, 0);
+	}
+}
+
+
+void CDlgResult::SetCtrlText(CString title, int id,  CString ctrl_type, CString text)
+{
+	
+
+	CString strMsg;
+
+	strMsg.Format("默认转发窗口:%s", title);
+	//AfxMessageBox(strMsg);
+	CWnd* pDefTransWnd = NULL;
+
+	CString strWndTitle = title;
+	FindWindowLike(strWndTitle);
+	pDefTransWnd = FindWindow(NULL, strWndTitle);
+
+
+	if(pDefTransWnd && pDefTransWnd->GetSafeHwnd())
+	{
+		CString strBarcode = text;
+
+		HWND hPopup = ::GetLastActivePopup(pDefTransWnd->GetSafeHwnd());
+
+		CWnd wndPopup;
+		wndPopup.Attach(hPopup);
+		CWnd* pTargetCtrl = NULL;
+		pTargetCtrl = FindWndByCtrlID(&wndPopup, id, ctrl_type);
+		//CString strPrint = PrintAllCtrl(&wndPopup);
+		//AfxMessageBox(strPrint);
+		wndPopup.Detach();		
+
+		if(pTargetCtrl && pTargetCtrl->GetSafeHwnd())
+		{
+			EmptyCtrlContent(pTargetCtrl->GetSafeHwnd());
+
+			CString strTmp;
+			TCHAR szClassName[MAX_PATH];
+			GetClassName(pTargetCtrl->GetSafeHwnd(), szClassName, MAX_PATH);
+			strTmp.Format("ID=%d H=%x class=%s\n", pTargetCtrl->GetDlgCtrlID(), pTargetCtrl->GetSafeHwnd(), szClassName);
+			OutputDebugString(strTmp);
+			for(int j = 0; j < strBarcode.GetLength(); j++)
+			{
+				::SendMessage(pTargetCtrl->GetSafeHwnd(), WM_CHAR, strBarcode.GetAt(j) & 0xFF, 0);
+			}
+			//::PostMessage(pTargetCtrl->GetSafeHwnd(), WM_KEYDOWN, VK_RETURN, 0);
+		}
+		else
+		{
+			strMsg.Format(_T("在默认窗口下找不到控件：ID=%d CtrlClassName=%s"), id, "Edit");
+			AfxMessageBox(strMsg);
+		}
+	}
+	else
+	{
+		strMsg.Format("找不到默认窗口！");
+		AfxMessageBox(strMsg);
 	}
 }
 
@@ -2466,7 +2526,8 @@ void CDlgResult::OnConnectMaintop()
 			// 设置纸张大小   窗口“建立新文件”
 			find_count = 0;
 			HWND new_file_dlg_id;
-			while(!(new_file_dlg_id = ::FindWindow("#32770", "建立新文件")))
+			CString new_file_dlg_title = "建立新文件";
+			while(!(new_file_dlg_id = ::FindWindow("#32770", new_file_dlg_title)))
 			{
 				Sleep(SLEEP_1000MS);
 				find_count++;
@@ -2509,11 +2570,29 @@ void CDlgResult::OnConnectMaintop()
 				string panel_width = ss.str();
 
 
+#if 0
+				// 长 10500 宽 10501
+				int len_id = 10500, width_id = 10501;
+
+				SetEditText(new_file_dlg_title, len_id, panel_len.c_str());
+
+				SetEditText(new_file_dlg_title, width_id, panel_width.c_str());
+
+				Sleep(SLEEP_3000MS);
+
+#else
+
 				setEditCtrlString(len_pos_x, len_pos_y, panel_len, SLEEP_10MS);
-				Sleep(SLEEP_1000MS);
+				Sleep(SLEEP_100MS);
 
 				setEditCtrlString(width_pos_x, width_pos_y, panel_width, SLEEP_10MS);
-				Sleep(SLEEP_1000MS);
+				//Sleep(SLEEP_100MS*2);
+
+#endif
+				
+
+				
+
 
 
 			}
@@ -2524,7 +2603,7 @@ void CDlgResult::OnConnectMaintop()
 			}
 
 
-			Sleep(SLEEP_1000MS);
+			Sleep(SLEEP_500MS);
 
 
 			// 按键-确定 新建文件
@@ -2577,7 +2656,7 @@ void CDlgResult::OnConnectMaintop()
 				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起I
 
 
-				Sleep(SLEEP_1000MS);
+				//Sleep(SLEEP_1000MS);
 
 
 
@@ -2585,8 +2664,9 @@ void CDlgResult::OnConnectMaintop()
 
 
 				HWND file_dlg_id;
+				CString file_dlg_tile = "取图片文件";
 
-				while(!(file_dlg_id = ::FindWindow("#32770", "取图片文件")))
+				while(!(file_dlg_id = ::FindWindow("#32770", file_dlg_tile)))
 				{
 					Sleep(SLEEP_1000MS);
 					find_count++;
@@ -2606,6 +2686,9 @@ void CDlgResult::OnConnectMaintop()
 					RECT file_dlg_rect;
 					::GetWindowRect(file_dlg_id, &file_dlg_rect);
 
+					
+
+#if 0
 					int file_path_x = file_dlg_rect.left + 150;
 					int file_path_y = file_dlg_rect.bottom - 65;
 
@@ -2624,7 +2707,6 @@ void CDlgResult::OnConnectMaintop()
 						first_insert_flag = true;
 					}
 
-
 					// 设置到剪切板
 					CopyToClipboard(file_path.c_str(), file_path.length());
 
@@ -2635,7 +2717,25 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
-					Sleep(SLEEP_500MS);
+
+#else
+
+					int file_path_id = 1152;
+					SetCtrlText(file_dlg_tile, file_path_id,"Edit", file_path.c_str());
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+					Sleep(SLEEP_100MS);
 
 					// 按键-确定 
 
@@ -2643,13 +2743,13 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-					Sleep(SLEEP_500MS);
+					Sleep(SLEEP_100MS);
 					// 按键-确定 
 					keybd_event(VK_RETURN, 0, 0, 0);
 					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-					Sleep(SLEEP_500MS);
+					Sleep(SLEEP_100MS);
 
 
 				}
@@ -2662,7 +2762,7 @@ void CDlgResult::OnConnectMaintop()
 				// 显示标注
 				if (show_coor_flag == false)
 				{
-					Sleep(SLEEP_3000MS);
+					Sleep(SLEEP_500MS);
 					int show_coord_btn_x = exe_wnd_rect.left + 610;
 					int show_coord_btn_y = exe_wnd_rect.top + 70;
 					SetCursorPos(show_coord_btn_x, show_coord_btn_y);
@@ -2678,12 +2778,12 @@ void CDlgResult::OnConnectMaintop()
 				if (first_modify_coord_flag == false)
 				{
 
-					Sleep(SLEEP_1000MS);
+					Sleep(SLEEP_500MS);
 					first_modify_coord_flag = true;
 				}
 
 
-				Sleep(SLEEP_1000MS);
+				//Sleep(SLEEP_1000MS);
 
 
 				HWND parent_dlg_id;
@@ -2743,14 +2843,14 @@ void CDlgResult::OnConnectMaintop()
 					SetCursorPos(img_attribule_x, img_attribule_y);
 
 					mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
-					Sleep(SLEEP_1000MS);
+					Sleep(SLEEP_500MS);
 
 
 					//选择右键菜单“栏框属性”，A+Enter
 					keybd_event('A', 0, 0, 0);						// 按下v
 					keybd_event('A', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 
-					Sleep(SLEEP_1000MS);
+					Sleep(SLEEP_100MS);
 
 
 					keybd_event(VK_RETURN, 0, 0, 0);
@@ -2769,7 +2869,7 @@ void CDlgResult::OnConnectMaintop()
 					{
 						
 
-						Sleep(SLEEP_1000MS);
+						Sleep(SLEEP_500MS);
 						find_count++;
 
 						// 10秒未启动
@@ -2806,7 +2906,7 @@ void CDlgResult::OnConnectMaintop()
 #endif
 
 
-						Sleep(SLEEP_1000MS);
+						Sleep(SLEEP_100MS);
 
 						// 点击确定 270 290 ID = 1
 
@@ -2829,7 +2929,7 @@ void CDlgResult::OnConnectMaintop()
 #endif
 						
 
-						Sleep(SLEEP_1000MS);
+						Sleep(SLEEP_100MS);
 
 
 
@@ -2837,9 +2937,42 @@ void CDlgResult::OnConnectMaintop()
 
 
 
+#if 0
+
+						//  x y w h r1 r2 id = 200~~205
+
+						int x_id	= 200;
+						int y_id	= 201;
+						int w_id	= 202;
+						int h_id	= 203;
+						int r1_id	= 204;
+						int r2_id	= 205;
+
+						if (pCpn->m_nRotatedAngle != 0)
+						{
+							// 先调整角度
+
+							
+
+							//Sleep(SLEEP_1000MS);
+							// 输入
+							SetCtrlText(exe_title, r1_id, "Edit", "90");
+							Sleep(SLEEP_100MS);
+
+							// 按键-确定 
+							keybd_event(VK_RETURN, 0, 0, 0);
+							keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						
+							Sleep(SLEEP_100MS);
+						}
 
 
+						SetCtrlText(exe_title, x_id, "Edit", str_pos_x.c_str());
+						SetCtrlText(exe_title, y_id, "Edit", str_pos_y.c_str());
 
+						Sleep(SLEEP_100MS);
+
+#else
 
 						// 设置x坐标
 						POINT coor_x;
@@ -2874,7 +3007,7 @@ void CDlgResult::OnConnectMaintop()
 							//Sleep(SLEEP_1000MS);
 							// 输入
 							InputNormalString("90");
-							Sleep(SLEEP_1000MS);
+							Sleep(SLEEP_500MS);
 
 							// 按键-确定 
 							keybd_event(VK_RETURN, 0, 0, 0);
@@ -2921,6 +3054,14 @@ void CDlgResult::OnConnectMaintop()
 
 
 
+
+#endif
+
+
+
+						
+
+						
 
 
 						// 按键-确定 

@@ -220,8 +220,8 @@ public:
 
 	void setEditCtrlString(int pos_x, int pos_y, string str, int sleep_time = 0);
 
-	static bool SetCtrlValue(CString title, int ctrl_id, CString ctrl_type,  CString str_value);
 	static void SetBottomAction(CString title, int id, UINT action);
+	static void SetCtrlText(CString title, int id,  CString ctrl_type, CString text);
 
 	static void EmptyCtrlContent(HWND hWnd);
 	static CWnd* FindWndByCtrlID(CWnd* pWnd, UINT nCtrlID, LPCTSTR szClassName);
