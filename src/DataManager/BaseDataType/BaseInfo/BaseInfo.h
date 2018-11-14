@@ -18,7 +18,7 @@ public:
 	// 开料相关的信息
 	bool    m_LengthUnlimited;					/**<  长度无限制	*/
 	bool    m_WidthUnlimited;					/**<  宽度无限制	*/
-	int		m_LayoutOrg;						/**<  排样原点		*/
+	int		m_LayoutOrg;						/**<  排样原点		0：左下角  1：左上角  2：右下角 3：右上角*/
 	int		m_LayoutMethod;						/**<  排样方法	0：智能模式	 1：省料优先 2：后道优先 3：客户优先*/	
 	float	m_PanelLength;						/**<  大板长度		*/
 	float	m_PanelWidth;						/**<  大板宽度		*/

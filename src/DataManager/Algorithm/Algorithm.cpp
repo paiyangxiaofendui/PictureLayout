@@ -492,7 +492,7 @@ int ALGORITHM_API::New_LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, v
 			}
 
 			// 排样
-			ALGORITHM_API::New_KnifeOneRemainder(pPerfectMatchRemainder, pPerfectMatchComponent, nRecommendCutDir, Info.m_SawKerfWidth, Org, Info);
+			ALGORITHM_API::New_KnifeOneRemainder(pPerfectMatchRemainder, pPerfectMatchComponent, nRecommendCutDir, Org, Info);
 
 			// 删除已排样的板件和余料
 			vector<Component*>::iterator it_cpn = find(SrcComponentList.begin(), SrcComponentList.end(), pPerfectMatchComponent);
@@ -667,7 +667,7 @@ int ALGORITHM_API::LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vecto
 }
 
 
-bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org, BaseInfo& b_info)
+bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, int Org, BaseInfo& b_info)
 {
 	// 判断要切割的小板是否合法
 	if (pPlaceCpn->IsLegal() == false)
@@ -698,9 +698,9 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			pLeft->m_Material		= pParentNode->m_Material;
 
 			// 右节点
-			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + SawKerfWidth;			// 父节点左下角 + 小板长度 + 锯缝
+			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + /*SawKerfWidth*/b_info.m_x_space;				// 父节点左下角 + 小板长度 + 锯缝
 			pRight->m_y				= pParentNode->m_y;														// 父节点的y
-			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;		// 父节点长度 - 小板长度 - 锯缝
 			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
 			pRight->m_Thickness		= pParentNode->m_Thickness;
 			pRight->m_Texture		= pParentNode->m_Texture;
@@ -721,9 +721,9 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			pLeft->m_Material		= pParentNode->m_Material;
 
 			// 右节点
-			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + SawKerfWidth;			// 父节点左下角 + 小板长度 + 锯缝
+			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + /*SawKerfWidth*/b_info.m_x_space;				// 父节点左下角 + 小板长度 + 锯缝
 			pRight->m_y				= pParentNode->m_y;														// 父节点的y
-			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;		// 父节点长度 - 小板长度 - 锯缝
 			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
 			pRight->m_Thickness		= pParentNode->m_Thickness;
 			pRight->m_Texture		= pParentNode->m_Texture;
@@ -747,7 +747,7 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			// 右节点
 			pRight->m_x				= pParentNode->m_x;			// 父节点的x
 			pRight->m_y				= pParentNode->m_y;														// 父节点的y
-			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;	// 父节点长度 - 小板长度 - 锯缝
 			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
 			pRight->m_Thickness		= pParentNode->m_Thickness;
 			pRight->m_Texture		= pParentNode->m_Texture;
@@ -770,7 +770,7 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			// 右节点
 			pRight->m_x				= pParentNode->m_x;			// 父节点的x
 			pRight->m_y				= pParentNode->m_y;														// 父节点的y
-			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;		// 父节点长度 - 小板长度 - 锯缝
 			pRight->m_RealWidth		= pParentNode->m_RealWidth;												// 父节点宽度
 			pRight->m_Thickness		= pParentNode->m_Thickness;
 			pRight->m_Texture		= pParentNode->m_Texture;
@@ -791,9 +791,9 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			pLeft->m_Material		= pParentNode->m_Material;
 
 			// 右节点
-			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + SawKerfWidth;			// 父节点左下角 + 小板长度 + 锯缝
+			pRight->m_x				= pParentNode->m_x + pPlaceCpn->m_RealLength + /*SawKerfWidth*/b_info.m_x_space;				// 父节点左下角 + 小板长度 + 锯缝
 			pRight->m_y				= pParentNode->m_y;
-			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - SawKerfWidth;	// 父节点长度 - 小板长度 - 锯缝
+			pRight->m_RealLength	= pParentNode->m_RealLength - pPlaceCpn->m_RealLength - /*SawKerfWidth*/b_info.m_x_space;		// 父节点长度 - 小板长度 - 锯缝
 			pRight->m_RealWidth		= pParentNode->m_RealWidth;
 			pRight->m_Thickness		= pParentNode->m_Thickness;
 			pRight->m_Texture		= pParentNode->m_Texture;
@@ -847,9 +847,9 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 
 			// 另一块余料
 			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
-			pSecondRight->m_y			= pLeft->m_y + pPlaceCpn->m_RealWidth + SawKerfWidth;			// 父节点的y + 小板宽度 + 锯缝
+			pSecondRight->m_y			= pLeft->m_y + pPlaceCpn->m_RealWidth + /*SawKerfWidth*/b_info.m_y_space;				// 父节点的y + 小板宽度 + 锯缝
 			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
-			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;	// 父节点宽度 - 小板宽度 - 锯缝
 			pSecondRight->m_Thickness	= pLeft->m_Thickness;
 			pSecondRight->m_Texture		= pLeft->m_Texture;
 			pSecondRight->m_type		= NodeType_Remainder;
@@ -869,7 +869,7 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
 			pSecondRight->m_y			= pLeft->m_y;													// 父节点的y
 			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
-			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;	// 父节点宽度 - 小板宽度 - 锯缝
 			pSecondRight->m_Thickness	= pLeft->m_Thickness;
 			pSecondRight->m_Texture		= pLeft->m_Texture;
 			pSecondRight->m_type		= NodeType_Remainder;
@@ -887,9 +887,9 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 
 			// 另一块余料
 			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
-			pSecondRight->m_y			= pLeft->m_y  + pPlaceCpn->m_RealWidth + SawKerfWidth;			// 父节点的y + 小板的宽度 + 锯缝
+			pSecondRight->m_y			= pLeft->m_y  + pPlaceCpn->m_RealWidth + /*SawKerfWidth*/b_info.m_y_space;			// 父节点的y + 小板的宽度 + 锯缝
 			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
-			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;	// 父节点宽度 - 小板宽度 - 锯缝
 			pSecondRight->m_Thickness	= pLeft->m_Thickness;
 			pSecondRight->m_Texture		= pLeft->m_Texture;
 			pSecondRight->m_type		= NodeType_Remainder;
@@ -912,7 +912,7 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 			pSecondRight->m_x			= pLeft->m_x;													// 父节点的x
 			pSecondRight->m_y			= pLeft->m_y;													// 父节点的y
 			pSecondRight->m_RealLength	= pLeft->m_RealLength;											// 父节点的长
-			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;	// 父节点宽度 - 小板宽度 - 锯缝
 			pSecondRight->m_Thickness	= pLeft->m_Thickness;
 			pSecondRight->m_Texture		= pLeft->m_Texture;
 			pSecondRight->m_type		= NodeType_Remainder;
@@ -931,9 +931,9 @@ bool ALGORITHM_API::New_KnifeOneRemainder(Component* pParentNode, Component* pPl
 
 			// 另一块余料
 			pSecondRight->m_x			= pLeft->m_x;			
-			pSecondRight->m_y			= pLeft->m_y + pPlaceCpn->m_RealWidth + SawKerfWidth;			// 父节点左下角 + 小板宽度 + 锯缝
+			pSecondRight->m_y			= pLeft->m_y + pPlaceCpn->m_RealWidth + /*SawKerfWidth*/b_info.m_y_space;		// 父节点左下角 + 小板宽度 + 锯缝
 			pSecondRight->m_RealLength	= pLeft->m_RealLength;	
-			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - SawKerfWidth;	// 父节点宽度 - 小板宽度 - 锯缝
+			pSecondRight->m_RealWidth	= pLeft->m_RealWidth - pPlaceCpn->m_RealWidth - /*SawKerfWidth*/b_info.m_y_space;	// 父节点宽度 - 小板宽度 - 锯缝
 			pSecondRight->m_Thickness	= pLeft->m_Thickness;
 			pSecondRight->m_Texture		= pLeft->m_Texture;
 			pSecondRight->m_type		= NodeType_Remainder;

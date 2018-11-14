@@ -47,7 +47,7 @@ public:
 
 	// 切割方式
 	static bool KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org);
-	static bool New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org, BaseInfo& b_info);
+	static bool New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir,  int Org, BaseInfo& b_info);
 
 public:
 	// 最低轮廓线算法
