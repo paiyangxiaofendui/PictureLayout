@@ -919,6 +919,9 @@ void CDlgResult::OnMenuResetMachiningOrder()
 void CDlgResult::OnRButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
+#if 0
+
+
 	if(m_pPastingComponent)
 	{
 		CancelPasting();
@@ -949,7 +952,7 @@ void CDlgResult::OnRButtonUp(UINT nFlags, CPoint point)
 		}
 	}
 
-	
+	#endif
 
 }
 
@@ -2581,12 +2584,12 @@ void CDlgResult::OnConnectMaintop()
 				Sleep(SLEEP_3000MS);
 
 #else
-
+				Sleep(SLEEP_1000MS);
 				setEditCtrlString(len_pos_x, len_pos_y, panel_len, SLEEP_10MS);
-				Sleep(SLEEP_100MS);
+				Sleep(SLEEP_1000MS);
 
 				setEditCtrlString(width_pos_x, width_pos_y, panel_width, SLEEP_10MS);
-				//Sleep(SLEEP_100MS*2);
+				//Sleep(SLEEP_1000MS);
 
 #endif
 				
@@ -3179,7 +3182,10 @@ void CDlgResult::OnOpenSourcePicInfo()
 					// 形成一条数据
 					ComponentInputItem componentInputItem;
 
-					componentInputItem.m_strBarcode			= pic_path.c_str();
+
+					//string file_name = pic_path.substr(pic_path.find_last_of('\\') + 1);
+
+					componentInputItem.m_strBarcode			= /*file_name*/pic_path.c_str();
 					componentInputItem.m_fLength			= w_mm;
 					componentInputItem.m_fWidth				= h_mm;
 					componentInputItem.m_nCount				= num;
