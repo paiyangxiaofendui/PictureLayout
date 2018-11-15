@@ -2362,7 +2362,7 @@ void CDlgResult::OnConnectMaintop()
 	{
 		Component* pCpn = cpn_list.at(i_cpn);
 
-		string file_path = pCpn->m_BarCode;
+		string file_path = pCpn->m_strCabinetName;
 		float x = pCpn->m_x;
 		float y;
 		if (pCpn->m_nRotatedAngle == 0)
@@ -3183,9 +3183,10 @@ void CDlgResult::OnOpenSourcePicInfo()
 					ComponentInputItem componentInputItem;
 
 
-					//string file_name = pic_path.substr(pic_path.find_last_of('\\') + 1);
+					string file_name = pic_path.substr(pic_path.find_last_of('\\') + 1);
 
-					componentInputItem.m_strBarcode			= /*file_name*/pic_path.c_str();
+					componentInputItem.m_strBarcode			= file_name.c_str();
+					componentInputItem.m_strCabinetName		= pic_path.c_str();
 					componentInputItem.m_fLength			= w_mm;
 					componentInputItem.m_fWidth				= h_mm;
 					componentInputItem.m_nCount				= num;
