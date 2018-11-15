@@ -2520,7 +2520,10 @@ void CDlgResult::OnConnectMaintop()
 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
-			// 新建Ctrl+N
+			/************************************************************************/
+			/*                     新建Ctrl+N                                      */
+			/************************************************************************/ 
+			
 			keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
 			keybd_event('N', 0, 0, 0);						// 按下N
 			keybd_event('N', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
@@ -2615,99 +2618,206 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-
-
+			/************************************************************************/
+			/*                     循环载入图片                                     */
+			/************************************************************************/ 
+			string prev_file_path;
+			RECT coor_dlg_rect;
 			for (UINT i = 0; i < file_list.size();  i++)
 			{
-
-				int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
-
-
-				// 窗口获取焦点
-
-				SetCursorPos(x, y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-
-
-
 				Component* pCpn = cpn_list.at(i);
-				string file_path = file_list.at(i);
+				string cur_file_path = file_list.at(i);
 				string str_pos_x = x_pos_list.at(i);
 				string str_pos_y = y_pos_list.at(i);
 
 
 
-				// 取图片文件窗口 Ctrl+I
-				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-				Sleep(SLEEP_10MS);
-				keybd_event('I', 0, 0, 0);						// 按下I
-				Sleep(SLEEP_10MS);
-				keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-				Sleep(SLEEP_10MS);
-				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起I
-
-
-
-				HWND file_dlg_id;
-				CString file_dlg_tile = "取图片文件";
-
-				while(!(file_dlg_id = ::FindWindow("#32770", file_dlg_tile)))
+				// 比较是不是同一个文件
+				bool same_file_flag = false;
+				if (prev_file_path == cur_file_path)
 				{
-					Sleep(SLEEP_1000MS);
-					find_count++;
-
-					// 10秒未启动
-					if (find_count >= FIND_TIMES)
-					{
-						AfxMessageBox("超过20秒未找到取图片文件窗口，退出！");
-						return;
-					}
-
+					same_file_flag = true;
 				}
 
-
-				if (file_dlg_id != NULL)
+				// 对上一文件名进行赋值
+				prev_file_path = cur_file_path;
+			
+				/************************************************************************/
+				/*                     同一个图片                                        */
+				/************************************************************************/ 
+				if (same_file_flag)
 				{
-					RECT file_dlg_rect;
-					::GetWindowRect(file_dlg_id, &file_dlg_rect);
+					// ctrl+d 直接复制一份
+					keybd_event(VK_CONTROL, 0, 0,				0);
+					keybd_event('D',		0, 0,				0);
+					keybd_event('D',		0, KEYEVENTF_KEYUP, 0);
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);
 
-					
+					// 调整位置
 
-#if 0
-					int file_path_x = file_dlg_rect.left + 150;
-					int file_path_y = file_dlg_rect.bottom - 65;
 
-					SetCursorPos(file_path_x, file_path_y);
+					// 设置x坐标
+					POINT coor_x;
+					coor_x.x = coor_dlg_rect.left + 35;
+					coor_x.y = coor_dlg_rect.top + 8;
+
+					SetCursorPos(coor_x.x, coor_x.y);
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
-					// 删除已有数据
-					keybd_event(VK_BACK, 0, 0, 0);
-					keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
-
-					if (first_insert_flag == false)
+					if (pCpn->m_nRotatedAngle != 0)
 					{
-						Sleep(SLEEP_1000MS);
+						// 先调整角度
 
-						first_insert_flag = true;
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+						// 按下table键
+						keybd_event(VK_TAB, 0, 0, 0);
+						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+						//Sleep(SLEEP_1000MS);
+						// 输入
+						InputNormalString("90");
+						Sleep(SLEEP_500MS);
+
+						// 按键-确定 
+						keybd_event(VK_RETURN, 0, 0, 0);
+						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						//Sleep(SLEEP_1000MS);
+
+						SetCursorPos(coor_x.x, coor_x.y);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						//Sleep(SLEEP_1000MS);
+
 					}
 
-					// 设置到剪切板
-					CopyToClipboard(file_path.c_str(), file_path.length());
 
-					// 粘贴 Ctrl+V
+
+
+
+
+
+
+
+					// 输入
+					InputNormalString(str_pos_x);
+
+
+					// 按下table键
+					keybd_event(VK_TAB, 0, 0, 0);
+					keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+					// 输入
+					InputNormalString(str_pos_y);
+
+
+					// 按键-确定 
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+				}
+				else
+				{
+
+					/************************************************************************/
+					/*                     不同图片                                        */
+					/************************************************************************/ 
+
+					int x = exe_wnd_rect.left + 80, y = exe_wnd_rect.top + 120;
+
+
+					// 窗口获取焦点
+
+					SetCursorPos(x, y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+					// 取图片文件窗口 Ctrl+I
 					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-					keybd_event('V', 0, 0, 0);						// 按下v
-					keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+					Sleep(SLEEP_10MS);
+					keybd_event('I', 0, 0, 0);						// 按下I
+					Sleep(SLEEP_10MS);
+					keybd_event('I', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					Sleep(SLEEP_10MS);
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起I
+
+
+
+					HWND file_dlg_id;
+					CString file_dlg_tile = "取图片文件";
+
+					while(!(file_dlg_id = ::FindWindow("#32770", file_dlg_tile)))
+					{
+						Sleep(SLEEP_1000MS);
+						find_count++;
+
+						// 10秒未启动
+						if (find_count >= FIND_TIMES)
+						{
+							AfxMessageBox("超过20秒未找到取图片文件窗口，退出！");
+							return;
+						}
+
+					}
+
+
+					if (file_dlg_id != NULL)
+					{
+						RECT file_dlg_rect;
+						::GetWindowRect(file_dlg_id, &file_dlg_rect);
+
+
+
+#if 0
+						int file_path_x = file_dlg_rect.left + 150;
+						int file_path_y = file_dlg_rect.bottom - 65;
+
+						SetCursorPos(file_path_x, file_path_y);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+						// 删除已有数据
+						keybd_event(VK_BACK, 0, 0, 0);
+						keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);
+
+						if (first_insert_flag == false)
+						{
+							Sleep(SLEEP_1000MS);
+
+							first_insert_flag = true;
+						}
+
+						// 设置到剪切板
+						CopyToClipboard(file_path.c_str(), file_path.length());
+
+						// 粘贴 Ctrl+V
+						keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+						keybd_event('V', 0, 0, 0);						// 按下v
+						keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+						keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
 
 #else
 
-					int file_path_id = 1152;
-					SetCtrlText(file_dlg_tile, file_path_id,"Edit", file_path.c_str());
+						int file_path_id = 1152;
+						SetCtrlText(file_dlg_tile, file_path_id,"Edit", cur_file_path.c_str());
 
 
 #endif
@@ -2715,139 +2825,62 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-					Sleep(SLEEP_100MS);
+						Sleep(SLEEP_100MS);
 
-					// 按键-确定 
+						// 按键-确定 
 
-					keybd_event(VK_RETURN, 0, 0, 0);
-					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-
-					Sleep(SLEEP_100MS);
-					// 按键-确定 
-					keybd_event(VK_RETURN, 0, 0, 0);
-					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						keybd_event(VK_RETURN, 0, 0, 0);
+						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-					Sleep(SLEEP_100MS);
+						Sleep(SLEEP_100MS);
+						// 按键-确定 
+						keybd_event(VK_RETURN, 0, 0, 0);
+						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-				}
-				else
-				{
-					AfxMessageBox("文件窗口未找到！");
-					return;
-				}
-
-				// 显示标注
-				if (show_coor_flag == false)
-				{
-					Sleep(SLEEP_500MS);
-					int show_coord_btn_x = exe_wnd_rect.left + 610;
-					int show_coord_btn_y = exe_wnd_rect.top + 70;
-					SetCursorPos(show_coord_btn_x, show_coord_btn_y);
-					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-					show_coor_flag = true;
-				}
+						Sleep(SLEEP_100MS);
 
 
-				// 修改标注
-
-
-				if (first_modify_coord_flag == false)
-				{
-
-					Sleep(SLEEP_500MS);
-					first_modify_coord_flag = true;
-				}
-
-
-				//Sleep(SLEEP_1000MS);
-
-
-				HWND parent_dlg_id;
-
-				while(!(parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "")))
-				{
-
-
-					Sleep(SLEEP_100MS);
-					find_count++;
-
-					// 10秒未启动
-					if (find_count >= FIND_TIMES)
+					}
+					else
 					{
-						AfxMessageBox("超过10秒未找到“图片坐标父窗口”，退出！");
+						AfxMessageBox("文件窗口未找到！");
 						return;
 					}
 
-				}
-
-
-
-
-				HWND coor_dlg_id;
-				while(!(coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "")))
-				{
-
-
-					Sleep(SLEEP_100MS);
-					find_count++;
-
-					// 10秒未启动
-					if (find_count >= FIND_TIMES)
+					// 显示标注
+					if (show_coor_flag == false)
 					{
-						AfxMessageBox("超过10秒未找到“图片坐标子窗口”，退出！");
-						return;
+						Sleep(SLEEP_500MS);
+						int show_coord_btn_x = exe_wnd_rect.left + 610;
+						int show_coord_btn_y = exe_wnd_rect.top + 70;
+						SetCursorPos(show_coord_btn_x, show_coord_btn_y);
+						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+						show_coor_flag = true;
 					}
 
-				}
+
+					// 修改标注
 
 
-
-				if (coor_dlg_id != NULL)
-				{
-					RECT coor_dlg_rect;
-					::GetWindowRect(coor_dlg_id, &coor_dlg_rect);
-
-
-					// 这里需要先对图片进“保持原有尺寸”行处理，
-
-
-
-
-
-					// 将鼠标移动到窗口左上角
-					int img_attribule_x = exe_wnd_rect.left + 80, img_attribule_y = exe_wnd_rect.top + 120;
-					SetCursorPos(img_attribule_x, img_attribule_y);
-
-					mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
-					Sleep(SLEEP_500MS);
-
-
-					//选择右键菜单“栏框属性”，A+Enter
-					keybd_event('A', 0, 0, 0);						// 按下v
-					keybd_event('A', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-
-					Sleep(SLEEP_100MS);
-
-
-					keybd_event(VK_RETURN, 0, 0, 0);
-					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-					Sleep(SLEEP_1MS);
-
-
-
-					// 选择窗口“图片框属性” 
-
-
-					HWND img_attribule_dlg_id;
-					CString img_attribule_dlg_title = "图片框属性";
-
-					while(!(img_attribule_dlg_id = ::FindWindow("#32770", img_attribule_dlg_title)))
+					if (first_modify_coord_flag == false)
 					{
-						
+
+						Sleep(SLEEP_500MS);
+						first_modify_coord_flag = true;
+					}
+
+
+					//Sleep(SLEEP_1000MS);
+
+
+					HWND parent_dlg_id;
+
+					while(!(parent_dlg_id = ::FindWindowEx(exe_id, 0,"OGL_V30_Window", "")))
+					{
+
 
 						Sleep(SLEEP_100MS);
 						find_count++;
@@ -2855,212 +2888,302 @@ void CDlgResult::OnConnectMaintop()
 						// 10秒未启动
 						if (find_count >= FIND_TIMES)
 						{
-							AfxMessageBox("超过10秒未找到“图片框属性”窗口，退出！");
+							AfxMessageBox("超过10秒未找到“图片坐标父窗口”，退出！");
 							return;
 						}
 
 					}
 
 
-					if (img_attribule_dlg_id != NULL)
+
+
+					HWND coor_dlg_id;
+					while(!(coor_dlg_id = ::FindWindowEx(parent_dlg_id, 0,"#32770", "")))
 					{
-						RECT img_attribule_dlg_rect;
-						::GetWindowRect(img_attribule_dlg_id, &img_attribule_dlg_rect);
-
-
-						// 点击保持图片原尺寸 75 290   ID=100
-
-#if 0
-
-						int keep_org_img_size_x = img_attribule_dlg_rect.left + 75, keep_org_img_size_y = img_attribule_dlg_rect.top + 290;
-
-						SetCursorPos(keep_org_img_size_x, keep_org_img_size_y);
-
-						mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-#else
-						int keep_org_img_size_id = 100;
-
-						SetBottomAction(img_attribule_dlg_title, keep_org_img_size_id, BM_CLICK);
-
-#endif
 
 
 						Sleep(SLEEP_100MS);
+						find_count++;
 
-						// 点击确定 270 290 ID = 1
-
-#if 0
-
-						int enter_x = img_attribule_dlg_rect.left + 270, enter_y = img_attribule_dlg_rect.top + 290;
-
-						SetCursorPos(enter_x, enter_y);
-
-						mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-#else
-						
-						int ok_id = 1;
-
-						SetBottomAction(img_attribule_dlg_title, ok_id, BM_CLICK);
-						
-
-
-#endif
-						
-
-						Sleep(SLEEP_100MS);
-
-
-
-
-
-
-
-#if 0
-
-						//  x y w h r1 r2 id = 200~~205
-
-						int x_id	= 200;
-						int y_id	= 201;
-						int w_id	= 202;
-						int h_id	= 203;
-						int r1_id	= 204;
-						int r2_id	= 205;
-
-						if (pCpn->m_nRotatedAngle != 0)
+						// 10秒未启动
+						if (find_count >= FIND_TIMES)
 						{
-							// 先调整角度
-
-							
-
-							//Sleep(SLEEP_1000MS);
-							// 输入
-							SetCtrlText(exe_title, r1_id, "Edit", "90");
-							Sleep(SLEEP_100MS);
-
-							// 按键-确定 
-							keybd_event(VK_RETURN, 0, 0, 0);
-							keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-						
-							Sleep(SLEEP_100MS);
+							AfxMessageBox("超过10秒未找到“图片坐标子窗口”，退出！");
+							return;
 						}
-
-
-						SetCtrlText(exe_title, x_id, "Edit", str_pos_x.c_str());
-						SetCtrlText(exe_title, y_id, "Edit", str_pos_y.c_str());
-
-						Sleep(SLEEP_100MS);
-
-#else
-
-						// 设置x坐标
-						POINT coor_x;
-						coor_x.x = coor_dlg_rect.left + 35;
-						coor_x.y = coor_dlg_rect.top + 8;
-
-						SetCursorPos(coor_x.x, coor_x.y);
-						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-						mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-						if (pCpn->m_nRotatedAngle != 0)
-						{
-							// 先调整角度
-
-							// 按下table键
-							keybd_event(VK_TAB, 0, 0, 0);
-							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-							// 按下table键
-							keybd_event(VK_TAB, 0, 0, 0);
-							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-							// 按下table键
-							keybd_event(VK_TAB, 0, 0, 0);
-							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-							// 按下table键
-							keybd_event(VK_TAB, 0, 0, 0);
-							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-
-							//Sleep(SLEEP_1000MS);
-							// 输入
-							InputNormalString("90");
-							Sleep(SLEEP_500MS);
-
-							// 按键-确定 
-							keybd_event(VK_RETURN, 0, 0, 0);
-							keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-							//Sleep(SLEEP_1000MS);
-
-							SetCursorPos(coor_x.x, coor_x.y);
-							mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-							mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-							//Sleep(SLEEP_1000MS);
-
-						}
-
-
-
-
-
-
-
-
-
-						// 输入
-						InputNormalString(str_pos_x);
-
-
-						// 设置y坐标
-						// 			POINT coor_y;
-						// 			coor_y.x = coor_dlg_rect.left + 35;
-						// 			coor_y.y = coor_dlg_rect.top + 25;
-						// 
-						// 			SetCursorPos(coor_y.x, coor_y.y);
-						// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-						// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-						//	
-						// 按下table键
-						keybd_event(VK_TAB, 0, 0, 0);
-						keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-
-						// 输入
-						InputNormalString(str_pos_y);
-
-
-
-
-#endif
-
-
-
-						
-
-						
-
-
-						// 按键-确定 
-						keybd_event(VK_RETURN, 0, 0, 0);
-						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 					}
 
 
 
+					if (coor_dlg_id != NULL)
+					{
+						::GetWindowRect(coor_dlg_id, &coor_dlg_rect);
+
+
+						// 这里需要先对图片进“保持原有尺寸”行处理，
+
+
+#if 0
+		
+						// 将鼠标移动到窗口左上角
+						int img_attribule_x = exe_wnd_rect.left + 80, img_attribule_y = exe_wnd_rect.top + 120;
+						SetCursorPos(img_attribule_x, img_attribule_y);
+
+						mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
+						Sleep(SLEEP_500MS);
+
+
+						//选择右键菜单“栏框属性”，A+Enter
+						keybd_event('A', 0, 0, 0);						// 按下v
+						keybd_event('A', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+						Sleep(SLEEP_100MS);
+
+
+						keybd_event(VK_RETURN, 0, 0, 0);
+						keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						Sleep(SLEEP_1MS);
+
+
+#else
+
+						// CTRL+A
+
+						keybd_event(VK_CONTROL,	0, 0,				0);		// 按下ctrl
+						keybd_event('A',		0, 0,				0);		// 按下A
+						keybd_event('A',		0, KEYEVENTF_KEYUP, 0);		// 抬起A
+						keybd_event(VK_CONTROL,	0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+
+#endif
+
+
+						
 
 
 
+						// 选择窗口“图片框属性” 
+
+
+						HWND img_attribule_dlg_id;
+						CString img_attribule_dlg_title = "图片框属性";
+
+						while(!(img_attribule_dlg_id = ::FindWindow("#32770", img_attribule_dlg_title)))
+						{
+
+
+							Sleep(SLEEP_100MS);
+							find_count++;
+
+							// 10秒未启动
+							if (find_count >= FIND_TIMES)
+							{
+								AfxMessageBox("超过10秒未找到“图片框属性”窗口，退出！");
+								return;
+							}
+
+						}
+
+
+						if (img_attribule_dlg_id != NULL)
+						{
+							RECT img_attribule_dlg_rect;
+							::GetWindowRect(img_attribule_dlg_id, &img_attribule_dlg_rect);
+
+
+							// 点击保持图片原尺寸 75 290   ID=100
+
+#if 0
+
+							int keep_org_img_size_x = img_attribule_dlg_rect.left + 75, keep_org_img_size_y = img_attribule_dlg_rect.top + 290;
+
+							SetCursorPos(keep_org_img_size_x, keep_org_img_size_y);
+
+							mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+#else
+							int keep_org_img_size_id = 100;
+
+							SetBottomAction(img_attribule_dlg_title, keep_org_img_size_id, BM_CLICK);
+
+#endif
+
+
+							Sleep(SLEEP_100MS);
+
+							// 点击确定 270 290 ID = 1
+
+#if 0
+
+							int enter_x = img_attribule_dlg_rect.left + 270, enter_y = img_attribule_dlg_rect.top + 290;
+
+							SetCursorPos(enter_x, enter_y);
+
+							mouse_event(MOUSEEVENTF_LEFTDOWN |MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+#else
+
+							int ok_id = 1;
+
+							SetBottomAction(img_attribule_dlg_title, ok_id, BM_CLICK);
+
+
+
+#endif
+
+
+							Sleep(SLEEP_100MS);
+
+
+
+
+
+
+
+#if 0
+
+							//  x y w h r1 r2 id = 200~~205
+
+							int x_id	= 200;
+							int y_id	= 201;
+							int w_id	= 202;
+							int h_id	= 203;
+							int r1_id	= 204;
+							int r2_id	= 205;
+
+							if (pCpn->m_nRotatedAngle != 0)
+							{
+								// 先调整角度
+
+
+
+								//Sleep(SLEEP_1000MS);
+								// 输入
+								SetCtrlText(exe_title, r1_id, "Edit", "90");
+								Sleep(SLEEP_100MS);
+
+								// 按键-确定 
+								keybd_event(VK_RETURN, 0, 0, 0);
+								keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+								Sleep(SLEEP_100MS);
+							}
+
+
+							SetCtrlText(exe_title, x_id, "Edit", str_pos_x.c_str());
+							SetCtrlText(exe_title, y_id, "Edit", str_pos_y.c_str());
+
+							Sleep(SLEEP_100MS);
+
+#else
+
+							// 设置x坐标
+							POINT coor_x;
+							coor_x.x = coor_dlg_rect.left + 35;
+							coor_x.y = coor_dlg_rect.top + 8;
+
+							SetCursorPos(coor_x.x, coor_x.y);
+							mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+							mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+							if (pCpn->m_nRotatedAngle != 0)
+							{
+								// 先调整角度
+
+								// 按下table键
+								keybd_event(VK_TAB, 0, 0, 0);
+								keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+								// 按下table键
+								keybd_event(VK_TAB, 0, 0, 0);
+								keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+								// 按下table键
+								keybd_event(VK_TAB, 0, 0, 0);
+								keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+								// 按下table键
+								keybd_event(VK_TAB, 0, 0, 0);
+								keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+								//Sleep(SLEEP_1000MS);
+								// 输入
+								InputNormalString("90");
+								Sleep(SLEEP_500MS);
+
+								// 按键-确定 
+								keybd_event(VK_RETURN, 0, 0, 0);
+								keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+								//Sleep(SLEEP_1000MS);
+
+								SetCursorPos(coor_x.x, coor_x.y);
+								mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+								mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+								//Sleep(SLEEP_1000MS);
+
+							}
+
+
+
+
+
+
+
+
+
+							// 输入
+							InputNormalString(str_pos_x);
+
+#if 0
+							// 设置y坐标
+							// 			POINT coor_y;
+							// 			coor_y.x = coor_dlg_rect.left + 35;
+							// 			coor_y.y = coor_dlg_rect.top + 25;
+							// 
+							// 			SetCursorPos(coor_y.x, coor_y.y);
+							// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+							// 			mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+							//	
+#endif
+
+							
+
+
+							// 按下table键
+							keybd_event(VK_TAB, 0, 0, 0);
+							keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+							// 输入
+							InputNormalString(str_pos_y);
+
+
+
+
+#endif
+
+
+
+
+							// 按键-确定 
+							keybd_event(VK_RETURN, 0, 0, 0);
+							keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+						}
+					}
+					else
+					{
+						AfxMessageBox("坐标窗口未找到！");
+						return;
+					}
 				}
-				else
-				{
-					AfxMessageBox("坐标窗口未找到！");
-					return;
-				}
+
+
+
 			}
 		}
 		else

@@ -29,7 +29,7 @@ class PanelViewingParam;
 #define WM_REFRESH_PANEL_VIEW               WM_USER+1
 
 
-#define DEFAULT_WIDTH						(100000) 
+#define DEFAULT_WIDTH						(1000000) 
 
 
 #define IDTIMER1  1
