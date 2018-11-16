@@ -25,6 +25,12 @@
     <Filter Include="源文件\Misc">
       <UniqueIdentifier>{3bbd2370-ee32-4c15-a322-547029b5779a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\DxfReadWrite">
+      <UniqueIdentifier>{f5da199a-63e5-42af-9800-e68d606bc072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DxfReadWrite">
+      <UniqueIdentifier>{8ac9797d-998d-4a12-a5ee-f1e1bd3988dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -69,6 +75,18 @@
     <ClCompile Include="Misc\ProgramMisc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="DxfReadWrite\dl_dxf.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\dl_writer_ascii.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\DxfReadWrite.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="DxfReadWrite\test_creationclass.cpp">
+      <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -106,6 +124,45 @@
     </ClInclude>
     <ClInclude Include="Work\WorkDef.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_attributes.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_codes.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_creationadapter.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_creationinterface.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_dxf.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_entities.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_exception.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_extrusion.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_global.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_writer.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\dl_writer_ascii.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\DxfReadWrite.h">
+      <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="DxfReadWrite\test_creationclass.h">
+      <Filter>头文件\DxfReadWrite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

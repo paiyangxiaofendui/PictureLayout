@@ -115,6 +115,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="DxfReadWrite\dl_dxf.cpp" />
+    <ClCompile Include="DxfReadWrite\dl_writer_ascii.cpp" />
+    <ClCompile Include="DxfReadWrite\DxfReadWrite.cpp" />
+    <ClCompile Include="DxfReadWrite\test_creationclass.cpp" />
     <ClCompile Include="FileReadWrite.cpp" />
     <ClCompile Include="HgyReadWrite\HgyReadWrite.cpp" />
     <ClCompile Include="Misc\HGCode.cpp" />
@@ -130,6 +134,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DxfReadWrite\dl_attributes.h" />
+    <ClInclude Include="DxfReadWrite\dl_codes.h" />
+    <ClInclude Include="DxfReadWrite\dl_creationadapter.h" />
+    <ClInclude Include="DxfReadWrite\dl_creationinterface.h" />
+    <ClInclude Include="DxfReadWrite\dl_dxf.h" />
+    <ClInclude Include="DxfReadWrite\dl_entities.h" />
+    <ClInclude Include="DxfReadWrite\dl_exception.h" />
+    <ClInclude Include="DxfReadWrite\dl_extrusion.h" />
+    <ClInclude Include="DxfReadWrite\dl_global.h" />
+    <ClInclude Include="DxfReadWrite\dl_writer.h" />
+    <ClInclude Include="DxfReadWrite\dl_writer_ascii.h" />
+    <ClInclude Include="DxfReadWrite\DxfReadWrite.h" />
+    <ClInclude Include="DxfReadWrite\test_creationclass.h" />
     <ClInclude Include="HgyReadWrite\HgyReadWrite.h" />
     <ClInclude Include="Misc\HGCode.h" />
     <ClInclude Include="Misc\HGTools.h" />

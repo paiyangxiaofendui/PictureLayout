@@ -173,6 +173,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_WM_RBUTTONUP()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
+	ON_BN_CLICKED(IDC_BUTTON_EXPORT_DXF, &CDlgResult::OnBtnExportDxf)
 	ON_LBN_SELCHANGE(IDC_LIST_CLIPBOARD, &CDlgResult::OnLbnSelchangeClipBoard)
 	ON_MESSAGE(WM_SHOW_OR_HIDE_CLIPBOARD, &CDlgResult::OnShowOrHideClipboard)
 	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
@@ -252,6 +253,38 @@ void CDlgResult::OnTimer(UINT nIDEvent)
 }
 
 
+void CDlgResult::OnBtnExportDxf()
+{
+	// 导出当前板件的dxf文件
+	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
+	if(pParam && pParam->m_pPanel)
+	{
+		CString strFilePath;
+
+		CString filter = "dxf 文件(*.dxf)|*.dxf|所有文件 (*.*)|*.*||";
+		//CString strDefFileName = GetFileNameInPath(m_strOpenedFile) + _T(".dxf");
+		CFileDialog fileDlg (FALSE, _T("dxf"), _T("001.dxf")/*strDefFileName*/,OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT, filter, NULL);
+		//CString strDefDir = SelectPathDlg().DefaultSavePath();
+		//fileDlg.m_ofn.lpstrInitialDir = strDefDir;
+
+		if ( fileDlg.DoModal() == IDOK)
+		{
+			strFilePath = fileDlg.GetPathName();
+
+			CString DownerFilePath = strFilePath;
+			DownerFilePath.Replace(".dxf", "@W.dxf");
+
+			if (DxfReadWrite::OutputUpperFaceDxf(pParam->m_pPanel, strFilePath) == true )
+			{
+				AfxMessageBox("文件保存成功！");
+			}
+			else
+			{
+				AfxMessageBox("文件保存失败！");
+			}
+		}
+	}
+}
 
 
 void CDlgResult::OnPaint()
