@@ -14,6 +14,19 @@
 #include "../CommonData/CommonData.h"
 #include "../CSingleton/CSingleton.h"
 
+
+enum
+{
+	Length_First,
+	Width_First,
+	Area_First,
+	Special_1,
+	MaxSide_First
+};
+
+
+#define  Component_Sort_Priority		MaxSide_First
+
 // –°∞Â–≈œ¢
 class AFX_EXT_CLASS Component : public Node
 {

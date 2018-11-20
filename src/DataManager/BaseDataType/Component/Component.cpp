@@ -13,16 +13,7 @@
 
 using namespace std;
 
-enum
-{
-	Length_First,
-	Width_First,
-	Area_First,
-	Special_1
-};
 
-
-#define  Component_Sort_Priority		Length_First
 
 Component::Component(void)
 {
@@ -250,7 +241,32 @@ Component* Component::GetLargestNeedComponent(void)
 // 长度优先 面积次之
 bool Component::operator> (const Component& dst_cpn) const
 {
-#if (Component_Sort_Priority == Length_First)
+
+#if 1
+
+	float src_max_side = max(this->m_RealLength, this->m_RealWidth);
+	float dst_max_side = max(dst_cpn.m_RealLength, dst_cpn.m_RealWidth);
+
+	if (src_max_side > dst_max_side)			// 长边优先
+	{
+		return true;
+	}
+	else if (src_max_side == dst_max_side)		// 面积次之
+	{
+		float src_area = this->m_RealLength * this->m_RealWidth;
+		float dst_area = dst_cpn.m_RealLength * dst_cpn.m_RealWidth;
+
+		if (src_area > dst_area)
+		{
+			return true;
+		}
+	}
+
+
+#else
+
+
+#if(Component_Sort_Priority == Length_First)
 
 	if (this->m_RealLength > dst_cpn.m_RealLength)			// 长度优先
 	{
@@ -267,7 +283,29 @@ bool Component::operator> (const Component& dst_cpn) const
 		}
 	}
 
-#elif	(Component_Sort_Priority == Width_First)
+#elif(Component_Sort_Priority == MaxSide_First)
+
+	float src_max_side = max(this->m_RealLength, this->m_RealWidth);
+	float dst_max_side = max(dst_cpn->m_RealLength, dst_cpn->m_RealWidth);
+
+	if (src_max_side > dst_max_side)			// 长边优先
+	{
+		return true;
+	}
+	else if (src_max_side == dst_max_side)		// 面积次之
+	{
+		float src_area = this->m_RealLength * this->m_RealWidth;
+		float dst_area = dst_cpn.m_RealLength * dst_cpn.m_RealWidth;
+
+		if (src_area > dst_area)
+		{
+			return true;
+		}
+	}
+
+
+
+#elif(Component_Sort_Priority == Width_First)
 
 	if (this->m_RealWidth > dst_cpn.m_RealWidth)			// 长度优先
 	{
@@ -283,10 +321,12 @@ bool Component::operator> (const Component& dst_cpn) const
 			return true;
 		}
 	}
-#elif	(Component_Sort_Priority == Area_First)
+
+#elif(Component_Sort_Priority == Area_First)
+
 	float src_area = this->m_RealLength * this->m_RealWidth;
 	float dst_area = dst_cpn.m_RealLength * dst_cpn.m_RealWidth;
-	
+
 	if (src_area > dst_area)
 	{
 		return true;
@@ -299,11 +339,11 @@ bool Component::operator> (const Component& dst_cpn) const
 		}
 	}
 
-#elif	(Component_Sort_Priority == Special_1)
+#elif(Component_Sort_Priority == Special_1)
 
 	float src_area = this->m_RealLength * this->m_RealWidth +　2 * (this->m_RealLength + this->m_RealWidth);
 	float dst_area = dst_cpn.m_RealLength * dst_cpn.m_RealWidth +　2 * (dst_cpn.m_RealLength + dst_cpn.m_RealWidth);
-	
+
 	if (src_area > dst_area)
 	{
 		return true;
@@ -311,6 +351,10 @@ bool Component::operator> (const Component& dst_cpn) const
 
 
 #endif
+
+#endif
+
+
 
 	return false;
 }
