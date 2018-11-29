@@ -180,7 +180,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath)
 
 
 			// 大板轮廓
-#if 1
+#if 0
 
 			// 画矩形
 			double panel_pnt1_x = 0;
@@ -260,7 +260,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath)
 				Component* pCpn = CpnList.at(i_cpn);
 
 // 板件信息
-#if 1
+#if 0
 				float info_offset = 20;
 
 				float info_x = pCpn->m_x + info_offset;
@@ -532,7 +532,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath)
 
 
 // 孔
-#if 1
+#if 0
 
 				vector<AllVec> UpperFaceHole = pCpn->m_vUpperFaceHole;
 
@@ -556,7 +556,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath)
 
 
 // 槽
-#if 1
+#if 0
 
 				// 存在正面槽
 				int nUpperFaceSlotCount = pCpn->m_vUpperFaceSlot.size();

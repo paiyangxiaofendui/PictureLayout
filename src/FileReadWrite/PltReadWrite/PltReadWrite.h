@@ -11,12 +11,13 @@
 #define		_PltReadWrite_H_
 
 
+using namespace std ;
 class Panel;
 
 class AFX_EXT_CLASS PltReadWrite
 {
 public:
-	static bool OutputPlt(Panel* pPanel, CString strPltFilePath);	
+	static bool OutputPlt(Panel* pPanel, string strPltFilePath);	
 
 };
 

@@ -86,6 +86,7 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnBtnExportDxf();
+	afx_msg void OnBtnExportPlt();
 	afx_msg void OnTimer( UINT nIDEvent );
 
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

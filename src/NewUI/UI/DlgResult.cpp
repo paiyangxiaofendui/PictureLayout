@@ -35,6 +35,7 @@
 #include "../../../include/FileReadWrite/DxfReadWrite/DxfReadWrite.h"
 #include "../../../include/FileReadWrite/HgyReadWrite/HgyReadWrite.h"
 #include "../../../include/FileReadWrite/Misc/HGCode.h"
+#include "../../../include/FileReadWrite/PltReadWrite/PltReadWrite.h"
 
 
 
@@ -174,6 +175,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_DXF, &CDlgResult::OnBtnExportDxf)
+	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PLT, &CDlgResult::OnBtnExportPlt)
 	ON_LBN_SELCHANGE(IDC_LIST_CLIPBOARD, &CDlgResult::OnLbnSelchangeClipBoard)
 	ON_MESSAGE(WM_SHOW_OR_HIDE_CLIPBOARD, &CDlgResult::OnShowOrHideClipboard)
 	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
@@ -251,6 +253,36 @@ void CDlgResult::OnTimer(UINT nIDEvent)
 
 	CDialogChildBase::OnTimer(nIDEvent);
 }
+
+
+void CDlgResult::OnBtnExportPlt()
+{
+	// 导出当前板件的dxf文件
+	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
+	if(pParam && pParam->m_pPanel)
+	{
+		CString strFilePath;
+
+		CString filter = "plt 文件(*.dxf)|*.plt|所有文件 (*.*)|*.*||";
+		CFileDialog fileDlg (FALSE, _T("plt"), _T("001.plt")/*strDefFileName*/,OFN_HIDEREADONLY|OFN_OVERWRITEPROMPT, filter, NULL);
+
+		if ( fileDlg.DoModal() == IDOK)
+		{
+			strFilePath = fileDlg.GetPathName();
+
+
+			if (PltReadWrite::OutputPlt(pParam->m_pPanel, strFilePath.GetBuffer()) == true )
+			{
+				AfxMessageBox("文件保存成功！");
+			}
+			else
+			{
+				AfxMessageBox("文件保存失败！");
+			}
+		}
+	}
+}
+
 
 
 void CDlgResult::OnBtnExportDxf()

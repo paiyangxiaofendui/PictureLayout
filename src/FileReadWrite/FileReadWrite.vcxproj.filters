@@ -31,6 +31,12 @@
     <Filter Include="源文件\DxfReadWrite">
       <UniqueIdentifier>{8ac9797d-998d-4a12-a5ee-f1e1bd3988dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\PltReadWrite">
+      <UniqueIdentifier>{5729cbb5-b3f1-4e94-ac0f-956b54089002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\PltReadWrite">
+      <UniqueIdentifier>{e1848da3-03d6-4d6a-8467-22fbef1301f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -86,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="DxfReadWrite\test_creationclass.cpp">
       <Filter>源文件\DxfReadWrite</Filter>
+    </ClCompile>
+    <ClCompile Include="PltReadWrite\PltReadWrite.cpp">
+      <Filter>源文件\PltReadWrite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="DxfReadWrite\test_creationclass.h">
       <Filter>头文件\DxfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="PltReadWrite\PltReadWrite.h">
+      <Filter>头文件\PltReadWrite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
