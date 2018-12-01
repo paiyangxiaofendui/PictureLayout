@@ -82,3 +82,7 @@
 /pages.html.lnk
 /src/VBTest/obj
 /src/VBTest/bin
+/src/PDFTest/Debug
+/src/PDFTest/*.user
+/src/PDFTest/hello - 副本.pdf
+/src/PDFTest/hello.pdf
