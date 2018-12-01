@@ -6,11 +6,14 @@
 
 #include "../../include/FileReadWrite/PdfReadWrite/pdflib.h"
 #include "../../include/FileReadWrite/PdfReadWrite/pdflib.hpp"
-#pragma comment(lib, "pdflib.lib")
+#pragma comment(lib, "../../lib/pdflib.lib")
 
 
 using namespace std;
 using namespace pdflib;
+
+
+
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -61,6 +64,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		//	const wstring imagefile = L"nesrin.jpg";
 		const wstring searchpath = L"";
 		const wstring imagefile = L"F:/PictureLayout/测试目录/新建文件夹/3.tif";
+
+		
 		int image;
 
 		wostringstream optlist;

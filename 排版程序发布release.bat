@@ -16,6 +16,7 @@ copy  "bin\FileReadWrite.dll" 			"%Release%"
 copy  "bin\muParser.dll" 				"%Release%"
 copy  "bin\NewUI.dll" 					"%Release%"
 copy  "bin\tinyxml.dll" 				"%Release%"
+copy  "bin\pdflib.dll" 					"%Release%"
 copy  "bin\VBTest.exe" 					"%Release%"
 
 

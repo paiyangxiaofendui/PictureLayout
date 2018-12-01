@@ -12,9 +12,10 @@
 #include <iostream>
 #include <fstream>
 #include <iosfwd>
+#include <xstring>
 #include "PdfReadWrite.h"
 #include "pdflib.h"
-#include "../../include/FileReadWrite/PdfReadWrite/pdflib.hpp"
+#include "pdflib.hpp"
 
 
 // 外部DataManager.dll的头文件
@@ -35,6 +36,43 @@
 #include "../../../include/AbnormalShapeManager/GeneralInterface/GeneralInterface.h"
 
 #pragma comment(lib, "../../lib/pdflib.lib")
+using namespace pdflib;
+
+
+
+std::wstring StringToWString(const std::string& str) 
+{
+	int num = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
+	wchar_t *wide = new wchar_t[num];
+	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, wide, num);
+	std::wstring w_str(wide);
+	delete[] wide;
+	return w_str;
+}
+
+
+std::wstring Ansi2WChar(LPCSTR pszSrc, int nLen)
+
+{
+	int nSize = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)pszSrc, nLen, 0, 0);
+	if(nSize <= 0) return NULL;
+
+	WCHAR *pwszDst = new WCHAR[nSize+1];
+	if( NULL == pwszDst) return NULL;
+
+	MultiByteToWideChar(CP_ACP, 0,(LPCSTR)pszSrc, nLen, pwszDst, nSize);
+	pwszDst[nSize] = 0;
+
+	if( pwszDst[0] == 0xFEFF) // skip Oxfeff
+		for(int i = 0; i < nSize; i ++) 
+			pwszDst[i] = pwszDst[i+1];
+
+	wstring wcharString(pwszDst);
+	delete pwszDst;
+
+	return wcharString;
+}
+
 
 
 /*-------------------------------------------------------*/
@@ -60,17 +98,20 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 		//  This means we must check return values of load_font() etc.
 		p.set_option(L"errorpolicy=return");
 
+		wstring unicode_filepath = Ansi2WChar(strPdfFilePath.c_str(), strPdfFilePath.length());
 
-		if (p.begin_document(L"hello.pdf", L"") == -1) {
+
+		if (p.begin_document(unicode_filepath.c_str(),  L"") == -1) {
 			wcerr << "Error: " << p.get_errmsg() << endl;
-			return 2;
+			return false;
 		}
 
 		p.set_info(L"Creator", L"hello.cpp");
 		p.set_info(L"Author", L"Thomas Merz");
 		p.set_info(L"Title", L"Hello, world (C++)!");
 
-		p.begin_page_ext(10000, 10000, L"");
+		// 大板长宽
+		p.begin_page_ext(pPanel->m_OrgLen*72/25.4, pPanel->m_OrgWidth*72/25.4, L"");
 
 		// Change "host" encoding to "winansi" or whatever you need!
 		font = p.load_font(L"Helvetica-Bold", L"host", L"");
@@ -86,7 +127,7 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 		if (font == -1) {
 			wcerr << L"Error: " << p.get_errmsg() << endl;
-			return(2);
+			return false;
 		}
 		p.setfont(font, 24);
 		p.set_text_pos(50, 50);
@@ -100,42 +141,80 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 		//const wstring searchpath = L"D:/搜狗高速下载/PDFlib-9.1.2p1-MSWin32-C-C%2B%2B+Cracked/PDFlib-9.1.2p1-MSWin32-C-C++ Cracked/bind/data";
 		//	const wstring imagefile = L"nesrin.jpg";
 		const wstring searchpath = L"";
-		const wstring imagefile = L"F:/PictureLayout/测试目录/新建文件夹/3.tif";
-		int image;
-
+		
 		wostringstream optlist;
 
 
-		// Set the search path for fonts and PDF files
-		optlist.str(L"");
-		optlist << L"searchpath={{" << searchpath << L"}}";
-		p.set_option(optlist.str());
+
+		
+
+		// 依次画图
+		vector<Component*> CpnList;
+		pPanel->GetAllNeededComponent(CpnList);
+
+		int nCpnCount = CpnList.size();
+		for (int i_cpn = 0; i_cpn < nCpnCount; i_cpn++)
+		{
+			Component* pCpn = CpnList.at(i_cpn);
+
+			string file_path = pCpn->m_strCabinetName;
+			wstring unicode_file_path = Ansi2WChar(file_path.c_str(), file_path.length());
+			float x = pCpn->m_x*72/25.4;
+			float y = pCpn->m_y*72/25.4;
+			wostringstream op_para;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				op_para.str(L"");
+
+			}
+			else
+			{
+				op_para.str(L"orientate=west");
+
+
+			}
+
+			// Set the search path for fonts and PDF files
+			optlist.str(L"");
+			optlist << L"searchpath={{" << searchpath << L"}}";
+			p.set_option(optlist.str());
 
 
 
-		image = p.load_image(L"auto", imagefile, L"");
+			const wstring imagefile = unicode_file_path;
+			int image;
 
-		if (image == -1) {
-			wcerr << L"Error: " << p.get_errmsg() << endl;
-			return 2;
+
+			image = p.load_image(L"auto", imagefile, L"");
+
+			if (image == -1) {
+				wcerr << L"Error: " << p.get_errmsg() << endl;
+
+				return false;
+			}
+
+			optlist.str(L"");
+			optlist.str(L"fontname={LinLibertine_R} encoding=unicode embedding fontsize=24");
+
+
+
+			p.fit_image(image, x, y, op_para.str());
+
+// 			p.fit_image(image, 2000, 2000,
+// 				L"orientate=west");
+// 
+// 			p.fit_image(image, 2000, 4000,
+// 				L"orientate=east");
+// 
+// 			p.fit_image(image, 2000, 6000,
+// 				L"orientate=south");
+
+
+
 		}
 
 
-		optlist.str(L"");
-		optlist.str(L"fontname={LinLibertine_R} encoding=unicode embedding fontsize=24");
-
-		//p.fit_textline(L"en: Hello!", 50, 700, optlist.str());
-
-		p.fit_image(image, 0, 0,L" ");
-
-		p.fit_image(image, 2000, 2000,
-			L"orientate=west");
-
-		p.fit_image(image, 2000, 4000,
-			L"orientate=east");
-
-		p.fit_image(image, 2000, 6000,
-			L"orientate=south");
 
 
 
@@ -149,293 +228,12 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 		wcerr << L"PDFlib exception occurred in hello sample: " << endl
 			<< L"[" << ex.get_errnum() << L"] " << ex.get_apiname()
 			<< L": " << ex.get_errmsg() << endl;
-		return 2;
+		return false;
 	}
 
 
 
 
-
-#if 0
-
-
-
-	//2017-7-20 yuanzb  新建文件，
-
-	try
-	{
-		std::ofstream plt_file(strPdfFilePath, ios::out);
-		
-
-
-		if (plt_file)
-		{
-
-
-			// 抬笔
-			plt_file << "PU;" << endl;
-
-
-			// 小板轮廓
-
-			// 板件轮廓点处理模块
-
-
-			vector<Component*> CpnList;
-			pPanel->GetAllNeededComponent(CpnList);
-
-			int nCpnCount = CpnList.size();
-			for (int i_cpn = 0; i_cpn < nCpnCount; i_cpn++)
-			{
-				Component* pCpn = CpnList.at(i_cpn);
-
-
-				// 将异形的点分段
-				vector<PointInfo> points = pCpn->m_vOutlinePoint;
-				vector<vector<PointInfo>> _pNewpoint;
-				vector<PointInfo> _tmppoint;
-				for (int n_p = 0;n_p < points.size();n_p++)
-				{
-					int _cut = points.at(n_p).cut;
-					if (_cut == 1)
-					{
-						_tmppoint.push_back(points.at(n_p));
-						_pNewpoint.push_back(_tmppoint);
-						_tmppoint.clear();
-					}
-					else if (_cut == 2)
-					{
-						_tmppoint.clear();
-						_tmppoint.push_back(points.at(n_p));
-					}
-					else
-					{
-						_tmppoint.push_back(points.at(n_p));
-					}
-				}
-
-				// 有这么多的点
-				if (_tmppoint.size() > 0)
-					_pNewpoint.push_back(_tmppoint);
-
-				for (int _pn = 0;_pn < _pNewpoint.size();_pn++)
-				{
-					int nCount;
-					vector<PointInfo> newpoint;
-					vector<PointInfo> tmpnewpoint;
-
-					// 这一次的轮廓点
-					tmpnewpoint = _pNewpoint.at(_pn);
-
-					// 过滤重合点
-					tmpnewpoint = ALGORITHM_API::FiltrateCoincidentPoints2(tmpnewpoint);
-
-					// 根据点组织成所需要的数据结构
-					Cad_Complex* pComplex = new Cad_Complex;
-
-					// 重新获取形状点个数
-					nCount = tmpnewpoint.size();
-					for (int index = 0; index < nCount; index++)
-					{
-						PointInfo cur_point = tmpnewpoint[index];
-
-						if (index == 0)
-						{
-							if (cur_point.sign == 0)	// 直线直接添加
-							{
-								ShapePoint* pPnt = new ShapePoint(cur_point.x, cur_point.y);
-
-								pPnt->m_FigureType = FigureType_PolyLine;
-								pComplex->AddShapePoint(pPnt);
-							}
-							else if (cur_point.sign == 1 || cur_point.sign == 3)	// 圆弧起点或圆弧连接点(属于数据错误但暂时先兼容) 跟圆弧终点一起算，添加一个圆弧
-							{
-								float center_x, center_y, r,sign ;
-								float mid_x, mid_y, vec_x, vec_y;
-								PointInfo end_pnt = tmpnewpoint[index+1];
-
-								// 求圆心
-								r = end_pnt.r;
-								sign = end_pnt.dir;
-								ALGORITHM_API::GetCircleCenter(cur_point.x, end_pnt.x,cur_point.y, end_pnt.y, r, sign, center_x, center_y);
-
-								// 求弦中点绝对坐标
-								mid_x = (end_pnt.x - cur_point.x)/2.0 + cur_point.x ;
-								mid_y = (end_pnt.y - cur_point.y)/2.0 + cur_point.y ;
-
-								vec_x = mid_x - center_x;
-								vec_y = mid_y - center_y;
-
-								ALGORITHM_API::NormalVector(vec_x, vec_y, vec_x, vec_y);
-								vec_x *= r;
-								vec_y *= r;
-
-								// 求圆弧中点绝对坐标
-								mid_x = center_x + vec_x;
-								mid_y = center_y + vec_y;
-
-								// 添加圆弧三个点
-								ShapePoint* pStart = new ShapePoint(cur_point.x, cur_point.y);
-								ShapePoint* pMid = new ShapePoint(mid_x, mid_y);
-								ShapePoint* pEnd = new ShapePoint(end_pnt.x, end_pnt.y);
-
-								pStart->m_FigureType = pMid->m_FigureType = pEnd->m_FigureType = FigureType_Arc;
-
-
-								pComplex->AddShapePoint(pStart);
-								pComplex->AddShapePoint(pMid);
-								pComplex->AddShapePoint(pEnd);
-
-								//index++;
-							}
-						}
-						else
-						{
-							PointInfo prev_point = tmpnewpoint[index-1];
-
-							if (cur_point.sign == 0)	// 直线直接添加
-							{
-								ShapePoint* pPnt = new ShapePoint(cur_point.x, cur_point.y);
-
-								pPnt->m_FigureType = FigureType_PolyLine;
-								pComplex->AddShapePoint(pPnt);
-							}
-							else if (cur_point.sign == 1 || cur_point.sign == 3)	// 圆弧起点 跟圆弧终点一起算，添加一个圆弧
-							{
-								float center_x, center_y, r,sign ;
-								float mid_x, mid_y, vec_x, vec_y;
-								PointInfo end_pnt = tmpnewpoint[index+1];
-
-								// 求圆心
-								r = end_pnt.r;
-								sign = end_pnt.dir;	// 圆弧方向
-								ALGORITHM_API::GetCircleCenter(cur_point.x, end_pnt.x, cur_point.y, end_pnt.y, r, sign, center_x, center_y);
-
-								// 求弦中点绝对坐标
-								mid_x = (end_pnt.x - cur_point.x)/2.0 + cur_point.x ;
-								mid_y = (end_pnt.y - cur_point.y)/2.0 + cur_point.y ;
-
-								vec_x = mid_x - center_x;
-								vec_y = mid_y - center_y;
-
-								ALGORITHM_API::NormalVector(vec_x, vec_y, vec_x, vec_y);
-								vec_x *= r;
-								vec_y *= r;
-
-								// 求圆弧中点绝对坐标
-								mid_x = center_x + vec_x;
-								mid_y = center_y + vec_y;
-
-								// 添加圆弧三个点
-								ShapePoint* pStart = new ShapePoint(cur_point.x, cur_point.y);
-								ShapePoint* pMid = new ShapePoint(mid_x, mid_y);
-								ShapePoint* pEnd = new ShapePoint(end_pnt.x, end_pnt.y);
-
-								if (prev_point.sign == 0 || prev_point.sign == 2)	// 前一点为直线或者圆弧终点，说明前一段是直线，当前点的图形图形设为直线
-								{
-									pStart->m_FigureType = FigureType_PolyLine;
-									pMid->m_FigureType = pEnd->m_FigureType = FigureType_Arc;
-								}
-								else
-								{
-									pStart->m_FigureType = pMid->m_FigureType = pEnd->m_FigureType = FigureType_Arc;
-								}
-
-								if (pStart->IsCloseTo(pComplex->GetTailShapePoint()) == FALSE)	// 不与最后一点重合，才添加第一点
-								{
-									pComplex->AddShapePoint(pStart);
-								}
-
-								pComplex->AddShapePoint(pMid);
-								pComplex->AddShapePoint(pEnd);
-							}
-						}
-					}
-
-					// 复合图形已构造完毕，写入dxf中
-					pComplex->CalComplexFigureList();
-
-
-					// 开始画图形
-
-
-
-					int nFigCount = pComplex->m_ComplexFigureList.size();
-					for (int i_fig = 0; i_fig < nFigCount; i_fig++)
-					{
-						Figure* pFig = pComplex->m_ComplexFigureList.at(i_fig);
-
-						if (pFig->m_FigureType == FigureType_PolyLine)
-						{
-							// 直线
-							// 暂时使用画线段的方式，以后采用画折线的方式
-
-							int nPntCount = pFig->GetShapePointNum();
-							for (int i_pnt = 0; i_pnt < nPntCount-1; i_pnt++)
-							{
-								ShapePoint* pFirst = pFig->GetShapePoint(i_pnt);
-								ShapePoint* pNext = pFig->GetShapePoint(i_pnt+1);
-
-								double real_start_x = pCpn->m_x + pFirst->m_x;
-								double real_start_y = pCpn->m_y + pFirst->m_y;
-								double real_end_x = pCpn->m_x + pNext->m_x;
-								double real_end_y = pCpn->m_y + pNext->m_y;
-
-								string tmp_s;
-								stringstream ss;
-
-								ss << real_start_x << "," << real_start_y << ";" ;
-
-								tmp_s = ss.str();
-
-
-								// 第一个点要落下
-								if (i_fig == 0 && i_pnt == 0)
-								{
-									// 去到起点
-									plt_file << "PA" << tmp_s << endl;
-
-									plt_file << "PD;"<< endl;
-								}
-
-
-								ss.clear();
-								ss.str("");
-
-								// 去到终点
-								ss << real_end_x << "," << real_end_y << ";" ;
-
-								tmp_s = ss.str();
-
-								plt_file << "PA" << tmp_s << endl;
-
-								// 最后一个点要抬起
-								if (i_fig == nFigCount-1 && i_pnt == nPntCount-2)
-								{
-
-									plt_file << "PU;"<< endl;
-								}
-
-							}
-						}
-					}
-				}
-			}
-
-			//  关闭文件
-			plt_file.close();
-
-		}
-	}
-	catch(CException* e)
-	{
-		TCHAR   szError[1024];   
-		e->GetErrorMessage(szError,1024);   //  e.GetErrorMessage(szError,1024); 
-		::AfxMessageBox(szError); 
-	}
-
-#endif
-	
 
 	return true;
 }
