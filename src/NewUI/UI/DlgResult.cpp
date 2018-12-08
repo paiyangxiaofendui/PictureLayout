@@ -622,7 +622,9 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 
 		DrawMachiningInfo(g, rcComponent, fScale, &theComponent);
 
+		
 		DrawDetail(g, rcComponent, fScale, &theComponent);
+		
 
 	}
 
@@ -850,7 +852,11 @@ void CDlgResult::DrawDetail(Graphics& g, CRect rcComponent, float fScale, Compon
 		rfDetail = rfTotalText;
 		rfDetail.Offset(rfMeasureOrder.Width, 0);
 		rfDetail.Width -= rfMeasureOrder.Width;
-		g.DrawString(AnsiToUnicode(strDetail).c_str(), -1, &font11, rfDetail, &sf, &brushBlack);
+		
+		if (pComponent->m_IndexInSameCpn == 0)
+		{
+			g.DrawString(AnsiToUnicode(strDetail).c_str(), -1, &font11, rfDetail, &sf, &brushBlack);
+		}
 	}
 	else//板件垂直于原板板件
 	{
@@ -880,7 +886,11 @@ void CDlgResult::DrawDetail(Graphics& g, CRect rcComponent, float fScale, Compon
 		
 
 		g.SetSmoothingMode(SmoothingModeHighQuality);
-		g.DrawString(AnsiToUnicode(strDetail).c_str(), -1, &font11, rfStr, &sf, &brushBlack);
+
+		if (pComponent->m_IndexInSameCpn == 0)
+		{
+			g.DrawString(AnsiToUnicode(strDetail).c_str(), -1, &font11, rfStr, &sf, &brushBlack);
+		}
 
 		g.ResetTransform();
 	}

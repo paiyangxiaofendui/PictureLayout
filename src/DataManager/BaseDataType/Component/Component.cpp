@@ -19,6 +19,7 @@ Component::Component(void)
 {
 	m_CpnID = 0;				
 	m_NumberInPanel = 0;	
+	m_IndexInSameCpn = 0;
 	m_BarCode = "";			
 	m_strCabinetName = "";	
 	m_strComponentName = "";	

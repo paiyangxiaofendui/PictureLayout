@@ -134,6 +134,8 @@ void ConvertInputInfoToComponentList(vector<ComponentInputItem>& vComponentInput
 		for(int j = 0; j < theInputItem.m_nCount; j++)
 		{
 			Component *pCpn = ConvertOneInputInfoToOneComponent(theInputItem);
+			
+			pCpn->m_IndexInSameCpn = j;		// °å¼þÐòºÅ
 			componentList.push_back(pCpn);
 		}
 	}

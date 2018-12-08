@@ -38,6 +38,7 @@ public:
 public:
 	int			m_CpnID;					// 板件ID	唯一标识， 为了解决小板切多次问题
 	int			m_NumberInPanel;			// 板内序号 第几块排的小板
+	int			m_IndexInSameCpn;			// 同一块小板中的序号，只有第一块显示，其他不显示
 	CString 	m_BarCode;					// 条码
 	CString     m_strCabinetName;			// 柜体名称
 	CString     m_strComponentName;			// 板件名称
