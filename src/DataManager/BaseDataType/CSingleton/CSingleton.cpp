@@ -146,14 +146,14 @@ int CSingleton::New_Layout(int Method, int CutStyle, int Org)
 
 		pSolution->m_ComponentList = theComponentList;				// Ð¡°å
 
-// 		if (Method == 0)
-// 		{
-// 			pSolution->LayoutOptimization_RandomSortCut(CutStyle, Org);
-// 		}
-// 		else
-// 		{
+		if (Method == 0)
+		{
+			pSolution->New_LayoutOptimization_LowestOutline(CutStyle, Org);
+		}
+		else
+		{
 			pSolution->New_LayoutOptimization_MinWaste(CutStyle, Org);					// ÓÅ»¯
-//		}
+		}
 
 		pSolution->FixPanelSize();
 		m_CurrentSolutionList.push_back(pSolution);

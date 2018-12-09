@@ -40,6 +40,11 @@ public:
 	//int LayoutOptimization(void);						// 排样优化	长度优先排序 + 最低轮廓线 + 随机横竖切割 
 	int LayoutOptimization_RandomSortCut(int CutStyle, int Org);			// 排样优化	随机排序 + 最低轮廓线 + 随机横竖切割 
 
+
+public:
+	int New_LayoutOptimization_LowestOutline(int CutStyle, int Org);				// 排样优化	最低轮廓线
+
+
 public:
 	int LayoutOptimization_MinWaste(int CutStyle, int Org);				// 排样优化	余料剩余最小，长或宽最大利用优先
 	int New_LayoutOptimization_MinWaste(int CutStyle, int Org);				// 排样优化	余料剩余最小，长或宽最大利用优先

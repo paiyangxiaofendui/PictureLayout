@@ -16,6 +16,15 @@ class	Component;
 class AFX_EXT_CLASS Outline
 {
 public:
+	typedef enum
+	{
+		OutlineType_Horizon = 0,
+		OutlineType_Vertical
+
+	}OutlineType;
+
+
+public:
 	Outline();
 	virtual ~Outline();
 
@@ -39,16 +48,18 @@ public:
 
 public:
 	// 成员变量
+	int m_index;
+	OutlineType m_type;
 	float m_start_x;	// 轮廓线起点x坐标
-	float m_end_x;		// 轮廓线终点x坐标
 	float m_start_y;	// 轮廓线起点y坐标
+	float m_end_x;		// 轮廓线终点x坐标
 	float m_end_y;		// 轮廓线终点终点x
+
 
 	Component* m_pParent;	// 大板指针，属于哪块大板
 
 };
 
-/*typedef vector<Outline>	OutlineList;*/
 
 
 

@@ -16,6 +16,8 @@
 // ¹¹Ôì
 Outline::Outline()
 {
+	m_index = 0;
+	m_type = OutlineType_Vertical;
 	m_start_x = 0;
 	m_end_x = 0;
 	m_start_y = 0;
@@ -105,11 +107,10 @@ float Outline::GetWidth(void) const
 bool Outline::Containable(Component* pCpn)
 {
 	float cur_len = GetLength();
-	float cur_width = GetWidth();
 
 	if (pCpn != NULL)
 	{
-		if (cur_len >= pCpn->m_RealLength && cur_width >= pCpn->m_RealWidth)
+		if (cur_len >= pCpn->m_RealLength)
 		{
 			return true;
 		}

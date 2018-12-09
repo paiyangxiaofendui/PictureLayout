@@ -32,6 +32,247 @@ int ALGORITHM_API::SortComponentList_Random(vector<Component*>& ComponentList)
 
 
 
+bool ALGORITHM_API::New_MatchSuitableComponentNOutline(vector<Component*>& ComponentList,vector<Outline>& outline_list,Component*& pPerfectMatchComponent, bool &rotate_flag,int  nCpnID, int &nOutlineID, BaseInfo& base_info)
+{
+
+	bool bMatchFlag = false;
+	Outline best_line;
+	float prev_height = 0;
+	bool bRotateFlag = false;
+
+match_loop:
+
+
+	// 选出最优轮廓线
+	if (New_FindBestOutLine(outline_list, best_line, base_info.m_LayoutOrg) == true)
+	{
+		nOutlineID = best_line.m_index;
+		int i_cpn , nLeftCpnSize = ComponentList.size();
+		Component* pSuitableCpn = NULL;
+
+		for (i_cpn = 0; i_cpn < nLeftCpnSize; i_cpn++)
+		{
+			Component* pCpn = ComponentList.at(i_cpn);
+
+			
+			// 可旋转比较两次，取高度较低的一次
+
+			if (best_line.Containable(pCpn) == true)
+			{
+				if(bMatchFlag == false)
+				{
+					//第一次选中
+					prev_height = pCpn->m_RealWidth;
+
+					pPerfectMatchComponent = pCpn;
+					bRotateFlag = false;
+					rotate_flag = bRotateFlag;
+					bMatchFlag = true;
+				}
+				else
+				{
+					float new_height = pCpn->m_RealWidth;
+
+					// 遇到更匹配的
+					if (new_height < prev_height )
+					{
+						prev_height = pCpn->m_RealWidth;
+
+						pPerfectMatchComponent = pCpn;
+						bRotateFlag = false;
+						rotate_flag = bRotateFlag;
+						bMatchFlag = true;
+
+					}
+				}
+			}
+
+			if (pCpn->IsRotatable() == true)	// 匹配时，为减少计算量和数据失真，不真正旋转，只比较数值，排样时才真正旋转
+			{
+				Component tmp_cpn;
+				tmp_cpn.m_RealLength = pCpn->m_RealWidth;
+				tmp_cpn.m_RealWidth =  pCpn->m_RealLength;
+
+				if (best_line.Containable(&tmp_cpn) == true)
+				{
+					if(bMatchFlag == false)
+					{
+						//第一次选中
+						prev_height = pCpn->m_RealWidth;
+
+						pPerfectMatchComponent = pCpn;
+						bRotateFlag = true;
+						rotate_flag = bRotateFlag;
+						bMatchFlag = true;
+
+
+					}
+					else
+					{
+						
+						float new_height = tmp_cpn.m_RealWidth;
+
+						// 遇到更匹配的
+ 						if (new_height < prev_height )
+ 						{
+							int r = 1/*rand() % 2*/;
+
+							if (r)
+							{
+								prev_height = tmp_cpn.m_RealWidth;
+
+								pPerfectMatchComponent = pCpn;
+								bRotateFlag = true;
+								rotate_flag = bRotateFlag;
+								bMatchFlag = true;
+							}
+
+
+						}
+					}
+				}
+			}
+
+
+			// 已找到
+			if (bMatchFlag == true)
+			{
+// 				int r = rand() % 2;
+// 
+// 				if (r)
+// 				{
+					break;
+
+//				}
+			}
+
+		}
+
+
+		// 此时还未找到匹配的最低轮廓线，说明最低轮廓线已经无法使用，把最低轮廓线链跟他最近的一条轮廓线合并
+		if (bMatchFlag == false)
+		{
+			vector<Outline> RealOutlineList;
+
+			New_GetRealOutlineList(outline_list, RealOutlineList);
+
+			vector<Outline>::iterator it =  std::find(RealOutlineList.begin(), RealOutlineList.end(), best_line) ;
+
+			if (it == RealOutlineList.begin())
+			{
+				// 头 跟后一条比较
+				int cur_id = best_line.m_index;
+				int next_id = best_line.m_index + 2;
+				
+
+				Outline& cur_real_line = outline_list.at(cur_id);
+				Outline& next_real_line = outline_list.at(next_id);
+
+				// 合并
+				cur_real_line.m_start_y = next_real_line.m_start_y;
+				cur_real_line.m_end_x = next_real_line.m_end_x;
+				cur_real_line.m_end_y = next_real_line.m_end_y;
+
+				// 删除
+				vector<Outline>::iterator start_it	= outline_list.begin() + cur_real_line.m_index;
+				vector<Outline>::iterator end_it	= outline_list.begin() + cur_real_line.m_index + 2;
+				outline_list.erase(start_it+1, end_it+1);
+
+				ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+
+
+			}
+			else if (it == RealOutlineList.begin() + RealOutlineList.size()-1)
+			{
+				// 尾 跟前一条比较
+				int cur_id = best_line.m_index;
+				int prev_id = best_line.m_index - 2;
+
+
+				Outline& cur_real_line = outline_list.at(cur_id);
+				Outline& prev_real_line = outline_list.at(prev_id);
+
+				// 合并
+				cur_real_line.m_end_y = prev_real_line.m_start_y;
+				cur_real_line.m_start_x = prev_real_line.m_start_x;
+				cur_real_line.m_start_y = prev_real_line.m_start_y;
+
+				// 删除
+				vector<Outline>::iterator start_it	= outline_list.begin() + cur_real_line.m_index - 2;
+				vector<Outline>::iterator end_it	= outline_list.begin() + cur_real_line.m_index ;
+				outline_list.erase(start_it, end_it);
+				ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+
+
+			}
+			else if (it == RealOutlineList.end())
+			{
+				// 出错，返回
+				return false;
+			}
+			else
+			{
+				// 中间，前后比较
+
+				int cur_id = best_line.m_index;
+				int prev_id = best_line.m_index - 2;
+				int next_id = best_line.m_index + 2;
+
+				Outline& cur_real_line = outline_list.at(cur_id);
+				Outline& prev_real_line = outline_list.at(prev_id);
+				Outline& next_real_line = outline_list.at(next_id);
+
+				if (prev_real_line.m_start_y < next_real_line.m_start_y)
+				{
+					// 合并
+					cur_real_line.m_end_y = prev_real_line.m_start_y;
+					cur_real_line.m_start_x = prev_real_line.m_start_x;
+					cur_real_line.m_start_y = prev_real_line.m_start_y;
+
+					// 删除
+					vector<Outline>::iterator start_it	= outline_list.begin() + cur_real_line.m_index - 2;
+					vector<Outline>::iterator end_it	= outline_list.begin() + cur_real_line.m_index ;
+					outline_list.erase(start_it, end_it);
+
+					ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+				}
+				else
+				{
+
+					// 合并
+					cur_real_line.m_start_y = next_real_line.m_start_y;
+					cur_real_line.m_end_x = next_real_line.m_end_x;
+					cur_real_line.m_end_y = next_real_line.m_end_y;
+
+					// 删除
+					vector<Outline>::iterator start_it	= outline_list.begin() + cur_real_line.m_index;
+					vector<Outline>::iterator end_it	= outline_list.begin() + cur_real_line.m_index + 2;
+					outline_list.erase(start_it+1, end_it+1);
+
+					ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+				}
+
+
+			}
+		
+
+			// 重新查找
+			goto match_loop;
+		}
+
+	}
+	else
+	{
+		return false;
+	}
+
+	return bMatchFlag;
+}
+
 
 
 /*--------------------------------------------------------------------------------------*/
@@ -156,6 +397,128 @@ bool ALGORITHM_API::CompareOutlineGreater(const Outline& first, const Outline& s
 }
 
 
+void ALGORITHM_API::New_UpdateOutlineListIndex(vector<Outline>& OutlineList)
+{
+	for (int i = 0 ; i < OutlineList.size(); i++)
+	{
+		Outline& ln = OutlineList.at(i);
+		ln.m_index = i;
+	}
+}
+
+/*--------------------------------------------------------------------------------------*/
+//	purpose:
+//		初始化轮廓线链表
+//	
+//	param:
+//		
+//
+//	return:
+//		0 -- 成功
+/*--------------------------------------------------------------------------------------*/
+int ALGORITHM_API::New_BuildOutlineList(Panel* pParent, vector<Outline>& OutlineList, int Org)
+{
+
+	// 清空轮廓线链表
+	OutlineList.clear();
+
+	float start_x, start_y, end_x, end_y;
+	Outline l1, l2, l3;
+
+	switch(Org)
+	{
+	case LayoutOrg_LeftBottom:
+	case LayoutOrg_RightBottom:
+
+		// 左边垂直线
+
+		start_x = pParent->m_x;
+		start_y = pParent->m_y + pParent->m_RealWidth;
+		end_x	= pParent->m_x;
+		end_y	= pParent->m_y;
+
+
+		l1.SetOutline(start_x, end_x , start_y, end_y, pParent);
+		l1.m_type = Outline::OutlineType_Vertical;
+
+		// 中间水平线
+
+		start_x = pParent->m_x;
+		start_y = pParent->m_y ;
+		end_x	= pParent->m_x + pParent->m_RealLength;
+		end_y	= pParent->m_y;
+
+
+		l2.SetOutline(start_x, end_x , start_y, end_y, pParent);
+		l2.m_type = Outline::OutlineType_Horizon;
+
+		// 右边垂直线
+
+
+		start_x = pParent->m_x + pParent->m_RealLength;
+		start_y = pParent->m_y ;
+		end_x	= pParent->m_x + pParent->m_RealLength;
+		end_y	= pParent->m_y + pParent->m_RealWidth;
+
+
+		l3.SetOutline(start_x, end_x , start_y, end_y, pParent);
+		l3.m_type = Outline::OutlineType_Vertical;
+
+		break;
+	case LayoutOrg_LeftTop:
+	case LayoutOrg_RightTop:
+
+		start_x = pParent->m_x;
+		start_y = pParent->m_y ;
+		end_x	= pParent->m_x;
+		end_y	= pParent->m_y + pParent->m_RealWidth;
+
+
+		l1.SetOutline(start_x, end_x , start_y, end_y, pParent);
+		l1.m_type = Outline::OutlineType_Vertical;
+
+		// 中间水平线
+
+		start_x = pParent->m_x;
+		start_y = pParent->m_y + pParent->m_RealWidth;
+		end_x	= pParent->m_x + pParent->m_RealLength;
+		end_y	= pParent->m_y + pParent->m_RealWidth;
+
+
+		l2.SetOutline(start_x, end_x , start_y, end_y, pParent);
+		l2.m_type = Outline::OutlineType_Horizon;
+
+		// 右边垂直线
+
+
+		start_x = pParent->m_x + pParent->m_RealLength;
+		start_y = pParent->m_y + pParent->m_RealWidth;
+		end_x	= pParent->m_x + pParent->m_RealLength;
+		end_y	= pParent->m_y ;
+
+
+		l3.SetOutline(start_x, end_x , start_y, end_y, pParent);
+		l3.m_type = Outline::OutlineType_Vertical;
+
+
+		break;
+
+
+	}
+
+	
+
+
+
+	OutlineList.push_back(l1);
+	OutlineList.push_back(l2);
+	OutlineList.push_back(l3);
+	New_UpdateOutlineListIndex(OutlineList);
+
+	return true;
+}
+
+
 /*--------------------------------------------------------------------------------------*/
 //	purpose:
 //		初始化轮廓线链表
@@ -232,6 +595,170 @@ int ALGORITHM_API::BuildOutlineList(Panel* pParent, vector<Outline>& OutlineList
 
 
 	return 0;
+}
+
+
+void ALGORITHM_API::New_GetRealOutlineList(vector<Outline>& OutlineList, vector<Outline>& RealOutlineList)
+{
+	RealOutlineList.clear();
+
+	for	(int i = 0; i < OutlineList.size(); i++)
+	{
+		Outline& tmp_ln = OutlineList.at(i);
+
+		if (tmp_ln.m_type == Outline::OutlineType_Horizon)
+		{
+			RealOutlineList.push_back(tmp_ln);
+		}
+
+	}
+}
+
+// 找到最适合的轮廓线
+bool ALGORITHM_API::New_FindBestOutLine(vector<Outline>& outline_list, Outline& ln, int Org)
+{
+	vector<Outline> RealOutlineList;
+
+	New_GetRealOutlineList(outline_list, RealOutlineList);
+
+
+	// 从小到大排序
+	sort(RealOutlineList.begin(), RealOutlineList.end(), CompareOutlineGreater);
+
+	if (RealOutlineList.size() > 0)
+	{
+
+		switch(Org)
+		{
+		case LayoutOrg_LeftBottom:		// 左下角
+
+			// 放置小板
+
+			ln = RealOutlineList.at(0);
+
+			break;
+		case LayoutOrg_LeftTop:			// 左上角
+			// 放置小板
+
+			ln = RealOutlineList.at(RealOutlineList.size()-1);
+
+			break;						
+		case LayoutOrg_RightBottom:		// 右下角
+
+
+			ln = RealOutlineList.at(0);
+
+			break;
+		case LayoutOrg_RightTop:		// 右上角
+			ln = RealOutlineList.at(RealOutlineList.size()-1);
+
+			break;
+		default:						// 默认左下角
+
+
+			ln = RealOutlineList.at(0);
+
+			break;
+
+		}
+
+		return true;
+	}
+
+
+	return false;
+}
+
+/*---------------------------------------*/
+//	函数说明：
+//
+//
+//
+//	参数：
+//
+//
+//
+//
+//	返回值:
+//
+//
+/*---------------------------------------*/
+int ALGORITHM_API::New_LayoutOnePanel_LowestOutline(Panel* pSrcPanel, BaseInfo& Info, vector<Component*>& SrcComponentList, int CutStyle, int Org)
+{
+	int nCpnID = 0;
+	int nOutlineID = 0;
+	vector<Outline> outline_list;
+
+	// 指针判断
+	if (pSrcPanel == NULL)
+	{
+		return -1;
+	}
+
+
+	// 建立轮廓线链表
+	New_BuildOutlineList(pSrcPanel, outline_list, Org);
+
+	// 不断排入小板
+
+
+	// 还有小板需要排样
+	while (SrcComponentList.size() > 0)
+	{
+		bool bMatchable = false;					// 匹配成功标志
+		bool bRotateFlag = false;					// 旋转标志
+		int nRecommendCutDir = CutDir_Horizon;		// 建议切割方式
+		Component* pPerfectMatchComponent = NULL;	// 最佳匹配的小板
+
+		
+
+
+		// 插入小板
+
+		// 更新轮廓线链表
+
+
+		bMatchable = New_MatchSuitableComponentNOutline( SrcComponentList,  outline_list,  pPerfectMatchComponent,  bRotateFlag,  nCpnID,  nOutlineID,  Info);
+
+		if (bMatchable == true)
+		{
+			Component* pPlaceCpn = pPerfectMatchComponent;		
+			Outline& SelectLine = outline_list.at(nOutlineID);
+			
+			
+			// 是否旋转
+			if (bRotateFlag == true)
+			{
+				pPlaceCpn->ClockwiseRotate90();
+			}
+
+
+			// 排样
+			ALGORITHM_API::New_KnifeOneOuline(outline_list, nOutlineID ,pSrcPanel,  pPerfectMatchComponent, Org, Info);
+
+			// 删除已排样的板件和余料
+			vector<Component*>::iterator it_cpn = find(SrcComponentList.begin(), SrcComponentList.end(), pPerfectMatchComponent);
+			SrcComponentList.erase(it_cpn);
+
+		}
+		else
+		{
+			if (SrcComponentList.size() > 0)
+				return 1;
+			else
+				return 0;	// 排完了
+		}
+	}
+
+	if (SrcComponentList.size() > 0)
+		return 1;
+	else
+		return 0;	// 排完了
+
+
+
+
+
 }
 
 
@@ -664,6 +1191,137 @@ int ALGORITHM_API::LayoutOnePanel_Greedy(Panel* pSrcPanel, BaseInfo& Info, vecto
 		return 1;
 	else
 		return 0;	// 排完了
+}
+
+
+
+bool  ALGORITHM_API::New_KnifeOneOuline(vector<Outline>& outline_list, int nOutlineID, Component* pParentNode, Component* pPlaceCpn,  int Org, BaseInfo& b_info)
+{
+	// 判断要切割的小板是否合法
+	if (pPlaceCpn->IsLegal() == false)
+	{
+		return false;
+	}
+
+
+	float start_x, start_y, end_x, end_y;
+	Outline& cur_line = outline_list.at(nOutlineID);
+	Outline new_ver_line, new_hor_line;
+	OutlineList::iterator insert_it;
+	OutlineList tmp_list;
+
+
+	switch(Org)
+	{
+	case LayoutOrg_LeftBottom:		// 左下角
+
+		// 放置小板
+		pPlaceCpn->m_x = cur_line.m_start_x;
+		pPlaceCpn->m_y = cur_line.m_start_y;
+
+		// 插入一条垂直线和一条新的
+
+		start_x = cur_line.m_start_x + pPlaceCpn->m_RealLength + b_info.m_x_space;
+		start_y = cur_line.m_start_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+		end_x	= start_x;
+		end_y	= cur_line.m_start_y;
+
+		new_ver_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_ver_line.m_type = Outline::OutlineType_Vertical;
+
+		start_x = cur_line.m_start_x + pPlaceCpn->m_RealLength + b_info.m_x_space;
+		start_y = cur_line.m_start_y;
+		end_x	= cur_line.m_end_x;
+		end_y	= cur_line.m_end_y;
+
+		new_hor_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_hor_line.m_type = Outline::OutlineType_Horizon;
+		
+		tmp_list.push_back(new_ver_line);
+		tmp_list.push_back(new_hor_line);
+
+		// 修改当前轮廓线坐标
+
+		start_x = cur_line.m_start_x ;
+		start_y = cur_line.m_start_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+		end_x	= new_ver_line.m_start_x;
+		end_y	= new_ver_line.m_start_y;
+		cur_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+
+		insert_it = outline_list.begin()+nOutlineID+1;
+
+		outline_list.insert(insert_it, tmp_list.begin(), tmp_list.end());
+		ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+		pParentNode->m_type = NodeType_CombinePanel;
+		pParentNode->AddChild(pPlaceCpn);
+
+
+		break;
+	case LayoutOrg_LeftTop:			// 左上角
+		// 放置小板
+		pPlaceCpn->m_x = cur_line.m_start_x;
+		pPlaceCpn->m_y = cur_line.m_start_y - pPlaceCpn->m_RealWidth;
+
+		// 插入一条垂直线和一条新的
+
+		start_x = cur_line.m_start_x + pPlaceCpn->m_RealLength + b_info.m_x_space;
+		start_y = cur_line.m_start_y - pPlaceCpn->m_RealWidth - b_info.m_y_space;
+		end_x	= start_x;
+		end_y	= cur_line.m_start_y;
+
+		new_ver_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_ver_line.m_type = Outline::OutlineType_Vertical;
+
+		start_x = cur_line.m_start_x + pPlaceCpn->m_RealLength + b_info.m_x_space;
+		start_y = cur_line.m_start_y;
+		end_x	= cur_line.m_end_x;
+		end_y	= cur_line.m_end_y;
+
+		new_hor_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_hor_line.m_type = Outline::OutlineType_Horizon;
+
+		tmp_list.push_back(new_ver_line);
+		tmp_list.push_back(new_hor_line);
+
+		// 修改当前轮廓线坐标
+
+		start_x = cur_line.m_start_x ;
+		start_y = cur_line.m_start_y - pPlaceCpn->m_RealWidth - b_info.m_y_space;
+		end_x	= new_ver_line.m_start_x;
+		end_y	= new_ver_line.m_start_y;
+		cur_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+
+		insert_it = outline_list.begin()+nOutlineID+1;
+
+		outline_list.insert(insert_it, tmp_list.begin(), tmp_list.end());
+		ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+		pParentNode->m_type = NodeType_CombinePanel;
+		pParentNode->AddChild(pPlaceCpn);
+		
+
+
+		break;						
+	case LayoutOrg_RightBottom:		// 右下角
+
+	
+
+		break;
+	case LayoutOrg_RightTop:		// 右上角
+
+		
+
+		break;
+	default:						// 默认左下角
+
+		
+
+		break;
+
+	}
+
+	return true;
 }
 
 

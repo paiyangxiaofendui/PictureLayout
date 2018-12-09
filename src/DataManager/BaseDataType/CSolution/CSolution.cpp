@@ -788,6 +788,110 @@ bool CompareOutlineLess(const Outline& first, const Outline& second)
 }
 
 
+// 最低轮廓线
+int CSolution::New_LayoutOptimization_LowestOutline(int CutStyle, int Org)
+{
+	bool bUseRmd = false;
+	Panel* pPanel;
+
+	srand((unsigned)time(0)); 
+
+	// 检查小板是否超出范围
+	CheckComponentList();
+
+	// 排序 长度优先 面积次之
+	SortComponentList_LengthFirst();
+
+	if (m_ComponentList.size() > 0)
+	{
+		// 新建大板
+		pPanel = new Panel;
+
+		// 判断有无余料可利用，有的话直接调用，没有则新建大板
+		CSingleton* pSingelton = CSingleton::GetSingleton();
+	
+		// Panel的信息
+		pPanel->m_PanelType		= PanelType_RawMaterial;		// 原料大板
+		pPanel->m_OrgLen		= m_BaseInfo.m_PanelLength;		// 设置大板原始长
+		pPanel->m_OrgWidth		=  m_BaseInfo.m_PanelWidth;		// 设置大板原始宽
+
+		bUseRmd = false;
+		
+		// Panel的信息
+		pPanel->m_OriginX		= m_BaseInfo.m_left_offset;								// 设置原点x 相对原始大板左下角的坐标
+		pPanel->m_OriginY		= m_BaseInfo.m_bottom_offset;								// 设置原点y 相对原始大板左下角的坐标
+
+		// Component的信息
+		pPanel->m_x				= m_BaseInfo.m_left_offset;														// 设置原点x 相对原始大板左下角的坐标
+		pPanel->m_y				= m_BaseInfo.m_bottom_offset;													// 设置原点y 相对原始大板左下角的坐标
+		pPanel->m_RealLength	= pPanel->m_OrgLen	 - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);		// 设置大板真实长 需减去左右修边
+		pPanel->m_RealWidth		= pPanel->m_OrgWidth - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);		// 设置大板真实宽 需减去上下修边
+		pPanel->m_Material		= m_strMaterial;																// 设置大板材质
+		pPanel->m_Thickness		= m_fThickness;																	// 设置大板厚度
+		pPanel->m_type			= NodeType_Remainder;															// 设置大板节点类型
+
+		m_PanelList.push_back(pPanel);
+	}
+
+	// 开始排样 有小板需要排，
+	while (m_ComponentList.size() > 0)
+	{
+		// 排版优化
+		ALGORITHM_API::New_LayoutOnePanel_LowestOutline(pPanel, m_BaseInfo, m_ComponentList, CutStyle, Org);
+
+
+		// 对板件编号
+		vector<Component*> CpnList;
+		pPanel->GetAllNeededComponent_Sorted(CpnList);
+		int nCpnCount = CpnList.size();
+
+		for (int i_cpn = 0; i_cpn < nCpnCount; i_cpn++)
+		{
+			Component* pCpn = CpnList.at(i_cpn);
+
+			pCpn->m_NumberInPanel = nCpnCount - i_cpn;
+
+		}
+
+
+
+		if (m_ComponentList.size() > 0)
+		{
+			// 新建大板
+			pPanel = new Panel;
+
+			// 判断有无余料可利用，有的话直接调用，没有则新建大板
+			CSingleton* pSingelton = CSingleton::GetSingleton();
+			
+			// Panel的信息
+			pPanel->m_PanelType		= PanelType_RawMaterial;		// 原料大板
+			pPanel->m_OrgLen		= m_BaseInfo.m_PanelLength;		// 设置大板原始长
+			pPanel->m_OrgWidth		=  m_BaseInfo.m_PanelWidth;		// 设置大板原始宽
+
+			bUseRmd = false;
+			
+
+			// Panel的信息
+			pPanel->m_OriginX		= m_BaseInfo.m_left_offset;									// 设置原点x 相对原始大板左下角的坐标
+			pPanel->m_OriginY		= m_BaseInfo.m_bottom_offset;								// 设置原点y 相对原始大板左下角的坐标
+
+			// Component的信息
+			pPanel->m_x				= m_BaseInfo.m_left_offset;														// 设置原点x 相对原始大板左下角的坐标
+			pPanel->m_y				= m_BaseInfo.m_bottom_offset;													// 设置原点y 相对原始大板左下角的坐标
+			pPanel->m_RealLength	= pPanel->m_OrgLen	 - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);;		// 设置大板真实长 需减去左右修边
+			pPanel->m_RealWidth		= pPanel->m_OrgWidth - (m_BaseInfo.m_left_offset+m_BaseInfo.m_right_offset);;		// 设置大板真实宽 需减去上下修边
+			pPanel->m_Material		= m_strMaterial;											// 设置大板材质
+			pPanel->m_Thickness		= m_fThickness;												// 设置大板厚度
+			pPanel->m_type			= NodeType_Remainder;										// 设置大板节点类型
+
+			m_PanelList.push_back(pPanel);
+		}
+	}
+
+	return 0;
+}
+
+
 
 int CSolution::New_LayoutOptimization_MinWaste(int CutStyle, int Org)
 {
