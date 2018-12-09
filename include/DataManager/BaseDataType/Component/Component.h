@@ -14,6 +14,19 @@
 #include "../CommonData/CommonData.h"
 #include "../CSingleton/CSingleton.h"
 
+
+enum
+{
+	Length_First,
+	Width_First,
+	Area_First,
+	Special_1,
+	MaxSide_First
+};
+
+
+#define  Component_Sort_Priority		MaxSide_First
+
 // 小板信息
 class AFX_EXT_CLASS Component : public Node
 {
@@ -25,6 +38,7 @@ public:
 public:
 	int			m_CpnID;					// 板件ID	唯一标识， 为了解决小板切多次问题
 	int			m_NumberInPanel;			// 板内序号 第几块排的小板
+	int			m_IndexInSameCpn;			// 同一块小板中的
 	CString 	m_BarCode;					// 条码
 	CString     m_strCabinetName;			// 柜体名称
 	CString     m_strComponentName;			// 板件名称

@@ -6,6 +6,10 @@
 #include "../BaseDataType/Outline/Outline.h"
 
 
+
+
+typedef vector<Outline>	OutlineList;
+
 // 算法接口 提供多种材质优化排版、多快板优化排版、单块板优化排版、余料优化排版
 class AFX_EXT_CLASS ALGORITHM_API
 {
@@ -50,8 +54,26 @@ public:
 	static bool New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir,  int Org, BaseInfo& b_info);
 
 public:
+
+
+	// 最低轮廓线算法
+	static int New_LayoutOnePanel_LowestOutline(Panel* pSrcPanel, BaseInfo& base_info, vector<Component*>& SrcCpnList, int cut_style, int Org);
+
+	// 建立最低轮廓线链表
+	static int New_BuildOutlineList(Panel* pParent, vector<Outline>& outline_list, int Org);
+	static void New_UpdateOutlineListIndex(vector<Outline>& outline_list);
+	static bool New_FindBestOutLine(vector<Outline>& outline_list, Outline& ln, int Org);
+	static void New_GetRealOutlineList(vector<Outline>& outline_list, vector<Outline>& RealOutlineList);
+	static bool New_MatchSuitableComponentNOutline(vector<Component*>& ComponentList, vector<Outline>& outline_list,Component*& pPerfectMatchComponent, bool &rotate_flag,int  nCpnID, int &nOutlineID, BaseInfo& base_info);
+	static bool New_KnifeOneOuline(vector<Outline>& outline_list, int nOutlineID, Component* pParentNode , Component* pPlaceCpn,  int Org, BaseInfo& b_info);
+
+
+
 	// 最低轮廓线算法
 	static int LayoutOnePanel_LowestOutline(Panel* pSrcPanel, BaseInfo& base_info, vector<Component*>& SrcCpnList, int cut_style, int Org);
+
+
+
 
 	// 建立最低轮廓线链表
 	static int BuildOutlineList(Panel* pParent, vector<Outline>& OutlineList, vector<Outline>& LowestOutlineList);
