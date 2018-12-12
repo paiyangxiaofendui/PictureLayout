@@ -1304,18 +1304,138 @@ bool  ALGORITHM_API::New_KnifeOneOuline(vector<Outline>& outline_list, int nOutl
 
 		break;						
 	case LayoutOrg_RightBottom:		// 右下角
+		// 放置小板
+		pPlaceCpn->m_x = cur_line.m_end_x - pPlaceCpn->m_RealLength;
+		pPlaceCpn->m_y = cur_line.m_end_y;
 
+		// 插入一条垂直线和一条新的
+
+		start_x = cur_line.m_end_x - pPlaceCpn->m_RealLength - b_info.m_x_space;
+		start_y = cur_line.m_end_y ;
+		end_x	= start_x;
+		end_y	= cur_line.m_end_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+
+		new_ver_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_ver_line.m_type = Outline::OutlineType_Vertical;
+
+		start_x = cur_line.m_end_x - pPlaceCpn->m_RealLength - b_info.m_x_space;
+		start_y = cur_line.m_end_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+		end_x	= cur_line.m_end_x;
+		end_y	= cur_line.m_end_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+
+		new_hor_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_hor_line.m_type = Outline::OutlineType_Horizon;
+
+		tmp_list.push_back(new_ver_line);
+		tmp_list.push_back(new_hor_line);
+
+		// 修改当前轮廓线坐标
+
+		start_x = cur_line.m_start_x ;
+		start_y = cur_line.m_start_y ;
+		end_x	= new_ver_line.m_start_x;
+		end_y	= new_ver_line.m_start_y;
+		cur_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+
+		insert_it = outline_list.begin()+nOutlineID+1;
+
+		outline_list.insert(insert_it, tmp_list.begin(), tmp_list.end());
+		ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+		pParentNode->m_type = NodeType_CombinePanel;
+		pParentNode->AddChild(pPlaceCpn);
 	
 
 		break;
 	case LayoutOrg_RightTop:		// 右上角
+		// 放置小板
+		pPlaceCpn->m_x = cur_line.m_end_x - pPlaceCpn->m_RealLength;
+		pPlaceCpn->m_y = cur_line.m_end_y - pPlaceCpn->m_RealWidth;
+
+		// 插入一条垂直线和一条新的
+
+		start_x = cur_line.m_end_x - pPlaceCpn->m_RealLength - b_info.m_x_space;
+		start_y = cur_line.m_end_y;
+		end_x	= start_x;
+		end_y	= cur_line.m_start_y - pPlaceCpn->m_RealWidth - b_info.m_y_space;
+
+		new_ver_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_ver_line.m_type = Outline::OutlineType_Vertical;
+
+		start_x = cur_line.m_end_x - pPlaceCpn->m_RealLength - b_info.m_x_space;
+		start_y = cur_line.m_end_y - pPlaceCpn->m_RealWidth - b_info.m_y_space;
+		end_x	= cur_line.m_end_x;
+		end_y	= cur_line.m_end_y - pPlaceCpn->m_RealWidth - b_info.m_y_space;
+
+		new_hor_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_hor_line.m_type = Outline::OutlineType_Horizon;
+
+		tmp_list.push_back(new_ver_line);
+		tmp_list.push_back(new_hor_line);
+
+		// 修改当前轮廓线坐标
+
+		start_x = cur_line.m_start_x ;
+		start_y = cur_line.m_start_y;
+		end_x	= new_ver_line.m_start_x;
+		end_y	= new_ver_line.m_start_y;
+		cur_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+
+		insert_it = outline_list.begin()+nOutlineID+1;
+
+		outline_list.insert(insert_it, tmp_list.begin(), tmp_list.end());
+		ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+		pParentNode->m_type = NodeType_CombinePanel;
+		pParentNode->AddChild(pPlaceCpn);
 
 		
 
 		break;
 	default:						// 默认左下角
 
-		
+
+		// 放置小板
+		pPlaceCpn->m_x = cur_line.m_start_x;
+		pPlaceCpn->m_y = cur_line.m_start_y;
+
+		// 插入一条垂直线和一条新的
+
+		start_x = cur_line.m_start_x + pPlaceCpn->m_RealLength + b_info.m_x_space;
+		start_y = cur_line.m_start_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+		end_x	= start_x;
+		end_y	= cur_line.m_start_y;
+
+		new_ver_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_ver_line.m_type = Outline::OutlineType_Vertical;
+
+		start_x = cur_line.m_start_x + pPlaceCpn->m_RealLength + b_info.m_x_space;
+		start_y = cur_line.m_start_y;
+		end_x	= cur_line.m_end_x;
+		end_y	= cur_line.m_end_y;
+
+		new_hor_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+		new_hor_line.m_type = Outline::OutlineType_Horizon;
+
+		tmp_list.push_back(new_ver_line);
+		tmp_list.push_back(new_hor_line);
+
+		// 修改当前轮廓线坐标
+
+		start_x = cur_line.m_start_x ;
+		start_y = cur_line.m_start_y + pPlaceCpn->m_RealWidth + b_info.m_y_space;
+		end_x	= new_ver_line.m_start_x;
+		end_y	= new_ver_line.m_start_y;
+		cur_line.SetOutline(start_x, end_x, start_y, end_y, NULL);
+
+		insert_it = outline_list.begin()+nOutlineID+1;
+
+		outline_list.insert(insert_it, tmp_list.begin(), tmp_list.end());
+		ALGORITHM_API::New_UpdateOutlineListIndex(outline_list);
+
+		pParentNode->m_type = NodeType_CombinePanel;
+		pParentNode->AddChild(pPlaceCpn);
+
 
 		break;
 
