@@ -138,9 +138,9 @@ void qr_code(std::string _src_str, std::string _dst_bmp_path)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	string str = "Ô¬è÷²º123yzb";
+	string str = "´òÓ¡ÅúºÅ¶şÎ¬Âë²âÊÔ123abc";
 
-	qr_code(str, "Ô¬è÷²º.bmp");
+	qr_code(str, "test.bmp");
 
 // 	QRcode*			pQRC;
 // 	const char* pSrc = str.c_str();

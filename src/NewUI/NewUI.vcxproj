@@ -140,6 +140,7 @@
     <ClCompile Include="UI\ListCtrlMaterial.cpp" />
     <ClCompile Include="UI\ListTotalResult.cpp" />
     <ClCompile Include="UI\NewUIDlg.cpp" />
+    <ClCompile Include="UI\OptimizeDlg.cpp" />
     <ClCompile Include="UI\SkinHeaderCtrl.cpp" />
     <ClCompile Include="UI\UICommon\DialogChildBase.cpp" />
     <ClCompile Include="UI\UICommon\MemDC.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="UI\ListCtrlMaterial.h" />
     <ClInclude Include="UI\ListTotalResult.h" />
     <ClInclude Include="UI\NewUIDlg.h" />
+    <ClInclude Include="UI\OptimizeDlg.h" />
     <ClInclude Include="UI\SkinHeaderCtrl.h" />
     <ClInclude Include="UI\UICommon\DialogChildBase.h" />
     <ClInclude Include="UI\UICommon\MEMDC.H" />

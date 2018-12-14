@@ -171,6 +171,9 @@
     <ClCompile Include="UI\DlgWeiXin.cpp">
       <Filter>源文件\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\OptimizeDlg.cpp">
+      <Filter>源文件\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NewUI.h">
@@ -252,6 +255,9 @@
       <Filter>头文件\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\DlgWeiXin.h">
+      <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\OptimizeDlg.h">
       <Filter>头文件\UI</Filter>
     </ClInclude>
   </ItemGroup>
