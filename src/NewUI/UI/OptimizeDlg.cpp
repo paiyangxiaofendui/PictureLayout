@@ -1,4 +1,4 @@
-// DirSetDlg.cpp : implementation file
+ï»¿// DirSetDlg.cpp : implementation file
 //
 
 #include "stdafx.h"
@@ -11,7 +11,7 @@
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
 
 
-// Ã¿ÓÅ»¯Ò»ÂÖ·¢Ò»´Î½á¹û
+// æ¯ä¼˜åŒ–ä¸€è½®å‘ä¸€æ¬¡ç»“æœ
 #define WM_CALCULATE			WM_USER + 10086
 #define WM_UPDATE_PROGRESS_BAR	WM_USER + 10087
 #define WM_UPDATE_REMAIN_TIME	WM_USER + 10088
@@ -48,7 +48,7 @@ IMPLEMENT_DYNAMIC(OptimizeDlg, CDialogEx)
 OptimizeDlg::OptimizeDlg(CWnd* pParent /*=NULL*/)
 			: CDialogEx(OptimizeDlg::IDD, pParent)
 {
-	// Êı¾İ³õÊ¼»¯
+	// æ•°æ®åˆå§‹åŒ–
 	m_LastPanelNum = 0;
 	m_ThreadIsRunning = FALSE;
 	m_vComponentInputItem.clear();
@@ -81,9 +81,9 @@ BEGIN_MESSAGE_MAP(OptimizeDlg, CDialogEx)
 	ON_BN_CLICKED(IDCANCEL, &OptimizeDlg::OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_BTN_USE_NOW, &OptimizeDlg::OnBnClickedUseNow)
 
-	ON_MESSAGE(WM_CALCULATE, &OptimizeDlg::OnWM_CALCULATE)								//ÏìÓ¦
-	ON_MESSAGE(WM_UPDATE_PROGRESS_BAR, &OptimizeDlg::OnWM_WM_UPDATE_PROGRESS_BAR)		//ÏìÓ¦
-	ON_MESSAGE(WM_UPDATE_REMAIN_TIME, &OptimizeDlg::OnWM_WM_UPDATE_REMAIN_TIME)			//ÏìÓ¦
+	ON_MESSAGE(WM_CALCULATE, &OptimizeDlg::OnWM_CALCULATE)								//å“åº”
+	ON_MESSAGE(WM_UPDATE_PROGRESS_BAR, &OptimizeDlg::OnWM_WM_UPDATE_PROGRESS_BAR)		//å“åº”
+	ON_MESSAGE(WM_UPDATE_REMAIN_TIME, &OptimizeDlg::OnWM_WM_UPDATE_REMAIN_TIME)			//å“åº”
 	
 
 
@@ -110,16 +110,16 @@ void OptimizeDlg::OnBnClickedCancel()
 
 
 /*---------------------------------------*/
-//	º¯ÊıËµÃ÷£º
-//		µã»÷Ê¹ÓÃ£¬Í£Ö¹Ïß³Ì
+//	å‡½æ•°è¯´æ˜ï¼š
+//		ç‚¹å‡»ä½¿ç”¨ï¼Œåœæ­¢çº¿ç¨‹
 //
 //
-//	²ÎÊı£º
+//	å‚æ•°ï¼š
 //
 //
 //
 //
-//	·µ»ØÖµ:
+//	è¿”å›å€¼:
 //
 //
 /*---------------------------------------*/
@@ -128,12 +128,12 @@ void OptimizeDlg::OnBnClickedUseNow()
 	if (m_ThreadIsRunning == TRUE)
 	{
 		m_ThreadIsRunning = FALSE;
-		DWORD dw = WaitForSingleObject(m_hdthread, INFINITE);	// µÈ´ıÏß³Ì½áÊø
+		DWORD dw = WaitForSingleObject(m_hdthread, INFINITE);	// ç­‰å¾…çº¿ç¨‹ç»“æŸ
 		switch(dw)
 		{
 		case WAIT_OBJECT_0:	
 			// The process terminated.
-			// Ïß³ÌÍË³ö
+			// çº¿ç¨‹é€€å‡º
 			CloseHandle(m_hdthread);
 			CDialogEx::OnOK();
 			break;
@@ -141,14 +141,14 @@ void OptimizeDlg::OnBnClickedUseNow()
 		case WAIT_TIMEOUT:
 			// The process did not terminate within 5000 milliseconds.
 			CloseHandle(m_hdthread);
-			AfxMessageBox("ÓÅ»¯Ïß³Ì³¬Ê±½áÊø£¡");
+			AfxMessageBox("ä¼˜åŒ–çº¿ç¨‹è¶…æ—¶ç»“æŸï¼");
 			CDialogEx::OnOK();
 			break;
 
 		case WAIT_FAILED:
 			// Bad call to function (invalid handle?)
 			CloseHandle(m_hdthread);
-			AfxMessageBox("ÓÅ»¯Ïß³ÌÍË³öÎŞĞ§£¡");
+			AfxMessageBox("ä¼˜åŒ–çº¿ç¨‹é€€å‡ºæ— æ•ˆï¼");
 			CDialogEx::OnOK();
 			break;
 		}
@@ -160,12 +160,12 @@ void OptimizeDlg::OnBnClickedUseNow()
 
 }
 
-//´°¿Ú³õÊ¼»¯
+//çª—å£åˆå§‹åŒ–
 BOOL OptimizeDlg::OnInitDialog()					
 {
 	CDialogEx::OnInitDialog();
 
-	// ¿Ø¼ş³õÊ¼»¯
+	// æ§ä»¶åˆå§‹åŒ–
 	//CFont font;
 	//font.CreatePointFont(100, "Arial");
 
@@ -198,17 +198,17 @@ BOOL OptimizeDlg::OnInitDialog()
 	rcListCtrl.right+=5;
 	m_ListCtrlSolutionInfo.MoveWindow(rcListCtrl);
 
-	m_ListCtrlSolutionInfo.InsertColumn(0,"ÓÃÁÏ²ÄÖÊ",0,180);
-	m_ListCtrlSolutionInfo.InsertColumn(1,"ºñ¶È",0,60);
-	m_ListCtrlSolutionInfo.InsertColumn(2,"Ãæ»ı",0,120);
-	m_ListCtrlSolutionInfo.InsertColumn(3,"ÊıÁ¿",0,60);
+	m_ListCtrlSolutionInfo.InsertColumn(0,"é•¿åº¦",	0,	110);
+	m_ListCtrlSolutionInfo.InsertColumn(1,"å®½åº¦",	0,	110);
+	m_ListCtrlSolutionInfo.InsertColumn(2,"é¢ç§¯",	0,	110);
+	m_ListCtrlSolutionInfo.InsertColumn(3,"åˆ©ç”¨ç‡",	0,	110);
 
-	// ½ûÓÃÓ¦ÓÃ°´¼ü
+	// ç¦ç”¨åº”ç”¨æŒ‰é”®
 	m_BtnUseNow.EnableWindow(FALSE);
 
 
 
-	// ¿ªÊ¼ÓÅ»¯Ïß³Ì
+	// å¼€å§‹ä¼˜åŒ–çº¿ç¨‹
 	StartOptimizeThread();
 
 	return  TRUE;
@@ -216,16 +216,16 @@ BOOL OptimizeDlg::OnInitDialog()
 }
 
 /*---------------------------------------*/
-//	º¯ÊıËµÃ÷£º
-//		´´½¨ÓÅ»¯Ïß³Ì
+//	å‡½æ•°è¯´æ˜ï¼š
+//		åˆ›å»ºä¼˜åŒ–çº¿ç¨‹
 //
 //
-//	²ÎÊı£º
+//	å‚æ•°ï¼š
 //
 //
 //
 //
-//	·µ»ØÖµ:
+//	è¿”å›å€¼:
 //
 //
 /*---------------------------------------*/
@@ -235,7 +235,7 @@ void OptimizeDlg::StartOptimizeThread()
 	m_hdthread = ::CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)OptimizeThread, this, NULL, NULL);
 	if (m_hdthread != INVALID_HANDLE_VALUE)
 	{
-		m_ThreadIsRunning = TRUE;	// Æô¶¯
+		m_ThreadIsRunning = TRUE;	// å¯åŠ¨
 	}
 
 
@@ -265,32 +265,32 @@ bool OptimizeDlg::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentI
 		ComponentInputItem& pCpn = *it;
 
 		bool bOverSize = false;
-		if (pCpn.m_strTexture == "ÎŞÎÆÀí")
+		if (pCpn.m_strTexture == "æ— çº¹ç†")
 		{
 			if(pCpn.m_fLength > panel_len - panel_offset 
 				|| pCpn.m_fWidth > panel_width - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
-				// Ğı×ªºó£¬ÔÙ´ÎÅĞ¶Ï
+				// æ—‹è½¬åï¼Œå†æ¬¡åˆ¤æ–­
 				if (pCpn.m_fLength >  panel_width - panel_offset
 					|| pCpn.m_fWidth > panel_len - panel_offset
 					|| pCpn.m_fLength <= 0
 					|| pCpn.m_fWidth <= 0)
 				{
-					// »¹ÊÇ³¬³ö£¬É¾³ı
+					// è¿˜æ˜¯è¶…å‡ºï¼Œåˆ é™¤
 					bOverSize = true;
 				}
 			}
 		}
-		else if(pCpn.m_strTexture == "ºáÎÆ")
+		else if(pCpn.m_strTexture == "æ¨ªçº¹")
 		{
 			if (pCpn.m_fLength > panel_len - panel_offset 
 				|| pCpn.m_fWidth > panel_width - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
-				// Ö±½ÓÉ¾³ı
+				// ç›´æ¥åˆ é™¤
 				bOverSize = true;
 			}
 		}
@@ -301,15 +301,15 @@ bool OptimizeDlg::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentI
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
-				// Ö±½ÓÉ¾³ı
+				// ç›´æ¥åˆ é™¤
 				bOverSize = true;
 			}
 		}
 
 		if(bOverSize)
 		{
-			// ±¨´í
-			strMsg += "É¾³ı³¬³ö·¶Î§°å¼ş£¬°å¼şºÅ£º" + pCpn.m_strBarcode + "\n";
+			// æŠ¥é”™
+			strMsg += "åˆ é™¤è¶…å‡ºèŒƒå›´æ¿ä»¶ï¼Œæ¿ä»¶å·ï¼š" + pCpn.m_strBarcode + "\n";
 			return false;
 		}
 		else
@@ -318,7 +318,7 @@ bool OptimizeDlg::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentI
 		}
 	}
 
-	// ÓĞĞÅÏ¢
+	// æœ‰ä¿¡æ¯
 	// 	if (strMsg.IsEmpty() != true)
 	// 	{
 	// 		AfxMessageBox(strMsg);
@@ -327,7 +327,7 @@ bool OptimizeDlg::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentI
 	return true;
 }
 
-/** ¼ì²é°å¼ş´óĞ¡ÊÇ·ñ³¬³ö²¢É¾³ı³¬³¤°å¼ş
+/** æ£€æŸ¥æ¿ä»¶å¤§å°æ˜¯å¦è¶…å‡ºå¹¶åˆ é™¤è¶…é•¿æ¿ä»¶
  *	@param[in]		
  *	@param[out]		
  *	@return			void
@@ -348,32 +348,32 @@ void OptimizeDlg::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>
 		ComponentInputItem& pCpn = *it;
 
 		bool bOverSize = false;
-		if (pCpn.m_strTexture == "ÎŞÎÆÀí")
+		if (pCpn.m_strTexture == "æ— çº¹ç†")
 		{
 			if(pCpn.m_fLength > base_info.m_PanelLength - panel_offset 
 				|| pCpn.m_fWidth > base_info.m_PanelWidth - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
-				// Ğı×ªºó£¬ÔÙ´ÎÅĞ¶Ï
+				// æ—‹è½¬åï¼Œå†æ¬¡åˆ¤æ–­
 				if (pCpn.m_fLength >  base_info.m_PanelWidth - panel_offset 
 					|| pCpn.m_fWidth > base_info.m_PanelLength - panel_offset
 					|| pCpn.m_fLength <= 0
 					|| pCpn.m_fWidth <= 0)
 				{
-					// »¹ÊÇ³¬³ö£¬É¾³ı
+					// è¿˜æ˜¯è¶…å‡ºï¼Œåˆ é™¤
 					bOverSize = true;
 				}
 			}
 		}
-		else if(pCpn.m_strTexture == "ºáÎÆ")
+		else if(pCpn.m_strTexture == "æ¨ªçº¹")
 		{
 			if (pCpn.m_fLength > base_info.m_PanelLength - panel_offset
 				|| pCpn.m_fWidth > base_info.m_PanelWidth - panel_offset
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
-				// Ö±½ÓÉ¾³ı
+				// ç›´æ¥åˆ é™¤
 				bOverSize = true;
 			}
 		}
@@ -384,17 +384,17 @@ void OptimizeDlg::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>
 				|| pCpn.m_fLength <= 0
 				|| pCpn.m_fWidth <= 0)
 			{
-				// Ö±½ÓÉ¾³ı
+				// ç›´æ¥åˆ é™¤
 				bOverSize = true;
 			}
 		}
 
 		if(bOverSize)
 		{
-			// ±¨´í
-			strMsg += "É¾³ı³¬³ö·¶Î§°å¼ş£¬°å¼şºÅ£º" + pCpn.m_strBarcode + "\n";
+			// æŠ¥é”™
+			strMsg += "åˆ é™¤è¶…å‡ºèŒƒå›´æ¿ä»¶ï¼Œæ¿ä»¶å·ï¼š" + pCpn.m_strBarcode + "\n";
 
-			// É¾³ı
+			// åˆ é™¤
 			it = vComponentInputItem.erase(it);
 		}
 		else
@@ -403,7 +403,7 @@ void OptimizeDlg::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>
 		}
 	}
 
-	// ÓĞĞÅÏ¢
+	// æœ‰ä¿¡æ¯
 	if (strMsg.IsEmpty() != true)
 	{
 		AfxMessageBox(strMsg);
@@ -413,16 +413,16 @@ void OptimizeDlg::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>
 }
 
 /*---------------------------------------*/
-//	º¯ÊıËµÃ÷£º
-//		Ïß³Ìº¯Êı£¬¸ºÔğÓÅ»¯
+//	å‡½æ•°è¯´æ˜ï¼š
+//		çº¿ç¨‹å‡½æ•°ï¼Œè´Ÿè´£ä¼˜åŒ–
 //
 //
-//	²ÎÊı£º
-//		PVOID lpThreadParameter		-- ÓÅ»¯´°¿ÚÖ¸Õë
+//	å‚æ•°ï¼š
+//		PVOID lpThreadParameter		-- ä¼˜åŒ–çª—å£æŒ‡é’ˆ
 //
 //
 //
-//	·µ»ØÖµ:
+//	è¿”å›å€¼:
 //
 //
 /*---------------------------------------*/
@@ -430,7 +430,7 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 {
 	OptimizeDlg* self = (OptimizeDlg*)( lpThreadParameter);
 
-	// Ê±¼ä²ÎÊı
+	// æ—¶é—´å‚æ•°
 	CTime last_time = CTime::GetCurrentTime();
 	CTime cur_time;
 	CTimeSpan  timeSpan;
@@ -439,113 +439,117 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 
 
 
+	BaseInfo& singleton_info = pSingleton->m_BaseInfo;
 
 
-	int sln_index = 0;
-	for (unsigned int raw_index = 0; raw_index < m_vRawMaterialList.size(); raw_index++)
+	singleton_info.m_x_space				=		m_BaseInfo.m_x_space;			
+	singleton_info.m_y_space				=		m_BaseInfo.m_y_space;			
+	singleton_info.m_left_offset			=		m_BaseInfo.m_left_offset;		
+	singleton_info.m_right_offset			=		m_BaseInfo.m_right_offset;	
+	singleton_info.m_top_offset				=		m_BaseInfo.m_top_offset;		
+	singleton_info.m_bottom_offset			=		m_BaseInfo.m_bottom_offset;	
+
+	singleton_info.m_LayoutOrg				=		m_BaseInfo.m_LayoutOrg;
+	singleton_info.m_FirstSectionOPTimes	=		m_BaseInfo.m_FirstSectionOPTimes;
+	singleton_info.m_FirstSectionOPMethod	=		m_BaseInfo.m_LayoutMethod;
+	singleton_info.m_bCustomerFirst			=		m_BaseInfo.m_bCustomerFirst; 
+
+
+
+
+	float offset = m_BaseInfo.m_left_offset + m_BaseInfo.m_right_offset;
+
+
+
+	// æ‹·è´éœ€è¦ä¼˜åŒ–çš„æ¿ä»¶ï¼Œä¸ç›´æ¥å¤„ç†éœ€è¦ä¼˜åŒ–çš„æ¿ä»¶ï¼Œé¿å…åŸå§‹æ•°æ®é­åˆ°ç ´å
+	vector<ComponentInputItem> vOptimizeComponent = m_vComponentInputItem;
+
+
+	// ä¿å­˜åŸå§‹æ¿ä»¶æ•°æ®
+	pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
+
+	// æ£€æµ‹æ¿ä»¶è¶…å‡º
+	CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
+
+
+
+	// æ’æ ·åŸç‚¹ã€ä¼˜åŒ–æ¬¡æ•°
+	int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
+	ComponentList componentList;
+
+	int nTotalCount = singleton_info.m_FirstSectionOPTimes;
+
+
+
+	// ä¼˜åŒ–å¾ªç¯å¼€å§‹
+	for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
 	{
-		RawMaterialInfo rm_info = m_vRawMaterialList.at(raw_index);
-
-		if (CheckRawMaterialUsable(m_vComponentInputItem, rm_info, m_BaseInfo) == false)
+		int sln_index = 0;
+		for (unsigned int raw_index = 0; raw_index < m_vRawMaterialList.size(); raw_index++)
 		{
-			continue;;
-		}
+			RawMaterialInfo rm_info = m_vRawMaterialList.at(raw_index);
 
-		BaseInfo& singleton_info = pSingleton->m_BaseInfo;
-
-		m_BaseInfo.m_PanelLength		= rm_info.m_PanelLength;
-		m_BaseInfo.m_PanelWidth			= rm_info.m_PanelWidth;
-
-
-		singleton_info.m_PanelLength		=		m_BaseInfo.m_PanelLength ;	
-
-		if (m_BaseInfo.m_PanelWidth == 0.0)
-		{
-			singleton_info.m_WidthUnlimited	=		true;
-			singleton_info.m_PanelWidth		=		DEFAULT_WIDTH;
-		}
-		else
-		{
-			singleton_info.m_PanelWidth		=		m_width;
-		}
+			if (CheckRawMaterialUsable(m_vComponentInputItem, rm_info, m_BaseInfo) == false)
+			{
+				continue;;
+			}
 
 
-		singleton_info.m_x_space				=		m_BaseInfo.m_x_space;			
-		singleton_info.m_y_space				=		m_BaseInfo.m_y_space;			
-		singleton_info.m_left_offset			=		m_BaseInfo.m_left_offset;		
-		singleton_info.m_right_offset			=		m_BaseInfo.m_right_offset;	
-		singleton_info.m_top_offset				=		m_BaseInfo.m_top_offset;		
-		singleton_info.m_bottom_offset			=		m_BaseInfo.m_bottom_offset;	
+			m_BaseInfo.m_PanelLength		= rm_info.m_PanelLength;
+			m_BaseInfo.m_PanelWidth			= rm_info.m_PanelWidth;
 
-		singleton_info.m_LayoutOrg				=		m_BaseInfo.m_LayoutOrg;
-		singleton_info.m_FirstSectionOPTimes	=		m_BaseInfo.m_FirstSectionOPTimes;
-		singleton_info.m_FirstSectionOPMethod	=		m_BaseInfo.m_LayoutMethod;
-		singleton_info.m_bCustomerFirst			=		m_BaseInfo.m_bCustomerFirst; 
 
-		float offset = m_BaseInfo.m_left_offset + m_BaseInfo.m_right_offset;
+			singleton_info.m_PanelLength		=		m_BaseInfo.m_PanelLength ;	
+
+			if (m_BaseInfo.m_PanelWidth == 0.0)
+			{
+				singleton_info.m_WidthUnlimited	=		true;
+				singleton_info.m_PanelWidth		=		DEFAULT_WIDTH;
+			}
+			else
+			{
+				singleton_info.m_PanelWidth		=		m_width;
+			}
 
 
 
-		// ¿½±´ĞèÒªÓÅ»¯µÄ°å¼ş£¬²»Ö±½Ó´¦ÀíĞèÒªÓÅ»¯µÄ°å¼ş£¬±ÜÃâÔ­Ê¼Êı¾İÔâµ½ÆÆ»µ
-		vector<ComponentInputItem> vOptimizeComponent = m_vComponentInputItem;
-
-
-		// ±£´æÔ­Ê¼°å¼şÊı¾İ
-		pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
+			
 
 
 
-
-		// ¼ì²â°å¼ş³¬³ö
-		CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
-
-
-
-		// ÅÅÑùÔ­µã¡¢ÓÅ»¯´ÎÊı
-		int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
-		ComponentList componentList;
-
-		int nTotalCount = singleton_info.m_FirstSectionOPTimes;
-
-		// ÓÅ»¯Ñ­»·¿ªÊ¼
-		for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
-		{
-
-
-
-			// µÚÒ»¶ÎÓÅ»¯
+				// ç¬¬ä¸€æ®µä¼˜åŒ–
 #if 1
 
 
 			int i_first_op_times = i_progress;
 
-			// ÊÍ·Å½â¾ö·½°¸ 
+			// é‡Šæ”¾è§£å†³æ–¹æ¡ˆ 
 			pSingleton->ClearCurrentSolution();
 			pSingleton->ClearRemainderManager();
 
-			// ÊÍ·ÅĞ¡°å·Ö×é
+			// é‡Šæ”¾å°æ¿åˆ†ç»„
 			pSingleton->m_vComponentGroup.clear();
 
-			// ÊäÈëĞ¡°å·Ö×é
+			// è¾“å…¥å°æ¿åˆ†ç»„
 			ConvertInputInfoToComponentList(vOptimizeComponent, m_vPreCombineItem, componentList);
 
-			// ÓÉÓÚ´æÔÚÎŞÎÆÀí±ÈÓĞÎÆÀíÀûÓÃÂÊ¸ü²îµÄÇé¿ö£¬ÎŞÎÆÀíÓÅ»¯Ê±£¬ÏÈºáÊúÎÆ¸÷ÅÅÒ»´Î
+			// ç”±äºå­˜åœ¨æ— çº¹ç†æ¯”æœ‰çº¹ç†åˆ©ç”¨ç‡æ›´å·®çš„æƒ…å†µï¼Œæ— çº¹ç†ä¼˜åŒ–æ—¶ï¼Œå…ˆæ¨ªç«–çº¹å„æ’ä¸€æ¬¡
 			int text_index = i_progress%5;
 			float rotate_limit = pSingleton->m_BaseInfo.m_PanelLength >  pSingleton->m_BaseInfo.m_PanelWidth ?  pSingleton->m_BaseInfo.m_PanelWidth :  pSingleton->m_BaseInfo.m_PanelLength ;
 
 			rotate_limit -= offset ;
 
 
-			// ¸³Öµ¸øµ¥ÀıÀàµÄÓÅ»¯Ô­ÁÏ
+			// èµ‹å€¼ç»™å•ä¾‹ç±»çš„ä¼˜åŒ–åŸæ–™
 			SplitComponentList(componentList, pSingleton->m_vComponentGroup);
 
 
-			// ÓÅ»¯
-			if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// ×îµÍÂÖÀªÏß
+			// ä¼˜åŒ–
+			if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// æœ€ä½è½®å»“çº¿
 			{
 				pSingleton->New_Layout(0, CutDir_Horizon, Org);
 			}
-			else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// Ì°ĞÄ
+			else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// è´ªå¿ƒ
 			{
 				if (i_first_op_times == 2)
 				{
@@ -566,10 +570,10 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 			}
 			else
 			{
-				// ×éºÏ Ì°ĞÄ+×îµÍÂÖÀªÏß
+				// ç»„åˆ è´ªå¿ƒ+æœ€ä½è½®å»“çº¿
 				int flag = pSingleton->m_BaseInfo.m_FirstSectionOPTimes/2;
 
-				if (i_first_op_times > flag) // Ëæ»ú
+				if (i_first_op_times > flag) // éšæœº
 				{
 					pSingleton->New_Layout(0, CutDir_Horizon, Org);
 				}
@@ -583,14 +587,19 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 #endif
 
 
-			// ±¸·İ½ÏºÃµÄ·½°¸
-			pSingleton->BackupBetterSolution(sln_index);
+			// å¤‡ä»½è¾ƒå¥½çš„æ–¹æ¡ˆ
+			bool better_flag = pSingleton->BackupBetterSolution(sln_index);
+
+			if (better_flag)
+			{
+				::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 1, pSingleton->GetBackupSolutionNum());
+			}
+			
 
 
 			{
-				// Ã¿¼ÆËãÍêÒ»ÂÖ·¢Ò»´Î¼ÆËãÍê³ÉÏûÏ¢
-				int nPanelCount = pSingleton->GetBackupSolutionPanelNum(); 
-
+				// æ¯è®¡ç®—å®Œä¸€è½®å‘ä¸€æ¬¡è®¡ç®—å®Œæˆæ¶ˆæ¯
+				
 
 				cur_time = CTime::GetCurrentTime();
 				timeSpan = cur_time - last_time;
@@ -598,39 +607,27 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 				int seconds = timeSpan.GetTotalSeconds();
 
 
-				// ¼ÆËãÍêÒ»´ÎÏò´°¿Ú·¢ËÍË¢ĞÂÎÄ×ÖºÍ½ø¶ÈÌõÏûÏ¢
+				// è®¡ç®—å®Œä¸€æ¬¡å‘çª—å£å‘é€åˆ·æ–°æ–‡å­—å’Œè¿›åº¦æ¡æ¶ˆæ¯
 				if (i_progress%10 == 0)
 				{
-					::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 0, nPanelCount);
+					::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 0, pSingleton->GetBackupSolutionNum());
 					::PostMessage(self->GetSafeHwnd(), WM_UPDATE_PROGRESS_BAR, nTotalCount, i_progress);
 					::PostMessage(self->GetSafeHwnd(), WM_UPDATE_REMAIN_TIME, (nTotalCount<<16) |  i_progress,  seconds);
 				}
 
-				// ÅĞ¶ÏÏß³ÌÊÇ·ñ¼ÌĞøÔËĞĞ
+				// åˆ¤æ–­çº¿ç¨‹æ˜¯å¦ç»§ç»­è¿è¡Œ
 				if (m_ThreadIsRunning == FALSE)
 				{
 					return 0;
 				}
 			}
 
-
-
-
-
+			// ç”¨ä¸‹ä¸€ä¸ªå°ºå¯¸è¿›è¡Œæ’æ ·
+			sln_index++;
 
 		}
-
-		// ÓÃÏÂÒ»¸ö³ß´ç½øĞĞÅÅÑù
-		sln_index++;
-
-
-
-		
-
-
-
-
 	}
+	
 
 
 
@@ -662,61 +659,44 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 
 	
 
-	// ÓÅ»¯½áÊø
+	// ä¼˜åŒ–ç»“æŸ
 	::PostMessage(self->GetSafeHwnd(), WM_CLOSE, 0, 0);
 
 	return 0;
 }
 
 
-//Íê³É¹Ø±Õ
+//å®Œæˆå…³é—­
 LRESULT OptimizeDlg::OnWM_CALCULATE(WPARAM wParam, LPARAM lParam)
 {
-	int messageinfo = (int)wParam;
-	int showmessage = (int)lParam;
-	CString strMsg =  "Ä¿Ç°×îÓÅ:";
+	int better_info = (int)wParam;
+	int show_message = (int)lParam;
+	CString strMsg =  "ç›®å‰æœ€ä¼˜:";
 
-	
-	switch(messageinfo)
+	if (better_info )
 	{
-	case 0:
-
-		if (m_LastPanelNum == 0)
-		{
-			m_LastPanelNum = showmessage;
-		}
-		else
-		{
-			if (showmessage < m_LastPanelNum)
-			{
-				m_LastPanelNum = showmessage;
-				AfxMessageBox("ÓĞ¸üÓÅµÄ·½°¸³öÏÖ£¡");
-			}
-		}
-		strMsg.Format("ÒÑÓĞÒ»Ì×½â¾ö·½°¸: %d ¿é´ó°å¡£µã»÷¡°Ó¦ÓÃ¡±°´Å¥²ÉÓÃ£¡", showmessage);
-
-		m_TxtOpMessage.SetWindowText(strMsg);
-		break;
-	default:
-		break;
+		AfxMessageBox("æœ‰æ›´ä¼˜çš„æ–¹æ¡ˆå‡ºç°ï¼");
 	}
 
-	
+
+	strMsg.Format("æ­£åœ¨è®¡ç®—ä¸­.......å·²ç®—å‡º %d å¥—ç”¨æ–™æ–¹æ¡ˆï¼Œç‚¹å‡»å³ä¸Šæ–¹â€œåº”ç”¨â€æŒ‰é’®å¯åœæ­¢è®¡ç®—ï¼", show_message);
+
+	m_TxtOpMessage.SetWindowText(strMsg);
 
 	return 0;
 }
 
 /*---------------------------------------*/
-//	º¯ÊıËµÃ÷£º
-//	¸üĞÂ½ø¶ÈÌõ
+//	å‡½æ•°è¯´æ˜ï¼š
+//	æ›´æ–°è¿›åº¦æ¡
 //
 //
-//	²ÎÊı£º
-//		WPARAM wParam	--	×Ü´ÎÊı
-//		LPARAM lParam	--	µ±Ç°´ÎÊı
+//	å‚æ•°ï¼š
+//		WPARAM wParam	--	æ€»æ¬¡æ•°
+//		LPARAM lParam	--	å½“å‰æ¬¡æ•°
 //
 //
-//	·µ»ØÖµ:
+//	è¿”å›å€¼:
 //
 //
 /*---------------------------------------*/
@@ -725,24 +705,24 @@ LRESULT OptimizeDlg::OnWM_WM_UPDATE_PROGRESS_BAR(WPARAM wParam, LPARAM lParam)
 	int first_message = (int)wParam;
 	int second_massage = (int)lParam;
 
-	// ¸üĞÂ½ø¶ÈÌõ
+	// æ›´æ–°è¿›åº¦æ¡
 	m_ProgressBar.SetRange32(0, first_message);
 	second_massage = second_massage % first_message+1;
 	m_ProgressBar.SetPos(second_massage);
 
-	// ¸üĞÂÎÄ±¾½ø¶È
+	// æ›´æ–°æ–‡æœ¬è¿›åº¦
 	float cur_time = lParam;
 	float total_time = wParam;
 	float progress = cur_time*100/total_time;
 	CString strProgress;
 
-	strProgress.Format("µ±Ç°ÓÅ»¯½ø¶È£º%0.2f%%......", progress);
+	strProgress.Format("å½“å‰ä¼˜åŒ–è¿›åº¦ï¼š%0.2f%%......", progress);
 	m_TxtOpMessage2.SetWindowText(strProgress);
 
 
 
 
-	// ¸üĞÂÓÅ»¯ĞÅÏ¢
+	// æ›´æ–°ä¼˜åŒ–ä¿¡æ¯
 
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 	int nSlnCount = pSingleton->GetBackupSolutionNum();
@@ -757,21 +737,34 @@ LRESULT OptimizeDlg::OnWM_WM_UPDATE_PROGRESS_BAR(WPARAM wParam, LPARAM lParam)
 	{
 		CSolution* pSln = pSingleton->m_BackupSolutionList.at(iSln);
 
-		CString str_thickness;
-		CString str_panel_size;
-		CString str_panel_num;
+		if (pSln)
+		{
+			Panel* pPanel = pSln->GetPanel(0);
+			if (pPanel)
+			{
 
-		str_thickness.Format("%0.0f", pSln->m_fThickness);
-		str_panel_size.Format("%0.0f x %0.0f", pSln->m_BaseInfo.m_PanelLength, pSln->m_BaseInfo.m_PanelWidth);
-		str_panel_num.Format("%d", pSln->GetPanelNum());
+				CString str_panel_len;
+				CString str_panel_width;
+				CString str_panel_area;
+				CString str_panel_utilization;
 
-		m_ListCtrlSolutionInfo.SetItemText(iSln, 0, pSln->m_strMaterial);
-		m_ListCtrlSolutionInfo.SetItemText(iSln, 1, str_thickness);
-		m_ListCtrlSolutionInfo.SetItemText(iSln, 2, str_panel_size);
-		m_ListCtrlSolutionInfo.SetItemText(iSln, 3, str_panel_num);
+				str_panel_len.Format("%0.3fç±³",			pPanel->m_OrgLen/1000);
+				str_panel_width.Format("%0.3fç±³",			pPanel->m_OrgWidth/1000);
+				str_panel_area.Format("%0.3få¹³ç±³",			pPanel->m_OrgLen * pPanel->m_OrgWidth/1000000);
+				str_panel_utilization.Format("%0.1f%%",	pPanel->GetUtilization()*100);
+
+				m_ListCtrlSolutionInfo.SetItemText(iSln, 0, str_panel_len);
+				m_ListCtrlSolutionInfo.SetItemText(iSln, 1, str_panel_width);
+				m_ListCtrlSolutionInfo.SetItemText(iSln, 2, str_panel_area);
+				m_ListCtrlSolutionInfo.SetItemText(iSln, 3, str_panel_utilization);
+			}
+
+		}
+
+
 	}
 
-	// Ê¹ÄÜÓ¦ÓÃ°´¼ü
+	// ä½¿èƒ½åº”ç”¨æŒ‰é”®
 	m_BtnUseNow.EnableWindow(TRUE);
 
 
@@ -796,7 +789,7 @@ LRESULT OptimizeDlg::OnWM_WM_UPDATE_REMAIN_TIME(WPARAM wParam, LPARAM lParam)
 	float remain_time = seconds_cur_count/cur_count*total_count - seconds_cur_count;
 
 	CString strProgress;
-	strProgress.Format("Ê£ÓàÊ±¼ä£º%0.0fÃë......", remain_time);
+	strProgress.Format("å‰©ä½™æ—¶é—´ï¼š%0.0fç§’......", remain_time);
 
 
 
