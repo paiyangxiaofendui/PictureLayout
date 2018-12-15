@@ -385,8 +385,9 @@ int CSingleton::GetBackupSolutionNum(void)
 //	return:
 //		void
 /*--------------------------------------------------------------------------------------*/
-void CSingleton::BackupBetterSolution(int index)
+bool CSingleton::BackupBetterSolution(int index)
 {
+	bool flag = false;
 	int cur_sln_num = m_CurrentSolutionList.size();
 	int backup_sln_num = m_BackupSolutionList.size();
 
@@ -418,6 +419,8 @@ void CSingleton::BackupBetterSolution(int index)
 
 				m_BackupSolutionList[index] = pCurSln;
 				m_CurrentSolutionList.clear();
+
+				flag = true;
 			}
 			else
 			{
@@ -426,6 +429,8 @@ void CSingleton::BackupBetterSolution(int index)
 
 		}
 	}
+
+	return flag;
 }
 
 

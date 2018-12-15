@@ -86,7 +86,7 @@ public:
 	int GetCurSolutionPanelNum(void);							/**< 获取当前优化方案大板数量	*/ 
 	int GetBackupSolutionPanelNum(void);						/**< 获取当前优化方案大板数量	*/
 	void BackupBestSolution(void);								/**< 保存最优解决方案	*/ 
-	void BackupBetterSolution(int index);							/**< 保存最优解决方案	*/ 
+	bool BackupBetterSolution(int index);							/**< 保存最优解决方案	*/ 
 
 
 	int GetCurSolutionNum(void);								/**< 获取当前优化方案数量	*/ 
