@@ -6,7 +6,7 @@
 
 #include "../DataProcess/DataProcess.h"
 
-#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleon.h"
+#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
 #include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
 
@@ -16,11 +16,30 @@
 #define WM_UPDATE_PROGRESS_BAR	WM_USER + 10087
 #define WM_UPDATE_REMAIN_TIME	WM_USER + 10088
 
-int OptimizeDlg::m_LastPanelNum = 0;
-BOOL OptimizeDlg::m_ThreadIsRunning = FALSE;
-vector<ComponentInputItem> OptimizeDlg::m_vComponentInputItem;
-vector<PreCombineItem> OptimizeDlg::m_vPreCombineItem;
+int							OptimizeDlg::m_LastPanelNum = 0;
+BOOL						OptimizeDlg::m_ThreadIsRunning = FALSE;
+vector<ComponentInputItem>	OptimizeDlg::m_vComponentInputItem;
+vector<PreCombineItem>		OptimizeDlg::m_vPreCombineItem;
 vector<RemainderInputItem>  OptimizeDlg::m_vRemainderInputItem;
+
+
+
+
+
+
+
+ BaseInfo					OptimizeDlg::m_BaseInfo;
+ vector<RawMaterialInfo>	OptimizeDlg::m_vRawMaterialList;								 
+
+ float	OptimizeDlg::m_len;				
+ float	OptimizeDlg::m_width;	
+ float	OptimizeDlg::m_x_space;			
+ float	OptimizeDlg::m_y_space;			
+ float	OptimizeDlg::m_left_offset;		
+ float	OptimizeDlg::m_right_offset;		
+ float	OptimizeDlg::m_top_offset;		
+ float	OptimizeDlg::m_bottom_offset;		
+ int	OptimizeDlg::m_arranging_origin;	
 
 // CDirSetDlg dialog
 
@@ -224,6 +243,174 @@ void OptimizeDlg::StartOptimizeThread()
 }
 
 
+bool OptimizeDlg::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentInputItem, RawMaterialInfo rm_info, BaseInfo b_info)
+{
+
+	float panel_len = rm_info.m_PanelLength;
+	float panel_width = rm_info.m_PanelWidth;
+	float panel_offset = b_info.m_left_offset + b_info.m_right_offset;
+
+	if (panel_width == 0.0)
+	{
+		panel_width = DEFAULT_WIDTH;
+
+	}
+
+
+	vector<ComponentInputItem>::iterator it, it_begin, it_end;
+	CString strMsg;
+
+	for (it = vComponentInputItem.begin(); it != vComponentInputItem.end();)
+	{
+		ComponentInputItem& pCpn = *it;
+
+		bool bOverSize = false;
+		if (pCpn.m_strTexture == "无纹理")
+		{
+			if(pCpn.m_fLength > panel_len - panel_offset 
+				|| pCpn.m_fWidth > panel_width - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 旋转后，再次判断
+				if (pCpn.m_fLength >  panel_width - panel_offset
+					|| pCpn.m_fWidth > panel_len - panel_offset
+					|| pCpn.m_fLength <= 0
+					|| pCpn.m_fWidth <= 0)
+				{
+					// 还是超出，删除
+					bOverSize = true;
+				}
+			}
+		}
+		else if(pCpn.m_strTexture == "横纹")
+		{
+			if (pCpn.m_fLength > panel_len - panel_offset 
+				|| pCpn.m_fWidth > panel_width - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+		else
+		{
+			if(pCpn.m_fLength >  panel_width - panel_offset 
+				|| pCpn.m_fWidth > panel_len - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+
+		if(bOverSize)
+		{
+			// 报错
+			strMsg += "删除超出范围板件，板件号：" + pCpn.m_strBarcode + "\n";
+			return false;
+		}
+		else
+		{
+			it++;
+		}
+	}
+
+	// 有信息
+	// 	if (strMsg.IsEmpty() != true)
+	// 	{
+	// 		AfxMessageBox(strMsg);
+	// 	}
+
+	return true;
+}
+
+/** 检查板件大小是否超出并删除超长板件
+ *	@param[in]		
+ *	@param[out]		
+ *	@return			void
+ *  @warning		
+ *	@note			
+ *	@see            
+ */
+void OptimizeDlg::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem)
+{
+	CSingleton* pSingleton = CSingleton::GetSingleton();
+	BaseInfo base_info = pSingleton->m_BaseInfo;
+	float panel_offset = base_info.m_left_offset + base_info.m_right_offset;
+	vector<ComponentInputItem>::iterator it, it_begin, it_end;
+	CString strMsg;
+
+	for (it = vComponentInputItem.begin(); it != vComponentInputItem.end();)
+	{
+		ComponentInputItem& pCpn = *it;
+
+		bool bOverSize = false;
+		if (pCpn.m_strTexture == "无纹理")
+		{
+			if(pCpn.m_fLength > base_info.m_PanelLength - panel_offset 
+				|| pCpn.m_fWidth > base_info.m_PanelWidth - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 旋转后，再次判断
+				if (pCpn.m_fLength >  base_info.m_PanelWidth - panel_offset 
+					|| pCpn.m_fWidth > base_info.m_PanelLength - panel_offset
+					|| pCpn.m_fLength <= 0
+					|| pCpn.m_fWidth <= 0)
+				{
+					// 还是超出，删除
+					bOverSize = true;
+				}
+			}
+		}
+		else if(pCpn.m_strTexture == "横纹")
+		{
+			if (pCpn.m_fLength > base_info.m_PanelLength - panel_offset
+				|| pCpn.m_fWidth > base_info.m_PanelWidth - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+		else
+		{
+			if(pCpn.m_fLength >  base_info.m_PanelWidth - panel_offset 
+				|| pCpn.m_fWidth > base_info.m_PanelLength - panel_offset
+				|| pCpn.m_fLength <= 0
+				|| pCpn.m_fWidth <= 0)
+			{
+				// 直接删除
+				bOverSize = true;
+			}
+		}
+
+		if(bOverSize)
+		{
+			// 报错
+			strMsg += "删除超出范围板件，板件号：" + pCpn.m_strBarcode + "\n";
+
+			// 删除
+			it = vComponentInputItem.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+
+	// 有信息
+	if (strMsg.IsEmpty() != true)
+	{
+		AfxMessageBox(strMsg);
+	}
+
+
+}
 
 /*---------------------------------------*/
 //	函数说明：
@@ -248,29 +435,90 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 	CTime cur_time;
 	CTimeSpan  timeSpan;
 
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 
 
-	// 排样原点、优化次数
-	CSingleon* pSingleton = CSingleon::GetSingleton();
-	int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
-	//vector<ComponentList> vComponentList;
-	ComponentList componentList;
 
-	int nTotalCount = pSingleton->m_BaseInfo.m_FirstSectionOPTimes;
 
-	// 优化循环开始
-	for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
+
+	int sln_index = 0;
+	for (unsigned int raw_index = 0; raw_index < m_vRawMaterialList.size(); raw_index++)
 	{
-		
+		RawMaterialInfo rm_info = m_vRawMaterialList.at(raw_index);
+
+		if (CheckRawMaterialUsable(m_vComponentInputItem, rm_info, m_BaseInfo) == false)
+		{
+			continue;;
+		}
+
+		BaseInfo& singleton_info = pSingleton->m_BaseInfo;
+
+		m_BaseInfo.m_PanelLength		= rm_info.m_PanelLength;
+		m_BaseInfo.m_PanelWidth			= rm_info.m_PanelWidth;
 
 
-// 第一段优化
+		singleton_info.m_PanelLength		=		m_BaseInfo.m_PanelLength ;	
+
+		if (m_BaseInfo.m_PanelWidth == 0.0)
+		{
+			singleton_info.m_WidthUnlimited	=		true;
+			singleton_info.m_PanelWidth		=		DEFAULT_WIDTH;
+		}
+		else
+		{
+			singleton_info.m_PanelWidth		=		m_width;
+		}
+
+
+		singleton_info.m_x_space				=		m_BaseInfo.m_x_space;			
+		singleton_info.m_y_space				=		m_BaseInfo.m_y_space;			
+		singleton_info.m_left_offset			=		m_BaseInfo.m_left_offset;		
+		singleton_info.m_right_offset			=		m_BaseInfo.m_right_offset;	
+		singleton_info.m_top_offset				=		m_BaseInfo.m_top_offset;		
+		singleton_info.m_bottom_offset			=		m_BaseInfo.m_bottom_offset;	
+
+		singleton_info.m_LayoutOrg				=		m_BaseInfo.m_LayoutOrg;
+		singleton_info.m_FirstSectionOPTimes	=		m_BaseInfo.m_FirstSectionOPTimes;
+		singleton_info.m_FirstSectionOPMethod	=		m_BaseInfo.m_LayoutMethod;
+		singleton_info.m_bCustomerFirst			=		m_BaseInfo.m_bCustomerFirst; 
+
+		float offset = m_BaseInfo.m_left_offset + m_BaseInfo.m_right_offset;
+
+
+
+		// 拷贝需要优化的板件，不直接处理需要优化的板件，避免原始数据遭到破坏
+		vector<ComponentInputItem> vOptimizeComponent = m_vComponentInputItem;
+
+
+		// 保存原始板件数据
+		pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
+
+
+
+
+		// 检测板件超出
+		CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
+
+
+
+		// 排样原点、优化次数
+		int Org = pSingleton->m_BaseInfo.m_LayoutOrg;
+		ComponentList componentList;
+
+		int nTotalCount = singleton_info.m_FirstSectionOPTimes;
+
+		// 优化循环开始
+		for(int i_progress = 0; i_progress < nTotalCount; i_progress++)
+		{
+
+
+
+			// 第一段优化
 #if 1
 
 
-		int i_first_op_times = i_progress;
-		//for(int i_first_op_times = 0; i_first_op_times < 1/*pSingleton->m_BaseInfo.m_FirstSectionOPTimes*/; i_first_op_times++)
-		{
+			int i_first_op_times = i_progress;
+
 			// 释放解决方案 
 			pSingleton->ClearCurrentSolution();
 			pSingleton->ClearRemainderManager();
@@ -279,100 +527,41 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 			pSingleton->m_vComponentGroup.clear();
 
 			// 输入小板分组
-			//ConvertInputInfoToComponentList(m_vComponentInputItem, componentList);
-			ConvertInputInfoToComponentList(m_vComponentInputItem, self->m_vPreCombineItem, componentList/*, mapComponentToPreCombine*/);
+			ConvertInputInfoToComponentList(vOptimizeComponent, m_vPreCombineItem, componentList);
 
 			// 由于存在无纹理比有纹理利用率更差的情况，无纹理优化时，先横竖纹各排一次
 			int text_index = i_progress%5;
 			float rotate_limit = pSingleton->m_BaseInfo.m_PanelLength >  pSingleton->m_BaseInfo.m_PanelWidth ?  pSingleton->m_BaseInfo.m_PanelWidth :  pSingleton->m_BaseInfo.m_PanelLength ;
 
-			rotate_limit -= 2* pSingleton->m_BaseInfo.m_DeburringWidth;
+			rotate_limit -= offset ;
 
-
-			if (text_index == 1)
-			{
-				for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
-				{
-					Component* pCpn = componentList.at(i_cpn);
-
-					// 全部用横纹排一次, 不能旋转的除外
-					if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
-						(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
-					{
-						pCpn->m_Texture = TextureType_H_TEXTURE;
-					}
-					else
-					{
-						int a = 0;
-					}
-				}
-
-			}
-			else if (text_index == 2)
-			{
-				for(int i_cpn = 0; i_cpn < componentList.size(); i_cpn++)
-				{
-					Component* pCpn = componentList.at(i_cpn);
-
-					// 全部用横纹排一次
-					if (pCpn->m_Texture == TextureType_NO_TEXTURE &&
-						(pCpn->m_RealLength < rotate_limit && pCpn->m_RealWidth < rotate_limit))
-					{
-						pCpn->m_Texture = TextureType_V_TEXTURE;
-					}
-					else
-					{
-						int a = 0;
-					}
-				}
-			}
 
 			// 赋值给单例类的优化原料
 			SplitComponentList(componentList, pSingleton->m_vComponentGroup);
-
-			// 余料赋值
-			for(int i_rmd = 0; i_rmd < m_vRemainderInputItem.size(); i_rmd++)
-			{
-				RemainderInputItem& rmd_item =  m_vRemainderInputItem.at(i_rmd);
-
-				RemainderItem* pRmd = new RemainderItem();
-
-				pRmd->m_Length = rmd_item.m_nXLen;
-				pRmd->m_Width = rmd_item.m_nYLen;
-				pRmd->m_Material = rmd_item.m_strMaterial;
-				pRmd->m_Thickness = rmd_item.m_fThickness;
-				pRmd->m_nCount = rmd_item.m_nCount;
-
-				pSingleton->m_RemainderManager.AddRemainderItem(pRmd);
-			}
-
-
-
-
 
 
 			// 优化
 			if (pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 0)			// 最低轮廓线
 			{
-				pSingleton->Layout(0, CutDir_Random, Org);
+				pSingleton->New_Layout(0, CutDir_Horizon, Org);
 			}
 			else if ( pSingleton->m_BaseInfo.m_FirstSectionOPMethod == 1)	// 贪心
 			{
 				if (i_first_op_times == 2)
 				{
-					pSingleton->Layout(1, CutDir_Horizon, Org);
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
 				}
 				else if (i_first_op_times == 3)
 				{
-					pSingleton->Layout(1, CutDir_Vertical, Org);
+					pSingleton->New_Layout(1, CutDir_Vertical, Org);
 				}
 				else if (i_first_op_times == 4)
 				{
-					pSingleton->Layout(1, CutDir_Default, Org);
+					pSingleton->New_Layout(1, CutDir_Default, Org);
 				}
 				else
 				{
-					pSingleton->Layout(1, CutDir_Random, Org);
+					pSingleton->New_Layout(1, CutDir_Random, Org);
 				}
 			}
 			else
@@ -382,76 +571,96 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 
 				if (i_first_op_times > flag) // 随机
 				{
-					pSingleton->Layout(0, CutDir_Random, Org);
+					pSingleton->New_Layout(0, CutDir_Horizon, Org);
 				}
 				else
 				{
-					pSingleton->Layout(1, CutDir_Random, Org);
+					pSingleton->New_Layout(1, CutDir_Horizon, Org);
 				}
 			}
 
-			pSingleton->BackupBestSolution();
-
-		}
-
 
 #endif
 
-// 暂时禁用第二、三阶段优化
-#if 0
 
-		// 第二段优化
-		for (int i_second_op_times = 0; i_second_op_times < 0/*pSingleton->m_BaseInfo.m_SecondSectionOPTimes*/; i_second_op_times++)
-		{
-			for(int i_sln = 0; i_sln < pSingleton->GetBackupSolutionNum(); i_sln++)
+			// 备份较好的方案
+			pSingleton->BackupBetterSolution(sln_index);
+
+
 			{
-				CSolution* pSln = pSingleton->m_BackupSolutionList.at(i_sln);
+				// 每计算完一轮发一次计算完成消息
+				int nPanelCount = pSingleton->GetBackupSolutionPanelNum(); 
 
-				pSln->ReOptimizeEveryPanel(Org);
+
+				cur_time = CTime::GetCurrentTime();
+				timeSpan = cur_time - last_time;
+
+				int seconds = timeSpan.GetTotalSeconds();
+
+
+				// 计算完一次向窗口发送刷新文字和进度条消息
+				if (i_progress%10 == 0)
+				{
+					::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 0, nPanelCount);
+					::PostMessage(self->GetSafeHwnd(), WM_UPDATE_PROGRESS_BAR, nTotalCount, i_progress);
+					::PostMessage(self->GetSafeHwnd(), WM_UPDATE_REMAIN_TIME, (nTotalCount<<16) |  i_progress,  seconds);
+				}
+
+				// 判断线程是否继续运行
+				if (m_ThreadIsRunning == FALSE)
+				{
+					return 0;
+				}
 			}
+
+
+
+
+
+
 		}
 
+		// 用下一个尺寸进行排样
+		sln_index++;
 
 
 
-		// 针对优化率不高的板件重新排样
-		for (int i_third_op_times = 0; i_third_op_times < 0/*pSingleton->m_BaseInfo.m_ThirdSectionOPTimes*/; i_third_op_times++)
-		{
-			for(int i_sln = 0; i_sln < pSingleton->GetBackupSolutionNum(); i_sln++)
-			{
-				CSolution* pSln = pSingleton->m_BackupSolutionList.at(i_sln);
-
-				pSingleton->ReOptimizeSln(pSln, Org);
-			}
-		}
- 
-#endif
+		
 
 
-		// 每计算完一轮发一次计算完成消息
-		int nPanelCount = pSingleton->GetBackupSolutionPanelNum(); 
 
 
-		cur_time = CTime::GetCurrentTime();
-		timeSpan = cur_time - last_time;
-
-		int seconds = timeSpan.GetTotalSeconds();
-
-
-		// 计算完一次向窗口发送刷新文字和进度条消息
-		if (i_progress%10 == 0)
-		{
-			::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 0, nPanelCount);
-			::PostMessage(self->GetSafeHwnd(), WM_UPDATE_PROGRESS_BAR, nTotalCount, i_progress);
-			::PostMessage(self->GetSafeHwnd(), WM_UPDATE_REMAIN_TIME, (nTotalCount<<16) |  i_progress,  seconds);
-		}
-
-		// 判断线程是否继续运行
-		if (m_ThreadIsRunning == FALSE)
-		{
-			return 0;
-		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	// 优化结束
 	::PostMessage(self->GetSafeHwnd(), WM_CLOSE, 0, 0);
@@ -535,7 +744,7 @@ LRESULT OptimizeDlg::OnWM_WM_UPDATE_PROGRESS_BAR(WPARAM wParam, LPARAM lParam)
 
 	// 更新优化信息
 
-	CSingleon* pSingleton = CSingleon::GetSingleton();
+	CSingleton* pSingleton = CSingleton::GetSingleton();
 	int nSlnCount = pSingleton->GetBackupSolutionNum();
 
 	m_ListCtrlSolutionInfo.DeleteAllItems();

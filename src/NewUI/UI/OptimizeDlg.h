@@ -1,11 +1,17 @@
 #pragma once
+#include "afxdialogex.h"
 #include "../Resource.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
+#include "../../../include/DataManager/BaseDataType/RawMaterialInfo/RawMaterialInfo.h"
+#include "../../../include/DataManager/BaseDataType/BaseInfo/BaseInfo.h"
 #include "./UICommon/SkinListCtrlBase.h"
 #include "SkinHeaderCtrl.h"
 #include "../UIData/UIData.h"
-
 // CDirSetDlg dialog
+
+
+
+#define DEFAULT_WIDTH						(1000000) 
 
 
 class OptimizeDlg : public CDialogEx
@@ -32,7 +38,40 @@ public:
 	static vector<PreCombineItem> m_vPreCombineItem;
 	static vector<RemainderInputItem> m_vRemainderInputItem;		// 余料
 
+	static BaseInfo  m_BaseInfo;
+	static vector<RawMaterialInfo> m_vRawMaterialList;								/**< 原料信息链表	*/ 
 
+	static float m_len;					/**< 原料长度 */
+	static float m_width;				/**< 原料宽度 */
+
+	static float m_x_space;				/**<  X方向间隙		*/
+	static float m_y_space;				/**<  Y方向间隙		*/
+	static float m_left_offset;			/**<  左预留间隙	*/
+	static float m_right_offset;		/**<  右预留间隙	*/
+	static float m_top_offset;			/**<  上预留间隙	*/
+	static float m_bottom_offset;		/**<  下预留间隙	*/
+	static int m_arranging_origin;		/**<  排样原点	*/
+
+	/** 
+	* @brief 检查原料
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	static bool CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentInputItem, RawMaterialInfo rm_info, BaseInfo b_info);
+
+	
+	/** 
+	* @brief 检查
+	* @author yuanzb
+	* @return 
+	* @note
+	* 
+	* @since 1.0
+	*/
+	static void CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem);
 
 
 	static BOOL m_ThreadIsRunning;		// 优化线程运行标志
