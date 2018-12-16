@@ -146,7 +146,9 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 
 
-		
+
+		int image_index = 0;
+		map<const wstring, int> ImageFileMap;
 
 		// 依次画图
 		vector<Component*> CpnList;
@@ -184,9 +186,29 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 			const wstring imagefile = unicode_file_path;
 			int image;
+			
+			map<const wstring, int>::iterator it;
+
+			it = ImageFileMap.find(imagefile);
+
+			if (it == ImageFileMap.end())
+			{
+				// 不存在，插入
+				ImageFileMap[imagefile] = image_index;
+				image_index++;
+
+				image = p.load_image(L"auto", imagefile, L"");
+
+			}
+			else
+			{
+				// 存在 直接取 索引
+				image = it->second;
+
+ 			}
+			
 
 
-			image = p.load_image(L"auto", imagefile, L"");
 
 			if (image == -1) {
 				wcerr << L"Error: " << p.get_errmsg() << endl;

@@ -590,10 +590,10 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 			// 备份较好的方案
 			bool better_flag = pSingleton->BackupBetterSolution(sln_index);
 
-			if (better_flag)
-			{
-				::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 1, pSingleton->GetBackupSolutionNum());
-			}
+// 			if (better_flag)
+// 			{
+// 				::PostMessage(self->GetSafeHwnd(), WM_CALCULATE, 1, pSingleton->GetBackupSolutionNum());
+// 			}
 			
 
 

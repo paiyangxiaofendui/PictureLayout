@@ -89,6 +89,7 @@ protected:
 	afx_msg void OnBtnExportPlt();
 	afx_msg void OnBtnExportPdf();
 	afx_msg void OnTimer( UINT nIDEvent );
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	
@@ -265,6 +266,11 @@ public:
 	vector<ComponentInputItem> m_vComponentInputItem;						/**< 输入板件链表	*/ 
 	vector<RawMaterialInfo> m_vRawMaterialList;								/**< 原料信息链表	*/ 
 	BaseInfo m_BaseInfo;											/**< 原料信息链表	*/ 
+	
+	float m_scale_ratio;
+	int m_offset_x;
+	int m_offset_y;
+
 
 	
 	float m_len;				/**< 原料长度 */

@@ -118,6 +118,11 @@ IMPLEMENT_DYNAMIC(CDlgResult, CDialogChildBase)
 	m_bottom_offset		= 0.0;
 
 	m_arranging_origin = 0;
+
+
+	m_scale_ratio = 1;
+	m_offset_x = 0;
+	m_offset_y = 0;
 }
 
 CDlgResult::~CDlgResult()
@@ -176,6 +181,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_WM_RBUTTONUP()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
+	ON_WM_MOUSEWHEEL()
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_DXF, &CDlgResult::OnBtnExportDxf)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PLT, &CDlgResult::OnBtnExportPlt)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PDF, &CDlgResult::OnBtnExportPdf)
@@ -228,6 +234,34 @@ BOOL CDlgResult::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
+}
+
+
+
+BOOL  CDlgResult::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	if (zDelta > 0)
+	{
+		// 放大
+		 m_scale_ratio *= 1.2;
+
+	}
+	else
+	{
+		// 缩小
+
+		m_scale_ratio *= 0.8;
+	}
+
+
+
+	CRect rcDrawArea;
+	rcDrawArea = GetPanelViewRect();
+
+	InvalidateRect(rcDrawArea);
+	return  CDialog::OnMouseWheel(nFlags, zDelta, pt);
 }
 
 
@@ -583,14 +617,19 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 
 	//float fScale = GetScale(nPanelLen, nPanelWidth, rcDrawArea.Width()-50, rcDrawArea.Height()-50);
 	float fScale = GetDrawingScale(nPanelLen, nPanelWidth);
+
+	// 缩放
+	fScale *= m_scale_ratio;
+
+
 	CRect rcPanelArea(DRAW_PANEL_GAP/2, DRAW_PANEL_GAP/2, rcDrawArea.Width()-DRAW_PANEL_GAP/2, rcDrawArea.Height()-DRAW_PANEL_GAP/2);
 
-	CRect rcPanel((rcDrawArea.Width()-nPanelLen*fScale)/2, \
-		(rcDrawArea.Height()-nPanelWidth*fScale)/2, \
-		(rcDrawArea.Width()-nPanelLen*fScale)/2 + nPanelLen*fScale, \
-		(rcDrawArea.Height()-nPanelWidth*fScale)/2 + nPanelWidth*fScale);
+	CRect rcPanel((rcDrawArea.Width()-nPanelLen*fScale)/2 , \
+		(rcDrawArea.Height()-nPanelWidth*fScale)/2  , \
+		(rcDrawArea.Width()-nPanelLen*fScale)/2 + nPanelLen*fScale , \
+		(rcDrawArea.Height()-nPanelWidth*fScale)/2 + nPanelWidth*fScale  );
 
-	g.FillRectangle(&SolidBrush(Color(240, 255, 255)), (INT)rcPanel.left, (INT)rcPanel.top, (INT)rcPanel.Width(), (INT)rcPanel.Height());
+	g.FillRectangle(&SolidBrush(Color(240, 240, 255)), (INT)rcPanel.left+ m_offset_x, (INT)rcPanel.top+ m_offset_y, (INT)rcPanel.Width(), (INT)rcPanel.Height());
 
 	vector<Component*> vAllComponent;
 	FindAllComponentInPanel(thePanel, vAllComponent);
@@ -598,7 +637,12 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 	for(int i = 0; i < vAllComponent.size(); i++)
 	{
 		Component& theComponent = *(vAllComponent[i]);
-		CRect rcComponent(theComponent.m_x*fScale, (/*thePanel.m_RealWidth*/nPanelWidth - (theComponent.m_y + theComponent.m_RealWidth))*fScale, (theComponent.m_x + theComponent.m_RealLength)*fScale, (/*thePanel.m_RealWidth*/nPanelWidth - theComponent.m_y)*fScale);
+
+		float cpn_x = theComponent.m_x;
+		float cpn_y = theComponent.m_y;
+
+
+		CRect rcComponent(cpn_x  *fScale  +  m_offset_x, (nPanelWidth - (cpn_y + theComponent.m_RealWidth))*fScale  + m_offset_y, (cpn_x + theComponent.m_RealLength)*fScale +  m_offset_x, (nPanelWidth - cpn_y)*fScale  + m_offset_y);
 		rcComponent.OffsetRect(rcPanel.left, rcPanel.top);
 
 		//g.FillRectangle(&SolidBrush(Color(180, 255, 255, 224)), (INT)rcComponent.left, (INT)rcComponent.top, (INT)rcComponent.Width(), (INT)rcComponent.Height());
@@ -632,7 +676,7 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 
 	DrawRemainderCuting(g, rcPanel, fScale, thePanel);
 
-	g.DrawRectangle(&Pen(Color::Black, 2), (INT)rcPanel.left, (INT)rcPanel.top, (INT)rcPanel.Width(), (INT)rcPanel.Height());
+	g.DrawRectangle(&Pen(Color::Black, 2), (INT)rcPanel.left+ m_offset_x, (INT)rcPanel.top+ m_offset_y, (INT)rcPanel.Width() , (INT)rcPanel.Height());
 }
 
 void CDlgResult::RefreshOptimizeResult()
@@ -854,10 +898,10 @@ void CDlgResult::DrawDetail(Graphics& g, CRect rcComponent, float fScale, Compon
 		rfDetail.Offset(rfMeasureOrder.Width, 0);
 		rfDetail.Width -= rfMeasureOrder.Width;
 		
-		if (pComponent->m_IndexInSameCpn == 0)
-		{
+// 		if (pComponent->m_IndexInSameCpn == 0)
+// 		{
 			g.DrawString(AnsiToUnicode(strDetail).c_str(), -1, &font11, rfDetail, &sf, &brushBlack);
-		}
+//		}
 	}
 	else//板件垂直于原板板件
 	{
@@ -888,10 +932,10 @@ void CDlgResult::DrawDetail(Graphics& g, CRect rcComponent, float fScale, Compon
 
 		g.SetSmoothingMode(SmoothingModeHighQuality);
 
-		if (pComponent->m_IndexInSameCpn == 0)
-		{
+// 		if (pComponent->m_IndexInSameCpn == 0)
+// 		{
 			g.DrawString(AnsiToUnicode(strDetail).c_str(), -1, &font11, rfStr, &sf, &brushBlack);
-		}
+//		}
 
 		g.ResetTransform();
 	}
@@ -1578,11 +1622,65 @@ LRESULT CDlgResult::OnShowOrHideClipboard(WPARAM wparam, LPARAM lparam)
 
 BOOL CDlgResult::PreTranslateMessage(MSG* pMsg)
 {
+	static CPoint LBtnDnPnt, LBtnUpPnt;
+	static BOOL LBtnDnPntEnable = FALSE, LBtnUpPntEnable = FALSE;
+	CRect rcDrawArea  = GetPanelViewRect();;
+
 	if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_SPACE)  
 	{
 		RotatePastingComponent();
 		return TRUE;
 	}
+	else if (pMsg->message == WM_LBUTTONDOWN)
+	{
+		// 左键按下
+		LBtnDnPnt = pMsg->pt;			// 左键按下的屏幕坐标
+		ScreenToClient(&LBtnDnPnt);	// 左键按下的窗口客户区坐标
+
+		
+		if(rcDrawArea.PtInRect(LBtnDnPnt) == TRUE)	// 点在绘图矩形区域内
+			LBtnDnPntEnable = TRUE;
+	}
+
+	// 左键抬起
+	if (pMsg->message == WM_LBUTTONUP)
+	{
+		LBtnUpPnt = pMsg->pt;			// 左键按下的屏幕坐标
+		ScreenToClient(&LBtnUpPnt);	// 左键按下的窗口客户区坐标
+
+		if(rcDrawArea.PtInRect(LBtnUpPnt) == TRUE)
+			LBtnUpPntEnable = TRUE;
+
+		if (LBtnDnPntEnable == TRUE && LBtnUpPntEnable == TRUE)
+		{
+			// 移动
+
+			CPoint Rel = LBtnUpPnt - LBtnDnPnt;
+			float dx = LBtnUpPnt.x - LBtnDnPnt.x;
+			float dy = LBtnUpPnt.y - LBtnDnPnt.y;		// 客户区坐标和CAD坐标y轴是相反的
+			float len = sqrt(dx*dx + dy*dy);
+
+			if(len > 10)	// 大于10个像素点，就判定为要移动
+			{
+				m_offset_x += dx;
+				m_offset_y += dy;
+				
+
+				InvalidateRect(rcDrawArea);
+			}
+		}
+
+		// 重置
+		LBtnDnPntEnable = LBtnUpPntEnable = FALSE;
+	}
+
+
+
+
+
+
+
+
 	return CDialog::PreTranslateMessage(pMsg);
 }
 
