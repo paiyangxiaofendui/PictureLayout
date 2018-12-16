@@ -77,7 +77,7 @@ using namespace std;
 #define	VERSION_PRO				(1)
 #define	VERSION_NORMAL			(2)
 
-#define CUR_VERSION				VERSION_NORMAL
+#define CUR_VERSION				VERSION_PRO
 
 
 #define MESSAGE_SET_CTRL_TEXT	(1)
@@ -164,7 +164,7 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 	DDX_CBIndex(pDX, IDC_COMBO_LAYOUT_ORIGIN, m_arranging_origin);
 
 	DDX_Control(pDX, IDC_CHECK_SHOW_FILE_NAME, m_cbShowFileName);
-	DDX_Control(pDX, IDC_CHECK_SHOW_PIC_SIZE, m_cbShowPicSize);
+	DDX_Control(pDX, IDC_CHECK_SHOW_FILE_PIC, m_cbShowFilePic);
 }
 
 
@@ -189,7 +189,8 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PLT, &CDlgResult::OnBtnExportPlt)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PDF, &CDlgResult::OnBtnExportPdf)
 	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_NAME, &CDlgResult::OnBtnShowFileName)
-
+	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_PIC, &CDlgResult::OnBtnShowFilePic)
+	
 
 
 	
@@ -237,6 +238,7 @@ BOOL CDlgResult::OnInitDialog()
 
 
 	m_cbShowFileName.SetCheck(1);
+	m_cbShowFilePic.SetCheck(0);
 
 	SetTimer(IDTIMER1, 1000, 0);
 
@@ -253,14 +255,14 @@ BOOL  CDlgResult::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	if (zDelta > 0)
 	{
 		// 放大
-		 m_scale_ratio *= 1.2;
+		 m_scale_ratio *= 1.2f;
 
 	}
 	else
 	{
 		// 缩小
 
-		m_scale_ratio *= 0.8;
+		m_scale_ratio *= 0.8f;
 	}
 
 
@@ -310,6 +312,13 @@ void CDlgResult::OnBtnShowFileName()
 
 
 };
+
+
+void  CDlgResult::OnBtnShowFilePic()
+{
+
+	InvalidateRect(GetPanelViewRect());
+}
 
 
 void CDlgResult::OnBtnExportPdf()
@@ -622,6 +631,31 @@ LRESULT CDlgResult::OnRefreshPanelView(WPARAM wparam, LPARAM lparam)
 	return 0;
 }
 
+
+
+std::wstring Ansi2WChar(LPCSTR pszSrc, int nLen)
+
+{
+	int nSize = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)pszSrc, nLen, 0, 0);
+	if(nSize <= 0) return NULL;
+
+	WCHAR *pwszDst = new WCHAR[nSize+1];
+	if( NULL == pwszDst) return NULL;
+
+	MultiByteToWideChar(CP_ACP, 0,(LPCSTR)pszSrc, nLen, pwszDst, nSize);
+	pwszDst[nSize] = 0;
+
+	if( pwszDst[0] == 0xFEFF) // skip Oxfeff
+		for(int i = 0; i < nSize; i ++) 
+			pwszDst[i] = pwszDst[i+1];
+
+	wstring wcharString(pwszDst);
+	delete pwszDst;
+
+	return wcharString;
+}
+
+
 void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewingParam& param)
 {
 	Graphics g(pDC->m_hDC);
@@ -646,10 +680,12 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 		(rcDrawArea.Width()-nPanelLen*fScale)/2 + nPanelLen*fScale , \
 		(rcDrawArea.Height()-nPanelWidth*fScale)/2 + nPanelWidth*fScale  );
 
-	g.FillRectangle(&SolidBrush(Color(240, 240, 255)), (INT)rcPanel.left+ m_offset_x, (INT)rcPanel.top+ m_offset_y, (INT)rcPanel.Width(), (INT)rcPanel.Height());
+	//g.FillRectangle(&SolidBrush(Color(240, 240, 255)), (INT)rcPanel.left+ m_offset_x, (INT)rcPanel.top+ m_offset_y, (INT)rcPanel.Width(), (INT)rcPanel.Height());
 
 	vector<Component*> vAllComponent;
 	FindAllComponentInPanel(thePanel, vAllComponent);
+
+	map<wstring, Image*> ImageFileMap;
 
 	for(int i = 0; i < vAllComponent.size(); i++)
 	{
@@ -662,14 +698,96 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 		CRect rcComponent(cpn_x  *fScale  +  m_offset_x, (nPanelWidth - (cpn_y + theComponent.m_RealWidth))*fScale  + m_offset_y, (cpn_x + theComponent.m_RealLength)*fScale +  m_offset_x, (nPanelWidth - cpn_y)*fScale  + m_offset_y);
 		rcComponent.OffsetRect(rcPanel.left, rcPanel.top);
 
+
+		// 画图是否画图
+		if (m_cbShowFilePic.GetCheck() == TRUE)
+		{
+
+			wstring unicode_filepath = Ansi2WChar(theComponent.m_strCabinetName.GetBuffer(), theComponent.m_strCabinetName.GetLength());
+
+
+
+			map<wstring, Image*>::iterator it;
+
+			it = ImageFileMap.find(unicode_filepath);
+
+
+			if (it == ImageFileMap.end())
+			{
+				// 不存在，插入
+				Image* pImage = new Image(unicode_filepath.c_str()); 
+
+				ImageFileMap[unicode_filepath] = pImage;
+
+
+				if (theComponent.m_nRotatedAngle == 0)
+				{
+
+					UINT width	=	pImage->GetWidth();  
+					UINT height	=	pImage->GetHeight();  
+					RectF destinationRect(rcComponent.left, rcComponent.top ,  rcComponent.Width(), rcComponent.Height()); 
+					g.DrawImage(pImage, destinationRect,0,0, width, height,UnitPixel); 
+				}
+				else
+				{
+					pImage->RotateFlip(Rotate90FlipNone);
+
+					UINT width	= pImage->GetWidth();  
+					UINT height	= pImage->GetHeight();  
+					RectF destinationRect(rcComponent.left, rcComponent.top ,  rcComponent.Width(), rcComponent.Height()); 
+					g.DrawImage(pImage, destinationRect,0,0, width, height,UnitPixel); 
+				}
+
+			}
+			else
+			{
+				// 存在 直接取 索引
+				Image* pImage  = it->second;
+
+
+
+				if (theComponent.m_nRotatedAngle == 0)
+				{
+
+					UINT width	= pImage->GetWidth();  
+					UINT height	= pImage->GetHeight();  
+					RectF destinationRect(rcComponent.left, rcComponent.top ,  rcComponent.Width(), rcComponent.Height()); 
+					g.DrawImage( pImage, destinationRect,0,0, width, height,UnitPixel); 
+				}
+				else
+				{
+					 pImage->RotateFlip(Rotate90FlipNone);
+
+					UINT width		=  pImage->GetWidth();  
+					UINT height		=  pImage->GetHeight();  
+					RectF destinationRect(rcComponent.left, rcComponent.top ,  rcComponent.Width(), rcComponent.Height()); 
+					g.DrawImage( pImage, destinationRect,0,0, width, height,UnitPixel); 
+				}
+			}
+
+
+
+
+
+
+
+		}
+
+
+
 		//g.FillRectangle(&SolidBrush(Color(180, 255, 255, 224)), (INT)rcComponent.left, (INT)rcComponent.top, (INT)rcComponent.Width(), (INT)rcComponent.Height());
 
-		Region regionComponent;
-		GetComponentRegion(theComponent.m_vOutlinePoint, rcComponent, fScale, regionComponent);
+
+		if (m_cbShowFilePic.GetCheck() == FALSE)
+		{
+			Region regionComponent;
+			GetComponentRegion(theComponent.m_vOutlinePoint, rcComponent, fScale, regionComponent);
+
+
+			g.FillRegion(&SolidBrush(Color(180, 255, 255, 224)), &regionComponent);
+
+		}
 		
-
-		g.FillRegion(&SolidBrush(Color(180, 255, 255, 224)), &regionComponent);
-
 		
 
 
@@ -690,6 +808,9 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 		}
 
 	}
+
+
+	// 释放image  map
 
 
 	DrawRemainderCuting(g, rcPanel, fScale, thePanel);
