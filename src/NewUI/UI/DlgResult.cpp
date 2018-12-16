@@ -123,6 +123,7 @@ IMPLEMENT_DYNAMIC(CDlgResult, CDialogChildBase)
 	m_scale_ratio = 1;
 	m_offset_x = 0;
 	m_offset_y = 0;
+
 }
 
 CDlgResult::~CDlgResult()
@@ -151,10 +152,10 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Text(pDX, IDC_EDIT_NEW_X_SPACE, m_x_space);				 
 	DDX_Text(pDX, IDC_EDIT_NEW_Y_SPACE, m_y_space);				 
-																 
+
 	DDX_Text(pDX, IDC_EDIT_NEW_LEFT_OFFSET, m_left_offset);			 
 	DDX_Text(pDX, IDC_EDIT_NEW_RIGHT_OFFSET, m_right_offset);			 
-																 
+
 	DDX_Text(pDX, IDC_EDIT_NEW_TOP_OFFSET, m_top_offset);
 	DDX_Text(pDX, IDC_EDIT_NEW_BOTTOM_OFFSET, m_bottom_offset);
 
@@ -162,6 +163,8 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_LAYOUT_ORIGIN, control_arranging_origin);
 	DDX_CBIndex(pDX, IDC_COMBO_LAYOUT_ORIGIN, m_arranging_origin);
 
+	DDX_Control(pDX, IDC_CHECK_SHOW_FILE_NAME, m_cbShowFileName);
+	DDX_Control(pDX, IDC_CHECK_SHOW_PIC_SIZE, m_cbShowPicSize);
 }
 
 
@@ -185,6 +188,9 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_DXF, &CDlgResult::OnBtnExportDxf)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PLT, &CDlgResult::OnBtnExportPlt)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PDF, &CDlgResult::OnBtnExportPdf)
+	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_NAME, &CDlgResult::OnBtnShowFileName)
+
+
 
 	
 	ON_LBN_SELCHANGE(IDC_LIST_CLIPBOARD, &CDlgResult::OnLbnSelchangeClipBoard)
@@ -229,6 +235,8 @@ BOOL CDlgResult::OnInitDialog()
 	control_arranging_origin.SetCurSel(0);
 
 
+
+	m_cbShowFileName.SetCheck(1);
 
 	SetTimer(IDTIMER1, 1000, 0);
 
@@ -293,6 +301,15 @@ void CDlgResult::OnTimer(UINT nIDEvent)
 	CDialogChildBase::OnTimer(nIDEvent);
 }
 
+
+void CDlgResult::OnBtnShowFileName()
+{
+
+
+	InvalidateRect(GetPanelViewRect());
+
+
+};
 
 
 void CDlgResult::OnBtnExportPdf()
@@ -665,11 +682,12 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 			DrawOneLine(g, rcComponent, fScale, vertexStart, vertexEnd);
 		}
 
-		DrawMachiningInfo(g, rcComponent, fScale, &theComponent);
+		if (m_cbShowFileName.GetCheck() == TRUE)
+		{
+			DrawMachiningInfo(g, rcComponent, fScale, &theComponent);
+			DrawDetail(g, rcComponent, fScale, &theComponent);
 
-		
-		DrawDetail(g, rcComponent, fScale, &theComponent);
-		
+		}
 
 	}
 

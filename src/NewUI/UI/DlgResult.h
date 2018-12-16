@@ -88,6 +88,7 @@ protected:
 	afx_msg void OnBtnExportDxf();
 	afx_msg void OnBtnExportPlt();
 	afx_msg void OnBtnExportPdf();
+	afx_msg void OnBtnShowFileName();
 	afx_msg void OnTimer( UINT nIDEvent );
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 
@@ -293,4 +294,6 @@ public:
 
 
 
+	CButton m_cbShowFileName;
+	CButton m_cbShowPicSize;
 };
