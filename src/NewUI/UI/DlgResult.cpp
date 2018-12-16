@@ -198,7 +198,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
 
 	ON_BN_CLICKED(IDC_BUTTON_READ_HGO, &CDlgResult::OnOpenSolution)
-	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnLayout)
+	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnBtnOptimize)
 	ON_BN_CLICKED(IDC_BUTTON_READ_PIC_INFO, &CDlgResult::OnOpenSourcePicInfo)
 	ON_BN_CLICKED(IDC_BUTTON_CONNECT_MAINTOP, &CDlgResult::OnConnectMaintop)
 
@@ -1853,8 +1853,6 @@ void CDlgResult::OnOpenSolution()
 	*/
 void  CDlgResult::OnLayout()
 {
-	// 获取排样数据
-	UpdateData(TRUE);
 
 
 	CSingleton* pSingleton = CSingleton::GetSingleton();
@@ -2065,10 +2063,27 @@ bool CDlgResult::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentIn
 }
 
 
-void CDlgResult::OnOptimize()
+void CDlgResult::OnBtnOptimize()
 {
 	// TODO: 在此添加命令处理程序代码
-	
+
+	// 获取排样数据
+	UpdateData(TRUE);
+
+
+	m_BaseInfo.m_x_space		=   m_x_space;				
+	m_BaseInfo.m_y_space		=   m_y_space;				
+	m_BaseInfo.m_left_offset	=	m_left_offset;			
+	m_BaseInfo.m_right_offset   =	m_right_offset;			
+	m_BaseInfo.m_top_offset		=	m_top_offset;			
+	m_BaseInfo.m_bottom_offset  =	m_bottom_offset;		
+	m_BaseInfo.m_LayoutOrg		= m_arranging_origin;
+
+
+	OnLayout();
+
+
+
 
 }
 

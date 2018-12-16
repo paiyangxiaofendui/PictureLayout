@@ -241,7 +241,7 @@ public:
 	* 
 	* @since 1.0
 	*/
-	void OnOptimize();
+	void OnBtnOptimize();
 
 	/** 
 	* @brief ¼ì²é
