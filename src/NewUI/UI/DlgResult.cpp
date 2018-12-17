@@ -140,6 +140,16 @@ CDlgResult::~CDlgResult()
 		pSingleton->ClearAllData();
 	}
 
+	// 释放图片资源
+	for (map<wstring, Image*>::iterator it = ImageFileMap.begin(); it != ImageFileMap.end(); it++)
+	{
+		Image* pImage = it->second;
+
+		delete pImage;
+	}
+	ImageFileMap.clear();
+
+
 }
 
 void CDlgResult::DoDataExchange(CDataExchange* pDX)
@@ -656,6 +666,65 @@ std::wstring Ansi2WChar(LPCSTR pszSrc, int nLen)
 }
 
 
+HRESULT GetShellThumbnailImage(LPCWSTR pszPath, UINT nDesiredWidth, UINT uDesiredHeight, HBITMAP* pThumbnail)
+{
+	HRESULT hr;
+	*pThumbnail = NULL;
+
+	LPITEMIDLIST pidlItems = NULL, pidlURL = NULL, pidlWorkDir;
+	WCHAR szBasePath[MAX_PATH], szFileName[MAX_PATH];
+	WCHAR* p;
+	wcscpy(szBasePath, pszPath);
+	p = wcsrchr(szBasePath, L'\\');
+	if (p) *(p + 1) = L'\0';
+	wcscpy(szFileName, pszPath + (p - szBasePath) + 1);
+
+	do
+	{
+		CComPtr<IShellFolder> psfDesktop;
+		hr = SHGetDesktopFolder(&psfDesktop);
+		if (FAILED(hr)) break;
+
+		CComPtr<IShellFolder> psfWorkDir;
+		DWORD dwAttribs = SFGAO_COMPRESSED;
+		ULONG cbEaten;
+		hr = psfDesktop->ParseDisplayName(NULL, NULL, szBasePath, &cbEaten, &pidlWorkDir, NULL);
+		if (FAILED(hr)) break;
+		hr = psfDesktop->BindToObject(pidlWorkDir, NULL, IID_IShellFolder, (LPVOID*)&psfWorkDir);
+		if (FAILED(hr)) break;
+
+		// 获取文件的PIDL
+		hr = psfWorkDir->ParseDisplayName(NULL, NULL, szFileName, NULL, &pidlURL, NULL);
+		if (FAILED(hr)) break;
+
+		// 查询缩略图  
+		CComPtr<IExtractImage> peiURL;
+		hr = psfWorkDir->GetUIObjectOf(NULL, 1, (LPCITEMIDLIST*)&pidlURL, IID_IExtractImage, NULL, (LPVOID*)&peiURL);
+		if (FAILED(hr)) break;
+
+		// 定义缩略图属性
+		SIZE size = { nDesiredWidth, uDesiredHeight };
+		DWORD dwPriority = 0, dwFlags = /*IEIFLAG_ASPECT*/IEIFLAG_ORIGSIZE;
+		WCHAR pszImagePath[MAX_PATH];
+		hr = peiURL->GetLocation(pszImagePath, MAX_PATH, &dwPriority, &size, 24, &dwFlags);
+		if (FAILED(hr)) break;
+
+		// 提取缩略图  
+		hr = peiURL->Extract(pThumbnail);
+		if (FAILED(hr)) break;
+
+		break;
+	} while (0);
+
+	// 释放资源 
+	if (pidlWorkDir) CoTaskMemFree(pidlWorkDir);
+	if (pidlURL) CoTaskMemFree(pidlURL);
+	return hr;
+}
+
+
+
+
 void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewingParam& param)
 {
 	Graphics g(pDC->m_hDC);
@@ -685,7 +754,6 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 	vector<Component*> vAllComponent;
 	FindAllComponentInPanel(thePanel, vAllComponent);
 
-	map<wstring, Image*> ImageFileMap;
 
 	for(int i = 0; i < vAllComponent.size(); i++)
 	{

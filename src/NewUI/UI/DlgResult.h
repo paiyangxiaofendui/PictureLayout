@@ -274,6 +274,9 @@ public:
 	int m_offset_y;
 
 
+	map<wstring, Image*> ImageFileMap;
+
+
 	
 	float m_len;				/**< 原料长度 */
 	float m_width;				/**< 原料宽度 */
