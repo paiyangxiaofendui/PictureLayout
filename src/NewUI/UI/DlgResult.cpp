@@ -774,6 +774,59 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 			wstring unicode_filepath = Ansi2WChar(theComponent.m_strCabinetName.GetBuffer(), theComponent.m_strCabinetName.GetLength());
 
 
+#if 0
+			HBITMAP hItemThumbnailBmp = NULL;
+
+
+			UINT ICON_IMG_WIDTH		= rcComponent.Width();
+			UINT ICON_IMG_HEIGHT	= rcComponent.Height();
+
+			HRESULT hResult = GetShellThumbnailImage(unicode_filepath.c_str(), ICON_IMG_WIDTH, ICON_IMG_HEIGHT, &hItemThumbnailBmp);
+			if(hResult == S_OK && hItemThumbnailBmp)
+			{
+				Gdiplus::Bitmap* pBitmapRightSize = new Gdiplus::Bitmap(ICON_IMG_WIDTH, ICON_IMG_HEIGHT, PixelFormat24bppRGB);
+				Gdiplus::Bitmap* pBitmapOrgThumbnail = Gdiplus::Bitmap::FromHBITMAP(hItemThumbnailBmp, NULL);
+				pBitmapRightSize->SetResolution(pBitmapOrgThumbnail->GetHorizontalResolution(), pBitmapOrgThumbnail->GetVerticalResolution());
+				Gdiplus::Graphics* g = Gdiplus::Graphics::FromImage(pBitmapRightSize);
+
+				// 				Color colorWhite(255, 255, 255, 255);
+				// 				g->Clear(colorWhite);
+				// 				g->SetInterpolationMode(InterpolationModeHighQualityBicubic);
+				// 
+				// 				float fScale = GetScale(pBitmapOrgThumbnail->GetWidth(), pBitmapOrgThumbnail->GetHeight(), ICON_IMG_WIDTH, ICON_IMG_HEIGHT);
+				// 				RectF rfTarget(\
+				// 					(ICON_IMG_WIDTH-pBitmapOrgThumbnail->GetWidth()*fScale)/2, \
+				// 					(ICON_IMG_HEIGHT-pBitmapOrgThumbnail->GetHeight()*fScale)/2, \
+				// 					pBitmapOrgThumbnail->GetWidth()*fScale, \
+				// 					pBitmapOrgThumbnail->GetHeight()*fScale);
+
+				RectF destinationRect(rcComponent.left, rcComponent.top ,  rcComponent.Width(), rcComponent.Height()); 
+
+				//			g->DrawImage(pBitmapOrgThumbnail, destinationRect, 0, 0, pBitmapOrgThumbnail->GetWidth(), pBitmapOrgThumbnail->GetHeight(), UnitPixel);
+
+				// 				HBITMAP hItemImgBmp = NULL;
+				// 				pBitmapRightSize->GetHBITMAP(colorWhite, &hItemImgBmp );
+				// 				if(hItemImgBmp != NULL)
+				// 				{
+				// 					CBitmap bmpItem;
+				// 					bmpItem.Attach(hItemImgBmp);
+				// 					int nImgID = m_imageList.Add(&bmpItem, RGB(255, 255, 255));
+				// 					bmpItem.Detach();
+				// 					DeleteObject(hItemImgBmp);
+				// 					m_List.InsertItem(m_List.GetItemCount(), strFileName, nImgID);
+				// 				}
+
+				DeleteObject(hItemThumbnailBmp);
+				delete pBitmapOrgThumbnail;
+				delete pBitmapRightSize;
+				delete g;
+			}
+
+#else
+
+
+
+
 
 			map<wstring, Image*>::iterator it;
 
@@ -824,7 +877,7 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 				}
 				else
 				{
-					 pImage->RotateFlip(Rotate90FlipNone);
+					pImage->RotateFlip(Rotate90FlipNone);
 
 					UINT width		=  pImage->GetWidth();  
 					UINT height		=  pImage->GetHeight();  
@@ -832,6 +885,27 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 					g.DrawImage( pImage, destinationRect,0,0, width, height,UnitPixel); 
 				}
 			}
+
+
+
+
+
+
+#endif
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
