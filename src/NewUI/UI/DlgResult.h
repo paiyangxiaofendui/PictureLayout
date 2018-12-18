@@ -274,7 +274,8 @@ public:
 	int m_offset_y;
 
 
-	map<wstring, Image*> ImageFileMap;
+	map<wstring, Image*>	ImageFileMap;
+	map<wstring, HBITMAP>	ThumbnailBmpMap;
 
 
 	
