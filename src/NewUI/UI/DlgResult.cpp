@@ -124,6 +124,7 @@ IMPLEMENT_DYNAMIC(CDlgResult, CDialogChildBase)
 	m_offset_x = 0;
 	m_offset_y = 0;
 
+	m_valShowPicScale = 0.1f;
 }
 
 CDlgResult::~CDlgResult()
@@ -183,6 +184,9 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_CHECK_SHOW_FILE_NAME, m_cbShowFileName);
 	DDX_Control(pDX, IDC_CHECK_SHOW_FILE_PIC, m_cbShowFilePic);
+	DDX_Text(pDX, IDC_EDIT_SHOW_PIC_SCALE, m_valShowPicScale);
+	DDV_MinMaxFloat(pDX, m_valShowPicScale, 0.0001, 1.0);
+	DDX_Control(pDX, IDC_CHECK_MAINTOP_WATCH_DOG, m_cbMaintopWatchDog);
 }
 
 
@@ -206,8 +210,9 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_DXF, &CDlgResult::OnBtnExportDxf)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PLT, &CDlgResult::OnBtnExportPlt)
 	ON_BN_CLICKED(IDC_BUTTON_EXPORT_PDF, &CDlgResult::OnBtnExportPdf)
-	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_NAME, &CDlgResult::OnBtnShowFileName)
-	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_PIC, &CDlgResult::OnBtnShowFilePic)
+	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_NAME, &CDlgResult::OnCBShowFileName)
+	ON_BN_CLICKED(IDC_CHECK_SHOW_FILE_PIC, &CDlgResult::OnCBShowFilePic)
+	ON_BN_CLICKED(IDC_BUTTON_SHOW_PIC, &CDlgResult::OnBtnShow)
 	
 
 
@@ -257,6 +262,11 @@ BOOL CDlgResult::OnInitDialog()
 
 	m_cbShowFileName.SetCheck(1);
 	m_cbShowFilePic.SetCheck(0);
+
+
+	GetDlgItem(IDC_EDIT_SHOW_PIC_SCALE)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_SHOW_PIC)->EnableWindow(FALSE);
+
 
 	SetTimer(IDTIMER1, 1000, 0);
 
@@ -322,7 +332,7 @@ void CDlgResult::OnTimer(UINT nIDEvent)
 }
 
 
-void CDlgResult::OnBtnShowFileName()
+void CDlgResult::OnCBShowFileName()
 {
 
 
@@ -332,8 +342,42 @@ void CDlgResult::OnBtnShowFileName()
 };
 
 
-void  CDlgResult::OnBtnShowFilePic()
+
+void  CDlgResult::OnBtnShow()
 {
+	UpdateData(TRUE);
+
+
+	// 清空图片缓存才能生效
+	for (map<wstring, HBITMAP>::iterator it = ThumbnailBmpMap.begin(); it != ThumbnailBmpMap.end(); it++)
+	{
+		HBITMAP hItemThumbnailBmp = it->second;
+
+		DeleteObject(hItemThumbnailBmp);
+	}
+	ThumbnailBmpMap.clear();
+
+
+	InvalidateRect(GetPanelViewRect());
+}
+
+void  CDlgResult::OnCBShowFilePic()
+{
+
+	if (m_cbShowFilePic.GetCheck() == TRUE)
+	{
+
+		GetDlgItem(IDC_EDIT_SHOW_PIC_SCALE)->EnableWindow(TRUE);
+		GetDlgItem(IDC_BUTTON_SHOW_PIC)->EnableWindow(TRUE);
+	}
+	else
+	{
+
+		GetDlgItem(IDC_EDIT_SHOW_PIC_SCALE)->EnableWindow(FALSE);
+		GetDlgItem(IDC_BUTTON_SHOW_PIC)->EnableWindow(FALSE);
+	}
+
+
 
 	InvalidateRect(GetPanelViewRect());
 }
@@ -808,9 +852,9 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 
 #if 1
 
-
-			UINT ICON_IMG_WIDTH		= 100;//rcComponent.Width();
-			UINT ICON_IMG_HEIGHT	= 100;//rcComponent.Height();
+			
+			UINT ICON_IMG_WIDTH		= theComponent.m_RealLength * m_valShowPicScale;//rcComponent.Width();
+			UINT ICON_IMG_HEIGHT	= theComponent.m_RealWidth * m_valShowPicScale;//rcComponent.Height();
 
 			HBITMAP hItemThumbnailBmp = NULL;
 
@@ -2807,15 +2851,18 @@ void CDlgResult::OnConnectMaintop()
 	CString exe_title;
 	HWND exe_id ;
 
-#if (CUR_VERSION == VERSION_NORMAL)
+	if (m_cbMaintopWatchDog.GetCheck() == TRUE)
+	{
 
-	exe_title = "蒙泰彩色电子出版系统 V6.0(普及版)";
+		exe_title = "蒙泰彩色电子出版系统 V6.0(专业版)";
+	}
+	else
+	{
+		exe_title = "蒙泰彩色电子出版系统 V6.0(普及版)";
 
-#else
+	}
 
-	exe_title = "蒙泰彩色电子出版系统 V6.0(专业版)";
 
-#endif
 
 		exe_id = ::FindWindow(NULL, exe_title);
 		int find_exe_num = 0;
@@ -3552,12 +3599,7 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-
-
-
-
-
-
+		AfxMessageBox("推送蒙泰完成！");
 
 }
 
