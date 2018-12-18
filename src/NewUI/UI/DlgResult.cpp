@@ -1970,14 +1970,16 @@ BOOL CDlgResult::PreTranslateMessage(MSG* pMsg)
 		LBtnDnPnt = pMsg->pt;			// 左键按下的屏幕坐标
 		ScreenToClient(&LBtnDnPnt);	// 左键按下的窗口客户区坐标
 
+		m_cbShowFileName.SetFocus();
+
 		
 		if(rcDrawArea.PtInRect(LBtnDnPnt) == TRUE)	// 点在绘图矩形区域内
 			LBtnDnPntEnable = TRUE;
 	}
-
-	// 左键抬起
-	if (pMsg->message == WM_LBUTTONUP)
+	else if (pMsg->message == WM_LBUTTONUP)
 	{
+
+		// 左键抬起
 		LBtnUpPnt = pMsg->pt;			// 左键按下的屏幕坐标
 		ScreenToClient(&LBtnUpPnt);	// 左键按下的窗口客户区坐标
 
@@ -2006,7 +2008,10 @@ BOOL CDlgResult::PreTranslateMessage(MSG* pMsg)
 		// 重置
 		LBtnDnPntEnable = LBtnUpPntEnable = FALSE;
 	}
-
+	else if (pMsg->message == WM_MOUSEHWHEEL || pMsg->message == WM_MOUSEHWHEEL)
+	{
+		m_cbShowFileName.SetFocus();
+	}
 
 
 
