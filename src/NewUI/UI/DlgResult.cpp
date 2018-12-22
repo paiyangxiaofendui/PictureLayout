@@ -3584,10 +3584,109 @@ void CDlgResult::OnConnectMaintop()
 						return;
 					}
 				}
+			}
 
+			// 载入图片文件名
+			for (UINT i = 0; i < file_list.size();  i++)
+			{
+				Component* pCpn = cpn_list.at(i);
+				string cur_file_path = file_list.at(i);
+				string str_pos_x = x_pos_list.at(i);
+				string str_pos_y = y_pos_list.at(i);
+				string file_name = pCpn->m_BarCode;
+				int index = pCpn->m_IndexInSameCpn;
+
+				// 选择文字工具  坐标 25，295
+				int text_tool_x = exe_wnd_rect.left + 25, text_tool_y = exe_wnd_rect.top + 295;
+
+
+				// 窗口获取焦点
+
+				SetCursorPos(text_tool_x, text_tool_y);
+				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+				// 移到空白处 左键按下，移动鼠标，左键抬起
+
+				int text_tool_down_x	= text_tool_x + 100	;
+				int text_tool_down_y	= text_tool_y;
+				int text_tool_up_x		= text_tool_x + 125;
+				int text_tool_up_y		= text_tool_y;
+
+				// 按下
+				SetCursorPos(text_tool_down_x, text_tool_down_y);
+				mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
+
+				// 拖拽 抬起
+				SetCursorPos(text_tool_up_x, text_tool_up_y);
+				mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+				// 复制粘贴
+
+				// 设置到剪切板
+				CopyToClipboard(file_name.c_str(), file_name.length());
+
+				// 粘贴 Ctrl+V
+				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+				keybd_event('V', 0, 0, 0);						// 按下v
+				keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+
+				// 确定
+				keybd_event(VK_RETURN, 0, 0, 0);
+				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+				// 切换到点选模式
+				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+				keybd_event(';', 0, 0, 0);						// 按下v
+				keybd_event(';', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+
+
+
+
+				// 修改坐标位置
+				// 设置x坐标
+				POINT coor_x;
+				coor_x.x = coor_dlg_rect.left + 35;
+				coor_x.y = coor_dlg_rect.top + 8;
+
+				SetCursorPos(coor_x.x, coor_x.y);
+				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+
+				// 输入
+				InputNormalString(str_pos_x);
+
+
+
+
+
+				// 按下table键
+				keybd_event(VK_TAB, 0, 0, 0);
+				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+				// 输入
+				InputNormalString(str_pos_y);
+
+
+
+				// 按键-确定 
+				keybd_event(VK_RETURN, 0, 0, 0);
+				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
 			}
+
+
+
 		}
 		else
 		{
