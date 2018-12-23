@@ -850,6 +850,7 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 			wstring unicode_filepath = Ansi2WChar(theComponent.m_strCabinetName.GetBuffer(), theComponent.m_strCabinetName.GetLength());
 
 
+			theComponent.m_strCabinetName.ReleaseBuffer();
 #if 1
 
 			
@@ -899,6 +900,14 @@ void CDlgResult::DrawPanel(CDC* pDC, Panel* pPanel, CRect rcDrawArea, PanelViewi
 
 
 
+				}
+				else
+				{
+					CString msg;
+					msg.Format("文件： %s  不存在！\n", theComponent.m_strCabinetName.GetBuffer());
+					
+					
+					AfxMessageBox(msg);
 				}
 			}
 			else
@@ -2678,6 +2687,7 @@ void CDlgResult::SetBottomAction(CString title, int id, UINT action)
 		wndPopup.Attach(::GetLastActivePopup(pDefTransWnd->GetSafeHwnd()));
 
 		CWnd* pDefTransCtrl = FindWndByCtrlID(/*pDefTransWnd*/&wndPopup, id, NULL);
+		
 		wndPopup.Detach();
 		if(pDefTransCtrl && pDefTransCtrl->GetSafeHwnd())
 		{
@@ -2735,6 +2745,13 @@ void CDlgResult::OnConnectMaintop()
 
 
 	CSolution* pCurSln = pSingleton->m_BackupSolutionList.at(pSingleton->m_CurSlnIndex);
+	if (pCurSln == NULL)
+	{
+		return;
+	}
+
+	BaseInfo& CurBaseInfo = pCurSln->m_BaseInfo; 
+
 
 	int nPanelNum = pCurSln->GetPanelNum();
 	if (nPanelNum < 1)
@@ -2753,6 +2770,9 @@ void CDlgResult::OnConnectMaintop()
 	vector<string> x_pos_list;
 	vector<string> y_pos_list;
 
+	vector<string> pic_name_x_pos_list;
+	vector<string> pic_name_y_pos_list;
+
 
 	//exe 路径
 	string exe_path = m_BaseInfo.m_strMainTopPath;
@@ -2765,16 +2785,18 @@ void CDlgResult::OnConnectMaintop()
 		string file_path = pCpn->m_strCabinetName;
 		float x = pCpn->m_x;
 		float y;
+		float pic_y ;
+
 		if (pCpn->m_nRotatedAngle == 0)
 		{
 
 			y = pCurPanel->m_OrgWidth - pCpn->m_y - pCpn->m_RealWidth;	// 左上角为原点， y要取反
-
+			pic_y = y + pCpn->m_RealWidth + CurBaseInfo.m_y_space*0.2;
 		}
 		else
 		{
 			y = pCurPanel->m_OrgWidth - pCpn->m_y;	// 左上角为原点， y要取反
-
+			pic_y = y + CurBaseInfo.m_y_space*0.2;
 
 		}
 
@@ -2796,56 +2818,23 @@ void CDlgResult::OnConnectMaintop()
 		x_pos_list.push_back(str_x);
 		y_pos_list.push_back(str_y);
 
+		
+		// 文字顶部会碰到图片
+
+		ss.clear();
+		ss.str("");
+
+		ss << pic_y;
+
+		string str_pic_y = ss.str();
+
+
+
+		pic_name_x_pos_list.push_back(str_x);
+		pic_name_y_pos_list.push_back(str_pic_y);
+
+
 	}
-
-
-
-#if 0
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\001.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\002.tif");
-// 	file_list.push_back("C:\\Users\\admin\\Desktop\\tif测试图片\\003.tif");
-
-
-#else
-// 	file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\001.tif");
-// 	file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\002.tif");
-// 	file_list.push_back("D:\\QQPCmgr\\Desktop\\tif测试图片\\003.tif");
-#endif
-
-
-
-
-
-
-
-// 	x_pos_list.push_back("100");
-// 	x_pos_list.push_back("200");
-// 	x_pos_list.push_back("300");
-	// 		x_pos_list.push_back("1500");
-	// 		x_pos_list.push_back("1600");
-	// 		x_pos_list.push_back("1700");
-	// 		x_pos_list.push_back("3100");
-	// 		x_pos_list.push_back("3200");
-	// 		x_pos_list.push_back("3300");
-
-
-// 	y_pos_list.push_back("10");
-// 	y_pos_list.push_back("1800");
-// 	y_pos_list.push_back("3600");
-	// 		y_pos_list.push_back("10");
-	// 		y_pos_list.push_back("1800");
-	// 		y_pos_list.push_back("3600");
-	// 		y_pos_list.push_back("10");
-	// 		y_pos_list.push_back("1800");
-	// 		y_pos_list.push_back("3600");
-
-
 
 
 	CString exe_title;
@@ -2864,38 +2853,38 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-		exe_id = ::FindWindow(NULL, exe_title);
-		int find_exe_num = 0;
-		int find_count = 0;
+	exe_id = ::FindWindow(NULL, exe_title);
+	int find_exe_num = 0;
+	int find_count = 0;
 
-		if (exe_id == 0)
+	if (exe_id == 0)
+	{
+		// 启动程序
+
+		ShellExecute(NULL, "open", exe_path.c_str(), NULL, NULL, SW_SHOWNORMAL); 
+
+
+		while(exe_id == 0)
 		{
-			// 启动程序
+			Sleep(SLEEP_100MS);
 
-			ShellExecute(NULL, "open", exe_path.c_str(), NULL, NULL, SW_SHOWNORMAL); 
+			exe_id = ::FindWindow(NULL, exe_title);
 
 
-			while(exe_id == 0)
+
+			find_exe_num++;
+
+			// 10秒未启动
+			if (find_exe_num >= FIND_TIMES)
 			{
-				Sleep(SLEEP_100MS);
-
-				exe_id = ::FindWindow(NULL, exe_title);
-
-
-
-				find_exe_num++;
-				
-				// 10秒未启动
-				if (find_exe_num >= FIND_TIMES)
-				{
-					AfxMessageBox("超过20秒未找到蒙泰程序窗口，退出！");
-					return;
-				}
-
-
+				AfxMessageBox("超过20秒未找到蒙泰程序窗口，退出！");
+				return;
 			}
 
+
 		}
+
+	}
 
 
 		if (exe_id != NULL)
@@ -2999,10 +2988,6 @@ void CDlgResult::OnConnectMaintop()
 
 #endif
 				
-
-				
-
-
 
 			}
 			else
@@ -3591,8 +3576,8 @@ void CDlgResult::OnConnectMaintop()
 			{
 				Component* pCpn = cpn_list.at(i);
 				string cur_file_path = file_list.at(i);
-				string str_pos_x = x_pos_list.at(i);
-				string str_pos_y = y_pos_list.at(i);
+				string str_pos_x = pic_name_x_pos_list.at(i);
+				string str_pos_y = pic_name_y_pos_list.at(i);
 				string file_name = pCpn->m_BarCode;
 				int index = pCpn->m_IndexInSameCpn;
 
@@ -3606,20 +3591,30 @@ void CDlgResult::OnConnectMaintop()
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
+
 				// 移到空白处 左键按下，移动鼠标，左键抬起
 
 				int text_tool_down_x	= text_tool_x + 100	;
 				int text_tool_down_y	= text_tool_y;
-				int text_tool_up_x		= text_tool_x + 125;
-				int text_tool_up_y		= text_tool_y;
+				int text_tool_up_x		= text_tool_down_x + 100;
+				int text_tool_up_y		= text_tool_down_y + 100;
 
 				// 按下
 				SetCursorPos(text_tool_down_x, text_tool_down_y);
 				mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
 
+
+				Sleep(SLEEP_500MS);
+
 				// 拖拽 抬起
 				SetCursorPos(text_tool_up_x, text_tool_up_y);
 				mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+				Sleep(SLEEP_100MS*2);
+
+
 
 				// 复制粘贴
 
@@ -3632,18 +3627,114 @@ void CDlgResult::OnConnectMaintop()
 				keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
+
+
+
 				// 确定
 				keybd_event(VK_RETURN, 0, 0, 0);
 				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
 
 
-				// 切换到点选模式
+
+				//SetCursorPos((exe_wnd_rect.left + exe_wnd_rect.right)/2, (exe_wnd_rect.top	 + exe_wnd_rect.bottom)/2);
+
+
+
+				// 鼠标 按下右键  + “O” 
+				mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
+				Sleep(SLEEP_100MS);
+				keybd_event('O', 0, 0, 0);						// 按下v
+				keybd_event('O', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+
+
+
+
+
+
+
+				// 选择窗口“图形文字字体属性” 
+
+
+				HWND pic_text_dlg_id;
+				CString pic_text_dlg_title = "图形文字字体属性";
+
+				while(!(pic_text_dlg_id = ::FindWindow("#32770", pic_text_dlg_title)))
+				{
+
+
+					Sleep(SLEEP_100MS);
+					find_count++;
+
+					// 10秒未启动
+					if (find_count >= FIND_TIMES)
+					{
+						AfxMessageBox("超过10秒未找到“图形文字字体属性”窗口，退出！");
+						return;
+					}
+
+				}
+
+				
+				RECT pic_text_dlg_rect;
+				::GetWindowRect(pic_text_dlg_id, &pic_text_dlg_rect);
+
+
+				// 行高坐标 100 220
+
+				stringstream ss2;
+				string s2;
+
+				int text_height_x = pic_text_dlg_rect.left + 100, text_height_y = pic_text_dlg_rect.top + 220;
+
+
+				// 窗口获取焦点
+
+				SetCursorPos(text_height_x, text_height_y);
+				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+
+				// 复制行高
+
+				ss2 << CurBaseInfo.m_y_space*0.5;
+				s2 = ss2.str();
+
+				ss2.clear();
+				ss2.str("");
+
+
+				// 设置到剪切板
+				CopyToClipboard(s2.c_str(), s2.length());
+
+				// 粘贴 Ctrl+V
 				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-				keybd_event(';', 0, 0, 0);						// 按下v
-				keybd_event(';', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+				keybd_event('V', 0, 0, 0);						// 按下v
+				keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
+
+
+				// 确定
+				keybd_event(VK_RETURN, 0, 0, 0);
+				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+
+				Sleep(SLEEP_100MS);
+
+				// 切换到点选模式
+				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+				keybd_event(VK_OEM_1, 0, 0, 0);						// 按下v
+				keybd_event(VK_OEM_1, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+
+
+				Sleep(SLEEP_100MS);
 
 
 				// 修改坐标位置
@@ -3656,25 +3747,67 @@ void CDlgResult::OnConnectMaintop()
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
+				Sleep(SLEEP_100MS);
 
 
+				// 删除现有信息，有负号双击不会删掉，需要手动删除
+				keybd_event(VK_BACK, 0, 0, 0);						// 按下v
+				keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 
-				// 输入
+
+				Sleep(SLEEP_100MS);
+
+				keybd_event(VK_BACK, 0, 0, 0);						// 按下v
+				keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+
+				Sleep(SLEEP_100MS);
+
+
+				// 输入 x
 				InputNormalString(str_pos_x);
-
-
-
-
 
 				// 按下table键
 				keybd_event(VK_TAB, 0, 0, 0);
 				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
 
 
+				Sleep(SLEEP_100MS);
 
-
-				// 输入
+				// 输入 y
 				InputNormalString(str_pos_y);
+
+			
+
+
+			
+
+
+// 				// 输入 长度
+// 				ss2 << pCpn->m_RealLength;
+// 
+// 				s2 = ss2.str();
+// 
+// 				InputNormalString(s2);
+// 
+// 
+// 				ss2.clear();
+// 				ss2.str("");
+// 
+// 
+// 
+// 				// 按下table键
+// 				keybd_event(VK_TAB, 0, 0, 0);
+// 				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+// 
+// 
+// 				// 输入 长度
+// 				ss2 << CurBaseInfo.m_y_space - 1;
+// 
+// 				s2 = ss2.str();
+// 
+// 				InputNormalString(s2);
+
 
 
 

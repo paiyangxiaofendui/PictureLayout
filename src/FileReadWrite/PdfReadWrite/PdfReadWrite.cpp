@@ -74,6 +74,19 @@ std::wstring Ansi2WChar(LPCSTR pszSrc, int nLen)
 }
 
 
+std::string WStringToString(const std::wstring &wstr)
+{
+	std::string str;
+	int nLen = (int)wstr.length();
+	str.resize(nLen, ' ');
+	int nResult = WideCharToMultiByte(CP_ACP, 0, (LPCWSTR)wstr.c_str(), nLen, (LPSTR)str.c_str(), nLen, NULL, NULL);
+	if (nResult == 0)
+	{
+		return "";
+	}
+	return str;
+}
+
 
 /*-------------------------------------------------------*/
 //	º¯ÊýËµÃ÷£º
@@ -103,6 +116,11 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 		if (p.begin_document(unicode_filepath.c_str(),  L"") == -1) {
 			wcerr << "Error: " << p.get_errmsg() << endl;
+
+			string msg = WStringToString(p.get_errmsg());
+
+			AfxMessageBox(msg.c_str());
+
 			return false;
 		}
 
@@ -127,6 +145,10 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 		if (font == -1) {
 			wcerr << L"Error: " << p.get_errmsg() << endl;
+
+			string msg = WStringToString(p.get_errmsg());
+
+			AfxMessageBox(msg.c_str());
 			return false;
 		}
 		p.setfont(font, 24);
@@ -213,6 +235,10 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 			if (image == -1) {
 				wcerr << L"Error: " << p.get_errmsg() << endl;
 
+				string msg = WStringToString(p.get_errmsg());
+
+				AfxMessageBox(msg.c_str());
+
 				return false;
 			}
 
@@ -250,6 +276,11 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 		wcerr << L"PDFlib exception occurred in hello sample: " << endl
 			<< L"[" << ex.get_errnum() << L"] " << ex.get_apiname()
 			<< L": " << ex.get_errmsg() << endl;
+
+		string msg = WStringToString(ex.get_errmsg());
+
+		AfxMessageBox(msg.c_str());
+
 		return false;
 	}
 
