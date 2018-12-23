@@ -3620,15 +3620,18 @@ void CDlgResult::OnConnectMaintop()
 
 				int text_tool_down_x	= text_tool_x + 100	;
 				int text_tool_down_y	= text_tool_y;
-				int text_tool_up_x		= text_tool_down_x + 100;
-				int text_tool_up_y		= text_tool_down_y + 100;
+				int text_tool_up_x		= text_tool_down_x + 200;
+				int text_tool_up_y		= text_tool_down_y + 200;
 
 				// 按下
 				SetCursorPos(text_tool_down_x, text_tool_down_y);
 				mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
 
 
-				Sleep(SLEEP_500MS);
+				Sleep(SLEEP_100MS);
+
+			
+
 
 				// 拖拽 抬起
 				SetCursorPos(text_tool_up_x, text_tool_up_y);
@@ -3636,7 +3639,51 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-				Sleep(SLEEP_100MS*2);
+				Sleep(SLEEP_100MS);
+
+
+				HWND text_dlg_id;
+				CString text_dlg_title = "图形文字";
+
+				while(!(text_dlg_id = ::FindWindow("#32770", text_dlg_title)))
+				{
+
+
+					Sleep(SLEEP_100MS);
+					find_count++;
+
+
+					// 按下
+					SetCursorPos(text_tool_down_x, text_tool_down_y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
+
+
+					Sleep(SLEEP_1000MS);
+
+
+
+
+					// 拖拽 抬起
+					SetCursorPos(text_tool_up_x, text_tool_up_y);
+					mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+
+
+					// 10秒未启动
+					if (find_count >= FIND_TIMES)
+					{
+						AfxMessageBox("超过10秒未找到“图形文字”窗口，退出！");
+						return;
+					}
+
+				}
+
+
+
+
+
 
 
 
