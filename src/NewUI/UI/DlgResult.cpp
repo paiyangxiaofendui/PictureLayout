@@ -2611,7 +2611,7 @@ void CDlgResult::EmptyCtrlContent(HWND hWnd)
 }
 
 
-void CDlgResult::SetCtrlText(CString title, int id,  CString ctrl_type, CString text)
+bool CDlgResult::SetCtrlText(CString title, int id,  CString ctrl_type, CString text)
 {
 	
 
@@ -2657,19 +2657,26 @@ void CDlgResult::SetCtrlText(CString title, int id,  CString ctrl_type, CString 
 		}
 		else
 		{
-			strMsg.Format(_T("在默认窗口下找不到控件：ID=%d CtrlClassName=%s"), id, "Edit");
+			strMsg.Format(_T("在默认窗口下找不到控件：窗口=%s ID=%d CtrlClassName=%s"),title, id, "Edit");
 			AfxMessageBox(strMsg);
+
+			return false;
 		}
 	}
 	else
 	{
-		strMsg.Format("找不到默认窗口！");
+		strMsg.Format("找不到默认窗口：%s！", title);
 		AfxMessageBox(strMsg);
+
+		return false;
 	}
+
+
+	return true;
 }
 
 
-void CDlgResult::SetBottomAction(CString title, int id, UINT action)
+bool CDlgResult::SetBottomAction(CString title, int id, UINT action)
 {
 	CString strMsg;
 	strMsg.Format("默认转发窗口:%s 默认转发控件ID:%d", title, id);
@@ -2708,15 +2715,20 @@ void CDlgResult::SetBottomAction(CString title, int id, UINT action)
 		}
 		else
 		{
-			strMsg.Format("找不到默认控件！");
+			strMsg.Format("找不到默认控件！窗口:%s 控件ID:%d", title, id);
 			AfxMessageBox(strMsg);
+			return false;
 		}	
 	}
 	else
 	{
-		strMsg.Format("找不到默认窗口！");
+		strMsg.Format("找不到默认窗口:%s！", title);
 		AfxMessageBox(strMsg);
+		return false;
 	}
+
+
+	return true;
 }
 
 
@@ -3205,7 +3217,11 @@ void CDlgResult::OnConnectMaintop()
 #else
 
 						int file_path_id = 1152;
-						SetCtrlText(file_dlg_tile, file_path_id,"Edit", cur_file_path.c_str());
+						if (!SetCtrlText(file_dlg_tile, file_path_id,"Edit", cur_file_path.c_str()))
+						{
+							return;
+						}
+						
 
 
 #endif
@@ -3393,7 +3409,11 @@ void CDlgResult::OnConnectMaintop()
 #else
 							int keep_org_img_size_id = 100;
 
-							SetBottomAction(img_attribule_dlg_title, keep_org_img_size_id, BM_CLICK);
+							if (!SetBottomAction(img_attribule_dlg_title, keep_org_img_size_id, BM_CLICK))
+							{
+								return ;
+							}
+
 
 #endif
 
@@ -3414,7 +3434,11 @@ void CDlgResult::OnConnectMaintop()
 
 							int ok_id = 1;
 
-							SetBottomAction(img_attribule_dlg_title, ok_id, BM_CLICK);
+							if (!SetBottomAction(img_attribule_dlg_title, ok_id, BM_CLICK))
+							{
+								return ;
+							}
+
 
 
 

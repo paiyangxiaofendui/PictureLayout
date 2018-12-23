@@ -227,8 +227,8 @@ public:
 
 	void setEditCtrlString(int pos_x, int pos_y, string str, int sleep_time = 0);
 
-	static void SetBottomAction(CString title, int id, UINT action);
-	static void SetCtrlText(CString title, int id,  CString ctrl_type, CString text);
+	static bool SetBottomAction(CString title, int id, UINT action);
+	static bool SetCtrlText(CString title, int id,  CString ctrl_type, CString text);
 
 	static void EmptyCtrlContent(HWND hWnd);
 	static CWnd* FindWndByCtrlID(CWnd* pWnd, UINT nCtrlID, LPCTSTR szClassName);
