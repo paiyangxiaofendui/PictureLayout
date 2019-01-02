@@ -8,19 +8,20 @@
 
 using namespace std;
 
-// 全局宏定义
-#define		NEW_ENCRYPT_BASE64		1
-
-#define HG_EDITION 0
-#define YW_EDITION 1
-
-#define CUR_EDITION HG_EDITION
 
 
 
+//0:智能模式 1：省料优先 2：后道优先 3：客户优先*/	
 
 
-
+typedef enum
+{
+	LayoutMethod_Smart = 0,
+	LayoutMethod_Minwaste,
+	LayoutMethod_OneCut,
+	LayoutMethod_ClientFirst,
+	
+}LayoutMethod;
 
 
 
@@ -66,6 +67,18 @@ typedef enum LayoutOrg
 	LayoutOrg_RightTop					// 右上角
 
 }LayoutOrg;
+
+typedef enum
+{
+	TextPos_TopLeft = 0,				// 0：上左        
+	TextPos_TopMid,						// 1：上中
+	TextPos_TopRight,					// 2：上右
+	TextPos_BottomLeft,					// 3：下左
+	TextPos_BottomMid,					// 4：下中
+	TextPos_BottomRight					// 5：下右
+
+}TextPos;
+
 
 
 // 大板类型  原料、余料
