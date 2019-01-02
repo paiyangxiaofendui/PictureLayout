@@ -2864,6 +2864,9 @@ void CDlgResult::OnConnectMaintop()
 				pic_y = y - pCpn->m_RealWidth ;
 			}
 
+			// 文字的y向上移动y间距
+			pic_y -= text_height;
+
 
 			break;
 		case TextPos_TopMid:
@@ -2878,6 +2881,9 @@ void CDlgResult::OnConnectMaintop()
 				pic_y = y - pCpn->m_RealWidth ;
 			}
 
+			// 文字的y向上移动y间距
+			pic_y -= text_height;
+
 			break;
 		case TextPos_TopRight:
 			pic_x = x + pCpn->m_RealLength - file_text_len;
@@ -2890,6 +2896,9 @@ void CDlgResult::OnConnectMaintop()
 			{
 				pic_y = y - pCpn->m_RealWidth ;
 			}
+
+			// 文字的y向上移动y间距
+			pic_y -= text_height;
 
 			break;
 		case TextPos_BottomLeft:
@@ -2947,8 +2956,6 @@ void CDlgResult::OnConnectMaintop()
 			break;
 		}
 
-		// 文字的y向上移动y间距
-		pic_y -= text_height;
 
 
 
