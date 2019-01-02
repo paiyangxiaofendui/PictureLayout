@@ -2502,6 +2502,13 @@ void  CDlgResult::InputNormalString(string str)
 			keybd_event(VK_DECIMAL, 0, 0, 0);					// 按下
 			keybd_event(VK_DECIMAL, 0, KEYEVENTF_KEYUP, 0);		// 抬起
 		}
+		else if (c == '-')
+		{
+
+			keybd_event(VK_OEM_MINUS, 0, 0, 0);					// 按下
+			keybd_event(VK_OEM_MINUS, 0, KEYEVENTF_KEYUP, 0);		// 抬起
+			
+		}
 		else
 		{
 			keybd_event(c, 0, 0, 0);					// 按下
@@ -2790,14 +2797,20 @@ void CDlgResult::OnConnectMaintop()
 	string exe_path = m_BaseInfo.m_strMainTopPath;
 
 
+	float text_width = CurBaseInfo.m_FontSize/7.0;
+	float text_height = CurBaseInfo.m_FontSize/3.0;
+
 	for (int i_cpn = 0; i_cpn < cpn_list.size(); i_cpn++)
 	{
 		Component* pCpn = cpn_list.at(i_cpn);
 
 		string file_path = pCpn->m_strCabinetName;
-		float x = pCpn->m_x;
-		float y;
+		string bar_code = pCpn->m_BarCode;
+		float x = pCpn->m_x; // 左上角
+		float y;			 // 左上角
+		float pic_x ;
 		float pic_y ;
+		int file_text_len;
 
 		if (pCpn->m_nRotatedAngle == 0)
 		{
@@ -2830,8 +2843,128 @@ void CDlgResult::OnConnectMaintop()
 		x_pos_list.push_back(str_x);
 		y_pos_list.push_back(str_y);
 
+
+
+		file_text_len =  bar_code.length();
+		file_text_len *= text_width ; 
+
+
 		
+		switch(CurBaseInfo.m_FileTextPosition)
+		{
+		case TextPos_TopLeft:
+			pic_x = x;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y  ;
+			}
+			else
+			{
+				pic_y = y - pCpn->m_RealWidth ;
+			}
+
+
+			break;
+		case TextPos_TopMid:
+			pic_x = x + pCpn->m_RealLength/2 - file_text_len/2;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y  ;
+			}
+			else
+			{
+				pic_y = y - pCpn->m_RealWidth ;
+			}
+
+			break;
+		case TextPos_TopRight:
+			pic_x = x + pCpn->m_RealLength - file_text_len;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y  ;
+			}
+			else
+			{
+				pic_y = y - pCpn->m_RealWidth ;
+			}
+
+			break;
+		case TextPos_BottomLeft:
+			pic_x = x;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y + pCpn->m_RealWidth ;
+			}
+			else
+			{
+				pic_y = y ;
+			}
+
+
+
+			break;
+		case TextPos_BottomMid:
+			pic_x = x + pCpn->m_RealLength/2 - file_text_len/2;;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y + pCpn->m_RealWidth ;
+			}
+			else
+			{
+				pic_y = y ;
+			}
+
+			break;
+		case TextPos_BottomRight:
+			pic_x =  x + pCpn->m_RealLength - file_text_len;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y + pCpn->m_RealWidth ;
+			}
+			else
+			{
+				pic_y = y ;
+			}
+
+			break;
+		default:
+			pic_x = x;
+
+			if (pCpn->m_nRotatedAngle == 0)
+			{
+				pic_y = y + pCpn->m_RealWidth ;
+			}
+			else
+			{
+				pic_y = y ;
+			}
+			break;
+		}
+
+		// 文字的y向上移动y间距
+		pic_y -= text_height;
+
+
+
+
+
+
+
 		// 文字顶部会碰到图片
+
+		ss.clear();
+		ss.str("");
+		
+		ss << pic_x;
+
+		string str_pic_x = ss.str();
+
 
 		ss.clear();
 		ss.str("");
@@ -2842,7 +2975,7 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-		pic_name_x_pos_list.push_back(str_x);
+		pic_name_x_pos_list.push_back(str_pic_x);
 		pic_name_y_pos_list.push_back(str_pic_y);
 
 
@@ -3769,7 +3902,7 @@ void CDlgResult::OnConnectMaintop()
 
 				// 复制行高
 
-				ss2 << CurBaseInfo.m_y_space*0.5;
+				ss2 << /*CurBaseInfo.m_y_space*0.5*/CurBaseInfo.m_FontSize;
 				s2 = ss2.str();
 
 				ss2.clear();
@@ -4062,6 +4195,18 @@ void CDlgResult::OnOpenSourcePicInfo()
 					int		Method			=  stoi(pCurPrinciple->Attribute("Method"));
 					int		OPTimes			=  stoi(pCurPrinciple->Attribute("OPTimes"));
 					int		Origin			=  stoi(pCurPrinciple->Attribute("Origin"));
+
+					int		TextPosition	=  stoi(pCurPrinciple->Attribute("TextPosition"));
+					int		AutoSpace		=  stoi(pCurPrinciple->Attribute("AutoSpace"));
+					float	FontSize	=  stof(pCurPrinciple->Attribute("FontSize"));
+					int		OneLabel		=  stoi(pCurPrinciple->Attribute("OneLabel"));
+					int		PositionSignDist=  stoi(pCurPrinciple->Attribute("PositionSignDist"));
+
+
+
+
+
+
 					float	XSpace			=  stof(pCurPrinciple->Attribute("XSpace"));
 					float	YSpace			=  stof(pCurPrinciple->Attribute("YSpace"));
 					float	LeftOffset		=  stof(pCurPrinciple->Attribute("LeftOffset"));
@@ -4070,22 +4215,59 @@ void CDlgResult::OnOpenSourcePicInfo()
 					float	BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
 					string	maintop_path	=  pCurPrinciple->Attribute("MainTopPath");	
 
-					m_BaseInfo.m_LayoutMethod			=	Method		;
+					switch(Method)
+					{
+					case 0:	// 省料
+					case 1:	// 后道
+						m_BaseInfo.m_LayoutMethod		=	Method		;
+						break;
+					case 2: // 客户
+						m_BaseInfo.m_LayoutMethod		=	Method		;
+						m_BaseInfo.m_bCustomerFirst		= true;
+						break;
+					case 3: // 智能
+						m_BaseInfo.m_LayoutMethod	= 1;
+						break;
+					default:
+						m_BaseInfo.m_LayoutMethod	= 1;
+						break;
+					}
+
 					m_BaseInfo.m_FirstSectionOPTimes	=	OPTimes		;
-					m_BaseInfo.m_LayoutOrg				=	Origin		;
-					m_BaseInfo.m_x_space				=	XSpace		;		
-					m_BaseInfo.m_y_space				=	YSpace		;		
+					m_BaseInfo.m_LayoutOrg				=	Origin		;	
 					m_BaseInfo.m_left_offset			=	LeftOffset	;	
 					m_BaseInfo.m_right_offset			=	RightOffset	;	
 					m_BaseInfo.m_top_offset				=	TopOffset	;	
 					m_BaseInfo.m_bottom_offset			=	BottomOffset;
 					m_BaseInfo.m_strMainTopPath			=	maintop_path;
 
-					// 
-					if (m_BaseInfo.m_LayoutMethod == 3)
+					m_BaseInfo.m_FileTextPosition		= TextPosition;
+					m_BaseInfo.m_AutoSpace				= AutoSpace;
+					m_BaseInfo.m_FontSize				= FontSize;
+					m_BaseInfo.m_OneLabel				= OneLabel;
+					m_BaseInfo.m_PositionSignDist		= PositionSignDist;
+
+					if (m_BaseInfo.m_AutoSpace)
 					{
-						m_BaseInfo.m_bCustomerFirst = true;
+						// 取高度
+						float tmp = FontSize/3.0;
+						int new_space = tmp+1;
+						m_BaseInfo.m_x_space				= 0;
+						m_BaseInfo.m_y_space				= new_space;
+
 					}
+					else
+					{
+
+						m_BaseInfo.m_x_space				=	XSpace		;		
+						m_BaseInfo.m_y_space				=	YSpace		;	
+
+					}
+
+
+
+
+					// 
 
 				}
 			}

@@ -68,6 +68,18 @@ typedef enum LayoutOrg
 
 }LayoutOrg;
 
+typedef enum
+{
+	TextPos_TopLeft = 0,				// 0：上左        
+	TextPos_TopMid,						// 1：上中
+	TextPos_TopRight,					// 2：上右
+	TextPos_BottomLeft,					// 3：下左
+	TextPos_BottomMid,					// 4：下中
+	TextPos_BottomRight					// 5：下右
+
+}TextPos;
+
+
 
 // 大板类型  原料、余料
 

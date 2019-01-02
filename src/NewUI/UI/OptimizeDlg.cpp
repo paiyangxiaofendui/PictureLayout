@@ -455,6 +455,12 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 	singleton_info.m_bCustomerFirst			=		m_BaseInfo.m_bCustomerFirst; 
 
 
+	singleton_info.m_FileTextPosition		= m_BaseInfo.m_FileTextPosition	;
+	singleton_info.m_AutoSpace				= m_BaseInfo.m_AutoSpace		;	
+	singleton_info.m_FontSize				= m_BaseInfo.m_FontSize			;
+	singleton_info.m_OneLabel				= m_BaseInfo.m_OneLabel			;
+	singleton_info.m_PositionSignDist		= m_BaseInfo.m_PositionSignDist	;
+
 
 
 	float offset = m_BaseInfo.m_left_offset + m_BaseInfo.m_right_offset;
