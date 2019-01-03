@@ -16,7 +16,7 @@ class Panel;
 class AFX_EXT_CLASS DxfReadWrite
 {
 public:
-	static bool OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath);	
+	static bool OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int type , float size,  float dist);	
 	static bool OutputDownerFaceDxf(Panel* pPanel, CString strDxfFilePath);
 
 };

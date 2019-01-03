@@ -45,7 +45,7 @@
 //
 //
 /*-------------------------------------------------------*/
-bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath) 
+bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int type , float size,  float dist) 
 {
 
 
@@ -177,6 +177,256 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath)
 // 		for (int i_panel = 0; i_panel < nPanelNum; i_panel++)
 // 		{
 // 			Panel* pPanel = pCurSln->GetPanel(i_panel);
+
+
+
+			// 定位符
+#if 1
+
+
+			int hori_num = pPanel->m_OrgLen/dist;
+			int vert_num = pPanel->m_OrgWidth/dist;
+			float offset = size/2;
+
+			float pos_x = - offset;
+			float pos_y = pPanel->m_OrgWidth + offset;
+
+
+			// 第一个点
+
+			switch(type)
+			{
+			case 0:
+
+				dxf->writeCircle(
+					*dw,
+					DL_CircleData(
+					pos_x,  
+					pos_y,
+					0.0,
+					offset),
+					DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+				break;
+
+			case 1:
+				dxf->writeLine(
+					*dw,
+					DL_LineData(
+					pos_x - offset,   // start point
+					pos_y,
+					0.0,
+					pos_x + offset,     // end point
+					pos_y,
+					0.0),
+					DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+				dxf->writeLine(
+					*dw,
+					DL_LineData(
+					pos_x,   // start point
+					pos_y + offset,
+					0.0,
+					pos_x,   // end point
+					pos_y - offset,
+					0.0),
+					DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+
+				break;
+			default:
+				dxf->writeLine(
+					*dw,
+					DL_LineData(
+					pos_x - offset,   // start point
+					pos_y,
+					0.0,
+					pos_x + offset,     // end point
+					pos_y,
+					0.0),
+					DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+				dxf->writeLine(
+					*dw,
+					DL_LineData(
+					pos_x,   // start point
+					pos_y + offset,
+					0.0,
+					pos_x,   // end point
+					pos_y - offset,
+					0.0),
+					DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+				break;
+			}
+
+
+
+
+
+
+
+
+			for (int i = 1; i < hori_num; i++)
+			{
+				pos_x = i*dist;
+				pos_y = pPanel->m_OrgWidth + offset;
+
+
+
+				switch(type)
+				{
+				case 0:
+
+					dxf->writeCircle(
+						*dw,
+						DL_CircleData(
+						pos_x,  
+						pos_y,
+						0.0,
+						offset),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					break;
+
+				case 1:
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x - offset,   // start point
+						pos_y,
+						0.0,
+						pos_x + offset,     // end point
+						pos_y,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x,   // start point
+						pos_y + offset,
+						0.0,
+						pos_x,   // end point
+						pos_y - offset,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+
+					break;
+				default:
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x - offset,   // start point
+						pos_y,
+						0.0,
+						pos_x + offset,     // end point
+						pos_y,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x,   // start point
+						pos_y + offset,
+						0.0,
+						pos_x,   // end point
+						pos_y - offset,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					break;
+				}
+
+
+			}
+
+
+			for (int i = 1; i < vert_num; i++)
+			{
+				pos_x = -offset;
+				pos_y = i*dist;
+
+
+
+				switch(type)
+				{
+				case 0:
+					dxf->writeCircle(
+						*dw,
+						DL_CircleData(
+						pos_x,  
+						pos_y,
+						0.0,
+						offset),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					break;
+
+				case 1:
+
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x - offset,   // start point
+						pos_y,
+						0.0,
+						pos_x + offset,     // end point
+						pos_y,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x,   // start point
+						pos_y + offset,
+						0.0,
+						pos_x,   // end point
+						pos_y - offset,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+
+					break;
+				default:
+
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x - offset,   // start point
+						pos_y,
+						0.0,
+						pos_x + offset,     // end point
+						pos_y,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					dxf->writeLine(
+						*dw,
+						DL_LineData(
+						pos_x,   // start point
+						pos_y + offset,
+						0.0,
+						pos_x,   // end point
+						pos_y - offset,
+						0.0),
+						DL_Attributes("mainlayer", 256, -1, "BYLAYER", 1.0));
+
+					break;
+				}
+
+				
+			}
+
+
+
+
+
+#endif
+
 
 
 			// 大板轮廓

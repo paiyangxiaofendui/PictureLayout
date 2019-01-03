@@ -463,7 +463,7 @@ void CDlgResult::OnBtnExportDxf()
 			CString DownerFilePath = strFilePath;
 			DownerFilePath.Replace(".dxf", "@W.dxf");
 
-			if (DxfReadWrite::OutputUpperFaceDxf(pParam->m_pPanel, strFilePath) == true )
+			if (DxfReadWrite::OutputUpperFaceDxf(pParam->m_pPanel, strFilePath, m_BaseInfo.m_PositionSignType, m_BaseInfo.m_PositionSignSize, m_BaseInfo.m_PositionSignDist) == true )
 			{
 				AfxMessageBox("文件保存成功！");
 			}
@@ -4199,15 +4199,17 @@ void CDlgResult::OnOpenSourcePicInfo()
 
 				if ( pCurPrinciple != NULL)
 				{
-					int		Method			=  stoi(pCurPrinciple->Attribute("Method"));
-					int		OPTimes			=  stoi(pCurPrinciple->Attribute("OPTimes"));
-					int		Origin			=  stoi(pCurPrinciple->Attribute("Origin"));
+					int		Method				=	stoi(pCurPrinciple->Attribute("Method"));
+					int		OPTimes				=	stoi(pCurPrinciple->Attribute("OPTimes"));
+					int		Origin				=	stoi(pCurPrinciple->Attribute("Origin"));
 
-					int		TextPosition	=  stoi(pCurPrinciple->Attribute("TextPosition"));
-					int		AutoSpace		=  stoi(pCurPrinciple->Attribute("AutoSpace"));
-					float	FontSize	=  stof(pCurPrinciple->Attribute("FontSize"));
-					int		OneLabel		=  stoi(pCurPrinciple->Attribute("OneLabel"));
-					int		PositionSignDist=  stoi(pCurPrinciple->Attribute("PositionSignDist"));
+					int		TextPosition		=	stoi(pCurPrinciple->Attribute("TextPosition"));
+					int		AutoSpace			=	stoi(pCurPrinciple->Attribute("AutoSpace"));
+					float	FontSize			=	stof(pCurPrinciple->Attribute("FontSize"));
+					int		OneLabel			=	stoi(pCurPrinciple->Attribute("OneLabel"));
+					float	PositionSignDist	=	stof(pCurPrinciple->Attribute("PositionSignDist"));
+					float	PositionSignSize	=	stof(pCurPrinciple->Attribute("PositionSignSize"));
+					int		PositionSignType	=	stoi(pCurPrinciple->Attribute("PositionSignType"));
 
 
 
@@ -4253,6 +4255,8 @@ void CDlgResult::OnOpenSourcePicInfo()
 					m_BaseInfo.m_FontSize				= FontSize;
 					m_BaseInfo.m_OneLabel				= OneLabel;
 					m_BaseInfo.m_PositionSignDist		= PositionSignDist;
+					m_BaseInfo.m_PositionSignType		= PositionSignType;
+					m_BaseInfo.m_PositionSignSize		= PositionSignSize;
 
 					if (m_BaseInfo.m_AutoSpace)
 					{
