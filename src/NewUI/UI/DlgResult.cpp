@@ -644,10 +644,10 @@ CRect CDlgResult::GetPanelViewRect()
 	ScreenToClient(rcDlgTotalResult);
 	ScreenToClient(rcClipboard);
 
-	rcRet.left = rcClient.left + 10;
-	rcRet.top = rcClient.top + 10;
-	rcRet.right = (m_lbClipBoard.IsWindowVisible() ? rcClipboard.left : rcDlgTotalResult.left) - 10;
-	rcRet.bottom = rcClient.bottom - 50;
+	rcRet.left = rcClient.left /*+ 10*/;
+	rcRet.top = rcClient.top /*+ 10*/;
+	rcRet.right = (m_lbClipBoard.IsWindowVisible() ? rcClipboard.left : rcDlgTotalResult.left) /*- 10*/;
+	rcRet.bottom = rcClient.bottom /*- 50*/;
 
 	return rcRet;
 }
@@ -3735,90 +3735,157 @@ void CDlgResult::OnConnectMaintop()
 				}
 			}
 
-			// 载入图片文件名
-			for (UINT i = 0; i < file_list.size();  i++)
+			try
 			{
-				Component* pCpn = cpn_list.at(i);
-				string cur_file_path = file_list.at(i);
-				string str_pos_x = pic_name_x_pos_list.at(i);
-				string str_pos_y = pic_name_y_pos_list.at(i);
-				string file_name = pCpn->m_BarCode;
-				int index = pCpn->m_IndexInSameCpn;
 
-				// 选择文字工具  坐标 25，295
-				int text_tool_x = exe_wnd_rect.left + 25, text_tool_y = exe_wnd_rect.top + 295;
-
-
-				// 窗口获取焦点
-
-				SetCursorPos(text_tool_x, text_tool_y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-
-
-				// 移到空白处 左键按下，移动鼠标，左键抬起
-
-				int text_tool_down_x	= text_tool_x + 100	;
-				int text_tool_down_y	= text_tool_y;
-				int text_tool_up_x		= text_tool_down_x + 200;
-				int text_tool_up_y		= text_tool_down_y + 200;
-
-				// 按下
-				SetCursorPos(text_tool_down_x, text_tool_down_y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
-
-
-				Sleep(SLEEP_100MS);
-
-			
-
-
-				// 拖拽 抬起
-				SetCursorPos(text_tool_up_x, text_tool_up_y);
-				mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-
-
-				Sleep(SLEEP_100MS);
-
-
-				HWND text_dlg_id;
-				CString text_dlg_title = "图形文字";
-
-				while(!(text_dlg_id = ::FindWindow("#32770", text_dlg_title)))
+				// 载入图片文件名
+				for (UINT i = 0; i < file_list.size();  i++)
 				{
+					Component* pCpn = cpn_list.at(i);
+					string cur_file_path = file_list.at(i);
+					string str_pos_x = pic_name_x_pos_list.at(i);
+					string str_pos_y = pic_name_y_pos_list.at(i);
+					string file_name = pCpn->m_BarCode;
+					int index = pCpn->m_IndexInSameCpn;
 
+					// 标签只打一份
+					if (m_BaseInfo.m_OneLabel == 1 && index != 0)
+					{
+						continue;
+					}
+
+
+					// 选择文字工具  坐标 25，295
+					int text_tool_x = exe_wnd_rect.left + 25, text_tool_y = exe_wnd_rect.top + 295;
+
+
+					// 窗口获取焦点
+
+					OutputDebugString("选择文字工具\n");
+
+					SetCursorPos(text_tool_x, text_tool_y);
 
 					Sleep(SLEEP_100MS);
-					find_count++;
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+					Sleep(SLEEP_100MS);
 
+
+
+					// 移到空白处 左键按下，移动鼠标，左键抬起
+
+					int text_tool_down_x	= text_tool_x + 100	;
+					int text_tool_down_y	= text_tool_y;
+					int text_tool_up_x		= text_tool_down_x + 200;
+					int text_tool_up_y		= text_tool_down_y + 200;
+
+					CPoint ptTgt(text_tool_up_x, text_tool_up_y);
+
+					//换算到event点
+					int mx = ptTgt.x * 65535 / GetSystemMetrics(SM_CXSCREEN);
+					int my = ptTgt.y * 65535 / GetSystemMetrics(SM_CYSCREEN);
+
+					OutputDebugString("按下\n");
 
 					// 按下
 					SetCursorPos(text_tool_down_x, text_tool_down_y);
+
 					mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
 
 
-					Sleep(SLEEP_1000MS);
+					OutputDebugString("移动\n");
+					mouse_event(MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE, mx, my, 0, 0);
+
+					Sleep(SLEEP_100MS*5);
 
 
 
 
 					// 拖拽 抬起
-					SetCursorPos(text_tool_up_x, text_tool_up_y);
+					OutputDebugString("抬起\n");
+					//SetCursorPos(text_tool_up_x, text_tool_up_y);
+
 					mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
 
+					Sleep(SLEEP_100MS);
 
 
-					// 10秒未启动
-					if (find_count >= FIND_TIMES)
+					HWND text_dlg_id;
+					CString text_dlg_title = "图形文字";
+
+					while(!(text_dlg_id = ::FindWindow("#32770", text_dlg_title)))
 					{
-						AfxMessageBox("超过10秒未找到“图形文字”窗口，退出！");
-						return;
+
+
+						Sleep(SLEEP_100MS);
+						find_count++;
+
+
+						// 按下
+						SetCursorPos(text_tool_down_x, text_tool_down_y);
+						mouse_event(MOUSEEVENTF_LEFTDOWN,0,0,0,0);
+
+
+						Sleep(SLEEP_1000MS);
+
+
+
+
+						// 拖拽 抬起
+						SetCursorPos(text_tool_up_x, text_tool_up_y);
+						mouse_event(MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+
+
+
+
+						// 10秒未启动
+						if (find_count >= FIND_TIMES)
+						{
+							AfxMessageBox("超过10秒未找到“图形文字”窗口，退出！");
+							return;
+						}
+
 					}
 
-				}
+
+
+
+
+
+					OutputDebugString("打开图形文字窗口\n");
+
+
+					// 复制粘贴
+
+					// 设置到剪切板
+					CopyToClipboard(file_name.c_str(), file_name.length());
+
+					// 粘贴 Ctrl+V
+					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+					keybd_event('V', 0, 0, 0);						// 按下v
+					keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+
+
+
+
+					// 确定
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+					//SetCursorPos((exe_wnd_rect.left + exe_wnd_rect.right)/2, (exe_wnd_rect.top	 + exe_wnd_rect.bottom)/2);
+
+
+
+					// 鼠标 按下右键  + “O” 
+					mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
+					Sleep(SLEEP_100MS);
+					keybd_event('O', 0, 0, 0);						// 按下v
+					keybd_event('O', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 
 
 
@@ -3827,208 +3894,182 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-				// 复制粘贴
-
-				// 设置到剪切板
-				CopyToClipboard(file_name.c_str(), file_name.length());
-
-				// 粘贴 Ctrl+V
-				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-				keybd_event('V', 0, 0, 0);						// 按下v
-				keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+					// 选择窗口“图形文字字体属性” 
 
 
+					HWND pic_text_dlg_id;
+					CString pic_text_dlg_title = "图形文字字体属性";
+
+					while(!(pic_text_dlg_id = ::FindWindow("#32770", pic_text_dlg_title)))
+					{
 
 
-				// 确定
-				keybd_event(VK_RETURN, 0, 0, 0);
-				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+						Sleep(SLEEP_100MS);
+						find_count++;
+
+						// 10秒未启动
+						if (find_count >= FIND_TIMES)
+						{
+							AfxMessageBox("超过10秒未找到“图形文字字体属性”窗口，退出！");
+							return;
+						}
+
+					}
+
+
+					OutputDebugString("图形文字属性\n");
+					RECT pic_text_dlg_rect;
+					::GetWindowRect(pic_text_dlg_id, &pic_text_dlg_rect);
+
+
+					// 行高坐标 100 220
+
+					stringstream ss2;
+					string s2;
+
+					int text_height_x = pic_text_dlg_rect.left + 100, text_height_y = pic_text_dlg_rect.top + 220;
+
+
+					// 窗口获取焦点
+
+					SetCursorPos(text_height_x, text_height_y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
 
-				//SetCursorPos((exe_wnd_rect.left + exe_wnd_rect.right)/2, (exe_wnd_rect.top	 + exe_wnd_rect.bottom)/2);
+
+					// 复制行高
+
+					ss2 << /*CurBaseInfo.m_y_space*0.5*/CurBaseInfo.m_FontSize;
+					s2 = ss2.str();
+
+					ss2.clear();
+					ss2.str("");
 
 
+					// 设置到剪切板
+					CopyToClipboard(s2.c_str(), s2.length());
 
-				// 鼠标 按下右键  + “O” 
-				mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
-				Sleep(SLEEP_100MS);
-				keybd_event('O', 0, 0, 0);						// 按下v
-				keybd_event('O', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-
-
-
-
-
-
-
-
-				// 选择窗口“图形文字字体属性” 
-
-
-				HWND pic_text_dlg_id;
-				CString pic_text_dlg_title = "图形文字字体属性";
-
-				while(!(pic_text_dlg_id = ::FindWindow("#32770", pic_text_dlg_title)))
-				{
+					// 粘贴 Ctrl+V
+					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+					keybd_event('V', 0, 0, 0);						// 按下v
+					keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
 					Sleep(SLEEP_100MS);
-					find_count++;
 
-					// 10秒未启动
-					if (find_count >= FIND_TIMES)
-					{
-						AfxMessageBox("超过10秒未找到“图形文字字体属性”窗口，退出！");
-						return;
-					}
+					// 确定
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+
+
+
+
+					Sleep(SLEEP_100MS);
+
+					OutputDebugString("切换到点选模式\n");
+					// 切换到点选模式
+					keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
+					keybd_event(VK_OEM_1, 0, 0, 0);						// 按下v
+					keybd_event(VK_OEM_1, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
+
+
+					Sleep(SLEEP_100MS);
+
+
+					// 修改坐标位置
+					// 设置x坐标
+					POINT coor_x;
+					coor_x.x = coor_dlg_rect.left + 35;
+					coor_x.y = coor_dlg_rect.top + 8;
+
+					SetCursorPos(coor_x.x, coor_x.y);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
+
+					Sleep(SLEEP_100MS);
+
+
+					// 删除现有信息，有负号双击不会删掉，需要手动删除
+					keybd_event(VK_BACK, 0, 0, 0);						// 按下v
+					keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+
+					Sleep(SLEEP_100MS);
+
+					keybd_event(VK_BACK, 0, 0, 0);						// 按下v
+					keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
+
+
+					Sleep(SLEEP_100MS);
+
+
+					// 输入 x
+					InputNormalString(str_pos_x);
+
+					// 按下table键
+					keybd_event(VK_TAB, 0, 0, 0);
+					keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+
+
+					Sleep(SLEEP_100MS);
+
+					// 输入 y
+					InputNormalString(str_pos_y);
+
+
+
+
+
+
+
+					// 				// 输入 长度
+					// 				ss2 << pCpn->m_RealLength;
+					// 
+					// 				s2 = ss2.str();
+					// 
+					// 				InputNormalString(s2);
+					// 
+					// 
+					// 				ss2.clear();
+					// 				ss2.str("");
+					// 
+					// 
+					// 
+					// 				// 按下table键
+					// 				keybd_event(VK_TAB, 0, 0, 0);
+					// 				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
+					// 
+					// 
+					// 				// 输入 长度
+					// 				ss2 << CurBaseInfo.m_y_space - 1;
+					// 
+					// 				s2 = ss2.str();
+					// 
+					// 				InputNormalString(s2);
+
+
+
+
+					// 按键-确定 
+					keybd_event(VK_RETURN, 0, 0, 0);
+					keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
+
+					OutputDebugString("按键-确定\n ");
 
 				}
 
-				
-				RECT pic_text_dlg_rect;
-				::GetWindowRect(pic_text_dlg_id, &pic_text_dlg_rect);
-
-
-				// 行高坐标 100 220
-
-				stringstream ss2;
-				string s2;
-
-				int text_height_x = pic_text_dlg_rect.left + 100, text_height_y = pic_text_dlg_rect.top + 220;
-
-
-				// 窗口获取焦点
-
-				SetCursorPos(text_height_x, text_height_y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-
-
-
-				// 复制行高
-
-				ss2 << /*CurBaseInfo.m_y_space*0.5*/CurBaseInfo.m_FontSize;
-				s2 = ss2.str();
-
-				ss2.clear();
-				ss2.str("");
-
-
-				// 设置到剪切板
-				CopyToClipboard(s2.c_str(), s2.length());
-
-				// 粘贴 Ctrl+V
-				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-				keybd_event('V', 0, 0, 0);						// 按下v
-				keybd_event('V', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
-
-
-
-
-				// 确定
-				keybd_event(VK_RETURN, 0, 0, 0);
-				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
-
-
-
-
-				Sleep(SLEEP_100MS);
-
-				// 切换到点选模式
-				keybd_event(VK_CONTROL, 0, 0, 0);				// 按下ctrl
-				keybd_event(VK_OEM_1, 0, 0, 0);						// 按下v
-				keybd_event(VK_OEM_1, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-				keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
-
-
-				Sleep(SLEEP_100MS);
-
-
-				// 修改坐标位置
-				// 设置x坐标
-				POINT coor_x;
-				coor_x.x = coor_dlg_rect.left + 35;
-				coor_x.y = coor_dlg_rect.top + 8;
-
-				SetCursorPos(coor_x.x, coor_x.y);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-				mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
-
-				Sleep(SLEEP_100MS);
-
-
-				// 删除现有信息，有负号双击不会删掉，需要手动删除
-				keybd_event(VK_BACK, 0, 0, 0);						// 按下v
-				keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-
-
-				Sleep(SLEEP_100MS);
-
-				keybd_event(VK_BACK, 0, 0, 0);						// 按下v
-				keybd_event(VK_BACK, 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
-
-
-				Sleep(SLEEP_100MS);
-
-
-				// 输入 x
-				InputNormalString(str_pos_x);
-
-				// 按下table键
-				keybd_event(VK_TAB, 0, 0, 0);
-				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-
-
-				Sleep(SLEEP_100MS);
-
-				// 输入 y
-				InputNormalString(str_pos_y);
-
-			
-
-
-			
-
-
-// 				// 输入 长度
-// 				ss2 << pCpn->m_RealLength;
-// 
-// 				s2 = ss2.str();
-// 
-// 				InputNormalString(s2);
-// 
-// 
-// 				ss2.clear();
-// 				ss2.str("");
-// 
-// 
-// 
-// 				// 按下table键
-// 				keybd_event(VK_TAB, 0, 0, 0);
-// 				keybd_event(VK_TAB, 0, KEYEVENTF_KEYUP, 0);
-// 
-// 
-// 				// 输入 长度
-// 				ss2 << CurBaseInfo.m_y_space - 1;
-// 
-// 				s2 = ss2.str();
-// 
-// 				InputNormalString(s2);
-
-
-
-
-				// 按键-确定 
-				keybd_event(VK_RETURN, 0, 0, 0);
-				keybd_event(VK_RETURN, 0, KEYEVENTF_KEYUP, 0);
-
 
 			}
-
+			catch(CException* e)
+			{
+				TCHAR   szError[1024];   
+				e->GetErrorMessage(szError,1024);   //  e.GetErrorMessage(szError,1024); 
+				::AfxMessageBox(szError); 
+			}
 
 
 		}
