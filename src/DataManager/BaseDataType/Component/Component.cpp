@@ -261,6 +261,14 @@ bool Component::operator> (const Component& dst_cpn) const
 		{
 			return true;
 		}
+		else if ((src_area == dst_area) &&  this->m_BarCode == dst_cpn.m_BarCode)
+		{
+			// 同一个图片，序号小的为大
+			if (this->m_IndexInSameCpn < dst_cpn.m_IndexInSameCpn)
+			{
+				return true;
+			}
+		}
 	}
 
 

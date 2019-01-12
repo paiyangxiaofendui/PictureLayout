@@ -32,14 +32,14 @@ public:
 
 	float	m_SawKerfWidth;						/**< 锯缝 用于排样				*/
 	float	m_DeburringWidth;					/**<  修边距离 4边都修			*/
-	float m_UpHeight;							/**< 安全高度					*/	
-	float m_DownHeight;							/**< 下刀深度					*/
-	float m_org_offset;							/**< 							*/
-	float m_distance1;							/**< 下刀偏移1					*/
-	float m_distance2;							/**< 下刀偏移2					*/
-	float m_MinLength;							/**< 最小大板参数 - 最小长度	*/
-	float m_MinWidth;							/**< 最小大板参数 - 最小宽度	*/
-	float m_MinArea;							/**< 最小大板参数 - 最小面积	*/
+	float	m_UpHeight;							/**< 安全高度					*/	
+	float	m_DownHeight;							/**< 下刀深度					*/
+	float	m_org_offset;							/**< 							*/
+	float	m_distance1;							/**< 下刀偏移1					*/
+	float	m_distance2;							/**< 下刀偏移2					*/
+	float	m_MinLength;							/**< 最小大板参数 - 最小长度	*/
+	float	m_MinWidth;							/**< 最小大板参数 - 最小宽度	*/
+	float	m_MinArea;							/**< 最小大板参数 - 最小面积	*/
 																				
 public:																			
 	// 优化相关参数															 
@@ -58,6 +58,7 @@ public:
 	int m_FileTextPosition;						/**<  文件名位置		0：上左  1：上中  2：上右 3：下左  4：下中  5：下右*/
 	int m_AutoSpace;							/**<  智能间距			0：不启用  1：启用 */
 	int m_OneLabel;								/**<  标签只打一份		0：不启用  1：启用  */
+	int m_OneLabelSpace;						/**<  标签只打一份时板的间距  */
 	int m_PositionSignType;						/**<  定位符类型		0：圆  */
 	float m_PositionSignSize;					/**<  定位符大小		mm  */
 	float m_PositionSignDist;					/**<  定位符			定位符间隔为1000mm时，dxf文件每隔1000mm显示一个圆  */
