@@ -52,6 +52,7 @@ public:
 	// �иʽ
 	static bool KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir, float SawKerfWidth, int Org);
 	static bool New_KnifeOneRemainder(Component* pParentNode, Component* pPlaceCpn, int CutDir,  int Org, BaseInfo& b_info);
+	static bool New_KnifeOneRemainder_AutoSpace(Component* pParentNode, Component* pPlaceCpn, int CutDir,  int Org, BaseInfo& b_info);
 
 public:
 
