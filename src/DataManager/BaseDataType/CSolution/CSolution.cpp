@@ -2151,8 +2151,9 @@ void CSolution::FixPanelSize()
 		{
 		case LayoutOrg_LeftBottom:
 		case LayoutOrg_RightBottom:
-			top = max_y + m_BaseInfo.m_top_offset;
 
+			top = max_y + m_BaseInfo.m_top_offset;
+		
 			pPanel->m_OrgWidth = top;
 			pPanel->m_RealWidth = max_y - min_y;
 			break;

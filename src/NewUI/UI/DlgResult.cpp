@@ -4303,9 +4303,22 @@ void CDlgResult::OnOpenSourcePicInfo()
 					{
 						// 取高度
 						float tmp = FontSize/3.0;
-						int new_space = tmp+1;
-						m_BaseInfo.m_x_space				= 0;
-						m_BaseInfo.m_y_space				= new_space;
+						int new_space = tmp + 3;
+
+
+						if (OneLabel == 1)
+						{
+							// 智能间距 + 标签只打一份，只有第一张标签会有间隔，
+							m_BaseInfo.m_x_space = 0;
+							m_BaseInfo.m_y_space = 0;
+							m_BaseInfo.m_OneLabelSpace = new_space;
+						}
+						else
+						{
+							m_BaseInfo.m_x_space				= 0;
+							m_BaseInfo.m_y_space				= new_space;
+						}
+
 
 					}
 					else
