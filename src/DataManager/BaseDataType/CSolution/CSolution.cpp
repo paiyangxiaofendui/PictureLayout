@@ -130,7 +130,32 @@ bool ComponentCompareGreater(const Component* pfirst, const Component* psecond)
 int CSolution::SortComponentList_LengthFirst(void)
 {
 	//  板件从大到小排序
-	sort(m_ComponentList.begin(), m_ComponentList.end(), ComponentCompareLess);
+
+	// sort方法有缺陷，采用传统冒泡法
+	//sort(m_ComponentList.begin(), m_ComponentList.end(), ComponentCompareLess);
+
+	for (int i =0; i < m_ComponentList.size()-1; i++)
+	{
+		for(int j = i +1; j < m_ComponentList.size(); j++)
+		{
+			Component* pa = m_ComponentList.at(i);
+			Component* pb = m_ComponentList.at(j);
+
+			if (*pb > *pa)
+			{
+				Component* pc = pa;
+
+				m_ComponentList[i] = pb;
+				m_ComponentList[j] = pc;
+			}
+
+
+
+
+		}
+	}
+
+
 
 	return 0;
 }

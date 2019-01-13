@@ -106,12 +106,18 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 {
 	try 
 	{
+		CSingleton* pSingleton = CSingleton::GetSingleton();
+
+
 		int font;
 		PDFlib p;
 		//  This means we must check return values of load_font() etc.
 		p.set_option(L"errorpolicy=return");
 
-		wstring unicode_filepath = Ansi2WChar(strPdfFilePath.c_str(), strPdfFilePath.length());
+		
+
+
+		wstring unicode_filepath = Ansi2WChar( (strPdfFilePath).c_str(), strPdfFilePath.length());
 
 
 		if (p.begin_document(unicode_filepath.c_str(),  L"") == -1) {
@@ -128,20 +134,24 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 		p.set_info(L"Author", L"Thomas Merz");
 		p.set_info(L"Title", L"Hello, world (C++)!");
 
+		
+
+
 		// 大板长宽
 		p.begin_page_ext(pPanel->m_OrgLen*72/25.4, pPanel->m_OrgWidth*72/25.4, L"");
 
 		// Change "host" encoding to "winansi" or whatever you need!
-		font = p.load_font(L"Helvetica-Bold", L"host", L"");
-		//font = p.load_font(L"arial", L"host", L"");
-		//font = p.load_font(L"arial", L"winansi", L"");
+		//font = p.load_font(L"Helvetica-Bold", L"host", L"");
+		font = p.load_font(L"MS PGothic", L"winansi", L"");
+		
+		//font = p.load_font(L"kai", L"winansi", L"");
 		//font = p.load_font(L"Arial", L"host", L"");
 		//font = p.load_font(L"Arial", L"winansi", L"");
 		//font = p.load_font(L"Times New Roman", L"winansi", L"");
 		//font = p.load_font(L"Times New Roman", L"host", L"");
 		//font = p.load_font(L"宋体 常规", L"winansi", L"");
 		//font = p.load_font(L"宋体 常规", L"host", L"");
-
+		
 
 		if (font == -1) {
 			wcerr << L"Error: " << p.get_errmsg() << endl;
@@ -151,10 +161,18 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 			AfxMessageBox(msg.c_str());
 			return false;
 		}
-		p.setfont(font, 24);
-		p.set_text_pos(50, 50);
-		//p.show(L"Hello, world!");
+
+		
+		int font_size = pSingleton->m_BaseInfo.m_FontSize;
+
+		p.setfont(font, /*24*/font_size);
+		
 		//p.continue_text(L"pdf");
+
+
+
+		float text_width = pSingleton->m_BaseInfo.m_FontSize/7.0;
+		float text_height = pSingleton->m_BaseInfo.m_FontSize/3.0;
 
 
 
@@ -182,7 +200,11 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 			Component* pCpn = CpnList.at(i_cpn);
 
 			string file_path = pCpn->m_strCabinetName;
-			wstring unicode_file_path = Ansi2WChar(file_path.c_str(), file_path.length());
+			string bar_code = pCpn->m_BarCode;
+
+			wstring unicode_file_path = Ansi2WChar( ( file_path).c_str(), file_path.length());
+			wstring unicode_bar_code = Ansi2WChar( ( bar_code).c_str(), bar_code.length());
+
 			float x = pCpn->m_x*72/25.4;
 			float y = pCpn->m_y*72/25.4;
 			wostringstream op_para;
@@ -248,6 +270,144 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 
 			p.fit_image(image, x, y, op_para.str());
+
+
+			int pic_x, pic_y;
+
+			int file_text_len =  bar_code.length();
+			file_text_len *= text_width ; 
+
+			switch(pSingleton->m_BaseInfo.m_FileTextPosition)
+			{
+			case TextPos_TopLeft:
+				pic_x = x;
+
+// 				if (pCpn->m_nRotatedAngle == 0)
+// 				{
+// 					pic_y = y  ;
+// 				}
+// 				else
+// 				{
+					pic_y = y + pCpn->m_RealWidth*72/25.4 ;
+//				}
+
+				// 文字的y向上移动y间距
+				pic_y += text_height*72/25.4/3;
+
+
+				break;
+			case TextPos_TopMid:
+				pic_x = x + pCpn->m_RealLength/2*72/25.4 - file_text_len/2*72/25.4;
+
+// 				if (pCpn->m_nRotatedAngle == 0)
+// 				{
+// 					pic_y = y  ;
+// 				}
+// 				else
+// 				{
+					pic_y = y + pCpn->m_RealWidth*72/25.4 ;
+//				}
+
+				// 文字的y向上移动y间距
+				pic_y += text_height*72/25.4/3;
+
+				break;
+			case TextPos_TopRight:
+				pic_x = x + pCpn->m_RealLength*72/25.4 - file_text_len*72/25.4;
+
+// 				if (pCpn->m_nRotatedAngle == 0)
+// 				{
+ 					pic_y = y  ;
+// 				}
+// 				else
+// 				{
+					pic_y = y + pCpn->m_RealWidth ;
+//				}
+
+				// 文字的y向上移动y间距
+				pic_y += text_height*72/25.4/3;
+
+				break;
+			case TextPos_BottomLeft:
+				pic_x = x;
+
+// 				if (pCpn->m_nRotatedAngle == 0)
+// 				{
+// 					pic_y = y + pCpn->m_RealWidth ;
+// 				}
+// 				else
+// 				{
+// 					pic_y = y ;
+// 				}
+				pic_y -= text_height*72/25.4;
+
+
+				break;
+			case TextPos_BottomMid:
+				pic_x = x + pCpn->m_RealLength/2*72/25.4 - file_text_len/2*72/25.4;;
+
+// 				if (pCpn->m_nRotatedAngle == 0)
+// 				{
+// 					pic_y = y + pCpn->m_RealWidth ;
+// 				}
+// 				else
+// 				{
+ 					pic_y = y ;
+// 				}
+
+
+				pic_y -= text_height*72/25.4;
+
+
+
+				break;
+			case TextPos_BottomRight:
+				pic_x =  x + pCpn->m_RealLength*72/25.4 - file_text_len*72/25.4;
+
+// 				if (pCpn->m_nRotatedAngle == 0)
+// 				{
+// 					pic_y = y + pCpn->m_RealWidth ;
+// 				}
+// 				else
+// 				{
+					pic_y = y ;
+// 				}
+
+
+				pic_y -= text_height*72/25.4;
+
+				break;
+			default:
+				pic_x = x;
+
+				// 				if (pCpn->m_nRotatedAngle == 0)
+				// 				{
+				// 					pic_y = y + pCpn->m_RealWidth ;
+				// 				}
+				// 				else
+				// 				{
+				 					pic_y = y ;
+				// 				}
+				pic_y -= text_height*72/25.4;
+
+				break;
+			}
+
+
+
+
+
+
+			// 标签只打一份
+			if (pSingleton->m_BaseInfo.m_OneLabel == 1 && pCpn->m_IndexInSameCpn != 0)
+			{
+				continue;
+			}
+
+			p.set_text_pos(pic_x, pic_y);
+			p.show(unicode_bar_code);
+
+
 
 // 			p.fit_image(image, 2000, 2000,
 // 				L"orientate=west");
