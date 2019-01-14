@@ -138,13 +138,16 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 
 		// ´ó°å³¤¿í
-		p.begin_page_ext(pPanel->m_OrgLen*72/25.4, pPanel->m_OrgWidth*72/25.4, L"");
+		double paper_len = pPanel->m_OrgLen*72/25.4;
+		double paper_width = pPanel->m_OrgWidth*72/25.4;
+
+		p.begin_page_ext(paper_len, paper_width, L"");
 
 		// Change "host" encoding to "winansi" or whatever you need!
 		//font = p.load_font(L"Helvetica-Bold", L"host", L"");
-		font = p.load_font(L"MS PGothic", L"winansi", L"");
+		//font = p.load_font(L"MS PGothic", L"winansi", L"");
 		
-		//font = p.load_font(L"kai", L"winansi", L"");
+		font = p.load_font(L"Microsoft YaHei UI", L"winansi", L"");
 		//font = p.load_font(L"Arial", L"host", L"");
 		//font = p.load_font(L"Arial", L"winansi", L"");
 		//font = p.load_font(L"Times New Roman", L"winansi", L"");
@@ -313,7 +316,7 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 				break;
 			case TextPos_TopRight:
-				pic_x = x + pCpn->m_RealLength*72/25.4 - file_text_len*72/25.4;
+				pic_x = x + pCpn->m_RealLength*72/25.4 - file_text_len*72/25.4*1.5;
 
 // 				if (pCpn->m_nRotatedAngle == 0)
 // 				{
@@ -362,7 +365,7 @@ bool PdfReadWrite::OutputPdf(Panel* pPanel, string strPdfFilePath)
 
 				break;
 			case TextPos_BottomRight:
-				pic_x =  x + pCpn->m_RealLength*72/25.4 - file_text_len*72/25.4;
+				pic_x =  x + pCpn->m_RealLength*72/25.4 - file_text_len*72/25.4*1.5;
 
 // 				if (pCpn->m_nRotatedAngle == 0)
 // 				{
