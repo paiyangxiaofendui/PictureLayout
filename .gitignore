@@ -87,3 +87,7 @@
 /src/PDFTest/hello - 副本.pdf
 /src/PDFTest/hello.pdf
 /bin/VBTest.xml
+/src/PDFTest/Release
+/src/QRcodeTest/Debug
+/src/QRcodeTest/Release
+/src/QRcodeTest/QRcodeTest.vcxproj.user
