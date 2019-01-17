@@ -460,6 +460,7 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 	singleton_info.m_FontSize				=	m_BaseInfo.m_FontSize			;
 	singleton_info.m_OneLabel				=	m_BaseInfo.m_OneLabel			;
 	singleton_info.m_PositionSignDist		=	m_BaseInfo.m_PositionSignDist	;
+	singleton_info.m_PositionSignOffset		=	m_BaseInfo.m_PositionSignOffset	;
 	singleton_info.m_OneLabelSpace			=	m_BaseInfo.m_OneLabelSpace	;
 
 

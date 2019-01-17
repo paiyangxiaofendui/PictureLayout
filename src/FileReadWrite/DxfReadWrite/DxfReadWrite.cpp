@@ -51,6 +51,8 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
 
 	//2017-7-20 yuanzb  以下是范例代码，一般情况下不做更改，只更改ENTITIES段的数据
 
+	CSingleton* pSingleton = CSingleton::GetSingleton();
+
 
     DL_Dxf* dxf = new DL_Dxf();
     DL_Codes::version exportVersion = DL_Codes::AC1015;
@@ -186,7 +188,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
 
 			int hori_num = pPanel->m_OrgLen/dist;
 			int vert_num = pPanel->m_OrgWidth/dist;
-			float offset = size/2;
+			float offset = size/2 + pSingleton->m_BaseInfo.m_PositionSignOffset;
 
 			float pos_x = - offset;
 			float pos_y = pPanel->m_OrgWidth + offset;

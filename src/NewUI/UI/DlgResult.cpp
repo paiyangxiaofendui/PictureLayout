@@ -4251,8 +4251,9 @@ void CDlgResult::OnOpenSourcePicInfo()
 					float	PositionSignDist	=	stof(pCurPrinciple->Attribute("PositionSignDist"));
 					float	PositionSignSize	=	stof(pCurPrinciple->Attribute("PositionSignSize"));
 					int		PositionSignType	=	stoi(pCurPrinciple->Attribute("PositionSignType"));
+					float	PositionSignOffset	=	stof(pCurPrinciple->Attribute("PositionSignOffset"));
 
-
+					
 
 
 
@@ -4298,6 +4299,7 @@ void CDlgResult::OnOpenSourcePicInfo()
 					m_BaseInfo.m_PositionSignDist		= PositionSignDist;
 					m_BaseInfo.m_PositionSignType		= PositionSignType;
 					m_BaseInfo.m_PositionSignSize		= PositionSignSize;
+					m_BaseInfo.m_PositionSignOffset		= PositionSignOffset;
 
 					if (m_BaseInfo.m_AutoSpace)
 					{

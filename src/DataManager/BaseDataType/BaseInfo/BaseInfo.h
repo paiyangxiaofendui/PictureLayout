@@ -62,6 +62,7 @@ public:
 	int m_PositionSignType;						/**<  定位符类型		0：圆  */
 	float m_PositionSignSize;					/**<  定位符大小		mm  */
 	float m_PositionSignDist;					/**<  定位符			定位符间隔为1000mm时，dxf文件每隔1000mm显示一个圆  */
+	float m_PositionSignOffset;					/**<  定位符偏移		定位符距离纸张的间隔  */
 	float m_FontSize;							/**<  字体大小pt		长=pt/7   高= pt/3  20pt,每个字符长3mm 高7mm */
 
 public:
