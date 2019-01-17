@@ -442,27 +442,9 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 	BaseInfo& singleton_info = pSingleton->m_BaseInfo;
 
 
-	singleton_info.m_x_space				=	m_BaseInfo.m_x_space;			
-	singleton_info.m_y_space				=	m_BaseInfo.m_y_space;			
-	singleton_info.m_left_offset			=	m_BaseInfo.m_left_offset;		
-	singleton_info.m_right_offset			=	m_BaseInfo.m_right_offset;	
-	singleton_info.m_top_offset				=	m_BaseInfo.m_top_offset;		
-	singleton_info.m_bottom_offset			=	m_BaseInfo.m_bottom_offset;	
-
-	singleton_info.m_LayoutOrg				=	m_BaseInfo.m_LayoutOrg;
-	singleton_info.m_FirstSectionOPTimes	=	m_BaseInfo.m_FirstSectionOPTimes;
-	singleton_info.m_FirstSectionOPMethod	=	m_BaseInfo.m_LayoutMethod;
-	singleton_info.m_bCustomerFirst			=	m_BaseInfo.m_bCustomerFirst; 
 
 
-	singleton_info.m_FileTextPosition		=	m_BaseInfo.m_FileTextPosition	;
-	singleton_info.m_AutoSpace				=	m_BaseInfo.m_AutoSpace		;	
-	singleton_info.m_FontSize				=	m_BaseInfo.m_FontSize			;
-	singleton_info.m_OneLabel				=	m_BaseInfo.m_OneLabel			;
-	singleton_info.m_PositionSignDist		=	m_BaseInfo.m_PositionSignDist	;
-	singleton_info.m_PositionSignOffset		=	m_BaseInfo.m_PositionSignOffset	;
-	singleton_info.m_OneLabelSpace			=	m_BaseInfo.m_OneLabelSpace	;
-
+	singleton_info		=	m_BaseInfo	;
 
 
 	float offset = m_BaseInfo.m_left_offset + m_BaseInfo.m_right_offset;

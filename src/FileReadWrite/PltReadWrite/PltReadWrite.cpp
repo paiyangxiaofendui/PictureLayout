@@ -33,6 +33,75 @@
 #include "../../../include/AbnormalShapeManager/GeneralInterface/GeneralInterface.h"
 
 
+
+void DrawACircle(float s_x, float s_y, float r, std::ofstream& plt_file)
+{
+	string tmp_s;
+	stringstream ss;
+
+	ss << s_x << "," << s_y << ";" ;
+
+	tmp_s = ss.str();
+
+
+
+	// 去到起点
+	plt_file << "PU"<<  tmp_s << endl;
+
+	ss.clear();
+	ss.str("");
+
+	ss << r;
+	tmp_s = ss.str();
+
+
+	plt_file << "PD;"<< endl;
+	plt_file << "CI"<<  tmp_s << "," << "1" << endl;
+
+	plt_file << "PU;"<< endl;
+}
+
+
+
+void DrawALine(float s_x, float s_y, float e_x, float e_y, std::ofstream& plt_file)
+{
+
+	string tmp_s;
+	stringstream ss;
+
+	ss << s_x << "," << s_y << ";" ;
+
+	tmp_s = ss.str();
+
+	// 去到起点,下去，划线，上来
+	plt_file << "PU"<< endl;
+	plt_file << "PA"<<  tmp_s << endl;
+	plt_file << "PD;"<< endl;
+
+
+
+	ss.clear();
+	ss.str("");
+
+	ss <<  e_x << "," << e_y << ";" ;
+	tmp_s = ss.str();
+
+	plt_file << "PA"<<  tmp_s << endl;
+
+
+	plt_file << "PU"<<   endl;
+
+
+
+}
+
+
+
+
+
+
+
+
 /*-------------------------------------------------------*/
 //	函数说明：
 //		导出正面的DXF文件
@@ -57,10 +126,153 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 	{
 		std::ofstream plt_file(strPltFilePath, ios::out);
 		
+		CSingleton* pSingleton = CSingleton::GetSingleton();
+		BaseInfo& info = pSingleton->m_BaseInfo;
 
 
 		if (plt_file)
 		{
+
+
+
+			float dist = info.m_PositionSignDist;
+			int hori_num = pPanel->m_OrgLen/dist;
+			int vert_num = pPanel->m_OrgWidth/dist;
+			float radius = info.m_PositionSignSize/2;
+			float offset = radius + info.m_PositionSignOffset;
+			float pos_x = - offset;
+			float pos_y = pPanel->m_OrgWidth + offset;
+
+
+#if 1
+			// 第一个点
+			
+
+			switch(info.m_PositionSignType)
+			{
+			case 0:
+
+				// 圆
+				DrawACircle(pos_x, pos_y, radius, plt_file);
+
+				break;
+
+			case 1:
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+				break;
+			default:
+
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+				break;
+			}
+
+
+
+
+
+
+
+
+			for (int i = 1; i < hori_num; i++)
+			{
+				pos_x = i*dist;
+				pos_y = pPanel->m_OrgWidth + offset;
+
+
+
+				switch(info.m_PositionSignType)
+				{
+				case 0:
+
+					// 圆
+					DrawACircle(pos_x, pos_y, radius, plt_file);
+
+					break;
+
+				case 1:
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+					break;
+				default:
+
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+					break;
+				}
+
+
+			}
+
+
+			for (int i = 1; i < vert_num; i++)
+			{
+				pos_x = -offset;
+				pos_y = i*dist;
+
+
+
+				switch(info.m_PositionSignType)
+				{
+				case 0:
+					// 圆
+					DrawACircle(pos_x, pos_y, radius, plt_file);
+
+
+					break;
+
+				case 1:
+
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+
+					break;
+				default:
+
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+					break;
+				}
+
+
+			}
+
+
+
+
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 			// 抬笔
