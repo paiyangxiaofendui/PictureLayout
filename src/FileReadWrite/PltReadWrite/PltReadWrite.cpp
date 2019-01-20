@@ -32,7 +32,43 @@
 #include "../../../include/AbnormalShapeManager/DataManager/Point/ShapePoint.h"
 #include "../../../include/AbnormalShapeManager/GeneralInterface/GeneralInterface.h"
 
+bool Is2LineEqual(Line& l1, Line& l2)
+{
+	if (l1.s_x == l2.s_x &&
+		l1.s_y == l2.s_y &&
+		l1.e_x == l2.e_x &&
+		l1.e_y == l2.e_y )
+	{
+		return true;
+	}
+	else if (l1.s_x == l2.e_x &&
+		l1.s_y == l2.e_y &&
+		l1.e_x == l2.s_x &&
+		l1.e_y == l2.s_y )
+	{
+		return true;
+	}
 
+
+	return false;
+}
+
+
+
+bool IsLineExist(Line& ln, vector<Line>& LineList)
+{
+	for (int i = 0; i < LineList.size(); i++)
+	{
+		Line& exist_ln = LineList.at(i);
+
+		if (Is2LineEqual(exist_ln, ln))
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 
 void DrawACircle(float s_x, float s_y, float r, std::ofstream& plt_file)
 {
@@ -284,6 +320,10 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 			// 板件轮廓点处理模块
 
 
+
+			vector<Line> CutLineList;
+
+
 			vector<Component*> CpnList;
 			pPanel->GetAllNeededComponent(CpnList);
 
@@ -479,10 +519,13 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 								ShapePoint* pFirst = pFig->GetShapePoint(i_pnt);
 								ShapePoint* pNext = pFig->GetShapePoint(i_pnt+1);
 
-								double real_start_x = pCpn->m_x + pFirst->m_x;
-								double real_start_y = pCpn->m_y + pFirst->m_y;
-								double real_end_x = pCpn->m_x + pNext->m_x;
-								double real_end_y = pCpn->m_y + pNext->m_y;
+								float real_start_x	= pCpn->m_x + pFirst->m_x;
+								float real_start_y	= pCpn->m_y + pFirst->m_y;
+								float real_end_x	= pCpn->m_x + pNext->m_x;
+								float real_end_y	= pCpn->m_y + pNext->m_y;
+
+
+#if 0
 
 								string tmp_s;
 								stringstream ss;
@@ -518,6 +561,38 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 
 									plt_file << "PU;"<< endl;
 								}
+
+
+
+#else
+
+								Line ln;
+
+								ln.s_x = real_start_x;	
+								ln.s_y = real_start_y;	
+								ln.e_x = real_end_x;
+								ln.e_y = real_end_y;
+
+								if (IsLineExist(ln, CutLineList))
+								{
+									continue;
+								}
+								else
+								{
+									CutLineList.push_back(ln);
+
+									DrawALine(ln.s_x,  ln.s_y,  ln.e_x, ln.e_y, plt_file);
+								}			 
+											 
+											  
+
+
+
+
+
+#endif
+
+								
 
 							}
 						}

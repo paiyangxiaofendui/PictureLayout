@@ -184,6 +184,23 @@ typedef struct
 }RemainderInputItem;
 
 
+typedef struct 
+{
+	float s_x;
+	float s_y;
+	float e_x;
+	float e_y;
+}Line;
+
+
+
+
+
+
+
+
+
+
 // 导出NC相关数据结构
 
 #define  NEW_PROGRAM	(1)		// 新程序 修改了数据结构
