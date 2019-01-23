@@ -260,7 +260,7 @@ BOOL CDlgResult::OnInitDialog()
 
 
 
-	m_cbShowFileName.SetCheck(1);
+	m_cbShowFileName.SetCheck(0);
 	m_cbShowFilePic.SetCheck(0);
 
 
@@ -2753,6 +2753,14 @@ bool CDlgResult::SetBottomAction(CString title, int id, UINT action)
 
 void CDlgResult::OnConnectMaintop()
 {
+
+	CButton* pBtn =	(CButton*)GetDlgItem(IDC_BUTTON_CONNECT_MAINTOP);
+	if (pBtn)
+	{
+		pBtn->EnableWindow(FALSE);
+	}
+
+
 	// 获取当前排样方案
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 	
@@ -3030,6 +3038,11 @@ void CDlgResult::OnConnectMaintop()
 			if (find_exe_num >= FIND_TIMES)
 			{
 				AfxMessageBox("超过20秒未找到蒙泰程序窗口，退出！");
+
+				if (pBtn)
+				{
+					pBtn->EnableWindow(TRUE);
+				}
 				return;
 			}
 
@@ -3086,6 +3099,11 @@ void CDlgResult::OnConnectMaintop()
 				if (find_count >= FIND_TIMES)
 				{
 					AfxMessageBox("超过20秒未找到建立新文件窗口，退出！");
+
+					if (pBtn)
+					{
+						pBtn->EnableWindow(TRUE);
+					}
 					return;
 				}
 
@@ -3145,6 +3163,11 @@ void CDlgResult::OnConnectMaintop()
 			else
 			{
 				AfxMessageBox("超过10秒未找到建立新文件窗口，退出！");
+
+				if (pBtn)
+				{
+					pBtn->EnableWindow(TRUE);
+				}
 				return;
 			}
 
@@ -3311,6 +3334,11 @@ void CDlgResult::OnConnectMaintop()
 						if (find_count >= FIND_TIMES)
 						{
 							AfxMessageBox("超过20秒未找到取图片文件窗口，退出！");
+
+							if (pBtn)
+							{
+								pBtn->EnableWindow(TRUE);
+							}
 							return;
 						}
 
@@ -3359,6 +3387,11 @@ void CDlgResult::OnConnectMaintop()
 						int file_path_id = 1152;
 						if (!SetCtrlText(file_dlg_tile, file_path_id,"Edit", cur_file_path.c_str()))
 						{
+
+							if (pBtn)
+							{
+								pBtn->EnableWindow(TRUE);
+							}
 							return;
 						}
 						
@@ -3390,6 +3423,11 @@ void CDlgResult::OnConnectMaintop()
 					else
 					{
 						AfxMessageBox("文件窗口未找到！");
+
+						if (pBtn)
+						{
+							pBtn->EnableWindow(TRUE);
+						}
 						return;
 					}
 
@@ -3433,6 +3471,11 @@ void CDlgResult::OnConnectMaintop()
 						if (find_count >= FIND_TIMES)
 						{
 							AfxMessageBox("超过10秒未找到“图片坐标父窗口”，退出！");
+
+							if (pBtn)
+							{
+								pBtn->EnableWindow(TRUE);
+							}
 							return;
 						}
 
@@ -3453,6 +3496,11 @@ void CDlgResult::OnConnectMaintop()
 						if (find_count >= FIND_TIMES)
 						{
 							AfxMessageBox("超过10秒未找到“图片坐标子窗口”，退出！");
+
+							if (pBtn)
+							{
+								pBtn->EnableWindow(TRUE);
+							}
 							return;
 						}
 
@@ -3524,6 +3572,11 @@ void CDlgResult::OnConnectMaintop()
 							if (find_count >= FIND_TIMES)
 							{
 								AfxMessageBox("超过10秒未找到“图片框属性”窗口，退出！");
+
+								if (pBtn)
+								{
+									pBtn->EnableWindow(TRUE);
+								}
 								return;
 							}
 
@@ -3730,6 +3783,11 @@ void CDlgResult::OnConnectMaintop()
 					else
 					{
 						AfxMessageBox("坐标窗口未找到！");
+
+						if (pBtn)
+						{
+							pBtn->EnableWindow(TRUE);
+						}
 						return;
 					}
 				}
@@ -3844,6 +3902,11 @@ void CDlgResult::OnConnectMaintop()
 						if (find_count >= FIND_TIMES)
 						{
 							AfxMessageBox("超过10秒未找到“图形文字”窗口，退出！");
+
+							if (pBtn)
+							{
+								pBtn->EnableWindow(TRUE);
+							}
 							return;
 						}
 
@@ -3911,6 +3974,12 @@ void CDlgResult::OnConnectMaintop()
 						if (find_count >= FIND_TIMES)
 						{
 							AfxMessageBox("超过10秒未找到“图形文字字体属性”窗口，退出！");
+
+
+							if (pBtn)
+							{
+								pBtn->EnableWindow(TRUE);
+							}
 							return;
 						}
 
@@ -4066,6 +4135,13 @@ void CDlgResult::OnConnectMaintop()
 			}
 			catch(CException* e)
 			{
+
+
+				if (pBtn)
+				{
+					pBtn->EnableWindow(TRUE);
+				}
+
 				TCHAR   szError[1024];   
 				e->GetErrorMessage(szError,1024);   //  e.GetErrorMessage(szError,1024); 
 				::AfxMessageBox(szError); 
@@ -4076,6 +4152,12 @@ void CDlgResult::OnConnectMaintop()
 		else
 		{
 			AfxMessageBox("exe窗口未找到！");
+
+			if (pBtn)
+			{
+				pBtn->EnableWindow(TRUE);
+			}
+
 			return;
 		}
 
@@ -4084,6 +4166,11 @@ void CDlgResult::OnConnectMaintop()
 
 
 		AfxMessageBox("推送蒙泰完成！");
+
+		if (pBtn)
+		{
+			pBtn->EnableWindow(TRUE);
+		}
 
 }
 

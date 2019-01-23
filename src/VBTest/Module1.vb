@@ -5,7 +5,7 @@
 Module Module1
 
 
-    ' Public Declare Function Function1 Lib "NewUId.dll" (ByVal a As Integer, ByVal b As Integer) As Integer
+    'Public Declare Function Function1 Lib "NewUId.dll" (ByVal a As Integer, ByVal b As Integer) As Integer
     'Public Declare Function JT_Layouts Lib "NewUId.dll" (ByVal src_file_path As String) As Integer
 
 
@@ -22,7 +22,8 @@ Module Module1
 
         s = "真实测试.xml"
         's = "F:\\PictureLayout\\真实测试.xml"
-        's = "E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml"
+        ' s = "E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml"
+        's = "G:\\真实测试.xml"
         JT_Layouts(s)
 
         MsgBox("Hello World")
