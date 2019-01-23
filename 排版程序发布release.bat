@@ -3,7 +3,7 @@ if %time:~0,2% leq 9 (set hour=0%time:~1,1%) else (set hour=%time:~0,2%)
 set min=%time:~3,2%%time:~6,2%
 set DST=%date%%hour%%min%
 
-set Release=排版软件业务(%DST%)
+set Release=排版软件业务Release版(%DST%)
 
 mkdir %Release%  
 
@@ -17,6 +17,7 @@ copy  "bin\muParser.dll" 				"%Release%"
 copy  "bin\NewUI.dll" 					"%Release%"
 copy  "bin\tinyxml.dll" 				"%Release%"
 copy  "bin\pdflib.dll" 					"%Release%"
+copy  "bin\QRCode.dll" 					"%Release%"
 copy  "bin\VBTest.exe" 					"%Release%"
 
 

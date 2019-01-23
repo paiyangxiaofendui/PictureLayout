@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="gb2312"?>
 <Root>
   <PictureSet Name="图片集">
-	<Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+1+PP胶+1.914x0.12x1张.tif" 								Number="1" Length="1914" Width="120" Texture="无纹理" Material="UV板" Customer="张三" />
-    <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+2+PP胶+1.925x0.12x1张.tif" 								Number="1" Length="1925" Width="120" Texture="无纹理" Material="UV板" Customer="张三" />
-	<Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+高清户外写真护模1X0.8羊肉串+PP胶+1x0.8x1张.tif" 			Number="1" Length="1000" Width="800" Texture="无纹理" Material="UV板" Customer="张三" />
-    <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+高清户外写真护模1X0.8羊肉串大串+PP胶+1x0.8x1张.tif" 		Number="1" Length="1000" Width="800" Texture="无纹理" Material="UV板" Customer="张三" />
-    <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+高清户外写真护模1X0.8羊蹄+PP胶+1x0.8x1张.tif" 				Number="1" Length="1000" Width="800" Texture="无纹理" Material="UV板" Customer="张三" />
+	<Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+1+PP胶+1.914x0.12x1张.tif" 								Number="10" Length="1914" Width="120" Texture="无纹理" Material="UV板" Customer="张三" />
+    <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+2+PP胶+1.925x0.12x1张.tif" 								Number="10" Length="1925" Width="120" Texture="无纹理" Material="UV板" Customer="张三" />
+	<Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+高清户外写真护模1X0.8羊肉串+PP胶+1x0.8x1张.tif" 			Number="10" Length="1000" Width="800" Texture="无纹理" Material="UV板" Customer="张三" />
+    <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+高清户外写真护模1X0.8羊肉串大串+PP胶+1x0.8x1张.tif" 		Number="10" Length="1000" Width="800" Texture="无纹理" Material="UV板" Customer="张三" />
+    <Picture path="E:\袁梓埠个人文件夹\代码\PictureLayout\测试目录\新建文件夹\聚图软件+高清户外写真护模1X0.8羊蹄+PP胶+1x0.8x1张.tif" 				Number="10" Length="1000" Width="800" Texture="无纹理" Material="UV板" Customer="张三" />
   
    </PictureSet>
   <RawMaterialSet Name="原料集">
     <RawMaterial Material="UV板" Length="2000" Width="0" />
   </RawMaterialSet>
   <PrincipleSet Name="排样规则集">
-    <Principle Method="1" Origin="1" OPTimes="1000"  TextPosition="5" AutoSpace="1" FontSize="50" OneLabel="1"  PositionSignType="1" PositionSignSize="10" PositionSignDist="1000"  XSpace="10" YSpace="10" LeftOffset="0" RightOffset="0"  TopOffset="0" BottomOffset="0" MainTopPath="E:\袁梓埠个人文件夹\代码\MainTop\DTP\dtpw.exe"   QRCode="聚图软件二维码测试"/>
+    <Principle Method="1" Origin="1" OPTimes="1000"  TextPosition="5" AutoSpace="1" FontSize="50" OneLabel="1"  PositionSignType="0" PositionSignSize="10" PositionSignDist="100" PositionSignOffset="10"   XSpace="10" YSpace="10" LeftOffset="0" RightOffset="0"  TopOffset="0" BottomOffset="0" MainTopPath="E:\袁梓埠个人文件夹\代码\MainTop\DTP\dtpw.exe"   QRCode="聚图软件二维码测试"/>
   			
   </PrincipleSet>
 </Root>
