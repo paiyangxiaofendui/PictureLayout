@@ -42,3 +42,5 @@
 using namespace Gdiplus;            //使用GDI+的命名空间   
 
 
+GdiplusStartupInput* getGdiplusStartupInput();
+ULONG_PTR* getgdiplusToken();

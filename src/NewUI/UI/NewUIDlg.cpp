@@ -26,6 +26,9 @@ CDlgNewUI::~CDlgNewUI()
 		m_pDlgResult = NULL;
 	}
 
+	GdiplusShutdown(/*m_gdiplusToken*/*(getgdiplusToken())); //¹Ø±ÕGDI +  
+
+
 }
 
 void CDlgNewUI::DoDataExchange(CDataExchange* pDX)

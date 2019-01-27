@@ -55,8 +55,6 @@ public:
 	CNewUIApp();
 
 
-	GdiplusStartupInput m_gdiplusStartupInput; 
-	ULONG_PTR m_gdiplusToken;  
 
 public:  
 	//÷ÿ‘ÿExitInstance  

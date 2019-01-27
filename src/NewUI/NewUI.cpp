@@ -63,7 +63,7 @@ BOOL CNewUIApp::InitInstance()
 
 
 
-	GdiplusStartup(&m_gdiplusToken, &m_gdiplusStartupInput, NULL);  
+	GdiplusStartup(/*&m_gdiplusToken*/getgdiplusToken(), /*&m_gdiplusStartupInput*/getGdiplusStartupInput(), NULL);  
 
 	return TRUE;
 }
@@ -72,7 +72,7 @@ BOOL CNewUIApp::InitInstance()
 int  CNewUIApp::ExitInstance()
 {
 	// TODO: Add your specialized code here and/or call the base class   
-	GdiplusShutdown(m_gdiplusToken); //¹Ø±ÕGDI +  
+	//GdiplusShutdown(m_gdiplusToken); //¹Ø±ÕGDI +  
 
 	return CWinApp::ExitInstance(); 
 }
