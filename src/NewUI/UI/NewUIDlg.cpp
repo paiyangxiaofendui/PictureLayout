@@ -16,6 +16,7 @@ CDlgNewUI::CDlgNewUI(CWnd* pParent /*=NULL*/)
 	,m_pDlgResult(NULL)
 {
 
+	GdiplusStartup(/*&m_gdiplusToken*/getgdiplusToken(), /*&m_gdiplusStartupInput*/getGdiplusStartupInput(), NULL);  
 }
 
 CDlgNewUI::~CDlgNewUI()

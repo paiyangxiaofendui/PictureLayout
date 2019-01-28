@@ -63,7 +63,7 @@ BOOL CNewUIApp::InitInstance()
 
 
 
-	GdiplusStartup(/*&m_gdiplusToken*/getgdiplusToken(), /*&m_gdiplusStartupInput*/getGdiplusStartupInput(), NULL);  
+	//GdiplusStartup(/*&m_gdiplusToken*/getgdiplusToken(), /*&m_gdiplusStartupInput*/getGdiplusStartupInput(), NULL);  
 
 	return TRUE;
 }
