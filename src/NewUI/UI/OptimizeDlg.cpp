@@ -337,8 +337,7 @@ bool OptimizeDlg::CheckRawMaterialUsable(vector<ComponentInputItem>& vComponentI
  */
 void OptimizeDlg::CheckAndDeleteOverSizeComponentList(vector<ComponentInputItem>& vComponentInputItem)
 {
-	CSingleton* pSingleton = CSingleton::GetSingleton();
-	BaseInfo base_info = pSingleton->m_BaseInfo;
+	BaseInfo base_info = m_BaseInfo;
 	float panel_offset = base_info.m_left_offset + base_info.m_right_offset;
 	vector<ComponentInputItem>::iterator it, it_begin, it_end;
 	CString strMsg;
@@ -459,7 +458,7 @@ DWORD OptimizeDlg::OptimizeThread( PVOID lpThreadParameter )
 	pSingleton->SetBackupComponentInputItem(vOptimizeComponent);
 
 	// 检测板件超出
-	CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
+	//CheckAndDeleteOverSizeComponentList(vOptimizeComponent);
 
 
 

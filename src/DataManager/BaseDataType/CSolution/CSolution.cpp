@@ -195,6 +195,9 @@ int CSolution::SortComponentList_Random(void)
 // 检查板件大小是否超出
 void CSolution::CheckComponentList(void)
 {
+
+	BaseInfo base_info = m_BaseInfo;
+	float panel_offset = base_info.m_left_offset + base_info.m_right_offset;
 	vector<Component*>::iterator it;
 	CString strMsg;
 
@@ -217,14 +220,14 @@ void CSolution::CheckComponentList(void)
 
 		if (pCpn->IsRotatable())
 		{
-			if(fOrgXLen > m_BaseInfo.m_PanelLength - 2*m_BaseInfo.m_DeburringWidth 
-				|| fOrgYLen > m_BaseInfo.m_PanelWidth - 2*m_BaseInfo.m_DeburringWidth
+			if(fOrgXLen > m_BaseInfo.m_PanelLength -  panel_offset  
+				|| fOrgYLen > m_BaseInfo.m_PanelWidth - panel_offset
 				|| fOrgXLen <= 0
 				|| fOrgYLen <= 0)
 			{
 				// 旋转后，再次判断
-				if (fOrgXLen >  m_BaseInfo.m_PanelWidth - 2*m_BaseInfo.m_DeburringWidth 
-					|| fOrgYLen > m_BaseInfo.m_PanelLength - 2*m_BaseInfo.m_DeburringWidth
+				if (fOrgXLen >  m_BaseInfo.m_PanelWidth - panel_offset 
+					|| fOrgYLen > m_BaseInfo.m_PanelLength - panel_offset
 					|| fOrgXLen <= 0
 					|| fOrgYLen <= 0)
 				{
@@ -235,8 +238,8 @@ void CSolution::CheckComponentList(void)
 		}
 		else if(pCpn->m_Texture == 1)
 		{
-			if(fOrgXLen > m_BaseInfo.m_PanelLength - 2*m_BaseInfo.m_DeburringWidth 
-				|| fOrgYLen > m_BaseInfo.m_PanelWidth - 2*m_BaseInfo.m_DeburringWidth
+			if(fOrgXLen > m_BaseInfo.m_PanelLength - panel_offset 
+				|| fOrgYLen > m_BaseInfo.m_PanelWidth - panel_offset
 				|| fOrgXLen <= 0
 				|| fOrgYLen <= 0)
 			{
@@ -246,8 +249,8 @@ void CSolution::CheckComponentList(void)
 		}
 		else
 		{
-			if(fOrgXLen >  m_BaseInfo.m_PanelWidth - 2*m_BaseInfo.m_DeburringWidth 
-				|| fOrgYLen > m_BaseInfo.m_PanelLength - 2*m_BaseInfo.m_DeburringWidth
+			if(fOrgXLen >  m_BaseInfo.m_PanelWidth - panel_offset 
+				|| fOrgYLen > m_BaseInfo.m_PanelLength - panel_offset
 				|| fOrgXLen <= 0
 				|| fOrgYLen <= 0)
 			{
@@ -278,7 +281,6 @@ void CSolution::CheckComponentList(void)
 	{
 		AfxMessageBox(strMsg);
 	}
-
 
 }
 

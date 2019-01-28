@@ -256,9 +256,10 @@ void CCppTestDlg::OnBnClickedOk()
 	JT_Layouts("F:\\PictureLayout\\真实测试.xml");
 #else
 
-	//JT_Layouts("E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml");	
-	//JT_Layouts("F:\\PictureLayout\\辜总测试方案.xml");
+	//JT_Layouts("E:\\袁梓埠个人文件夹\\代码\\PictureLayout\\真实测试_家里电脑.xml");
 	JT_Layouts("真实测试.xml");
+
+
 #endif
 
 
