@@ -2804,7 +2804,7 @@ void CDlgResult::OnConnectMaintop()
 	string exe_path = m_BaseInfo.m_strMainTopPath;
 
 
-	float text_width = CurBaseInfo.m_FontSize/7.0;
+	float text_width = CurBaseInfo.m_FontSize/6.0;
 	float text_height = CurBaseInfo.m_FontSize/3.0;
 
 	for (int i_cpn = 0; i_cpn < cpn_list.size(); i_cpn++)
@@ -3603,6 +3603,11 @@ void CDlgResult::OnConnectMaintop()
 
 							if (!SetBottomAction(img_attribule_dlg_title, keep_org_img_size_id, BM_CLICK))
 							{
+								if (pBtn)
+								{
+									pBtn->EnableWindow(TRUE);
+								}
+
 								return ;
 							}
 
@@ -3628,6 +3633,11 @@ void CDlgResult::OnConnectMaintop()
 
 							if (!SetBottomAction(img_attribule_dlg_title, ok_id, BM_CLICK))
 							{
+								if (pBtn)
+								{
+									pBtn->EnableWindow(TRUE);
+								}
+
 								return ;
 							}
 
@@ -3942,10 +3952,15 @@ void CDlgResult::OnConnectMaintop()
 					//SetCursorPos((exe_wnd_rect.left + exe_wnd_rect.right)/2, (exe_wnd_rect.top	 + exe_wnd_rect.bottom)/2);
 
 
+					// 增加延时
+					Sleep(SLEEP_100MS*2);
 
 					// 鼠标 按下右键  + “O” 
 					mouse_event(MOUSEEVENTF_RIGHTDOWN|MOUSEEVENTF_RIGHTUP,0,0,0,0);
-					Sleep(SLEEP_100MS);
+					
+					// 增加延时
+					Sleep(SLEEP_100MS*2);
+
 					keybd_event('O', 0, 0, 0);						// 按下v
 					keybd_event('O', 0, KEYEVENTF_KEYUP, 0);		// 抬起ctrl
 
@@ -4001,6 +4016,9 @@ void CDlgResult::OnConnectMaintop()
 					// 窗口获取焦点
 
 					SetCursorPos(text_height_x, text_height_y);
+
+					Sleep(SLEEP_100MS);
+
 					mouse_event(MOUSEEVENTF_LEFTDOWN|MOUSEEVENTF_LEFTUP,0,0,0,0);
 
 
@@ -4025,7 +4043,7 @@ void CDlgResult::OnConnectMaintop()
 					keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);	// 抬起v
 
 
-					Sleep(SLEEP_100MS);
+					Sleep(SLEEP_500MS);
 
 					// 确定
 					keybd_event(VK_RETURN, 0, 0, 0);

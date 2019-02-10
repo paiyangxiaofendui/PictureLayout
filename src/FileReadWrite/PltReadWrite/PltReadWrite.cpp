@@ -181,8 +181,102 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 
 
 #if 1
-			// 第一个点
+			// 第一个点 左上角的定位符
 			
+
+			switch(info.m_PositionSignType)
+			{
+			case 0:
+
+				// 圆
+				DrawACircle(pos_x, pos_y, radius, plt_file);
+
+				break;
+
+			case 1:
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+				break;
+			default:
+
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+				break;
+			}
+
+
+			//  右上角的定位符
+
+
+			pos_x = pPanel->m_OrgLen + offset;
+			pos_y = pPanel->m_OrgWidth + offset;
+
+			switch(info.m_PositionSignType)
+			{
+			case 0:
+
+				// 圆
+				DrawACircle(pos_x, pos_y, radius, plt_file);
+
+				break;
+
+			case 1:
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+				break;
+			default:
+
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+				break;
+			}
+
+
+			//  左下角的定位符
+			pos_x = - offset;
+			pos_y = - offset;
+
+			switch(info.m_PositionSignType)
+			{
+			case 0:
+
+				// 圆
+				DrawACircle(pos_x, pos_y, radius, plt_file);
+
+				break;
+
+			case 1:
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+				break;
+			default:
+
+				// 十字
+				DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+				DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+				break;
+			}
+
+
+			//  右下角的定位符
+
+
+			pos_x = pPanel->m_OrgLen + offset;
+			pos_y = - offset;
 
 			switch(info.m_PositionSignType)
 			{
@@ -212,17 +306,13 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 
 
 
-
-
-
-
-			for (int i = 1; i < hori_num; i++)
+			for (int i = 1; i <= hori_num; i++)
 			{
 				pos_x = i*dist;
 				pos_y = pPanel->m_OrgWidth + offset;
 
 
-
+				// 上
 				switch(info.m_PositionSignType)
 				{
 				case 0:
@@ -248,16 +338,45 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 					break;
 				}
 
+
+				// 下
+				pos_x = i*dist;
+				pos_y = -offset;
+
+				switch(info.m_PositionSignType)
+				{
+				case 0:
+
+					// 圆
+					DrawACircle(pos_x, pos_y, radius, plt_file);
+
+					break;
+
+				case 1:
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+					break;
+				default:
+
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+					break;
+				}
 
 			}
 
 
-			for (int i = 1; i < vert_num; i++)
+			for (int i = 1; i <= vert_num; i++)
 			{
 				pos_x = -offset;
 				pos_y = i*dist;
 
-
+				// 左
 
 				switch(info.m_PositionSignType)
 				{
@@ -286,6 +405,38 @@ bool PltReadWrite::OutputPlt(Panel* pPanel, string strPltFilePath)
 					break;
 				}
 
+
+				// 右
+				pos_x = pPanel->m_OrgLen + offset;
+				pos_y = i*dist;
+
+
+				switch(info.m_PositionSignType)
+				{
+				case 0:
+					// 圆
+					DrawACircle(pos_x, pos_y, radius, plt_file);
+
+
+					break;
+
+				case 1:
+
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+
+
+					break;
+				default:
+
+					// 十字
+					DrawALine(pos_x - radius, pos_y, pos_x + radius, pos_y, plt_file);
+					DrawALine(pos_x, pos_y + radius, pos_x, pos_y - radius, plt_file);
+
+					break;
+				}
 
 			}
 
