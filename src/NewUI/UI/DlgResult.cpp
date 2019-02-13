@@ -2804,7 +2804,7 @@ void CDlgResult::OnConnectMaintop()
 	string exe_path = m_BaseInfo.m_strMainTopPath;
 
 
-	float text_width = CurBaseInfo.m_FontSize/6.0;
+	float text_width = CurBaseInfo.m_FontSize/5.0;
 	float text_height = CurBaseInfo.m_FontSize/3.0;
 
 	for (int i_cpn = 0; i_cpn < cpn_list.size(); i_cpn++)
