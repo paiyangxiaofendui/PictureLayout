@@ -51,8 +51,8 @@ using namespace std;
 
 #pragma comment (lib, "User32.lib")
 
-
-
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
 
 
 
@@ -187,6 +187,9 @@ void CDlgResult::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_SHOW_PIC_SCALE, m_valShowPicScale);
 	DDV_MinMaxFloat(pDX, m_valShowPicScale, 0.0001, 1.0);
 	DDX_Control(pDX, IDC_CHECK_MAINTOP_WATCH_DOG, m_cbMaintopWatchDog);
+
+
+
 }
 
 
@@ -225,6 +228,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnBtnOptimize)
 	ON_BN_CLICKED(IDC_BUTTON_READ_PIC_INFO, &CDlgResult::OnOpenSourcePicInfo)
 	ON_BN_CLICKED(IDC_BUTTON_CONNECT_MAINTOP, &CDlgResult::OnConnectMaintop)
+	ON_BN_CLICKED(IDC_BUTTON_SAVE_RESULT, &CDlgResult::OnBtnExportParamResult)
 
 
 
@@ -383,6 +387,77 @@ void  CDlgResult::OnCBShowFilePic()
 }
 
 
+void CDlgResult::OnBtnExportParamResult()
+{
+	CSingleton* pSingleton = CSingleton::GetSingleton();
+
+	
+
+
+
+	TiXmlDocument* m_xmlDoc = new TiXmlDocument();
+
+	TiXmlDeclaration * xmlDec = new TiXmlDeclaration("1.0", "GB2312", "yes"); 
+
+
+	// 单例类
+	TiXmlElement* pSingletonElement = new TiXmlElement("ParamResult");
+
+	m_xmlDoc->LinkEndChild(xmlDec);
+	m_xmlDoc->LinkEndChild(pSingletonElement);
+
+	// 解决方案
+	vector<CSolution*>& SlnList = pSingleton->m_BackupSolutionList;
+	
+	CSolution* pCurSln = SlnList.at(pSingleton->m_CurSlnIndex);
+	Panel* pPanel = pCurSln->GetPanel(0);
+
+	float len = pPanel->m_OrgLen;
+	float width = pPanel->m_OrgWidth;
+	float area = len * width/1000000;
+
+
+
+
+
+	// 计算总周长
+	vector<Component*> vAllComponent;
+
+
+	pPanel->GetAllNeededComponent(vAllComponent);
+
+	float Circumference = 0;
+
+	for (vector<Component*>::iterator it = vAllComponent.begin(); it != vAllComponent.end(); it++)
+	{
+		Circumference += (*it)->m_RealLength * 2;
+		Circumference += (*it)->m_RealWidth * 2;
+	}
+
+	Circumference /= 1000;
+
+
+
+	TiXmlElement* pSolutionElement = new TiXmlElement("Parameter");
+
+	pSolutionElement->SetAttribute("Length",		GetFloatStringTrimming(len,		1));
+	pSolutionElement->SetAttribute("Width",			GetFloatStringTrimming(width,	1));
+	pSolutionElement->SetAttribute("Area",			GetFloatStringTrimming(area,	1));
+	pSolutionElement->SetAttribute("Circumference",	GetFloatStringTrimming(Circumference, 1));
+
+	pSingletonElement->LinkEndChild(pSolutionElement);
+
+
+	CString xml_path = m_BaseInfo.m_strParamResultPath.c_str();
+
+	m_xmlDoc->SaveFile(xml_path);
+	delete m_xmlDoc;
+
+
+
+}
+
+
 void CDlgResult::OnBtnExportPdf()
 {
 	PanelViewingParam* pParam = m_pDlgTotalResult->GetSelectedItemViewingParam();
@@ -463,7 +538,7 @@ void CDlgResult::OnBtnExportDxf()
 			CString DownerFilePath = strFilePath;
 			DownerFilePath.Replace(".dxf", "@W.dxf");
 
-			if (DxfReadWrite::OutputUpperFaceDxf(pParam->m_pPanel, strFilePath, m_BaseInfo.m_PositionSignType, m_BaseInfo.m_PositionSignSize, m_BaseInfo.m_PositionSignDist) == true )
+			if (DxfReadWrite::OutputUpperFaceDxf(pParam->m_pPanel, strFilePath, m_BaseInfo.m_PositionSignType, m_BaseInfo.m_PositionSignSize, m_BaseInfo.m_PositionSignDist, m_BaseInfo.m_LineWidth) == true )
 			{
 				AfxMessageBox("文件保存成功！");
 			}
@@ -676,6 +751,12 @@ LRESULT CDlgResult::OnRefreshPanelView(WPARAM wparam, LPARAM lparam)
 			m_top_offset		= pCurSel->m_BaseInfo.m_top_offset		;
 			m_bottom_offset		= pCurSel->m_BaseInfo.m_bottom_offset	;
 			m_arranging_origin	= pCurSel->m_BaseInfo.m_LayoutOrg		;
+
+
+			// 保存当前版面参数
+			OnBtnExportParamResult();
+
+
 
 			UpdateData(FALSE);
 		}
@@ -2262,6 +2343,9 @@ void  CDlgResult::OnLayout()
 	pSingleton->UpdatePreCombinedComponent();
 
 	ResetResultDlg();
+
+
+
 }
 
 
@@ -4182,7 +4266,12 @@ void CDlgResult::OnConnectMaintop()
 
 
 
-		AfxMessageBox("推送蒙泰完成！");
+
+
+		//AfxMessageBox("推送蒙泰完成！");
+
+
+		PlaySound(m_BaseInfo.m_strWavPath.c_str(),NULL,SND_FILENAME|SND_ASYNC);//播放"sound.wma"文件
 
 		if (pBtn)
 		{
@@ -4357,7 +4446,6 @@ void CDlgResult::OnOpenSourcePicInfo()
 					int		PositionSignType	=	stoi(pCurPrinciple->Attribute("PositionSignType"));
 					float	PositionSignOffset	=	stof(pCurPrinciple->Attribute("PositionSignOffset"));
 
-					
 
 
 
@@ -4367,8 +4455,13 @@ void CDlgResult::OnOpenSourcePicInfo()
 					float	LeftOffset		=  stof(pCurPrinciple->Attribute("LeftOffset"));
 					float	RightOffset		=  stof(pCurPrinciple->Attribute("RightOffset"));
 					float	TopOffset		=  stof(pCurPrinciple->Attribute("TopOffset"));
-					float	BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));	
+					float	BottomOffset	=  stof(pCurPrinciple->Attribute("BottomOffset"));
+					float	LineWidth		=  stof(pCurPrinciple->Attribute("LineWidth"));	
 					string	maintop_path	=  pCurPrinciple->Attribute("MainTopPath");	
+					string	wav_path		=  pCurPrinciple->Attribute("WavPath");	
+					string	param_path		=  pCurPrinciple->Attribute("ParamResultPath");	
+
+
 
 					switch(Method)
 					{
@@ -4394,7 +4487,12 @@ void CDlgResult::OnOpenSourcePicInfo()
 					m_BaseInfo.m_right_offset			=	RightOffset	;	
 					m_BaseInfo.m_top_offset				=	TopOffset	;	
 					m_BaseInfo.m_bottom_offset			=	BottomOffset;
+					m_BaseInfo.m_LineWidth				=	LineWidth;
 					m_BaseInfo.m_strMainTopPath			=	maintop_path;
+					m_BaseInfo.m_strWavPath				=   wav_path;
+					m_BaseInfo.m_strParamResultPath		=   param_path;
+
+
 
 					m_BaseInfo.m_FileTextPosition		= TextPosition;
 					m_BaseInfo.m_AutoSpace				= AutoSpace;

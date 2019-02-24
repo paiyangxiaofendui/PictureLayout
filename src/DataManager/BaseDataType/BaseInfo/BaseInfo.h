@@ -65,8 +65,13 @@ public:
 	float m_PositionSignOffset;					/**<  定位符偏移		定位符距离纸张的间隔  */
 	float m_FontSize;							/**<  字体大小pt		长=pt/7   高= pt/3  20pt,每个字符长3mm 高7mm */
 
+	float m_LineWidth;							/**<  dxf文件线型宽度 1 = 1mm */
+
+
 public:
-	string m_strMainTopPath;
+	string m_strMainTopPath;					/**<  蒙泰路径 */
+	string m_strWavPath;						/**<  wav音频路径 */
+	string m_strParamResultPath;				/**<  版面参数路径 */
 
 
 

@@ -88,6 +88,7 @@ protected:
 	afx_msg void OnBtnExportDxf();
 	afx_msg void OnBtnExportPlt();
 	afx_msg void OnBtnExportPdf();
+	afx_msg void OnBtnExportParamResult();
 	afx_msg void OnCBShowFileName();
 	afx_msg void OnCBShowFilePic();
 	afx_msg void OnBtnShow();

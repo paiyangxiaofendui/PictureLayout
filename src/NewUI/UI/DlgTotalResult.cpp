@@ -403,6 +403,9 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 
 #endif
 
+
+#if 0
+
 	m_lcTotalSolutionPanel.EnsureVisible(0, FALSE);
 	m_lcTotalSolutionPanel.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
 
@@ -436,13 +439,67 @@ void CDlgTotalResult::RefreshTotalSolutionPanel()
 
 		// 面积 = 大板面积x数量x平均利用率
 		float fAverageAvailability	=  GetSolutionComponentToatlArea(*pSolution) * 100 / GetSolutionPanelTotalArea(*pSolution);
-		float fUsedArea				=  pSolution->m_BaseInfo.m_PanelLength/1000.0 * pSolution->m_BaseInfo.m_PanelWidth/1000.0 * pSolution->GetPanelNum() * fAverageAvailability/100.0;	// 平方毫米转平方米 利用率/100
+		//float fUsedArea				=  pSolution->m_BaseInfo.m_PanelLength/1000.0 * pSolution->m_BaseInfo.m_PanelWidth/1000.0 * pSolution->GetPanelNum() * fAverageAvailability/100.0;	// 平方毫米转平方米 利用率/100
+		float fUsedArea				=  pSolution->GetPanel(0)->m_OrgLen/1000.0 * pSolution->GetPanel(0)->m_OrgWidth/1000.0 * pSolution->GetPanelNum() * fAverageAvailability/100.0;	// 平方毫米转平方米 利用率/100
+
+
 
 		m_lcTotalMaterial.SetItemText(nItem, 3, GetFloatString(/*GetSolutionComponentToatlArea(*pSolution)*/fUsedArea, 2));
 		m_lcTotalMaterial.SetItemText(nItem, 4, GetFloatString(fAverageAvailability, 1) + _T("%"));
 
 		nItem++;
 	}
+
+
+#else
+
+	m_lcTotalSolutionPanel.EnsureVisible(0, FALSE);
+	m_lcTotalSolutionPanel.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
+
+	m_lcTotalMaterial.DeleteAllItems();
+	nItem = 0;
+
+	vector<CSolution*> SlnList = pSingleton->m_BackupSolutionList;
+	
+	for(int i = 0; i < SlnList.size(); i++)
+	{
+		CSolution* pSolution = SlnList.at(i);
+		Panel* pPanel = pSolution->GetPanel(0);
+
+		vector<Component*> vAllComponent;
+		pPanel->GetAllNeededComponent(vAllComponent);
+
+	
+		float Circumference = 0;
+
+		for (vector<Component*>::iterator it = vAllComponent.begin(); it != vAllComponent.end(); it++)
+		{
+			Circumference += (*it)->m_RealLength * 2;
+			Circumference += (*it)->m_RealWidth * 2;
+		}
+
+
+
+
+
+		m_lcTotalMaterial.InsertItem(nItem, pSolution->m_strMaterial);
+		m_lcTotalMaterial.SetItemText(nItem, 1, GetFloatString(Circumference/1000.0, 1));
+
+		m_lcTotalMaterial.SetItemText(nItem, 2, GetFloatString(pSolution->m_PanelList.size(), 0));
+
+		m_lcTotalMaterial.SetItemText(nItem, 3, GetFloatString(pPanel->m_OrgLen * pPanel->m_OrgWidth/1000000, 2));
+		m_lcTotalMaterial.SetItemText(nItem, 4, GetFloatString(pPanel->GetUtilization()*100, 1) + _T("%"));
+
+		nItem++;
+	}
+
+
+
+
+#endif
+
+
+	
 }
 
 PanelViewingParam* CDlgTotalResult::GetSelectedItemViewingParam()

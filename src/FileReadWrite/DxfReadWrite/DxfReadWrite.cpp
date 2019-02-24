@@ -45,7 +45,7 @@
 //
 //
 /*-------------------------------------------------------*/
-bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int type , float size,  float dist) 
+bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int type , float size,  float dist,  float line_type_width) 
 {
 
 
@@ -53,6 +53,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
 
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 
+	int line_width = line_type_width * 100;// 线型宽度单位为0.01mm ，所以要乘以100
 
     DL_Dxf* dxf = new DL_Dxf();
     DL_Codes::version exportVersion = DL_Codes::AC1015;
@@ -97,7 +98,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
                    DL_Attributes(
                        std::string(""),      // leave empty
                        DL_Codes::black,        // default color
-                       100,                  // default width
+                       line_width,                  // default width
                        "CONTINUOUS", 1.0));       // default line style
  
     dxf->writeLayer(*dw,
@@ -105,7 +106,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
                    DL_Attributes(
                        std::string(""),
                        DL_Codes::red,
-                       100,
+                       line_width,
                        "CONTINUOUS", 1.0));
 
     dxf->writeLayer(*dw,
@@ -113,7 +114,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
                    DL_Attributes(
                        std::string(""),
                        DL_Codes::black,
-                       100,
+                       line_width,
                        "CONTINUOUS", 1.0));
 
     dw->tableEnd();
@@ -192,6 +193,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
 
 			float pos_x = - offset;
 			float pos_y = pPanel->m_OrgWidth + offset;
+
 
 
 			// 第一个点

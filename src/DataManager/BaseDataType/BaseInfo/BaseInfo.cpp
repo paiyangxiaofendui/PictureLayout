@@ -21,6 +21,7 @@ BaseInfo::BaseInfo(void)
 	m_right_offset						= 1.0;	
 	m_top_offset						= 1.0;		
 	m_bottom_offset						= 1.0;	
+	m_LineWidth							= 1.0;
 
 
 
