@@ -59,14 +59,19 @@ public:
 	int m_AutoSpace;							/**<  智能间距			0：不启用  1：启用 */
 	int m_OneLabel;								/**<  标签只打一份		0：不启用  1：启用  */
 	int m_OneLabelSpace;						/**<  标签只打一份时板的间距  */
-	int m_PositionSignType;						/**<  定位符类型		0：圆  */
+	int m_PositionSignType;						/**<  定位符类型		0：圆  1: 十字*/
 	float m_PositionSignSize;					/**<  定位符大小		mm  */
 	float m_PositionSignDist;					/**<  定位符			定位符间隔为1000mm时，dxf文件每隔1000mm显示一个圆  */
 	float m_PositionSignOffset;					/**<  定位符偏移		定位符距离纸张的间隔  */
 	float m_FontSize;							/**<  字体大小pt		长=pt/7   高= pt/3  20pt,每个字符长3mm 高7mm */
 
+	float m_LineWidth;							/**<  dxf文件线型宽度 1 = 1mm */
+
+
 public:
-	string m_strMainTopPath;
+	string m_strMainTopPath;					/**<  蒙泰路径 */
+	string m_strWavPath;						/**<  wav音频路径 */
+	string m_strParamResultPath;				/**<  版面参数路径 */
 
 
 
