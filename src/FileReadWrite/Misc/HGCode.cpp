@@ -5,7 +5,7 @@
 #include <locale>
 #include <codecvt>
 
-void HGCode::UTF8_To_Unicode(wchar_t* pOut,char *pText)
+void JT_Code::UTF8_To_Unicode(wchar_t* pOut,char *pText)
 {
 	char* uchar = (char *)pOut;
 
@@ -15,7 +15,7 @@ void HGCode::UTF8_To_Unicode(wchar_t* pOut,char *pText)
 	return;
 }
 
-void HGCode::Unicode_To_UTF8(char* pOut,wchar_t* pText)
+void JT_Code::Unicode_To_UTF8(char* pOut,wchar_t* pText)
 {
 	// 注意 WCHAR高低字的顺序,低字节在前，高字节在后
 	char* pchar = (char *)pText;
@@ -27,19 +27,19 @@ void HGCode::Unicode_To_UTF8(char* pOut,wchar_t* pText)
 	return;
 }
 
-void HGCode::Unicode_To_GB2312(char* pOut,wchar_t uData)
+void JT_Code::Unicode_To_GB2312(char* pOut,wchar_t uData)
 {
 	WideCharToMultiByte(CP_ACP,NULL,&uData,1,pOut,sizeof(wchar_t),NULL,NULL);
 	return;
 }    
 
-void HGCode::Gb2312_To_Unicode(wchar_t* pOut,char *gbBuffer)
+void JT_Code::Gb2312_To_Unicode(wchar_t* pOut,char *gbBuffer)
 {
 	::MultiByteToWideChar(CP_ACP,MB_PRECOMPOSED,gbBuffer,2,pOut,1);
 	return ;
 }
 
-void HGCode::GB2312_To_UTF8(std::string& pOut,char *pText, int pLen)
+void JT_Code::GB2312_To_UTF8(std::string& pOut,char *pText, int pLen)
 {
 	char buf[4];
 	int nLength = pLen* 3;
@@ -82,7 +82,7 @@ void HGCode::GB2312_To_UTF8(std::string& pOut,char *pText, int pLen)
 	return;
 }
 
-void HGCode::UTF_8To_GB2312(std::string &pOut, char *pText, int pLen)
+void JT_Code::UTF_8To_GB2312(std::string &pOut, char *pText, int pLen)
 {
 	char * newBuf = new char[pLen];
 	char Ctemp[4];
@@ -119,7 +119,7 @@ void HGCode::UTF_8To_GB2312(std::string &pOut, char *pText, int pLen)
 	return;
 } 
 
-std::wstring HGCode::UTF8_To_ws( const std::string& src )
+std::wstring JT_Code::UTF8_To_ws( const std::string& src )
 {
 	if(src.empty()) return L"";
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
@@ -135,7 +135,7 @@ std::wstring HGCode::UTF8_To_ws( const std::string& src )
 	return move(temp);
 }
 
-std::string HGCode::UTF8_To_s( const std::string& src )
+std::string JT_Code::UTF8_To_s( const std::string& src )
 {
 	return CString(UTF8_To_ws(src).c_str()).GetBuffer();
 }
@@ -147,9 +147,9 @@ std::string HGCode::UTF8_To_s( const std::string& src )
 
 
 
-wchar_t* HGCode::wszResult = nullptr;
+wchar_t* JT_Code::wszResult = nullptr;
 
-const char* HGCode::wchar_t_Unicode_To_GB2312(wchar_t* str)
+const char* JT_Code::wchar_t_Unicode_To_GB2312(wchar_t* str)
 {
 	if (szResult)
 	{
@@ -184,7 +184,7 @@ const char* HGCode::wchar_t_Unicode_To_GB2312(wchar_t* str)
 	return szResult;
 }
 
-const wchar_t* HGCode::char_Gb2312_To_Unicode(const char* szTestNew)
+const wchar_t* JT_Code::char_Gb2312_To_Unicode(const char* szTestNew)
 {
 	if (wszResult)
 	{
@@ -221,10 +221,10 @@ const wchar_t* HGCode::char_Gb2312_To_Unicode(const char* szTestNew)
 #endif	//DEMO
 }
 
-char* HGCode::szResult = nullptr;
+char* JT_Code::szResult = nullptr;
 
 
-void HGCode::one_UTF8_To_Unicode(wchar_t* pOut,char *pText)
+void JT_Code::one_UTF8_To_Unicode(wchar_t* pOut,char *pText)
 {
 	char* uchar = (char *)pOut;
 
@@ -234,7 +234,7 @@ void HGCode::one_UTF8_To_Unicode(wchar_t* pOut,char *pText)
 	return;
 }
 
-void HGCode::one_Unicode_To_UTF8(char* pOut,wchar_t* pText)
+void JT_Code::one_Unicode_To_UTF8(char* pOut,wchar_t* pText)
 {
 	// 注意 WCHAR高低字的顺序,低字节在前，高字节在后
 	char* pchar = (char *)pText;
@@ -246,19 +246,19 @@ void HGCode::one_Unicode_To_UTF8(char* pOut,wchar_t* pText)
 	return;
 }
 
-void HGCode::one_Unicode_To_GB2312(char* pOut,wchar_t uData)
+void JT_Code::one_Unicode_To_GB2312(char* pOut,wchar_t uData)
 {
 	int a = WideCharToMultiByte(CP_ACP,NULL,&uData,1,pOut,sizeof(wchar_t),NULL,NULL);
 	return;
 }    
 
-void HGCode::one_Gb2312_To_Unicode(wchar_t* pOut,char *gbBuffer)
+void JT_Code::one_Gb2312_To_Unicode(wchar_t* pOut,char *gbBuffer)
 {
 	int a = ::MultiByteToWideChar(CP_ACP,MB_PRECOMPOSED,gbBuffer,2,pOut,1);
 	return ;
 }
 
-void HGCode::one_GB2312_To_UTF8(std::string& pOut,char *pText, int pLen)
+void JT_Code::one_GB2312_To_UTF8(std::string& pOut,char *pText, int pLen)
 {
 	char buf[4];
 	int nLength = pLen* 3;
@@ -302,7 +302,7 @@ void HGCode::one_GB2312_To_UTF8(std::string& pOut,char *pText, int pLen)
 }
 
 
-void HGCode::one_UTF_8To_GB2312(std::string &pOut, char *pText, int pLen)
+void JT_Code::one_UTF_8To_GB2312(std::string &pOut, char *pText, int pLen)
 {
 	char * newBuf = new char[pLen];
 	char Ctemp[4];
@@ -342,7 +342,7 @@ void HGCode::one_UTF_8To_GB2312(std::string &pOut, char *pText, int pLen)
 
 
 //把str编码为网页中的 GB2312 url encode ,英文不变，汉字双字节 如%3D%AE%88
-std::string HGCode::UrlGB2312(char * str)
+std::string JT_Code::UrlGB2312(char * str)
 {
 	std::string dd;
 	size_t len = strlen(str);
@@ -371,7 +371,7 @@ std::string HGCode::UrlGB2312(char * str)
 
 //把str编码为网页中的 UTF-8 url encode ,英文不变，汉字三字节 如%3D%AE%88
 
-std::string HGCode::UrlUTF8(char * str)
+std::string JT_Code::UrlUTF8(char * str)
 {
 	std::string tt;
 	std::string dd;
@@ -402,7 +402,7 @@ std::string HGCode::UrlUTF8(char * str)
 	return dd;
 }
 //把url GB2312解码
-std::string HGCode::UrlGB2312Decode(std::string str)
+std::string JT_Code::UrlGB2312Decode(std::string str)
 {
 	std::string output="";
 	char tmp[2];
@@ -428,7 +428,7 @@ std::string HGCode::UrlGB2312Decode(std::string str)
 	return output;
 }
 //把url utf8解码
-std::string HGCode::UrlUTF8Decode(std::string str)
+std::string JT_Code::UrlUTF8Decode(std::string str)
 {
 	std::string output="";
 
@@ -441,13 +441,13 @@ std::string HGCode::UrlUTF8Decode(std::string str)
 
 }
 //做为解Url使用
-char HGCode:: CharToInt(char ch){
+char JT_Code:: CharToInt(char ch){
 	if(ch>='0' && ch<='9')return (char)(ch-'0');
 	if(ch>='a' && ch<='f')return (char)(ch-'a'+10);
 	if(ch>='A' && ch<='F')return (char)(ch-'A'+10);
 	return -1;
 }
-char HGCode::StrToBin(char *str){
+char JT_Code::StrToBin(char *str){
 	char tempWord[2];
 	char chn;
 

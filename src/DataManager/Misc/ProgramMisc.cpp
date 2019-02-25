@@ -1,12 +1,7 @@
 #include "stdafx.h"
 #include "ProgramMisc.h"
 
-//#include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
-//#include "../../../include/DataManager/BaseDataType/CSingleton/CSingleton.h"
-//#include "../../../include/DataManager/BaseDataType/CSolution/CSolution.h"
-//#include "../../../include/HG3D/XmlFile.h"
-//#include "../../../include/HG3D/XmlNode.h"
-//#include "../../../include/HG3D/Utils.h"
+
 
 void FindAllComponentInPanel(Component& thePanel, vector<Component*>& vAllComponent)
 {
@@ -33,60 +28,6 @@ void FindAllComponentInPanel(Component& thePanel, vector<Component*>& vAllCompon
 	}
 }
 
-//void GetSolutionPanel(vector<PanelAndTheSolution>& vPanelAndTheSolution)
-//{
-//	vPanelAndTheSolution.clear();
-//	for(int i = 0; i < CSingleton::GetSingleton()->m_BackupSolutionList.size(); i++)
-//	{
-//		CSolution* pSolution = CSingleton::GetSingleton()->m_BackupSolutionList[i];
-//		for(int j = 0; j < pSolution->m_PanelList.size(); j++)
-//		{
-//			PanelAndTheSolution panleAndSol;
-//			panleAndSol.m_pPanel = pSolution->m_PanelList[j];
-//			panleAndSol.m_pSolution = pSolution;
-//			vPanelAndTheSolution.push_back(panleAndSol);
-//		}
-//	}
-//}
-//
-////得到贴标的宽高
-//void GetTiebiaoSize( float& tiebiao_width, float& tiebiao_height )
-//{
-//	hg3d::TString strConfigFile = _T("picture");
-//	strConfigFile = hg3d::getFullFileName(strConfigFile);
-//	strConfigFile += _T("\\printcode.xml");
-//
-//	hg3d::CXmlFile* doc = new hg3d::CXmlFile();
-//	if (!doc->Load(strConfigFile.c_str()))
-//	{
-//		AfxMessageBox("读取printcode.xml失败",MB_OK);
-//		return;
-//	}
-//
-//	hg3d::CXmlNode * print_node = NULL;
-//
-//	for (int i = 0;i < doc->GetChildNodes().size();i++)
-//	{
-//		hg3d::CXmlNode* child_node = doc->GetChildNodes().at(i);
-//		std::string _used = child_node->GetAttributeValue("Used");
-//		if (_used == "1")
-//		{
-//			print_node = child_node;
-//			break;
-//		}
-//	}
-//
-//	//如果没有找到任何标签配置信息，那么默认标签大小认为是100*100
-//	if (print_node == NULL)
-//	{
-//		tiebiao_width = 100/4.0;
-//		tiebiao_height = 100/4.0;
-//		return;
-//	}
-//
-//	tiebiao_width = atof(print_node->GetAttributeValue("paperWidth").c_str())/4.0;
-//	tiebiao_height = atof(print_node->GetAttributeValue("paperHeight").c_str())/4.0;
-//}
 
 void OutlinePointsClockwiseRotate90(vector<PointInfo>& vOutlinePoint, float fOrgXLen, float fOrgYLen)
 {
@@ -125,10 +66,8 @@ void SlotClockwiseRotate90(vector<AllSlot>& vSlot, float fOrgXLen, float fOrgYLe
 		theSlot._dir = (theSlot._dir == 0) ? 1 : 0;
 	}
 }
-//void OutlinePointsAntiClockwiseRotate90(vector<PointInfo>& vOutlinePoint)
-//{
-//
-//}
+
+
 
 void BandingClockwiseRotate90(float (&afBanding)[4])
 {

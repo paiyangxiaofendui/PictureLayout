@@ -1,6 +1,6 @@
 #pragma  once
 #include <string>
-class AFX_EXT_CLASS HGCode
+class AFX_EXT_CLASS JT_Code
 {
 public:
 	// 把UTF-8转换成Unicode
@@ -19,7 +19,7 @@ public:
 	static void GB2312_To_UTF8(std::string& pOut,char *pText, int pLen);
 
 	static std::wstring UTF8_To_ws( const std::string& src );
-	static std::string HGCode::UTF8_To_s( const std::string& src );
+	static std::string JT_Code::UTF8_To_s( const std::string& src );
 
 
 private:
@@ -93,7 +93,7 @@ public:
 	static std::string UrlGB2312Decode(std::string str);                //urlgb2312解码
 private:
 	static char StrToBin(char *str);
-	static char HGCode:: CharToInt(char ch);
+	static char JT_Code:: CharToInt(char ch);
 
 
 };
