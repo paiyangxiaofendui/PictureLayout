@@ -220,7 +220,7 @@ std::vector<PointInfo> OtherShapeHelper::RotatePointInfoDegree180( std::vector<P
 }
 
 // 异形string 参数列表
-// ID:2016;gapWidth:10;gapHeight:20;   =>   { ID : 2016 , gapWidth : 10 , gapHeight : 20 }
+// ID:2019;gapWidth:10;gapHeight:20;   =>   { ID : 2019 , gapWidth : 10 , gapHeight : 20 }
 std::vector<param_point> OtherShapeHelper::GetParamPointsFromOtherShapeString( std::string otherShapeString )
 {
 	vector<param_point> pa_p;
@@ -263,7 +263,7 @@ std::vector<param_point> OtherShapeHelper::GetParamPointsFromOtherShapeString( s
 }
 
 // 异形string 参数列表
-// ID:2016;gapWidth:10;gapHeight:20;   =>   { ID : 2016 , PW : 50 , PD : 50 , gapWidth : 10 , gapHeight : 20 }
+// ID:2019;gapWidth:10;gapHeight:20;   =>   { ID : 2019 , PW : 50 , PD : 50 , gapWidth : 10 , gapHeight : 20 }
 std::vector<param_point> OtherShapeHelper::GetParamPointsFromOtherShapeString( std::string otherShapeString, std::string panelWidth, std::string panelHeight )
 {
 	std::vector<param_point> pa_p = GetParamPointsFromOtherShapeString(otherShapeString);
@@ -406,7 +406,7 @@ float calcFormula(std::string formula)
 }
 
 // 用异形string参数，替换公共异形参数点阵，计算参数点阵到普通点阵
-// ID:2016;PW:50;PD:60;gapWidth:10;gapHeight:20; + {[x:"PD-gapWidth",y:"PW-gapHeight"]} => {[ x:50.0 , y:30.0 ]}
+// ID:2019;PW:50;PD:60;gapWidth:10;gapHeight:20; + {[x:"PD-gapWidth",y:"PW-gapHeight"]} => {[ x:50.0 , y:30.0 ]}
 std::vector<PointInfo> OtherShapeHelper::GetPointInfoFromPanelOutLineAndParamPoint( std::vector<std::map<std::string,std::string>> panelOutline, std::vector<param_point> pa_p )
 {
 	OtherShapeHelper::sortParam_pointByStrLen(pa_p);
@@ -607,7 +607,7 @@ void OtherShapeHelper::GetPointsToYPlus(std::vector<PointInfo>& pointInfos, cons
 }
 
 // 获得所有公共异形参数点阵
-// ID:2016;...  => {[x:"PD-gapWidth",y:"PW-gapHeight"]}
+// ID:2019;...  => {[x:"PD-gapWidth",y:"PW-gapHeight"]}
 OutlineParamShapeDict OtherShapeHelper::GetOtherShapePanelOutLineList()
 {
 	OutlineParamShapeDict outlineResult;
@@ -632,7 +632,7 @@ void OtherShapeHelper::removeParamPoint_PanelWidthPanelHeight( std::vector<param
 }
 
 // 参数列表 转 异形string 
-// { ID : 2016 , gapWidth : 10 , gapHeight : 20 }   =>   ID:2016;gapWidth:10;gapHeight:20;
+// { ID : 2019 , gapWidth : 10 , gapHeight : 20 }   =>   ID:2019;gapWidth:10;gapHeight:20;
 std::string OtherShapeHelper::GetOtherShapeStringFromParamPoints( std::vector<param_point> pa_p )
 {
 	CString result;

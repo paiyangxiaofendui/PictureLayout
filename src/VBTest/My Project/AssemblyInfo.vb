@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("Microsoft")> 
 <Assembly: AssemblyProduct("VBTest")> 
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2018")> 
+<Assembly: AssemblyCopyright("Copyright © Microsoft 2019")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>

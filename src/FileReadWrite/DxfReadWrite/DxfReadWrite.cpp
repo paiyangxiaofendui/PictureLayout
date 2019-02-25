@@ -2,7 +2,7 @@
 //	DxfReadWrite.cpp      -- dxf文件读写类实现文件
 //	
 //	作者：	yuanzb
-//	时间：	2017.7.21
+//	时间：	2019.7.21
 //	备注：	
 //
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -49,7 +49,7 @@ bool DxfReadWrite::OutputUpperFaceDxf(Panel* pPanel, CString strDxfFilePath, int
 {
 
 
-	//2017-7-20 yuanzb  以下是范例代码，一般情况下不做更改，只更改ENTITIES段的数据
+	//2019-7-20 yuanzb  以下是范例代码，一般情况下不做更改，只更改ENTITIES段的数据
 
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 
@@ -932,7 +932,7 @@ bool DxfReadWrite::OutputDownerFaceDxf(Panel* pPanel, CString strDxfFilePath)
 {
 
 
-	//2017-7-20 yuanzb  以下是范例代码，一般情况下不做更改，只更改ENTITIES段的数据
+	//2019-7-20 yuanzb  以下是范例代码，一般情况下不做更改，只更改ENTITIES段的数据
 
 
     DL_Dxf* dxf = new DL_Dxf();

@@ -2,7 +2,7 @@
  *  @file		RawMaterialInfo.h 
  *  @author		yaunzb
  *  @version	1.0
- *  @date		2018.7.8
+ *  @date		2019.7.8
  *  @note       
  *  @since    
  */

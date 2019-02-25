@@ -2,7 +2,7 @@
 //	GeneralInterface.cpp    -- 公共借口类实现文件
 //	
 //	作者：	yuanzb
-//	时间：	2016.7.12
+//	时间：	2019.7.12
 //	备注：	数据操作公共接口
 //
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -315,7 +315,7 @@ BOOL GeneralInterface::CalFigureIntersect(Figure* pSrcFig, Figure* pDstFig, FPoi
 			{
 				rt = CalSegmenIntersect2(pSrcCur->m_x, pSrcCur->m_y, pSrcNext->m_x, pSrcNext->m_y, pDstCur->m_x, pDstCur->m_y, pDstNext->m_x, pDstNext->m_y, inter_pnt.m_x, inter_pnt.m_y);
 
-				//2017-5-23  yuanzb  第一个图形的头交了第二个图形的尾，这种情况即使相交也不算相交,此处求的相交是第一个图形的尾交第二个图形的头部
+				//2019-5-23  yuanzb  第一个图形的头交了第二个图形的尾，这种情况即使相交也不算相交,此处求的相交是第一个图形的尾交第二个图形的头部
 				FPoint* pDstFigTailPnt = pDstFig->GetTailShapePoint();
 
 				if (rt == TRUE && inter_pnt.IsCloseTo(pDstFigTailPnt) == TRUE)

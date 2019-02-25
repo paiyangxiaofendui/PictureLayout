@@ -147,11 +147,11 @@ public:
 	static std::vector<PointInfo> RotatePointInfoDegree180(std::vector<PointInfo> pointInfos, float fOrgXLen, float fOrgYLen);
 
 	// 异形string 参数列表
-	// ID:2016;gapWidth:10;gapHeight:20;   =>   { ID : 2016 , gapWidth : 10 , gapHeight : 20 }
+	// ID:2019;gapWidth:10;gapHeight:20;   =>   { ID : 2019 , gapWidth : 10 , gapHeight : 20 }
 	static std::vector<param_point> GetParamPointsFromOtherShapeString( std::string otherShapeString );
 
 	// 异形string 参数列表
-	// ID:2016;gapWidth:10;gapHeight:20;   =>   { ID : 2016 , PW : 50 , PD : 50 , gapWidth : 10 , gapHeight : 20 }
+	// ID:2019;gapWidth:10;gapHeight:20;   =>   { ID : 2019 , PW : 50 , PD : 50 , gapWidth : 10 , gapHeight : 20 }
 	static std::vector<param_point> GetParamPointsFromOtherShapeString( std::string otherShapeString, std::string panelWidth, std::string panelHeight );
 
 	//根据长度整理参数的排序函数
@@ -177,7 +177,7 @@ public:
 	static std::vector<PointInfo> RotateOtherShapePointInfos(std::vector<PointInfo> m_pointInfos,std::string changeType ,std::string m_panelwidth, std::string m_panelheight);
 
 	// 用异形string参数，替换公共异形参数点阵，计算参数点阵到普通点阵
-	// ID:2016;PW:50;PD:60;gapWidth:10;gapHeight:20; + {[x:"PD-gapWidth",y:"PW-gapHeight"]} => {[ x:50.0 , y:30.0 ]}
+	// ID:2019;PW:50;PD:60;gapWidth:10;gapHeight:20; + {[x:"PD-gapWidth",y:"PW-gapHeight"]} => {[ x:50.0 , y:30.0 ]}
 	static std::vector<PointInfo> GetPointInfoFromPanelOutLineAndParamPoint(std::vector<std::map<std::string,std::string>> panelOutline, std::vector<param_point> pa_p);
 
 
@@ -190,14 +190,14 @@ public:
 	static void GetPointsToYPlus(std::vector<PointInfo>& pointInfos, const std::string rotate, std::string m_panelwidth, std::string m_panelheight);
 
 	// 获得所有公共异形参数点阵
-	// ID:2016;...  => {[x:"PD-gapWidth",y:"PW-gapHeight"]}
+	// ID:2019;...  => {[x:"PD-gapWidth",y:"PW-gapHeight"]}
 	static OutlineParamShapeDict GetOtherShapePanelOutLineList();
 
 	//异形参数列表PW PD删除
 	static void removeParamPoint_PanelWidthPanelHeight( std::vector<param_point>& pa_p );
 
 	// 参数列表 转 异形string 
-	// { ID : 2016 , gapWidth : 10 , gapHeight : 20 }   =>   ID:2016;gapWidth:10;gapHeight:20;
+	// { ID : 2019 , gapWidth : 10 , gapHeight : 20 }   =>   ID:2019;gapWidth:10;gapHeight:20;
 	static std::string GetOtherShapeStringFromParamPoints( std::vector<param_point> pa_p );
 
 	//通过点获得线段数组

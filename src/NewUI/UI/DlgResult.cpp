@@ -4287,20 +4287,6 @@ void CDlgResult::OnOpenSourcePicInfo()
 
 					// 计算图片长宽
 
-					// 						const wchar_t* pwc = HGCode::char_Gb2312_To_Unicode(pic_path.c_str());
-					// 						Image tmp_img(pwc);
-					// 
-					// 
-					// 						UINT w	= tmp_img.GetWidth();
-					// 						UINT h	= tmp_img.GetHeight();
-					// 						UINT hr = tmp_img.GetHorizontalResolution();		// dpi 每英寸多少个像素点
-					// 						UINT vr = tmp_img.GetVerticalResolution();			// dpi
-					// 
-					// 						float w_inch = (1.0*w)/hr;
-					// 						float h_inch = (1.0*h)/vr;
-					// 
-					// 						float w_mm = w_inch*INCH_TO_MM;
-					// 						float h_mm = h_inch*INCH_TO_MM;
 
 
 					// 形成一条数据

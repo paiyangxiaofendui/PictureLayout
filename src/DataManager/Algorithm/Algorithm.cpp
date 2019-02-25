@@ -3633,7 +3633,7 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 				}
 			}
 
-			//2018-10-27 yuanzb  匹配到了直接退出，因为图片排样不是在规定尺寸而是无限长，要按照从上往下或者从下往上排，否则空间浪费很大
+			//2019-10-27 yuanzb  匹配到了直接退出，因为图片排样不是在规定尺寸而是无限长，要按照从上往下或者从下往上排，否则空间浪费很大
 			// 配合余料从上往下或者从下往排，可以解决优先排在最上或者最下，只有余料不能排时才选择下一个余料
 			if (bMatchFlag == true)
 			{
@@ -3839,7 +3839,7 @@ bool ALGORITHM_API::MatchSuitableComponentNRemaider(vector<Component*>& Remainde
 				}
 			}
 
-			//2018-10-27 yuanzb  匹配到了直接退出，因为图片排样不是在规定尺寸而是无限长，要按照从上往下或者从下往上排，否则空间浪费很大
+			//2019-10-27 yuanzb  匹配到了直接退出，因为图片排样不是在规定尺寸而是无限长，要按照从上往下或者从下往上排，否则空间浪费很大
 			// 配合余料从上往下或者从下往排，可以解决优先排在最上或者最下，只有余料不能排时才选择下一个余料
 			if (bMatchFlag == true)
 			{
@@ -4083,7 +4083,7 @@ vector<PointInfo> ALGORITHM_API::FiltrateCoincidentPoints(vector<PointInfo>& old
 		// 当前点与下一点有重合点
 		if (dis_point < COINCIDENT_DIST)
 		{
-			//2016 yuanzb  最后一点与第一点重合，且最后一点不是圆弧终点，删掉
+			//2019 yuanzb  最后一点与第一点重合，且最后一点不是圆弧终点，删掉
 			if (i == old_point_size-1)
 			{
 				if (cur_point.sign == 2 || cur_point.sign == 3)	// 圆弧终点，添加
@@ -4239,7 +4239,7 @@ vector<PointInfo> ALGORITHM_API::FiltrateCoincidentPoints2(vector<PointInfo>& ol
 		// 当前点与下一点有重合点
 		if (dis_point < COINCIDENT_DIST)
 		{
-			//2016 yuanzb  最后一点直接添加
+			//2019 yuanzb  最后一点直接添加
 			if (i == old_point_size-1)
 			{
 				// 判断是否已添加了相同坐标的点

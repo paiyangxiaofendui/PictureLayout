@@ -2,7 +2,7 @@
 //	Complex.cpp   -- 复合图形类实现文件
 //	
 //	作者：	yuanzb
-//	时间：	2016.7.12
+//	时间：	2019.7.12
 //	备注：	
 //
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -293,7 +293,7 @@ void Cad_Complex::UpdateShapePointInfo(void)
 void Cad_Complex::CalShapePointOutlineInfo(void)
 {
 	int i,j, n, nCount;
-	int nLastDelIndex = -1;								//yuanzb 2016-9-29 因为图形间的连接弧可能距离很近导致判断重合，删多了会导致计算点不匹配，所以添加变量最后一个删除的索引，避免多次删除图形间的连接点导致数量不匹配  
+	int nLastDelIndex = -1;								//yuanzb 2019-9-29 因为图形间的连接弧可能距离很近导致判断重合，删多了会导致计算点不匹配，所以添加变量最后一个删除的索引，避免多次删除图形间的连接点导致数量不匹配  
 	int nComplexFigNum, nTmpListTotalNum, nTmpListNum;	// 复合图形数量，tmplist形状点数量总和，tmplist删除针对直线接圆弧、圆弧接圆弧、圆弧接直线，重合形状点后的数量
 	Figure* pFig = NULL;
 	ShapePoint* pPnt = NULL;

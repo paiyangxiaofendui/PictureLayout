@@ -556,7 +556,7 @@ void CDlgTotalResult::UpdateList()
 		PanelViewingParam* pParam = (PanelViewingParam*)m_lcTotalSolutionPanel.GetItemData(nItem);
 		Panel& thePanel = *(pParam->m_pPanel);
 
-		// yuanzb 2017-7-6 显示使用原始大板长宽
+		// yuanzb 2019-7-6 显示使用原始大板长宽
 		CString strSize;
 		strSize.Format("%s*%s", GetFloatString(thePanel.m_OrgLen, 0), GetFloatString(thePanel.m_OrgWidth, 0));
 

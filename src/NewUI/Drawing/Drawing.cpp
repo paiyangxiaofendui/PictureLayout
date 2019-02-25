@@ -61,7 +61,7 @@ void DrawPanelDiagramToA4(HDC hdc, Panel* pPanel, CRect rcDrawingArea, int nPane
 // 打印大板标签
 bool DrawPanelInfoToDC(HDC hdc, Panel* pPanel, float org_scale, int rightmove, int bottommove, int num, /*CFont* font*/PanelDiagramPrintingStyle eStyle)
 {
-	float scale = org_scale * 1.2;	//2016-8-18 yuanzb 大图时显示标签，将图缩小，腾出右边的空间
+	float scale = org_scale * 1.2;	//2019-8-18 yuanzb 大图时显示标签，将图缩小，腾出右边的空间
 
 	Graphics g(hdc);
 	g.SetSmoothingMode(SmoothingModeHighQuality);
