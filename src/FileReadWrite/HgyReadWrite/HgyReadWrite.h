@@ -1,5 +1,5 @@
-#ifndef		_HgyReadWrite_h_
-#define		_HgyReadWrite_h_
+#ifndef		_JtyReadWrite_h_
+#define		_JtyReadWrite_h_
 #pragma  once
 
 #include "../../../include/TinyXml/tinyxml.h"
@@ -13,12 +13,12 @@ class Component;
 using namespace std;
 using namespace TinyXml;
 
-class AFX_EXT_CLASS  HgyReadWrite
+class AFX_EXT_CLASS  JtyReadWrite
 {
 public:
 	//	标准读写函数
-	static bool ReadHgy(CString szFileDir);										// 加载hgy
-	static bool WriteHgy(CString szFileDir);									// 保存为hgy
+	static bool ReadJty(CString szFileDir);										// 加载jty
+	static bool WriteJty(CString szFileDir);									// 保存为jty
 	static bool SaveOneTree2Xml(TiXmlElement* pCurNode, Component* pCurCpn);	// 保存大板树形结构到XML文件
 	static bool LoadOneTreeFromXml(TiXmlElement* pCurNode, Component* pCurCpn);	// 从XML文件读取大板树型结构
 

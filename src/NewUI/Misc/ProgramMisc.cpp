@@ -812,46 +812,13 @@ float GetKerf()
 
 void DrawLogoTextInLabel(CDC* pDC, CRect rcLabelArea)
 {
-// 	CFont newfont;
-// 	newfont.CreateFont(12, 0, 0, 0, FW_NORMAL,FALSE, FALSE, FALSE, 0, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,   CLEARTYPE_QUALITY, DEFAULT_PITCH | FF_ROMAN, "宋体");
-// 
-// 	CFont* pOldFont = pDC->SelectObject(&newfont);
-// 	int nOldBkMode = pDC->SetBkMode(TRANSPARENT);
-// 	CString str_text;
-// 	str_text.Format("%s", g_szCompanySimpleName);
-// 	CRect rcText(rcLabelArea.right - 50, rcLabelArea.top, rcLabelArea.right, rcLabelArea.top+50);
-// 	pDC->DrawText(str_text, rcText, DT_LEFT);
-// 	pDC->SelectObject(pOldFont);
-// 	pDC->SetBkMode(nOldBkMode);
-// 	newfont.DeleteObject();
+
 }
 
 int GetLabelSide(LPCSTR szMachineName)
 {
 	int bRet = 0;
 
-	// hgm文件路径和xml文件路径
-// 	CString strTmp;
-// 	strTmp.Format(_T("kdata\\knifetype%s"), g_szEncyptSubfix);
-// 	CString hgmpath = HGTools::getRelativePath(strTmp);
-// 	CString xmlpath = HGTools::getXmlPathFromHgxPath(hgmpath);
-// 
-// 	// 解密文件
-// 	decrypt_base64(hgmpath.GetBuffer(), xmlpath.GetBuffer());
-// 
-// 	XmlHandler xmlHandler;
-// 	xmlHandler.LoadFile(xmlpath.GetBuffer());
-// 	HGTools::deleteFile(xmlpath);
-// 
-// 	TiXmlElement* elmRoot = xmlHandler.GetDoc()->RootElement();
-// 	TiXmlElement* elmKnifeType = xmlHandler.GetIndicatedElement(elmRoot, "KnifeType", "Name", szMachineName);
-// 
-// 	if (elmKnifeType != NULL)
-// 	{
-// 		TiXmlElement* elmParamList = xmlHandler.GetChildElm(elmKnifeType, "ParamList");
-// 		TiXmlElement* elmTheParam = xmlHandler.GetIndicatedElement(elmParamList, "Param", "Name", "LabelSide");
-// 		xmlHandler.GetXmlAttribute(elmTheParam, "Value", bRet);
-// 	}
 
 	return bRet;
 }
@@ -1246,45 +1213,45 @@ std::map<std::string,std::string> GetMapByComponentInputItem(ComponentInputItem&
 {
 	std::map<std::string,std::string> noProcessSmallPanelOne;
 
-	noProcessSmallPanelOne["order"]			 = HGTools::Convert2StdString(theComponentInputItem.m_strOrderID);	//订单号
-	noProcessSmallPanelOne["cabinet"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strCabinetID);	//柜号
-	noProcessSmallPanelOne["info"]			 = HGTools::Convert2StdString(theComponentInputItem.m_strBarcode);	//条码
-	noProcessSmallPanelOne["PorductName"]	 = HGTools::Convert2StdString(theComponentInputItem.m_strCabinetName);	//产品名称
-	noProcessSmallPanelOne["porduct"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strPanelName);	//成品名称
-	noProcessSmallPanelOne["matrial"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strMaterial);	//材质
-	noProcessSmallPanelOne["width"]			 = HGTools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fLength, 1));	//长
-	noProcessSmallPanelOne["height"]		 = HGTools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fWidth, 1));	//宽
-	noProcessSmallPanelOne["thin"]			 = HGTools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fThickness, 1));	//厚度
+	noProcessSmallPanelOne["order"]			 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strOrderID);	//订单号
+	noProcessSmallPanelOne["cabinet"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strCabinetID);	//柜号
+	noProcessSmallPanelOne["info"]			 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strBarcode);	//条码
+	noProcessSmallPanelOne["PorductName"]	 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strCabinetName);	//产品名称
+	noProcessSmallPanelOne["porduct"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strPanelName);	//成品名称
+	noProcessSmallPanelOne["matrial"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strMaterial);	//材质
+	noProcessSmallPanelOne["width"]			 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fLength, 1));	//长
+	noProcessSmallPanelOne["height"]		 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fWidth, 1));	//宽
+	noProcessSmallPanelOne["thin"]			 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fThickness, 1));	//厚度
 	//noProcessSmallPanelOne["num"]			 = HGTools::Convert2StdString(m_matriallist.GetItemText(index,9));	//切割数量
-	noProcessSmallPanelOne["dir"]			 = HGTools::Convert2StdString(theComponentInputItem.m_strTexture);	//纹理方向
-	noProcessSmallPanelOne["edgeLen1"]		 = HGTools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_FRONT], 1));	//封长1
-	noProcessSmallPanelOne["edgeWidth1"]	 = HGTools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_RIGHT], 1));	//封宽1
-	noProcessSmallPanelOne["edgeLen2"]		 = HGTools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_BACK], 1));	//封长2
-	noProcessSmallPanelOne["edgeWidth2"]	 = HGTools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_LEFT], 1));	//封宽2
-	noProcessSmallPanelOne["pointInfo"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strOtherShapeIDAndParam);	//异形信息
+	noProcessSmallPanelOne["dir"]			 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strTexture);	//纹理方向
+	noProcessSmallPanelOne["edgeLen1"]		 = JT2_Tools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_FRONT], 1));	//封长1
+	noProcessSmallPanelOne["edgeWidth1"]	 = JT2_Tools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_RIGHT], 1));	//封宽1
+	noProcessSmallPanelOne["edgeLen2"]		 = JT2_Tools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_BACK], 1));	//封长2
+	noProcessSmallPanelOne["edgeWidth2"]	 = JT2_Tools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_LEFT], 1));	//封宽2
+	noProcessSmallPanelOne["pointInfo"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strOtherShapeIDAndParam);	//异形信息
 	CString strTmp;
 	strTmp.Format(_T("%d"), theComponentInputItem.m_eRotateType);
-	noProcessSmallPanelOne["rotate"]		 = HGTools::Convert2StdString(strTmp);	//是否旋转
-	noProcessSmallPanelOne["slotInfo"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strUpperFaceSlotInfo);	//槽
-	noProcessSmallPanelOne["slotRotate"]	 = HGTools::Convert2StdString(theComponentInputItem.m_bSlotFlipped ? _T("是") :  _T(""));	//槽翻转
-	noProcessSmallPanelOne["dslotInfo"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strDownerFaceSlotInfo);	//反面槽
-	noProcessSmallPanelOne["vecInfo"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strUpperFaceHoleInfo);	//孔
-	noProcessSmallPanelOne["vecRotate"]		 = HGTools::Convert2StdString(theComponentInputItem.m_bVHoleFlipped ? _T("是") :  _T(""));	//孔翻转
-	noProcessSmallPanelOne["dvecInfo"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strDownerFaceHoleInfo);	//反面孔
-	noProcessSmallPanelOne["customeInfo"]	 = HGTools::Convert2StdString(theComponentInputItem.m_strCustomerInfo);	//客户信息
-	noProcessSmallPanelOne["store"]			 = HGTools::Convert2StdString(theComponentInputItem.m_strJoinedStore);	//加盟店
-	noProcessSmallPanelOne["SawMark"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strSlottingFlag);	//拉槽标识
-	noProcessSmallPanelOne["HelpSign"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strReminder);	//助记号
-	noProcessSmallPanelOne["Vertical"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strDrilling);	//钻孔
-	noProcessSmallPanelOne["OrderType"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strOrderType);	//订单类型
-	noProcessSmallPanelOne["BackCode"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strReverseSideBarcode);	//反面条码
-	noProcessSmallPanelOne["ProductWidth"]	 = HGTools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fProductLength, 1));	//成品长度
-	noProcessSmallPanelOne["ProductHeight"]	 = HGTools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fProductWidth, 1));	//成品宽度
-	noProcessSmallPanelOne["ProductThin"]	 = HGTools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fProductThickness, 1));	//成品厚度
-	noProcessSmallPanelOne["otherID"]		 = HGTools::Convert2StdString(theComponentInputItem.m_strOtherShapeID);	//异型ID
-	noProcessSmallPanelOne["customeAddr"]	 = HGTools::Convert2StdString(theComponentInputItem.m_strCustomerAddress);	//客户地址
-	noProcessSmallPanelOne["DrillingLogo"]	 = HGTools::Convert2StdString(theComponentInputItem.m_strHoleSlotFlag);	//钻槽标识
-	noProcessSmallPanelOne["OtherPoints"]	 = HGTools::Convert2StdString(_T(""));	//异形点信息
+	noProcessSmallPanelOne["rotate"]		 = JT2_Tools::Convert2StdString(strTmp);	//是否旋转
+	noProcessSmallPanelOne["slotInfo"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strUpperFaceSlotInfo);	//槽
+	noProcessSmallPanelOne["slotRotate"]	 = JT2_Tools::Convert2StdString(theComponentInputItem.m_bSlotFlipped ? _T("是") :  _T(""));	//槽翻转
+	noProcessSmallPanelOne["dslotInfo"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strDownerFaceSlotInfo);	//反面槽
+	noProcessSmallPanelOne["vecInfo"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strUpperFaceHoleInfo);	//孔
+	noProcessSmallPanelOne["vecRotate"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_bVHoleFlipped ? _T("是") :  _T(""));	//孔翻转
+	noProcessSmallPanelOne["dvecInfo"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strDownerFaceHoleInfo);	//反面孔
+	noProcessSmallPanelOne["customeInfo"]	 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strCustomerInfo);	//客户信息
+	noProcessSmallPanelOne["store"]			 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strJoinedStore);	//加盟店
+	noProcessSmallPanelOne["SawMark"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strSlottingFlag);	//拉槽标识
+	noProcessSmallPanelOne["HelpSign"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strReminder);	//助记号
+	noProcessSmallPanelOne["Vertical"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strDrilling);	//钻孔
+	noProcessSmallPanelOne["OrderType"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strOrderType);	//订单类型
+	noProcessSmallPanelOne["BackCode"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strReverseSideBarcode);	//反面条码
+	noProcessSmallPanelOne["ProductWidth"]	 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fProductLength, 1));	//成品长度
+	noProcessSmallPanelOne["ProductHeight"]	 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fProductWidth, 1));	//成品宽度
+	noProcessSmallPanelOne["ProductThin"]	 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fProductThickness, 1));	//成品厚度
+	noProcessSmallPanelOne["otherID"]		 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strOtherShapeID);	//异型ID
+	noProcessSmallPanelOne["customeAddr"]	 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strCustomerAddress);	//客户地址
+	noProcessSmallPanelOne["DrillingLogo"]	 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strHoleSlotFlag);	//钻槽标识
+	noProcessSmallPanelOne["OtherPoints"]	 = JT2_Tools::Convert2StdString(_T(""));	//异形点信息
 
 	return (noProcessSmallPanelOne);
 }

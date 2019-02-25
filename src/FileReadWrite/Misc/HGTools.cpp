@@ -4,22 +4,22 @@
 
 
 //创建指定目录
-void HGTools::createDir(CString path)
+void JT_Tools::createDir(CString path)
 {
-	if (!HGTools::isDir(path))
+	if (!JT_Tools::isDir(path))
 	{
 		path = "\""+ path +"\"";
 		char temp[512] = {0};
 		temp[0] = 'm';
 		temp[1] = 'd';
 		temp[2] = ' ';
-		HGTools::Convert2FillChar(path,temp+3);
+		JT_Tools::Convert2FillChar(path,temp+3);
 		system(temp);
 	}
 }
 
 //判断这个路径是否是一个目录
-bool HGTools::isDir(CString path)
+bool JT_Tools::isDir(CString path)
 {
 	return PathIsDirectory(path);
 }
@@ -28,14 +28,14 @@ bool HGTools::isDir(CString path)
 
 
 //删除这个目录下的文件
-void HGTools::deleteFile(CString path)
+void JT_Tools::deleteFile(CString path)
 {
 	DeleteFile(path);
 }
 
 
 //删除这个目录以及下属所有文件
-bool HGTools::deletePath(CString path)
+bool JT_Tools::deletePath(CString path)
 {
 	char DirName[MAX_PATH];
 	Convert2FillChar(path,DirName);
@@ -71,9 +71,9 @@ bool HGTools::deletePath(CString path)
 }
 
 //删除这个目录下属所有文件(不包括子目录)
-void HGTools::deletePathFiles(CString path)
+void JT_Tools::deletePathFiles(CString path)
 {
-	if (HGTools::isDir(path))
+	if (JT_Tools::isDir(path))
 	{
 		path = "\""+ path +"\\*.*\" /Q";
 		char temp[512] = {0};
@@ -81,7 +81,7 @@ void HGTools::deletePathFiles(CString path)
 		temp[1] = 'e';
 		temp[2] = 'l';
 		temp[3] = ' ';
-		HGTools::Convert2FillChar(path,temp+4);
+		JT_Tools::Convert2FillChar(path,temp+4);
 		system(temp);
 
 	}
@@ -89,7 +89,7 @@ void HGTools::deletePathFiles(CString path)
 
 
 //判断这个路径是否是一个文件
-bool HGTools::isFileExists(CString path)
+bool JT_Tools::isFileExists(CString path)
 {
 	return PathFileExists(path);
 }
@@ -97,12 +97,12 @@ bool HGTools::isFileExists(CString path)
 
 
 //获取当前运行EXE所在路径附加相对路径
-CString HGTools::getRelativePath(CString path)
+CString JT_Tools::getRelativePath(CString path)
 {
 	return getCurExeContainPath() + "\\" + path ;
 }
 //获取当前运行EXE所在路径
-CString HGTools::getCurExeFullPath()
+CString JT_Tools::getCurExeFullPath()
 {
 	char ExeFile[2000];
 	GetModuleFileName(NULL,ExeFile,500);
@@ -112,7 +112,7 @@ CString HGTools::getCurExeFullPath()
 }
 
 //获取当前运行EXE所在路径的目录
-CString HGTools::getCurExeContainPath()
+CString JT_Tools::getCurExeContainPath()
 {
 	CString file_path = getCurExeFullPath();
 	file_path = getContainPath(file_path);
@@ -121,7 +121,7 @@ CString HGTools::getCurExeContainPath()
 }
 
 //获取文件所在路径的目录
-CString HGTools::getContainPath(CString path)
+CString JT_Tools::getContainPath(CString path)
 {
 	CString file_path = path;
 	file_path = file_path.Left(file_path.ReverseFind('\\'));
@@ -131,49 +131,28 @@ CString HGTools::getContainPath(CString path)
 
 
 //获取文件名称带后缀名
-CString HGTools::getFileNameWithSuffix(CString path)
+CString JT_Tools::getFileNameWithSuffix(CString path)
 {
 	CString file_path = path;
 	file_path = file_path.Mid(file_path.ReverseFind('\\')+1);
 	return file_path;
 }
 //获取文件名称不带后缀名
-CString HGTools::getFileName(CString path)
+CString JT_Tools::getFileName(CString path)
 {
 	CString file_path = getFileNameWithSuffix(path);
 	file_path = file_path.Left(file_path.ReverseFind('.'));
 	return file_path;
 }
 //获得程序当前版本号
-CString HGTools::getVersion()
+CString JT_Tools::getVersion()
 {
 	return " v2.0";
 }
 
-//加密指定文件到指定位置
-// void HGTools::encryptFile(CString src,CString dst)
-// {
-// 	char encryptPath[1000];
-// 	char originPath[1000];
-// 	Convert2FillChar(dst,encryptPath);
-// 	Convert2FillChar(src,originPath);
-// 	File_Encrypt(originPath,encryptPath);
-// }
-// //解密指定文件到指定位置
-// void HGTools::decryptFile(CString src,CString dst)
-// {
-// 	char decryptPath[1000];
-// 	char originPath[1000];
-// 	Convert2FillChar(src,decryptPath);
-// 	Convert2FillChar(dst,originPath);
-// 	File_Decrypt(decryptPath,originPath);	
-// 
-// 
-// }
-
 
 //将CString 转换成 char[]数据
-char* HGTools::Convert2FillChar(CString src,char* dst)
+char* JT_Tools::Convert2FillChar(CString src,char* dst)
 {
 	std::string src_string = src.GetBuffer();
 	int i = 0;
@@ -186,7 +165,7 @@ char* HGTools::Convert2FillChar(CString src,char* dst)
 }
 
 //转换为std::string
-std::string HGTools::Convert2StdString(int src)
+std::string JT_Tools::Convert2StdString(int src)
 {
 	CString temp;
 	temp.Format("%d",src);
@@ -194,7 +173,7 @@ std::string HGTools::Convert2StdString(int src)
 }
 
 //转换为std::string
-std::string HGTools::Convert2StdString(float src)
+std::string JT_Tools::Convert2StdString(float src)
 {
 	CString temp;
 	temp.Format("%f",src);
@@ -204,33 +183,33 @@ std::string HGTools::Convert2StdString(float src)
 
 
 //转换为Char*
-const char* HGTools::Convert2Char(CString src)
+const char* JT_Tools::Convert2Char(CString src)
 {
 	std::string temp = src.GetBuffer();
 	return temp.c_str();
 }
 //转换为std::string
-std::string HGTools::Convert2StdString(CString src)
+std::string JT_Tools::Convert2StdString(CString src)
 {
 	return src.GetBuffer();
 }
 
 //转换为std::string
-std::string HGTools::Convert2StdString(char* src)
+std::string JT_Tools::Convert2StdString(char* src)
 {
 	return std::string(src);
 }
 
 
 //转换为CString
-CString HGTools::Convert2CString(char* src)
+CString JT_Tools::Convert2CString(char* src)
 {
 	CString temp;
 	temp.Format("%s",src);
 	return temp;
 }
 //转换为CString
-CString HGTools::Convert2CString(std::string src)
+CString JT_Tools::Convert2CString(std::string src)
 {
 	CString temp;
 	temp.Format("%s",src.c_str());
@@ -238,7 +217,7 @@ CString HGTools::Convert2CString(std::string src)
 }
 
 //从hgx文件目录生成xml文件目录
-CString HGTools::getXmlPathFromHgxPath(CString pathName)
+CString JT_Tools::getXmlPathFromHgxPath(CString pathName)
 {
 	if (pathName.Right(4).Left(3) = ".hg")//匹配 ".hg*"
 	{
@@ -248,7 +227,7 @@ CString HGTools::getXmlPathFromHgxPath(CString pathName)
 	return pathName;
 }
 //处理绝对路径中".",".."等路径转换，变成直接是存地址。
-CString HGTools::getRealPathFromReleativePath(CString path)
+CString JT_Tools::getRealPathFromReleativePath(CString path)
 {
 	char tempPath[512] = {0};
 	return PathCombine(tempPath,path,NULL);
@@ -256,7 +235,7 @@ CString HGTools::getRealPathFromReleativePath(CString path)
 
 
 //获得最小适配缩放比例
-float HGTools::getMinScale(CRect& putterRect, CRect& containerRect)
+float JT_Tools::getMinScale(CRect& putterRect, CRect& containerRect)
 {
 	float scale_w = putterRect.Width()/((float)(containerRect.Width()));
 	float scale_h = putterRect.Height()/((float)(containerRect.Height()));
@@ -267,7 +246,7 @@ float HGTools::getMinScale(CRect& putterRect, CRect& containerRect)
 }
 
 //获得最小适配缩放比例
-float HGTools::getMinScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h)
+float JT_Tools::getMinScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h)
 {
 	float scale_w = putterRect_w/containerRect_w;
 	float scale_h = putterRect_h/containerRect_h;
@@ -278,7 +257,7 @@ float HGTools::getMinScale(float putterRect_w,float putterRect_h, float containe
 }
 
 //获得最大适配缩放比例
-float HGTools::getMaxScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h)
+float JT_Tools::getMaxScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h)
 {
 	float scale_w = containerRect_w/putterRect_w;
 	float scale_h = containerRect_h/putterRect_h;
@@ -290,7 +269,7 @@ float HGTools::getMaxScale(float putterRect_w,float putterRect_h, float containe
 
 
 //将字符串按给定的符号进行拆分
-int HGTools::SplitCString(CString strIn, CStringArray& strAryRe, char division)
+int JT_Tools::SplitCString(CString strIn, CStringArray& strAryRe, char division)
 {
 	strAryRe.RemoveAll();
 	if (!strIn.IsEmpty())
@@ -321,7 +300,7 @@ int HGTools::SplitCString(CString strIn, CStringArray& strAryRe, char division)
 }
 
 //将字符串按给定的符号进行拆分
-int HGTools::SplitCString(CString &strIn, CStringArray& strAryRe, LPCTSTR str)
+int JT_Tools::SplitCString(CString &strIn, CStringArray& strAryRe, LPCTSTR str)
 {
 	if (str == _T(""))
 	{
@@ -346,7 +325,7 @@ int HGTools::SplitCString(CString &strIn, CStringArray& strAryRe, LPCTSTR str)
 }
 
 //获得相反数
-std::string HGTools::GetNagativeValue( std::string value )
+std::string JT_Tools::GetNagativeValue( std::string value )
 {
 	float val = atof(value.c_str());
 	val = val*-1;
@@ -356,7 +335,7 @@ std::string HGTools::GetNagativeValue( std::string value )
 }
 
 //获得文件的最后保存时间
-long long HGTools::GetFileLastTime(const CString filePath)
+long long JT_Tools::GetFileLastTime(const CString filePath)
 {
 	WIN32_FIND_DATAA FindFileData;
 	::memset(&FindFileData,0,sizeof(FindFileData));

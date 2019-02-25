@@ -12,17 +12,17 @@ std::string ExchangeVerticalXY(std::string str_vertical/*, float fXLen*/, float 
 	CString result;
 	if (str_vertical.compare("") != 0)
 	{
-		CString vertical = HGTools::Convert2CString(str_vertical);
+		CString vertical = JT_Tools::Convert2CString(str_vertical);
 
 		CStringArray verticalArr;
-		HGTools::SplitCString(vertical,verticalArr,';');
+		JT_Tools::SplitCString(vertical,verticalArr,';');
 		for (int line_i = 0;line_i<verticalArr.GetSize();line_i++)
 		{
 			CString oneVertical = verticalArr.GetAt(line_i);
 			if (oneVertical != "")
 			{
 				CStringArray vercitalData;
-				HGTools::SplitCString(oneVertical,vercitalData,',');
+				JT_Tools::SplitCString(oneVertical,vercitalData,',');
 
 				if (vercitalData.GetCount() >= 4)
 				{
@@ -53,17 +53,17 @@ std::string ExchangeSlotXY(std::string str_slot/*, float fXLen*/, float fYLen)
 	CString result;
 	if (str_slot.compare("") != 0)
 	{
-		CString slot = HGTools::Convert2CString(str_slot);
+		CString slot = JT_Tools::Convert2CString(str_slot);
 
 		CStringArray slotArr;
-		HGTools::SplitCString(slot,slotArr,';');
+		JT_Tools::SplitCString(slot,slotArr,';');
 		for (int line_i = 0;line_i<slotArr.GetSize();line_i++)
 		{
 			CString oneSlot = slotArr.GetAt(line_i);
 			if (oneSlot != "")
 			{
 				CStringArray slotData;
-				HGTools::SplitCString(oneSlot,slotData,',');
+				JT_Tools::SplitCString(oneSlot,slotData,',');
 
 				if (slotData.GetCount() >= 6)
 				{

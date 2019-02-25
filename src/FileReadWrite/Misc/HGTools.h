@@ -4,7 +4,7 @@
 
 
 
-class HGTools
+class JT_Tools
 {
 public:
 	//创建指定目录
@@ -74,7 +74,7 @@ public:
 	static float getMinScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h);
 
 	//获得最大适配缩放比例
-	static float HGTools::getMaxScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h);
+	static float JT_Tools::getMaxScale(float putterRect_w,float putterRect_h, float containerRect_w, float containerRect_h);
 
 	//将字符串按给定的符号进行拆分
 	static int SplitCString(CString strIn, CStringArray& strAryRe, char division);

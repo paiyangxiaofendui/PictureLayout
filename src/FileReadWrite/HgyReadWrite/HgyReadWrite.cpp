@@ -27,7 +27,7 @@
 //
 //
 /*---------------------------------------*/
-bool  HgyReadWrite::WriteHgy(CString szFileDir)
+bool  JtyReadWrite::WriteJty(CString szFileDir)
 {
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 
@@ -190,7 +190,7 @@ bool  HgyReadWrite::WriteHgy(CString szFileDir)
 
 
 // 保存大板树形结构到XML文件
-bool HgyReadWrite::SaveOneTree2Xml(TiXmlElement* pCurNode, Component* pCurCpn)
+bool JtyReadWrite::SaveOneTree2Xml(TiXmlElement* pCurNode, Component* pCurCpn)
 {
 	if (pCurCpn == NULL)
 	{
@@ -307,7 +307,7 @@ bool HgyReadWrite::SaveOneTree2Xml(TiXmlElement* pCurNode, Component* pCurCpn)
 //
 //
 /*---------------------------------------*/
-void HgyReadWrite::ReadOutlineHoleSlotInfo(TiXmlElement* pCurCpnNode, Component* pNewCpn)
+void JtyReadWrite::ReadOutlineHoleSlotInfo(TiXmlElement* pCurCpnNode, Component* pNewCpn)
 {
 
 	for (TiXmlElement * pCurInfoNode = pCurCpnNode->FirstChildElement(); pCurInfoNode != NULL; pCurInfoNode = (TiXmlElement*)(pCurInfoNode->NextSibling()))
@@ -342,7 +342,7 @@ void HgyReadWrite::ReadOutlineHoleSlotInfo(TiXmlElement* pCurCpnNode, Component*
 //
 //
 /*---------------------------------------*/
-void HgyReadWrite::ReadOutline(TiXmlElement* pCpnElem, Component* pCpn)
+void JtyReadWrite::ReadOutline(TiXmlElement* pCpnElem, Component* pCpn)
 {
 	// 先清空原有的
 	pCpn->m_vOutlinePoint.clear();
@@ -380,7 +380,7 @@ void HgyReadWrite::ReadOutline(TiXmlElement* pCpnElem, Component* pCpn)
 //
 //
 /*---------------------------------------*/
-void HgyReadWrite::SaveOutline(TiXmlElement* pCpnElem, Component* pCpn)
+void JtyReadWrite::SaveOutline(TiXmlElement* pCpnElem, Component* pCpn)
 {
 	int nOutlineCount = pCpn->m_vOutlinePoint.size();
 	if (nOutlineCount > 0)
@@ -419,7 +419,7 @@ void HgyReadWrite::SaveOutline(TiXmlElement* pCpnElem, Component* pCpn)
 
 
 // 从XML文件读取大板树型结构
-bool HgyReadWrite::LoadOneTreeFromXml(TiXmlElement* pCurNode, Component* pParentCpn)
+bool JtyReadWrite::LoadOneTreeFromXml(TiXmlElement* pCurNode, Component* pParentCpn)
 {
 	if (pParentCpn == NULL)
 	{
@@ -500,7 +500,7 @@ bool HgyReadWrite::LoadOneTreeFromXml(TiXmlElement* pCurNode, Component* pParent
 
 
 
-bool  HgyReadWrite::ReadHgy(CString strSrcPath)
+bool  JtyReadWrite::ReadJty(CString strSrcPath)
 {
 	CSingleton* pSingleton = CSingleton::GetSingleton();
 
