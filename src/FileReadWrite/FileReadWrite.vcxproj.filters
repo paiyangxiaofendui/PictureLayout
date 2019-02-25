@@ -66,9 +66,6 @@
     <ClCompile Include="HgyReadWrite\HgyReadWrite.cpp">
       <Filter>源文件\HgyReadWrite</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\HGCode.cpp">
-      <Filter>源文件\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="Misc\XmlHandlePlus.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
@@ -105,6 +102,9 @@
     <ClCompile Include="PdfReadWrite\PdfReadWrite.cpp">
       <Filter>源文件\PdfReadWrite</Filter>
     </ClCompile>
+    <ClCompile Include="Misc\JT_Code.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -118,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="HgyReadWrite\HgyReadWrite.h">
       <Filter>头文件\HgyReadWrite</Filter>
-    </ClInclude>
-    <ClInclude Include="Misc\HGCode.h">
-      <Filter>头文件\Misc</Filter>
     </ClInclude>
     <ClInclude Include="Misc\XmlHandlePlus.h">
       <Filter>头文件\Misc</Filter>
@@ -187,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="PdfReadWrite\PdfReadWrite.h">
       <Filter>头文件\PdfReadWrite</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\JT_Code.h">
+      <Filter>头文件\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

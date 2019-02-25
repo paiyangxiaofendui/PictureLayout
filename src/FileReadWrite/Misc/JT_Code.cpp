@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "HGCode.h"
+#include "JT_Code.h"
 
 #include <string>
 #include <locale>
