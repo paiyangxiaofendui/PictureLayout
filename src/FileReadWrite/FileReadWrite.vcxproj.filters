@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="头文件\HgyReadWrite">
-      <UniqueIdentifier>{28012e86-8389-4a54-bda3-c86c4b39447a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\HgyReadWrite">
-      <UniqueIdentifier>{991a381d-b0a6-4b4f-b3f0-c6fb96a200dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\Misc">
       <UniqueIdentifier>{0a0b389c-929f-4d77-9ad4-dd984307410a}</UniqueIdentifier>
     </Filter>
@@ -42,6 +36,12 @@
     </Filter>
     <Filter Include="源文件\PdfReadWrite">
       <UniqueIdentifier>{5da7205e-ba36-4711-8522-b03b9b381773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\JtyReadWrite">
+      <UniqueIdentifier>{28012e86-8389-4a54-bda3-c86c4b39447a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\JtyReadWrite">
+      <UniqueIdentifier>{991a381d-b0a6-4b4f-b3f0-c6fb96a200dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,8 +102,8 @@
     <ClCompile Include="Misc\JT_Tools.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="HgyReadWrite\JtyReadWrite.cpp">
-      <Filter>源文件\HgyReadWrite</Filter>
+    <ClCompile Include="JtyReadWrite\JtyReadWrite.cpp">
+      <Filter>源文件\JtyReadWrite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +185,8 @@
     <ClInclude Include="Misc\JT_Tools.h">
       <Filter>头文件\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="HgyReadWrite\JtyReadWrite.h">
-      <Filter>头文件\HgyReadWrite</Filter>
+    <ClInclude Include="JtyReadWrite\JtyReadWrite.h">
+      <Filter>头文件\JtyReadWrite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

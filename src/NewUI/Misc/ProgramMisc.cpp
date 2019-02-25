@@ -1369,7 +1369,6 @@ CString GetLogDir()
 
 	TCHAR szMyDoc[_MAX_PATH];  
 	SHGetSpecialFolderPath(NULL, szMyDoc, CSIDL_MYDOCUMENTS, 0);
-	strRet.Format(_T("%s\\HG3D\\log\\Carving\\"), szMyDoc);
 
 	return strRet;
 }

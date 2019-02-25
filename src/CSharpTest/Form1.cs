@@ -80,7 +80,7 @@ namespace CSharpTest
             // rt = Test(str);
             
             // string src_file = "C:\\Users\\Administrator\\Desktop\\C#—孔槽翻转测试.xml";
-            // string dst_file = "C:\\Users\\Administrator\\Desktop\\C#—孔槽翻转测试.hge";
+            // string dst_file = "C:\\Users\\Administrator\\Desktop\\C#—孔槽翻转测试.jte";
             // string dst_xml_file = "C:\\Users\\Administrator\\Desktop\\C#—孔槽翻转测试2.xml";
             // rt = encrypt_base64(src_file.ToCharArray(), dst_file.ToCharArray());
             // rt = decrypt_base64(dst_file.ToCharArray(), dst_xml_file.ToCharArray());

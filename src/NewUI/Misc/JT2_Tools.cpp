@@ -205,7 +205,7 @@ CString JT2_Tools::Convert2CString(std::string src)
 CString JT2_Tools::getXmlPathFromJtxPath(CString pathName)
 {
 #ifndef YiWei
-	if (pathName.Right(4).Left(3) = ".hg")//匹配 ".hg*"
+	if (pathName.Right(4).Left(3) = ".jt")//匹配 ".jt*"
 #else
 	if (pathName.Right(4).Left(3) = ".yw")
 #endif
@@ -222,11 +222,6 @@ CString JT2_Tools::getRealPathFromReleativePath(CString path)
 	char tempPath[512] = {0};
 	return PathCombine(tempPath,path,NULL);
 }
-////处理绝对路径中".",".."等路径转换，变成直接是存地址。
-//CString HGTools::getReleativePathFromRealPath(CString path)
-//{
-//	return "";
-//}
 
 
 

@@ -219,7 +219,7 @@ CString JT_Tools::Convert2CString(std::string src)
 //从jtx文件目录生成xml文件目录
 CString JT_Tools::getXmlPathFromJtxPath(CString pathName)
 {
-	if (pathName.Right(4).Left(3) = ".hg")//匹配 ".hg*"
+	if (pathName.Right(4).Left(3) = ".jt")//匹配 ".jt*"
 	{
 		pathName = pathName.Left(pathName.GetLength()-4) + ".xml";
 		return pathName;

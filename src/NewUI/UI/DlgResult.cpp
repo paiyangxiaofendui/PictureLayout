@@ -34,7 +34,7 @@
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
 #include "../../../include/FileReadWrite/DxfReadWrite/DxfReadWrite.h"
-#include "../../../include/FileReadWrite/HgyReadWrite/JtyReadWrite.h"
+#include "../../../include/FileReadWrite/JtyReadWrite/JtyReadWrite.h"
 #include "../../../include/FileReadWrite/Misc/JT_Code.h"
 #include "../../../include/FileReadWrite/PltReadWrite/PltReadWrite.h"
 #include "../../../include/FileReadWrite/PdfReadWrite/PdfReadWrite.h"
@@ -224,7 +224,7 @@ BEGIN_MESSAGE_MAP(CDlgResult, CDialogChildBase)
 	ON_MESSAGE(WM_SHOW_OR_HIDE_CLIPBOARD, &CDlgResult::OnShowOrHideClipboard)
 	ON_COMMAND(ID_MENU_ROTATE_PASTING_COMPONENT, &CDlgResult::OnMenuRotatePastingComponent)
 
-	ON_BN_CLICKED(IDC_BUTTON_READ_HGO, &CDlgResult::OnOpenSolution)
+	ON_BN_CLICKED(IDC_BUTTON_READ_JTO, &CDlgResult::OnOpenSolution)
 	ON_BN_CLICKED(IDC_BUTTON_LAYOUT, &CDlgResult::OnBtnOptimize)
 	ON_BN_CLICKED(IDC_BUTTON_READ_PIC_INFO, &CDlgResult::OnOpenSourcePicInfo)
 	ON_BN_CLICKED(IDC_BUTTON_CONNECT_MAINTOP, &CDlgResult::OnConnectMaintop)

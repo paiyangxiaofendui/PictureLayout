@@ -120,7 +120,7 @@
     <ClCompile Include="DxfReadWrite\DxfReadWrite.cpp" />
     <ClCompile Include="DxfReadWrite\test_creationclass.cpp" />
     <ClCompile Include="FileReadWrite.cpp" />
-    <ClCompile Include="HgyReadWrite\JtyReadWrite.cpp" />
+    <ClCompile Include="JtyReadWrite\JtyReadWrite.cpp" />
     <ClCompile Include="Misc\JT_Code.cpp" />
     <ClCompile Include="Misc\JT_Tools.cpp" />
     <ClCompile Include="Misc\Misc.cpp" />
@@ -149,7 +149,7 @@
     <ClInclude Include="DxfReadWrite\dl_writer_ascii.h" />
     <ClInclude Include="DxfReadWrite\DxfReadWrite.h" />
     <ClInclude Include="DxfReadWrite\test_creationclass.h" />
-    <ClInclude Include="HgyReadWrite\JtyReadWrite.h" />
+    <ClInclude Include="JtyReadWrite\JtyReadWrite.h" />
     <ClInclude Include="Misc\JT_Code.h" />
     <ClInclude Include="Misc\JT_Tools.h" />
     <ClInclude Include="Misc\Misc.h" />

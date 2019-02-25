@@ -394,7 +394,7 @@ std::vector<PointInfo> OtherShapeHelper::GetPointInfoFromPanelOutLineAndParamPoi
 			panelOutline[i]["Side"] = YHInfoTools::replace_allstr(panelOutline[i]["Side"],p_name,p_value);
 		}
 
-		//hg3d::Construction cst;
+
 
 		//对所有数据进行四则运算
 		if (panelOutline[i]["Sign"].compare("-1") != 0)
