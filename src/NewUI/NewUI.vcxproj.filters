@@ -147,9 +147,6 @@
     <ClCompile Include="Misc\YHInfoTools.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\HGTools.cpp">
-      <Filter>源文件\Misc</Filter>
-    </ClCompile>
     <ClCompile Include="Drawing\Drawing.cpp">
       <Filter>源文件\Drawing</Filter>
     </ClCompile>
@@ -173,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="UI\OptimizeDlg.cpp">
       <Filter>源文件\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Misc\JT2_Tools.cpp">
+      <Filter>源文件\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +233,6 @@
     <ClInclude Include="Misc\YHInfoTools.h">
       <Filter>头文件\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Misc\HGTools.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Drawing\Drawing.h">
       <Filter>头文件\Drawing</Filter>
     </ClInclude>
@@ -259,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="UI\OptimizeDlg.h">
       <Filter>头文件\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\JT2_Tools.h">
+      <Filter>头文件\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

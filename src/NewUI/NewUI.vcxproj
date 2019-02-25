@@ -120,7 +120,7 @@
     <ClCompile Include="DataProcess\DataProcess.cpp" />
     <ClCompile Include="Drawing\Drawing.cpp" />
     <ClCompile Include="ExportAPI.cpp" />
-    <ClCompile Include="Misc\HGTools.cpp" />
+    <ClCompile Include="Misc\JT2_Tools.cpp" />
     <ClCompile Include="Misc\Misc.cpp" />
     <ClCompile Include="Misc\OtherShapeHelper.cpp" />
     <ClCompile Include="Misc\ProgramMisc.cpp" />
@@ -151,7 +151,7 @@
     <ClInclude Include="DataProcess\DataProcess.h" />
     <ClInclude Include="Drawing\Drawing.h" />
     <ClInclude Include="ExportAPI.h" />
-    <ClInclude Include="Misc\HGTools.h" />
+    <ClInclude Include="Misc\JT2_Tools.h" />
     <ClInclude Include="Misc\Misc.h" />
     <ClInclude Include="Misc\OtherShapeHelper.h" />
     <ClInclude Include="Misc\ProgramMisc.h" />

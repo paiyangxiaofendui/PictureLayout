@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "HGTools.h"
+#include "JT2_Tools.h"
 #include <WinBase.h>
 
 //创建指定目录

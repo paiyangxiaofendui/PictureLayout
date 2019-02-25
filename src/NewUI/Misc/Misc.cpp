@@ -2,7 +2,7 @@
 #include <atlimage.h>
 #include "Misc.h"
 #include <math.h>
-#include "HGTools.h"
+#include "JT2_Tools.h"
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "../Work/WorkDef.h"

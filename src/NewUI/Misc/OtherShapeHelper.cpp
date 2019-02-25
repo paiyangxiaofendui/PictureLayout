@@ -5,7 +5,7 @@
 
 #include "YHInfoTools.h"
 #include <algorithm>
-#include "HGTools.h"
+#include "JT2_Tools.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "Misc.h"
 #include "../Work/WorkDef.h"
