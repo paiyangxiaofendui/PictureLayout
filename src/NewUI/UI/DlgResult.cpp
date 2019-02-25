@@ -34,7 +34,7 @@
 #include "../../../include/DataManager/BaseDataType/Panel/Panel.h"
 #include "../../../include/DataManager/BaseDataType/Component/Component.h"
 #include "../../../include/FileReadWrite/DxfReadWrite/DxfReadWrite.h"
-#include "../../../include/FileReadWrite/HgyReadWrite/HgyReadWrite.h"
+#include "../../../include/FileReadWrite/HgyReadWrite/JtyReadWrite.h"
 #include "../../../include/FileReadWrite/Misc/JT_Code.h"
 #include "../../../include/FileReadWrite/PltReadWrite/PltReadWrite.h"
 #include "../../../include/FileReadWrite/PdfReadWrite/PdfReadWrite.h"

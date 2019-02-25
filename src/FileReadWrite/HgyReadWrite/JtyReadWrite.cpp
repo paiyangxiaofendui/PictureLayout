@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "HgyReadWrite.h"
+#include "JtyReadWrite.h"
 #include "../Misc/JT_Tools.h"
 #include "../Misc/Misc.h"
 
@@ -627,7 +627,7 @@ bool  JtyReadWrite::ReadJty(CString strSrcPath)
 		}
 		else
 		{
-			AfxMessageBox("hgy中读取到未知节点，跳过！");
+			AfxMessageBox("jty中读取到未知节点，跳过！");
 		}
 	}
 

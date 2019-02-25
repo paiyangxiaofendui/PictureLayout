@@ -1222,7 +1222,6 @@ std::map<std::string,std::string> GetMapByComponentInputItem(ComponentInputItem&
 	noProcessSmallPanelOne["width"]			 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fLength, 1));	//长
 	noProcessSmallPanelOne["height"]		 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fWidth, 1));	//宽
 	noProcessSmallPanelOne["thin"]			 = JT2_Tools::Convert2StdString(GetFloatStringTrimming(theComponentInputItem.m_fThickness, 1));	//厚度
-	//noProcessSmallPanelOne["num"]			 = HGTools::Convert2StdString(m_matriallist.GetItemText(index,9));	//切割数量
 	noProcessSmallPanelOne["dir"]			 = JT2_Tools::Convert2StdString(theComponentInputItem.m_strTexture);	//纹理方向
 	noProcessSmallPanelOne["edgeLen1"]		 = JT2_Tools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_FRONT], 1));	//封长1
 	noProcessSmallPanelOne["edgeWidth1"]	 = JT2_Tools::Convert2StdString(GetFloatString(theComponentInputItem.m_afBanding[BANDING_ID_RIGHT], 1));	//封宽1

@@ -63,9 +63,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HgyReadWrite\HgyReadWrite.cpp">
-      <Filter>源文件\HgyReadWrite</Filter>
-    </ClCompile>
     <ClCompile Include="Misc\XmlHandlePlus.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
@@ -105,6 +102,9 @@
     <ClCompile Include="Misc\JT_Tools.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="HgyReadWrite\JtyReadWrite.cpp">
+      <Filter>源文件\HgyReadWrite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -115,9 +115,6 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="HgyReadWrite\HgyReadWrite.h">
-      <Filter>头文件\HgyReadWrite</Filter>
     </ClInclude>
     <ClInclude Include="Misc\XmlHandlePlus.h">
       <Filter>头文件\Misc</Filter>
@@ -187,6 +184,9 @@
     </ClInclude>
     <ClInclude Include="Misc\JT_Tools.h">
       <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="HgyReadWrite\JtyReadWrite.h">
+      <Filter>头文件\HgyReadWrite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

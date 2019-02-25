@@ -34,8 +34,8 @@ public:
 	static CString getFileName(CString path);
 	//获得程序当前版本号
 	static CString getVersion();
-	//从hgx文件目录生成xml文件目录
-	static CString getXmlPathFromHgxPath(CString path);
+	//从jtx文件目录生成xml文件目录
+	static CString getXmlPathFromJtxPath(CString path);
 	//处理绝对路径中".",".."等路径转换，变成直接是存地址。
 	static CString getRealPathFromReleativePath(CString path);
 	//处理绝对路径中".",".."等路径转换，变成直接是存地址。

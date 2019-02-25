@@ -201,8 +201,8 @@ CString JT2_Tools::Convert2CString(std::string src)
 	return temp;
 }
 
-//从hgx文件目录生成xml文件目录
-CString JT2_Tools::getXmlPathFromHgxPath(CString pathName)
+//从jtx文件目录生成xml文件目录
+CString JT2_Tools::getXmlPathFromJtxPath(CString pathName)
 {
 #ifndef YiWei
 	if (pathName.Right(4).Left(3) = ".hg")//匹配 ".hg*"
