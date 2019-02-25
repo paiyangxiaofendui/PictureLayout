@@ -72,9 +72,6 @@
     <ClCompile Include="Misc\YHInfoTools.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="Misc\HGTools.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Misc\OtherShapeHelper.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -105,6 +102,9 @@
     <ClCompile Include="Misc\JT_Code.cpp">
       <Filter>源文件\Misc</Filter>
     </ClCompile>
+    <ClCompile Include="Misc\JT_Tools.cpp">
+      <Filter>源文件\Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -124,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="Misc\YHInfoTools.h">
       <Filter>头文件\Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="Misc\HGTools.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Misc\OtherShapeHelper.h">
       <Filter>头文件</Filter>
@@ -186,6 +183,9 @@
       <Filter>头文件\PdfReadWrite</Filter>
     </ClInclude>
     <ClInclude Include="Misc\JT_Code.h">
+      <Filter>头文件\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\JT_Tools.h">
       <Filter>头文件\Misc</Filter>
     </ClInclude>
   </ItemGroup>

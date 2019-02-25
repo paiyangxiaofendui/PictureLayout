@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ProgramMisc.h"
-#include "HGTools.h"
+#include "JT_Tools.h"
 #include "Misc.h"
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 #include "OtherShapeHelper.h"

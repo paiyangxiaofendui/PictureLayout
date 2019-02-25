@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "HgyReadWrite.h"
-#include "../Misc/HGTools.h"
+#include "../Misc/JT_Tools.h"
 #include "../Misc/Misc.h"
 
 //#include "../../../include/FileCompressandUnCompress/FileCompressandUnCompress.h"

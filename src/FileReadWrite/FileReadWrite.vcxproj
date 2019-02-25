@@ -122,7 +122,7 @@
     <ClCompile Include="FileReadWrite.cpp" />
     <ClCompile Include="HgyReadWrite\HgyReadWrite.cpp" />
     <ClCompile Include="Misc\JT_Code.cpp" />
-    <ClCompile Include="Misc\HGTools.cpp" />
+    <ClCompile Include="Misc\JT_Tools.cpp" />
     <ClCompile Include="Misc\Misc.cpp" />
     <ClCompile Include="Misc\OtherShapeHelper.cpp" />
     <ClCompile Include="Misc\ProgramMisc.cpp" />
@@ -151,7 +151,7 @@
     <ClInclude Include="DxfReadWrite\test_creationclass.h" />
     <ClInclude Include="HgyReadWrite\HgyReadWrite.h" />
     <ClInclude Include="Misc\JT_Code.h" />
-    <ClInclude Include="Misc\HGTools.h" />
+    <ClInclude Include="Misc\JT_Tools.h" />
     <ClInclude Include="Misc\Misc.h" />
     <ClInclude Include="Misc\OtherShapeHelper.h" />
     <ClInclude Include="Misc\ProgramMisc.h" />

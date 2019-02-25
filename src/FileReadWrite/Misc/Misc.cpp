@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Misc.h"
 #include <math.h>
-#include "HGTools.h"
+#include "JT_Tools.h"
 
 #include "../../../include/DataManager/BaseDataType/CommonData/CommonData.h"
 //#include "../../../include/Encryption/base64/base64.h"
